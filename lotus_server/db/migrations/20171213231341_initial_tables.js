@@ -20,7 +20,7 @@ exports.up = function(knex, Promise) {
       table.integer('team_id');
       table.integer('monster_id');
     }),
-    knex.schema.createTable('body', (table) => {
+    knex.schema.createTable('bodies', (table) => {
       table.increments();
       table.string('image_url');
       table.integer('hp');
@@ -28,7 +28,7 @@ exports.up = function(knex, Promise) {
       table.integer('type_id');
       table.string('creature');
     }),
-    knex.schema.createTable('head', (table) => {
+    knex.schema.createTable('heads', (table) => {
       table.increments();
       table.string('image_url');
       table.integer('attack_id');
@@ -44,13 +44,17 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('types', (table) => {
       table.increments();
       table.string('name');
-      table.integer('weak_against');
-      table.integer('strong_against');
+      table.integer('weakness');
     }),
     knex.schema.createTable('abilities', (table) => {
       table.increments();
       table.string('name');
     }),
+    knex.schema.createTable('attacks', (table) => {
+      table.increments();
+      table.string('name');
+      table.integer('type_id');
+    })
   ]);
 };
 
