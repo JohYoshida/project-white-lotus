@@ -1,9 +1,20 @@
 const express = require('express')
-const app = express()
+const WebSocket = require('ws');
+const SocketServer = WebSocket.Server;
 
-// Use EJS
-app.set('view engine', 'ejs');
+const PORT = 3001;
 
-app.get('/', (req, res) => res.render('battle'))
+const server = express()
+  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
+
+const wss = new SocketServer({ server });
+
+wss.on('connection', (ws) => {
+  console.log("A client connected")
+
+  ws.on('close', () => {
+    console.log("A client disconnected")
+    });
+});
