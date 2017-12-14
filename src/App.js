@@ -6,14 +6,15 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.socket = new WebSocket("ws://localhost:3001");
+    this.socket = new WebSocket('ws://localhost:3001');
     this.state = {
-        };
+
+    };
   }
 
   componentDidMount() {
     let websocket = this.socket
-    websocket.addEventListener('open', function (event) {
+    websocket.addEventListener('open', event => {
       websocket.send('Hello!?');
     });
   }
