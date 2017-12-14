@@ -63,10 +63,11 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTableIfExists('users'),
     knex.schema.dropTableIfExists('monsters'),
     knex.schema.dropTableIfExists('teams_monster'),
-    knex.schema.dropTableIfExists('body'),
-    knex.schema.dropTableIfExists('head'),
+    knex.schema.dropTableIfExists('bodies'),
+    knex.schema.dropTableIfExists('heads'),
     knex.schema.dropTableIfExists('arms'),
     knex.schema.dropTableIfExists('types'),
     knex.schema.dropTableIfExists('abilities'),
+    knex.schema.dropTableIfExists('attacks')
   ]);
 };
