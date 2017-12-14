@@ -22,7 +22,8 @@ class CompleteMonster {
     this.attack = attack.attributes;
     this.ability = ability.attributes;
     this.alt_attack = alt_attack.attributes;
-    
+    this.bench = true;
+
     // generate attacks and/or ability
     this.attack = this.set_attacks();
     this.ability = this.set_ability();

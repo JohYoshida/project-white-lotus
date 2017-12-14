@@ -1,5 +1,5 @@
 const getCreature = require('../models/monster_builder');
-const generateTeam = require('../lib/generate_team');
+const generatePlayer = require('../lib/generate_player');
 
 test('There should be three monsters in play.', done => {
   Promise.all([
@@ -21,22 +21,11 @@ test('There should be two teams in play.', done => {
   const team1 = [1, 2, 3];
   const team2 = [1, 2, 3];
   Promise.all([
-    generateTeam(team1),
-    generateTeam(team2)
-  ]).then(teams => {
-    expect(teams[0].userId).toBe(1);
-    done();
-  });
-});
-
-test('A monster\'s abilities should run immediately.', done => {
-  const team1 = [1, 2, 3];
-  const team2 = [1, 2, 3];
-  Promise.all([
-    generateTeam(team1),
-    generateTeam(team2)
-  ]).then(teams => {
-    expect(teams[0].userId).toBe(1);
+    generatePlayer(team1),
+    generatePlayer(team2)
+  ]).then(players => {
+    expect(players[0].team.length).toBe(3);
+    expect(players[1].team.length).toBe(3);
     done();
   });
 });
