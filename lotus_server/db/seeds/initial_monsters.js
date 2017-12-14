@@ -45,7 +45,6 @@ exports.seed = function(knex, Promise) {
           id: 1,
           image_url:'https://api.adorable.io/avatars/285/gojira.png',
           hp: 10,
-          current_hp: 10,
           type_id: 1,
           creature: 'kaiju'
         },
@@ -53,7 +52,6 @@ exports.seed = function(knex, Promise) {
           id: 2,
           image_url:'https://api.adorable.io/avatars/285/rhino.png',
           hp: 5,
-          current_hp: 5,
           type_id: 1,
           creature: 'mecha'
         },
@@ -61,7 +59,6 @@ exports.seed = function(knex, Promise) {
           id: 3,
           image_url:'https://api.adorable.io/avatars/285/mecha_gojira.png',
           hp: 12,
-          current_hp: 12,
           type_id: 2,
           creature: 'kaiju'
         }
@@ -113,7 +110,6 @@ exports.seed = function(knex, Promise) {
         {
           id: 1,
           name: 'scratch',
-          type_id: 1,
           aoe:false,
           dot:false
         }
