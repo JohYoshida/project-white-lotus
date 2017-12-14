@@ -20,6 +20,9 @@ module.exports = function(Body, Head, Arm, Type, Attack, Ability){
     },
     ability: function(){
       return this.belongsTo(Ability).through(Head);
+    },
+    alt_attack: function(){
+      return this.belongsTo(Attack).through(Head);
     }
   });
 }
