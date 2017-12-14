@@ -1,6 +1,7 @@
-const bookshelf = require('./bookshelf');
+const bookshelf = require('./lib/bookshelf');
 const set_attack = require('./attack_model');
 
+//  monster components
 const Body = bookshelf.Model.extend({
   tableName: 'bodies',
 });
@@ -38,11 +39,11 @@ class myMonster {
     this.body.current_hp -= 1;
   }
 }
-
+// How we will actually get the creature data.
 const get_creature = (id) => {
   return new Monster({'id': id}).fetch({withRelated: ['body', 'arm', 'head']}).then((prod) => {
     return new myMonster(prod);
   }).then(monster => monster.set_attack());
 };
-// for testing
+
 module.exports = get_creature;

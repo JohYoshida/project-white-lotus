@@ -1,4 +1,4 @@
-const get_creature = require('../lib/monster_model');
+const get_creature = require('../models/monster_model');
 
 test('The monster\'s name should be "Gojira".', done => {
   get_creature(1).then((creature) => {
@@ -47,6 +47,20 @@ test('The monster\'s hp should be reduced when takeDamage is called.', done => {
 test('Current_hp lost should not be persistent.', done => {
   get_creature(1).then(creature => {
     expect(creature.body.current_hp).toBe(10);
+    done();
+  });
+});
+
+test('Attack should reduce another monster\'s hp', done => {
+  // this is a good way to set up battlefields.
+  Promise.all([
+    get_creature(1),
+    get_creature(1)
+  ]).then(creatures => {
+    const gojira = creatures[0];
+    const mechaGojira = creatures[1];
+    gojira.attack(mechaGojira);
+    expect(mechaGojira.body.current_hp).toBe(9);
     done();
   });
 });

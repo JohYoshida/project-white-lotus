@@ -1,11 +1,12 @@
-const bookshelf = require('./bookshelf');
+const bookshelf = require('./lib/bookshelf');
 
 const Attack = bookshelf.Model.extend({
   tableName: 'attacks',
 });
 
 const attackFuncs = {
-  scratch: function(){
+  scratch: function(creature){
+    creature ? creature.takeDamage() : null;
     return 'Scratch!';
   }
 }
