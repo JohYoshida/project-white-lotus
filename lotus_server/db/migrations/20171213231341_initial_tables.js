@@ -9,36 +9,37 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('monsters', (table) => {
       table.increments();
-      table.integer('user_id');
+      table.integer('user_id').references('users');
       table.string('name');
-      table.integer('body_id');
-      table.integer('arm_id');
-      table.integer('head_id');
+      table.integer('body_id').references('bodies');
+      table.integer('arm_id').references('arms');
+      table.integer('head_id').references('heads');
     }),
     knex.schema.createTable('teams_monster', (table) => {
       table.increments();
-      table.integer('team_id');
-      table.integer('monster_id');
+      table.integer('team_id').references('teams');
+      table.integer('monster_id').references('monsters');
     }),
     knex.schema.createTable('bodies', (table) => {
       table.increments();
       table.string('image_url');
       table.integer('hp');
       table.integer('current_hp');
-      table.integer('type_id');
+      table.integer('accuracy_bonus');
+      table.integer('type_id').references('types');
       table.string('creature');
     }),
     knex.schema.createTable('heads', (table) => {
       table.increments();
       table.string('image_url');
-      table.integer('attack_id');
-      table.integer('ability_id');
+      table.integer('attack_id').references('attacks');
+      table.integer('ability_id').references('abilities');
       table.string('creature');
     }),
     knex.schema.createTable('arms', (table) => {
       table.increments();
       table.string('image_url');
-      table.integer('attack_id');
+      table.integer('attack_id').references('attacks');
       table.string('creature');
     }),
     knex.schema.createTable('types', (table) => {
@@ -53,7 +54,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('attacks', (table) => {
       table.increments();
       table.string('name');
-      table.integer('type_id');
+      table.integer('type_id').references('types');
     })
   ]);
 };
