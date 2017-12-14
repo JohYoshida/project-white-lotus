@@ -12,7 +12,7 @@ const attackFuncs = {
 }
 
 const set_attack = function(){
-  return new Attack({id:this.arm.id}).fetch().then(model => {
+  return new Attack({id:this.arm.attack_id}).fetch().then(model => {
     this.attack = attackFuncs[model.attributes.name];
     return this;
   });

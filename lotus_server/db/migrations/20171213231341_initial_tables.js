@@ -54,6 +54,8 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('attacks', (table) => {
       table.increments();
       table.string('name');
+      table.boolean('aoe');
+      table.boolean('dot');
       table.integer('type_id').references('types');
     })
   ]);
