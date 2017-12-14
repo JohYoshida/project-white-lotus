@@ -10,6 +10,7 @@ exports.seed = function(knex, Promise) {
     knex('arms').del(),
     knex('types').del(),
     knex('abilities').del(),
+    knex('attacks').del()
   ]).then(function () {
     // Inserts seed entries
     return Promise.all([
@@ -22,6 +23,22 @@ exports.seed = function(knex, Promise) {
           arm_id: 1,
           head_id: 1
         },
+        {
+          id: 2,
+          name: 'Rhino',
+          user_id: 1,
+          body_id: 2,
+          arm_id: 2,
+          head_id: 2
+        },
+        {
+          id: 3,
+          name: 'Mecha Gojira',
+          user_id: 1,
+          body_id: 3,
+          arm_id: 3,
+          head_id: 3
+        },
       ]),
       knex('bodies').insert([
         {
@@ -31,11 +48,41 @@ exports.seed = function(knex, Promise) {
           current_hp: 10,
           type_id: 1,
           creature: 'kaiju'
+        },
+        {
+          id: 2,
+          image_url:'https://api.adorable.io/avatars/285/rhino.png',
+          hp: 5,
+          current_hp: 5,
+          type_id: 1,
+          creature: 'mecha'
+        },
+        {
+          id: 3,
+          image_url:'https://api.adorable.io/avatars/285/mecha_gojira.png',
+          hp: 12,
+          current_hp: 12,
+          type_id: 2,
+          creature: 'kaiju'
         }
       ]),
       knex('heads').insert([
         {
           id: 1,
+          image_url: null,
+          attack_id: 1,
+          ability_id: null,
+          creature: 'kaiju'
+        },
+        {
+          id: 2,
+          image_url: null,
+          attack_id: null,
+          ability_id: 1,
+          creature: 'mecha'
+        },
+        {
+          id: 3,
           image_url: null,
           attack_id: 1,
           ability_id: null,
@@ -48,13 +95,27 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: 1,
           creature: 'kaiju'
+        },
+        {
+          id: 2,
+          image_url: null,
+          attack_id: 1,
+          creature: 'mecha'
+        },
+        {
+          id: 3,
+          image_url: null,
+          attack_id: 1,
+          creature: 'kaiju'
         }
       ]),
       knex('attacks').insert([
         {
           id: 1,
           name: 'scratch',
-          type_id: 1
+          type_id: 1,
+          aoe:false,
+          dot:false
         }
       ]),
       knex('abilities').insert([

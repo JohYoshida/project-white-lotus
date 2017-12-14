@@ -2,7 +2,14 @@ const get_creature = require('../models/monster_model');
 
 test('The monster\'s name should be "Gojira".', done => {
   get_creature(1).then((creature) => {
-    expect(creature.name).toBe("Gojira");
+    expect(creature.name).toBe('Gojira');
+    done();
+  });
+});
+
+test('The monster\'s name should be "Rhino".', done => {
+  get_creature(2).then((creature) => {
+    expect(creature.name).toBe('Rhino');
     done();
   });
 });
