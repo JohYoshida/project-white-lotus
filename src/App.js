@@ -3,6 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.socket = new WebSocket("ws://localhost:3001");
+    this.state = {
+        };
+  }
+
+  componentDidMount() {
+    let websocket = this.socket
+    websocket.addEventListener('open', function (event) {
+      websocket.send('Hello!?');
+    });
+  }
+
   render() {
     return (
       <div className="App">
