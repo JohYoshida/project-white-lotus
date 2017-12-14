@@ -23,7 +23,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('bodies', (table) => {
       table.increments();
       table.string('image_url');
-      table.integer('max_hp');
+      table.integer('hp');
       table.integer('current_hp');
       table.integer('accuracy_bonus');
       table.integer('type_id').references('types');
