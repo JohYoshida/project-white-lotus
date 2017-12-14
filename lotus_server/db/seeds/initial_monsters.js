@@ -35,9 +35,9 @@ exports.seed = function(knex, Promise) {
           id: 3,
           name: 'Mecha Gojira',
           user_id: 1,
-          body_id: 2,
-          arm_id: 2,
-          head_id: 2
+          body_id: 3,
+          arm_id: 3,
+          head_id: 3
         },
       ]),
       knex('bodies').insert([
@@ -86,7 +86,7 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: 1,
           ability_id: null,
-          creature: 'Mecha Gojira'
+          creature: 'kaiju'
         }
       ]),
       knex('arms').insert([
