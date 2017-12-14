@@ -6,7 +6,7 @@ const Attack = bookshelf.Model.extend({
 
 const attackFuncs = {
   scratch: function(creature){
-    creature ? creature.takeDamage() : null;
+    creature ? creature.takeDamage(this.type.name) : null;
     return 'Scratch!';
   }
 }

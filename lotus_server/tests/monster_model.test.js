@@ -17,7 +17,7 @@ test('The monster\'s name should be "Rhino".', done => {
 test('The monster object should have the body\'s HP.', done => {
   get_creature(1).then((creature) => {
     expect(creature.body.hp).toBe(10);
-    expect(creature.body.current_hp).toBe(10);
+    expect(creature.body.hp).toBe(10);
     done();
   });
 });
@@ -46,28 +46,14 @@ test('The monster\'s attack should return scratch.', done => {
 test('The monster\'s hp should be reduced when takeDamage is called.', done => {
   get_creature(1).then(creature => {
     creature.takeDamage();
-    expect(creature.body.current_hp).toBe(9);
+    expect(creature.body.hp).toBe(9);
     done();
   });
 });
 
-test('Current_hp lost should not be persistent.', done => {
+test('The monster\'s type should be "fire"', done => {
   get_creature(1).then(creature => {
-    expect(creature.body.current_hp).toBe(10);
-    done();
-  });
-});
-
-test('Attack should reduce another monster\'s hp', done => {
-  // this is a good way to set up battlefields.
-  Promise.all([
-    get_creature(1),
-    get_creature(1)
-  ]).then(creatures => {
-    const gojira = creatures[0];
-    const mechaGojira = creatures[1];
-    gojira.attack(mechaGojira);
-    expect(mechaGojira.body.current_hp).toBe(9);
+    expect(creature.type.name).toBe('fire')
     done();
   });
 });
