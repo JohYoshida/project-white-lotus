@@ -11,6 +11,9 @@ const knex = require('knex')(dbconfig);
 
 const PORT = 3001;
 
+const getMonsters = require('./models/monster_builder');
+
+
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
 });
@@ -27,16 +30,17 @@ wss.on('connection', (ws) => {
 
 // Find monsters so they can be fetched by React App component
 server.get('/monsters', (req, res) => {
-  knex.from('monsters')
-  .then(monsters => {
-    res.json(monsters);
-  });
-});
-
-// Find monster bodies so they can be fetched by React App component
-server.get('/monsters/bodies', (req, res) => {
-  knex.from('bodies')
-  .then(bodies => {
-    res.json(bodies);
+  // Get all monster IDs
+  knex.from('monsters').column('id')
+  .then(ids => {
+    const monsterIDs = [];
+    for (let index of ids) {
+      // Create promise with a complete monster associated with each ID
+      monsterIDs.push(getMonsters(index.id));
+    }
+    // When all promises are made, send as JSON to App
+    Promise.all(monsterIDs).then(results => {
+      res.send(JSON.stringify(results));
+    });
   });
 });
