@@ -24,6 +24,19 @@ class Player {
       }
     }
   }
+  executeActive(activeAction){
+    const changes = {};
+    if (activeAction) {
+      changes[this.id] = activeAction();
+    }
+    changes[this.id]['turn'] = false;
+    return changes;
+  }
+  executePassive(passiveAction){
+    const changes = {};
+    changes[this.id] = passiveAction();
+    return changes;
+  }
 }
 
 const generatePlayer = (userid, team) => {
