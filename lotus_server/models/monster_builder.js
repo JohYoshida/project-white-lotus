@@ -14,14 +14,18 @@ class CompleteMonster {
   constructor(monster){
     const {body, arm, head, type, attack, alt_attack, ability} = monster.relations;
     // set attributes
+    this.id = monster.attributes.id;
+    this.name = monster.attributes.name;
+
     this.body = body.attributes;
     this.arm = arm.attributes;
     this.head = head.attributes;
-    this.name = monster.attributes.name;
     this.type = type.attributes;
     this.attack = attack.attributes;
     this.ability = ability.attributes;
     this.alt_attack = alt_attack.attributes;
+
+    this.image_url = this.body.image_url;
     this.bench = true;
 
     // generate attacks and/or ability
