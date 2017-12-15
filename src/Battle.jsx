@@ -8,7 +8,7 @@ class Battle extends Component {
     this.state = {choosing:true};
     // when a team is selected, the player's can be made
     this.makePlayer = (event) =>{
-      const team = event.target.dataset.teamids;
+      const team = event.target.dataset.monsterids;
       // the "team" needs to be a string of 3 ids.
       fetch(`/battle/1?monsters=${team}`).then(res => {
         return res.json();
@@ -19,7 +19,7 @@ class Battle extends Component {
   }
   render() {
     const chooseableTeams = [
-      <button key="1" data-teamids="123" onClick={this.makePlayer}>Gojira, Rhino, Mecha Gojira</button>
+      <button key="1" data-monsterids="123" onClick={this.makePlayer}>Gojira, Rhino, Mecha Gojira</button>
     ];
     return (
       <main>

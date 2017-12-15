@@ -8,8 +8,8 @@ class Player {
   }
 }
 
-const generatePlayer = (team) => {
-  return generateTeam(team).then(team => {
+const generatePlayer = (userid, team) => {
+  return generateTeam(userid, team).then(team => {
     return new Player(team);
   });
 };
