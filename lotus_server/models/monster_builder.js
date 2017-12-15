@@ -32,8 +32,23 @@ class CompleteMonster {
     this.attack = this.set_attacks();
     this.ability = this.set_ability();
   }
-  takeDamage(){
-    this.body.hp -= 1;
+  buildStateChange(changeObj){
+    const stateChanges = {team:{}};
+    stateChanges.team[this.id] = {};
+    // for each bodypart it builds it up
+    for(const attribute in changeObj){
+      stateChanges.team[this.id][attribute] = changeObj[attribute];
+    }
+    return stateChanges;
+  }
+  takeDamage(damage){
+    return this.buildStateChange({'body' : {'hp': this.body.hp - damage}});
+  }
+  becomeActive(){
+    return this.buildStateChange({'bench':false});
+  }
+  becomeBenched(){
+    return this.buildStateChange({'bench':true});
   }
   set_attacks(name, alt_name) {
     let attack_name = name;

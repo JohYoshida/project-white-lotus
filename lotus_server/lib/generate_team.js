@@ -6,6 +6,7 @@ const generateTeam = (team) => {
   team.forEach(creature => {
     teamMembers.push(getCreature(creature));
   });
+  // Once all the teamMembers are pulled.
   return Promise.all(teamMembers).then(team => {
     const teamObj = {};
     team.forEach(monster => {

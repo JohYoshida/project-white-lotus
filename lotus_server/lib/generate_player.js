@@ -16,8 +16,11 @@ class Player {
         this[propertyName] = property;
         continue;
       }
-      for(const subPropertyName in property){
-        this[propertyName][subPropertyName] = property[subPropertyName];
+      for(const bodyPartName in property){
+        const bodyPart = property[bodyPartName];
+        for(const bodyPartAttribute in bodyPart){
+          this[propertyName][bodyPartName][bodyPartAttribute] = bodyPart[bodyPartAttribute];
+        }
       }
     }
   }
