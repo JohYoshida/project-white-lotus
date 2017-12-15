@@ -24,8 +24,8 @@ test('There should be two teams in play.', done => {
     generatePlayer(1, team1),
     generatePlayer(2, team2)
   ]).then(players => {
-    expect(players[0].team.length).toBe(3);
-    expect(players[1].team.length).toBe(3);
+    expect(Object.keys(players[0].team).length).toBe(3);
+    expect(Object.keys(players[1].team).length).toBe(3);
     done();
   });
 });
