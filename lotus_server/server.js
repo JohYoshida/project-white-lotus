@@ -11,16 +11,6 @@ const knex = require('knex')(dbconfig);
 
 const PORT = 3001;
 
-server.get('/monsters', (req, res) => {
-  knex.from('monsters')
-  .then(monsters => {
-    for (let monster in monsters) {
-      console.log(monster, monsters[monster]);
-    }
-    res.json(monsters);
-  });
-});
-
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
 });
@@ -32,5 +22,21 @@ wss.on('connection', (ws) => {
 
   ws.on('close', () => {
     console.log("A client disconnected");
+  });
+});
+
+// Find monsters so they can be fetched by React App component
+server.get('/monsters', (req, res) => {
+  knex.from('monsters')
+  .then(monsters => {
+    res.json(monsters);
+  });
+});
+
+// Find monster bodies so they can be fetched by React App component
+server.get('/monsters/bodies', (req, res) => {
+  knex.from('bodies')
+  .then(bodies => {
+    res.json(bodies);
   });
 });
