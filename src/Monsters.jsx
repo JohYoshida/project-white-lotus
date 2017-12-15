@@ -1,46 +1,54 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
+// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Monsters extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      ready: false,
       monsters: []
     };
   }
 
   componentDidMount() {
-    // TODO: move to helper function
 
-    // Get monsters from server and add to state
+    // TODO: move to helper function
     fetch('/monsters').then(res => {
       res.json().then(data => {
-        for (let index in data) {
-          let monsters = this.state.monsters;
-          monsters.push({monster: data[index]});
-          this.setState({monsters: monsters});
-        }
-      });
+        this.setState(monsters => {
+          return {monsters: data}
+        });
+        this.setState({ready: true});
+      })
     });
+  }
 
-    // Get monster bodiess from server and add to state
-    fetch('/monsters/bodies').then(res => {
-      res.json().then(data => {
-        let monsters = this.state.monsters;
-        for (let index in monsters) {
-          monsters[index].body = data[monsters[index].monster.body_id - 1];
-        }
-      });
-    });
+  printMonsters() {
+    const monsters = this.state.monsters;
+    const monsterArray = [];
+    for(let monster of monsters){
+      monsterArray.push(
+        <li key={monster.name}>
+          <p>{monster.name}</p>
+          <p>{monster.body.creature}</p>
+          <img src={monster.body.image_url} alt='monster icon'></img>
+          <p>{monster.body.hp} HP</p>
+          <p>Type: {monster.type.name}</p>
+        </li>
+      );
+    }
+    return monsterArray;
   }
 
   render() {
     return (
-      <div>
+      <main>
         <h2>Monsters</h2>
-      </div>
-    )
+        <ul>
+          {this.state.ready && this.printMonsters()}
+        </ul>
+      </main>
+    );
   }
 }
 
