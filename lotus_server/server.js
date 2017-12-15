@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 const generatePlayer = require('./lib/generate_player.js');
+const getCreature = require('./models/monster_builder');
 const express = require('express')
 const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
@@ -17,23 +18,17 @@ const PORT = 3001;
 server.use(bodyParser.urlencoded({ extended: false }))
 
 server.get('/monsters', (req, res) => {
-  knex.from('monsters')
-    .then(monsters => {
-      for (let monster in monsters) {
-        // console.log(monster, monsters[monster]);
-      }
-      res.json(monsters);
-    });
+  getCreature(1).then(creature => {
+    res.send(JSON.stringify(creature));
+  })
 });
 
 server.get('/battle/:id', (req, res) => {
-  // assumed the "team" is already generated.
-  // In reality, the team would be selected (i.e. generated), then the Player would be created.
-  // We're skipping that part for testing.
   console.log(req.query);
-  generatePlayer(req.query.monsters.split('')).then(team => {
+  generatePlayer(req.query.userid, req.query.team.split('')).then(team => {
     res.send(JSON.stringify(team));
   });
+
 });
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {

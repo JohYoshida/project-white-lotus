@@ -12,15 +12,6 @@ class App extends Component {
     websocket.addEventListener('open', event => {
       websocket.send('Hello!?');
     });
-
-    // Get everything from monsters table and add to state
-    fetch('/monsters').then(res => {
-      res.json().then(data => {
-        this.setState((monsters) => {
-          return {monsters: data};
-        });
-      });
-    });
   }
 
   render() {
@@ -56,7 +47,7 @@ const Monsters = ({ match }) => (
     <ul>
       <li>
         <Link to={`${match.url}/monster`}>
-          Monster
+
         </Link>
       </li>
     </ul>
