@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Battle from './Battle.jsx';
-// const monsterBuilder = require('./helpers/monster_builder');
-const helpers = require('./helpers/helpers');
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,20 +14,14 @@ class App extends Component {
       websocket.send('Hello!?');
     });
 
-    helpers.getMonsters().then(monster => {
-      console.log(monster);
+    // Get everything from monsters table and add to state
+    fetch('/monsters').then(res => {
+      res.json().then(data => {
+        this.setState((monsters) => {
+          return {monsters: data};
+        });
+      });
     });
-
-    // monsterBuilder(1).then(monster => {
-    //   this.state.monster = monster;
-    // });
-    
-    // fetch('/').then(res => {
-    //   res.json().then(data => {
-    //     console.log(data);
-    //   });
-    //   console.log(res);
-    // });
   }
 
   render() {
@@ -52,10 +43,10 @@ const Routes = () => (
 
       <hr/>
 
-      <Route exact path="/" component={Monsters}/>
-      <Route path="/store" component={Store}/>
-      <Route path="/teams" component={Teams}/>
-      <Route path="/battle" component={Battle}/>
+      <Route exact path="/" component={Monsters} />
+      <Route path="/store" component={Store} />
+      <Route path="/teams" component={Teams} />
+      <Route path="/battle" component={Battle} />
     </div>
   </Router>
 )
@@ -71,7 +62,7 @@ const Monsters = ({ match }) => (
       </li>
     </ul>
 
-    <Route path={`${match.url}/:topicId`} component={Monster}/>
+    <Route path={`${match.url}/:topicId`} component={Monster} />
     <Route exact path={match.url} render={() => (
       <h3>Please select a Monster.</h3>
     )}/>
