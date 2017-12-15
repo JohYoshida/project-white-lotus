@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Battle from './Battle.jsx';
+// const monsterBuilder = require('./helpers/monster_builder');
+const helpers = require('./helpers/helpers');
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +16,21 @@ class App extends Component {
     websocket.addEventListener('open', event => {
       websocket.send('Hello!?');
     });
+
+    helpers.getMonsters().then(monster => {
+      console.log(monster);
+    });
+
+    // monsterBuilder(1).then(monster => {
+    //   this.state.monster = monster;
+    // });
+    
+    // fetch('/').then(res => {
+    //   res.json().then(data => {
+    //     console.log(data);
+    //   });
+    //   console.log(res);
+    // });
   }
 
   render() {

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 class Moves extends Component {
-  constructor(props) {
-    super(props);
-
-  }
+  // constructor(props) {
+  //   super(props);
+  //
+  // }
 
   render() {
     return (
-      <section class="moves">
+      <section className="moves">
         <p>Ability</p>
         <p>Attack</p>
         <p>Swap</p>
