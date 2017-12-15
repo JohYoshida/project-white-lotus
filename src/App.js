@@ -7,7 +7,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.socket = new WebSocket('ws://localhost:3001');
-    this.state = {};
   }
 
   componentDidMount() {
@@ -19,6 +18,7 @@ class App extends Component {
 
   render() {
     return (
+
       <Router monsters={ this.state.monsters }>
         <div>
           <ul>
@@ -39,7 +39,6 @@ class App extends Component {
     )
   }
 }
-
 
 // TODO: Break these into components
 const Store = () => (

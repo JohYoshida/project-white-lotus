@@ -1,18 +1,20 @@
 'uses strict';
 
 require('dotenv').config();
+const generatePlayer = require('./lib/generate_player.js');
 const express = require('express')
 const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
 const server = express();
 
+
 const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
 const knex = require('knex')(dbconfig);
+const bodyParser = require('body-parser')
 
 const PORT = 3001;
 
 const getMonsters = require('./models/monster_builder');
-
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
