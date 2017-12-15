@@ -11,7 +11,7 @@ class Player extends Component {
 
   render() {
     return (
-      <div class="player">
+      <div className="player">
         <ActiveMonster />
         <Moves />
         <Bench />

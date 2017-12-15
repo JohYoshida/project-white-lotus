@@ -8,15 +8,15 @@ class Bench extends Component {
 
   render() {
     return (
-      <aside class="bench">
-        <section class="bench-monster">
-          <div class="monster-icon"></div>
-          <div class="monster-health">100 HP</div>
+      <aside className="bench">
+        <section className="bench-monster">
+          <div className="monster-icon"></div>
+          <div className="monster-health">100 HP</div>
         </section>
 
-        <section class="bench-monster">
-          <div class="monster-icon"></div>
-          <div class="monster-health">100 HP</div>
+        <section className="bench-monster">
+          <div className="monster-icon"></div>
+          <div className="monster-health">100 HP</div>
         </section>
       </aside>
     )

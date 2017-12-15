@@ -8,7 +8,7 @@ class Moves extends Component {
 
   render() {
     return (
-      <section class="moves">
+      <section className="moves">
         <p>Ability</p>
         <p>Attack</p>
         <p>Swap</p>

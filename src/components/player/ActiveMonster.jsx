@@ -8,9 +8,9 @@ class ActiveMonster extends Component {
 
   render() {
     return (
-      <section class="active-monster">
-        <div class="monster-icon"></div>
-        <div class="monster-health">100 HP</div>
+      <section className="active-monster">
+        <div className="monster-icon"></div>
+        <div className="monster-health">100 HP</div>
       </section>
     )
   }
