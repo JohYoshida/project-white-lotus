@@ -14,22 +14,41 @@ class CompleteMonster {
   constructor(monster){
     const {body, arm, head, type, attack, alt_attack, ability} = monster.relations;
     // set attributes
+    this.id = monster.attributes.id;
+    this.name = monster.attributes.name;
+
     this.body = body.attributes;
     this.arm = arm.attributes;
     this.head = head.attributes;
-    this.name = monster.attributes.name;
     this.type = type.attributes;
     this.attack = attack.attributes;
     this.ability = ability.attributes;
     this.alt_attack = alt_attack.attributes;
+
+    this.image_url = this.body.image_url;
     this.bench = true;
 
     // generate attacks and/or ability
     this.attack = this.set_attacks();
     this.ability = this.set_ability();
   }
-  takeDamage(){
-    this.body.hp -= 1;
+  buildStateChange(changeObj){
+    const stateChanges = {team:{}};
+    stateChanges.team[this.id] = {};
+    // for each bodypart it builds it up
+    for(const attribute in changeObj){
+      stateChanges.team[this.id][attribute] = changeObj[attribute];
+    }
+    return stateChanges;
+  }
+  takeDamage(damage){
+    return this.buildStateChange({'body' : {'hp': this.body.hp - damage}});
+  }
+  becomeActive(){
+    return this.buildStateChange({'bench':false});
+  }
+  becomeBenched(){
+    return this.buildStateChange({'bench':true});
   }
   set_attacks(name, alt_name) {
     let attack_name = name;
