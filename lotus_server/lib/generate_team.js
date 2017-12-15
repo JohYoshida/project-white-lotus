@@ -8,7 +8,7 @@ const generateTeam = (userid, team) => {
   });
   // This should be a function of the user object. So userId will become this.userId.
   return Promise.all(teamMembers).then(team => {
-    return {userId, team};
+    return {userid, team};
   });
 };
 
