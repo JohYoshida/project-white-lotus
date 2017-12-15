@@ -5,7 +5,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.socket = new WebSocket('ws://localhost:3001');
-    this.state = {};
   }
 
   componentDidMount() {
@@ -27,7 +26,7 @@ class App extends Component {
     return (
 
       <Routes />
-    )
+    );
   }
 }
 
@@ -49,7 +48,7 @@ const Routes = () => (
       <Route path="/battle" component={Battle} />
     </div>
   </Router>
-)
+);
 
 const Monsters = ({ match }) => (
   <div>
@@ -67,7 +66,7 @@ const Monsters = ({ match }) => (
       <h3>Please select a Monster.</h3>
     )}/>
   </div>
-)
+);
 
 const Monster = ({ match }) => (
   <div>

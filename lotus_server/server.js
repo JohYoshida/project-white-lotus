@@ -1,17 +1,21 @@
 'uses strict';
 
 require('dotenv').config();
+const generatePlayer = require('./lib/generate_player.js');
 const express = require('express')
 const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
 const server = express();
 
+
 const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
 const knex = require('knex')(dbconfig);
+const bodyParser = require('body-parser')
+server.use(bodyParser.urlencoded({ extended: false }))
+
+
 const expressws = require('express-ws')(server);
 const PORT = 3001;
-
-
 server.use(function (req, res, next) {
   console.log('middleware');
   req.testing = 'testing';
@@ -28,14 +32,20 @@ server.get('/battle/:id', function(req, res, next){
 
   }else if(this.exampleSocket.readyState===1){
     this.exampleSocket.send("Hello World");
-    res.end();
   }else{
     console.log(this.exampleSocket.readyState);
-    res.end();
   }
-
+  console.log(req.query);
+  res.send("Welcome to battles");
+  /*if(req.query!==null){
+     console.log(req.query);
+     generatePlayer(req.query.monsters.split('')).then(team => {
+        res.send(JSON.stringify(team));
+      });
+  }else{
+    req.end();
+  }*/
 });
-
 server.ws('/battle/:id', function(ws, req) {
   let game = {}
   ws.on('message', function(msg) {
@@ -46,40 +56,15 @@ server.ws('/battle/:id', function(ws, req) {
 server.listen(PORT);
 
 
-
-
-
-/*server.get('/battle/:id', function(req,res,next){
-  try{
-  this.webSocket = new WebSocket("localhost:3001/battles");
-  }catch(err){
-    console.log(err);
-  }
-  this.battle_id= req.params.id
-  console.log("SocketSet"+this.battle_id);
-  res.send("Welcome to Battles");
-
-});
-
-server.ws('/battles', function(ws,req){
-  ws.on('message',function(msg){
-    console.log("Boop");
-  });
-  console.log("WebSocket Connected")
-});*/
-
-
-
-
-/*server.get('/monsters', (req, res) => {
+server.get('/monsters', (req, res) => {
   knex.from('monsters')
-  .then(monsters => {
-    for (let monster in monsters) {
-      console.log(monster, monsters[monster]);
-    }
-    res.json(monsters);
-  });
-});*/
+    .then(monsters => {
+      for (let monster in monsters) {
+        // console.log(monster, monsters[monster]);
+      }
+      res.json(monsters);
+    });
+});
 
 /*server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
