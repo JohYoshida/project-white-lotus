@@ -26,15 +26,16 @@ class Player {
   }
   executeActive(activeAction){
     const changes = {};
+    changes[this.id] = {};
     if (activeAction) {
-      changes[this.id] = activeAction();
+      changes[this.id] = activeAction(this);
     }
     changes[this.id]['turn'] = false;
     return changes;
   }
   executePassive(passiveAction){
     const changes = {};
-    changes[this.id] = passiveAction();
+    changes[this.id] = passiveAction(this);
     return changes;
   }
 }
