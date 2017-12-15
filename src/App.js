@@ -18,8 +18,7 @@ class App extends Component {
 
   render() {
     return (
-
-      <Router monsters={ this.state.monsters }>
+      <Router>
         <div>
           <ul>
             <li><Link to="/">Monsters</Link></li>
@@ -40,7 +39,6 @@ class App extends Component {
   }
 }
 
-// TODO: Break these into components
 const Store = () => (
   <div>
     <h2>Store</h2>

@@ -14,13 +14,6 @@ test('The monster\'s name should be "Rhino".', done => {
   });
 });
 
-test('Creature\'s ability should return "Avoid"', done => {
-  getCreature(2).then(creature => {
-    expect(creature.ability()).toBe("Avoid!");
-    done();
-  });
-});
-
 test('The monster object should have the body\'s HP.', done => {
   getCreature(1).then((creature) => {
     expect(creature.body.hp).toBe(10);
