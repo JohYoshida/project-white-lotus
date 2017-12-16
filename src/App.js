@@ -15,10 +15,9 @@ class App extends Component {
       websocket.send('Hello!?');
     });
   }
+  
   render() {
     return (
-      <Routes />
-    );
       <Router>
         <div>
           <ul>
