@@ -21,15 +21,14 @@ class CompleteMonster {
     this.arm = arm.attributes;
     this.head = head.attributes;
     this.type = type.attributes;
-    this.attack = attack.attributes;
     this.ability = ability.attributes;
-    this.alt_attack = alt_attack.attributes;
 
     this.image_url = this.body.image_url;
     this.bench = true;
 
     // generate attacks and/or ability
-    this.attack = this.set_attacks();
+    this.attack = this.set_attacks(attack.attributes.name, alt_attack.attributes.name);
+    // console.log(this.attack);
     this.ability = this.set_ability();
   }
   buildStateChange(changeObj){
@@ -51,16 +50,23 @@ class CompleteMonster {
     return this.buildStateChange({'bench':true});
   }
   set_attacks(name, alt_name) {
-    let attack_name = name;
-    let alt_attack_name = alt_name;
-    attack_name ? null : attack_name = this.attack.name;
-    alt_attack_name ? null : alt_attack_name = this.alt_attack.name;
-    return [attackFuncs[attack_name], attackFuncs[alt_attack_name]];
+    const attackOne = {};
+    const attackTwo = {};
+    const attacks = [];
+    attackOne[name] = attackFuncs[name];
+    attackTwo[alt_name] = attackFuncs[alt_name];
+    attacks.push(attackOne);
+    if(alt_name){
+      attacks.push(attackTwo);
+    }
+    return attacks;
   }
   set_ability(name) {
+    const ability = {};
     let ability_name = name;
     ability_name ? null : ability_name = this.ability.name;
-    return abilityFuncs[ability_name];
+    ability[ability_name] = abilityFuncs[ability_name]
+    return ability;
   }
 }
 

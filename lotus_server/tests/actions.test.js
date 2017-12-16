@@ -29,7 +29,8 @@ test('The state change should contain multiple states per player.', done => {
       const ben = players[0];
       const lisa = players[1];
       lisa.team[1].bench = false;
-      const changes = [ben.executeActive(), lisa.executePassive(ben.team['1'].attack[0]())];
+      console.log(ben.team['2']);
+      const changes = [ben.executeActive(), lisa.executePassive(ben.team['1'].attack[0]["scratch"]())];
       expect(changes[1][lisa.id].team['1'].body.hp).toBe(9);
       done();
     });
