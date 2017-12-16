@@ -62,15 +62,14 @@ server.post('/battles',(req,res) => {
   res.send(`Room Created at ${req.body.roomname}`)
 });
 
-// Find monsters so they can be fetched by React App component
+// Find monsters so they can be fetched by React Monsters component
 server.get('/monsters', (req, res) => {
   // Get all monster IDs
   buildMonstersJSON(res);
 });
 
-//
+// Find a single monster so it can be fetched by React Monster component
 server.get('/monsters/:id', (req, res) => {
-  debugger
   buildMonsterJSON(res, req.params.id);
 });
 
