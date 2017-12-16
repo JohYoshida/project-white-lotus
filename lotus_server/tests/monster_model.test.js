@@ -1,4 +1,4 @@
-const getCreature = require('../models/monster_builder');
+const getCreature = require('../lib/generate_monster');
 
 test('The monster\'s name should be "Gojira".', done => {
   getCreature(1).then((creature) => {

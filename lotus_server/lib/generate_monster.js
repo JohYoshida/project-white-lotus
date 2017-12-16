@@ -1,13 +1,13 @@
 // Attacks, abilities and their required collections
-const {Attack, attackFuncs} = require('./attack_model');
-const {Ability, abilityFuncs} = require('./ability_model');
-const Type = require('./type_model');
+const {Attack, attackFuncs} = require('../models/attack_model');
+const {Ability, abilityFuncs} = require('../models/ability_model');
+const Type = require('../models/type_model');
 
 // Monster components, functions so that we can bring everything together into this file.
-const Body = require('./body_model')(Type);
-const Head = require('./head_model')(Ability, Attack);
-const Arm = require('./arm_model')(Attack);
-const Monster = require('./monster_model')(Body, Head, Arm, Type, Attack, Ability);
+const Body = require('../models/body_model')(Type);
+const Head = require('../models/head_model')(Ability, Attack);
+const Arm = require('../models/arm_model')(Attack);
+const Monster = require('../models/monster_model')(Body, Head, Arm, Type, Attack, Ability);
 
 // the monster class
 class CompleteMonster {

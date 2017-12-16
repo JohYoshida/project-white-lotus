@@ -1,15 +1,13 @@
 'uses strict';
 
 require('dotenv').config();
-const generatePlayer = require('./lib/generate_player.js');
-const getCreature = require('./models/monster_builder');
+const generatePlayer = require('./lib/generate_player');
+const getCreature = require('../lib/generate_monster');
 const express = require('express')
 const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
 const server = express();
 
-
-const getMonsters = require('./models/monster_builder');
 const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
 const knex = require('knex')(dbconfig);
 const bodyParser = require('body-parser')
@@ -44,7 +42,7 @@ server.get('/monsters', (req, res) => {
       const monsterIDs = [];
       for (let index of ids) {
         // Create promise with a complete monster associated with each ID
-        monsterIDs.push(getMonsters(index.id));
+        monsterIDs.push(getCreature(index.id));
       }
       // When all promises are made, send as JSON to App
       Promise.all(monsterIDs).then(results => {

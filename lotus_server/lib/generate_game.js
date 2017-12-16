@@ -17,7 +17,7 @@ class Game{
     }
   }
   takeAction(actionObj){
-    // put this if block into an object
+    // @todo: put this if block into an object
     if(Object.keys(actionObj)[0] === 'attack'){
       let actionName = Object.keys(actionObj)[0];
       let actionFuncName = actionObj[actionName];
