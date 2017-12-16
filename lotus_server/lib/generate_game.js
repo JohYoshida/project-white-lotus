@@ -9,24 +9,19 @@ class Game{
 
     // action handlers
     const attack = (actionObj) => {
-      const actionName = Object.keys(actionObj)[0];
+      const {activePlayer, idlePlayer} = this;
       const actionOptions = actionObj[Object.keys(actionObj)[1]];
-      let actionFuncName = actionObj[actionName];
+      const actionFuncName = actionObj[Object.keys(actionObj)[0]];
       let attackFunc = null;
-      // Find the attack from in the active player
-      for(let attack of this.activePlayer.activeMonster.attack){
+      // Find the attack function in the active player
+      for(let attack of activePlayer.activeMonster.attack){
         if(Object.keys(attack)[0] === actionFuncName){
           attackFunc = attack[actionFuncName];
         }
       }
-      // Set the attack player's turn to false.
-      this.activePlayer.executeActive();
-
-      // Execute the attack function so that it effects the idle player. Set the attacked player's turn to true.
-      this.idlePlayer.executePassive(attackFunc(actionOptions));
-
-      // trigger adjust active player
-      this.findActivePlayer();
+      // Execute the attack function so that it effects the idle player. Set attacking player's turn to false.
+      idlePlayer.executePassive(attackFunc(actionOptions));
+      activePlayer.executeActive();
     };
 
     const passive = () => {
@@ -39,9 +34,14 @@ class Game{
       }
     };
 
-    const activate = () => {
-
+    const activate = (actionObj) => {
+      const {activePlayer, idlePlayer} = this;
+      const monsterId = actionObj[Object.keys(actionObj)[0]];
+      activePlayer.activateMonster(monsterId);
+      activePlayer.executeActive();
+      idlePlayer.turn = true;
     };
+
     this.actions = {
       attack,
       passive,
@@ -60,8 +60,9 @@ class Game{
   }
   takeAction(actionObj){
     // @todo: put this if block into an object
-    const actionName = Object.keys(actionObj)[0]
+    const actionName = Object.keys(actionObj)[0];
     this.actions[actionName](actionObj);
+    this.findActivePlayer();
   }
 }
 
