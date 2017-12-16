@@ -14,8 +14,6 @@ const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
 const knex = require('knex')(dbconfig);
 const bodyParser = require('body-parser')
 server.use(bodyParser.urlencoded({ extended: false }))
-
-
 const expressws = require('express-ws')(server);
 const PORT = 3001;
 server.ws('/battle/:id', function(ws, req) {
