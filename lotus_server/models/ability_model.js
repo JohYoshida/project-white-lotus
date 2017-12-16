@@ -6,8 +6,9 @@ const Ability = bookshelf.Model.extend({
 
 const abilityFuncs = {
   avoid: function(creature){
-    creature ? creature.body.hp += 1 : null;
-    return 'Avoid!';
+    return (player) => {
+      creature ? player.team[creature.id].body.hp += 1 : null;
+    };
   }
 };
 
