@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Monsters extends Component {
   constructor(props) {
@@ -11,7 +11,6 @@ class Monsters extends Component {
   }
 
   componentDidMount() {
-
     // TODO: move to helper function
     fetch('/monsters').then(res => {
       res.json().then(data => {
@@ -19,7 +18,7 @@ class Monsters extends Component {
           return {monsters: data}
         });
         this.setState({ready: true});
-      })
+      });
     });
   }
 
@@ -28,10 +27,14 @@ class Monsters extends Component {
     const monsterArray = [];
     for(let monster of monsters){
       monsterArray.push(
-        <li key={monster.name}>
-          <p>{monster.name}</p>
+        <li key={monster.id}>
+          <Link to={`/monsters/${monster.id}`}>
+            <button onClick={this.showOne} id={monster.id}>
+              {monster.name}
+            </button>
+          </Link>
           <p>{monster.body.creature}</p>
-          <img src={monster.body.image_url} alt='monster icon'></img>
+          <img src={monster.body.image_url} alt='monster icon' />
           <p>{monster.body.hp} HP</p>
           <p>Type: {monster.type.name}</p>
         </li>
@@ -52,4 +55,4 @@ class Monsters extends Component {
   }
 }
 
-export default Monsters
+export default Monsters;

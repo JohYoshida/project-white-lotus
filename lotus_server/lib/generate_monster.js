@@ -17,6 +17,7 @@ class CompleteMonster {
     // set attributes
     this.id = monster.attributes.id;
     this.name = monster.attributes.name;
+    this.creature = body.attributes.creature;
     this.maxHp = body.attributes.hp;
     this.hp = body.attributes.hp;
     this.type = type.attributes;
