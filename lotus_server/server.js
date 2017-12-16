@@ -41,6 +41,28 @@ server.get('/battle/:id', (req, res) => {
   });
 
 });
+server.get('/battles',(req,res)=>{
+  console.log();
+  res.render('Gen.ejs');
+});
+server.post('/battles',(req,res)=>{
+  console.log(req.body.roomname);
+  genBattle(req.body.roomname);
+  res.send("Room Created at "+req.body.roomname)
+});
+function genBattle(id){
+  server.ws('/battles/'+id,(req,res,ws)=>{
+    ws.send('in the WebSocket of /battles/'+id);
+  });
+  server.get('/battles/'+id,(req,res)=>{
+    res.send('in the Get of /battles/'+id);
+  });
+  server.post('/battles/'+id,(req,res)=>{
+    res.send('in the Post of /battles/'+id);
+  });
+
+
+}
 
 // Find monsters so they can be fetched by React App component
 server.get('/monsters', (req, res) => {
@@ -62,4 +84,3 @@ server.get('/monsters', (req, res) => {
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
 });
->>>>>>> pr/3
