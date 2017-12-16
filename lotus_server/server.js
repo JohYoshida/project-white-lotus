@@ -15,8 +15,8 @@ const bodyParser = require('body-parser')
 // Functions
 const generatePlayer = require('./lib/generate_player.js');
 const getCreature = require('./models/monster_builder');
-// const getMonsters = require('./models/monster_builder');
-const generateMonstersJSON = require('./lib/generate_monsters_json');
+const buildMonstersJSON = require('./lib/build_monsters_json');
+const buildMonsterJSON = require('./lib/build_monster_json');
 
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
@@ -65,7 +65,13 @@ server.post('/battles',(req,res) => {
 // Find monsters so they can be fetched by React App component
 server.get('/monsters', (req, res) => {
   // Get all monster IDs
-  generateMonstersJSON(res);
+  buildMonstersJSON(res);
+});
+
+//
+server.get('/monsters/:id', (req, res) => {
+  debugger
+  buildMonsterJSON(res, req.params.id);
 });
 
 function genBattle(id){
