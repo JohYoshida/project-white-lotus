@@ -16,4 +16,4 @@ const generateTeam = (team) => {
   });
 };
 
-module.exports = generateTeam
+module.exports = generateTeam;

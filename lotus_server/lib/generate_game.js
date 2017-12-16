@@ -6,6 +6,42 @@ class Game{
     this.start = true;
     this.activePlayer = undefined;
     this.idlePlayer = undefined;
+
+    // action handlers
+    const attack = (actionObj) => {
+      const actionName = Object.keys(actionObj)[0];
+      let actionFuncName = actionObj[actionName];
+      let attackFunc = undefined;
+      // Find the attack from in the active player
+      for(let attack of this.activePlayer.activeMonster.attack){
+        if(Object.keys(attack)[0] === actionFuncName){
+          attackFunc = attack[actionFuncName];
+        }
+      }
+      // Set the attack player's turn to false.
+      this.activePlayer.setState(this.activePlayer.executeActive());
+
+      // Execute the attack function so that it effects the idle player. Set the attacked player's turn to true.
+      this.idlePlayer.setState(this.idlePlayer.executePassive(attackFunc));
+      this.idlePlayer.turn = true;
+
+      // trigger adjust active player
+      this.findActivePlayer();
+    };
+
+    const passive = () => {
+
+    };
+
+    const activate = () => {
+
+    };
+
+    this.actions = {
+      attack,
+      passive,
+      activate
+    };
   }
   findActivePlayer(){
     for(const player of this.players){
@@ -18,20 +54,8 @@ class Game{
   }
   takeAction(actionObj){
     // @todo: put this if block into an object
-    if(Object.keys(actionObj)[0] === 'attack'){
-      let actionName = Object.keys(actionObj)[0];
-      let actionFuncName = actionObj[actionName];
-      let attackFunc = undefined;
-      for(let attack of this.activePlayer.activeMonster.attack){
-        if(Object.keys(attack)[0] === actionFuncName){
-          attackFunc = attack[actionFuncName];
-        }
-      }
-      this.activePlayer.setState(this.activePlayer.executeActive());
-      this.idlePlayer.setState(this.idlePlayer.executePassive(attackFunc));
-      // trigger turn change
-      this.findActivePlayer();
-    }
+    const actionName = Object.keys(actionObj)[0]
+    this.actions[actionName](actionObj);
   }
 }
 

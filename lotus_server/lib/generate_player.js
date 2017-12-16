@@ -8,7 +8,10 @@ class Player {
     this.activeMonster = undefined;
   }
   // Function takes an object of changes and applies them to the player.
-  // Object should be equivalent to how the player is constructed.
+  // Lets you change the player's properties but also the player's teams. Useful for any range of effects.
+  // When to use:
+  // - When you want to change a monster or multiple monster's properties (e.g. taking damage).
+  // - When you want to conveniently affect mmultiple properties at the same time.
   setState(changesObj){
     for(const propertyName in changesObj){
       const property = changesObj[propertyName];
@@ -34,7 +37,6 @@ class Player {
     return changes;
   }
   executePassive(passiveAction){
-    const changes = {};
     return passiveAction(this);
   }
   findActiveMonster(){
