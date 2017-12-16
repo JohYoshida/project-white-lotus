@@ -5,7 +5,6 @@ const getMonsters = require('../models/monster_builder');
 
 const generateMonstersJSON = (res, id) => {
   getMonsters(id).then(result => {
-    console.log('Get monster result', result);
     res.json(result);
   });
 }
