@@ -29,15 +29,13 @@ class Player {
     }
   }
   executeActive(activeAction){
-    let changes = {};
     if (activeAction) {
-      changes = activeAction(this);
+      activeAction(this);
     }
-    changes['turn'] = false;
-    return changes;
+    this.turn = false;
   }
   executePassive(passiveAction){
-    return passiveAction(this);
+    passiveAction(this);
   }
   findActiveMonster(){
     for(const monsterId in this.team){

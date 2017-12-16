@@ -12,67 +12,55 @@ const Monster = require('../models/monster_model')(Body, Head, Arm, Type, Attack
 // the monster class
 class CompleteMonster {
   constructor(monster){
-    const {body, arm, head, type, attack, alt_attack, ability} = monster.relations;
+    // arm and head to be used for image compilation functionality.
+    const {body, arm, head, type} = monster.relations;
     // set attributes
     this.id = monster.attributes.id;
     this.name = monster.attributes.name;
-
-    this.body = body.attributes;
-    this.arm = arm.attributes;
-    this.head = head.attributes;
+    this.maxHp = body.attributes.hp;
+    this.hp = body.attributes.hp;
     this.type = type.attributes;
-    this.ability = ability.attributes;
-
-    this.image_url = this.body.image_url;
+    // Will eventually the compiled image.
+    this.image_url = body.attributes.image_url;
+    // on bench?
     this.bench = true;
-
-    // generate attacks and/or ability
-    this.attack = this.set_attacks(attack.attributes.name, alt_attack.attributes.name);
-    // console.log(this.attack);
-    this.ability = this.set_ability();
-  }
-  buildStateChange(changeObj){
-    const stateChanges = {team:{}};
-    stateChanges.team[this.id] = {};
-    // for each bodypart it builds it up
-    for(const attribute in changeObj){
-      stateChanges.team[this.id][attribute] = changeObj[attribute];
-    }
-    return stateChanges;
+    // Can passive be used?
+    this.passiveActive = true;
   }
   takeDamage(damage){
-    return this.buildStateChange({'body' : {'hp': this.body.hp - damage}});
+    this.hp -= damage;
   }
   becomeActive(){
-    return this.buildStateChange({'bench':false});
+    this.bench = false;
   }
   becomeBenched(){
-    return this.buildStateChange({'bench':true});
+    this.bench = true;
   }
   set_attacks(name, alt_name) {
     const attackOne = {};
     const attackTwo = {};
     const attacks = [];
-    attackOne[name] = attackFuncs[name];
-    attackTwo[alt_name] = attackFuncs[alt_name];
-    attacks.push(attackOne);
+    attackOne[name] = attackFuncs[name].bind(this);
     if(alt_name){
+      attackTwo[alt_name] = attackFuncs[alt_name].bind(this);
       attacks.push(attackTwo);
     }
-    return attacks;
+    this.attack = attacks;
   }
   set_ability(name) {
-    const ability = {};
-    let ability_name = name;
-    ability_name ? null : ability_name = this.ability.name;
-    ability[ability_name] = abilityFuncs[ability_name]
-    return ability;
+    this.ability = abilityFuncs[name].bind(this);
   }
 }
 
 const getCreature = (id) => {
   return new Monster({'id': id}).fetch({withRelated: ['body', 'arm', 'head', 'type', 'attack', 'alt_attack', 'ability']}).then((prod) => {
-    return new CompleteMonster(prod);
+    const {attack, alt_attack, ability} = prod.relations;
+    const monster = new CompleteMonster(prod);
+    monster.set_attacks(attack.attributes.name, alt_attack.attributes.name);
+    if(ability.attributes.name){
+      monster.set_ability(ability.attributes.name);
+    }
+    return monster;
   });
 };
 

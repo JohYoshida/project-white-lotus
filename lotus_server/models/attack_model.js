@@ -5,10 +5,14 @@ const Attack = bookshelf.Model.extend({
 });
 
 const attackFuncs = {
-  scratch: function(player){
-    // Attacks return a function which calls a state change on an object.
-    const damage = 1;
-    return player.activeMonster.takeDamage(damage);
+  scratch: function(){
+    return (player) => {
+      // Attacks return a function which calls a state change on an object.
+      const damage = 1;
+      player.activeMonster.takeDamage(damage);
+      // We set the player turn here because, so it's optional.
+      player.turn = true;
+    };
   }
 };
 

@@ -4,14 +4,15 @@ class Game{
   constructor(players){
     this.players = players;
     this.start = true;
-    this.activePlayer = undefined;
-    this.idlePlayer = undefined;
+    this.activePlayer = null;
+    this.idlePlayer = null;
 
     // action handlers
     const attack = (actionObj) => {
       const actionName = Object.keys(actionObj)[0];
+      const actionOptions = actionObj[Object.keys(actionObj)[1]];
       let actionFuncName = actionObj[actionName];
-      let attackFunc = undefined;
+      let attackFunc = null;
       // Find the attack from in the active player
       for(let attack of this.activePlayer.activeMonster.attack){
         if(Object.keys(attack)[0] === actionFuncName){
@@ -19,29 +20,34 @@ class Game{
         }
       }
       // Set the attack player's turn to false.
-      this.activePlayer.setState(this.activePlayer.executeActive());
+      this.activePlayer.executeActive();
 
       // Execute the attack function so that it effects the idle player. Set the attacked player's turn to true.
-      this.idlePlayer.setState(this.idlePlayer.executePassive(attackFunc));
-      this.idlePlayer.turn = true;
+      this.idlePlayer.executePassive(attackFunc(actionOptions));
 
       // trigger adjust active player
       this.findActivePlayer();
     };
 
     const passive = () => {
-
+      for(let monsterId in this.activePlayer.team){
+        const {team} = this.activePlayer;
+        const monster = team[monsterId];
+        if(monster.bench && monster.passiveActive && monster.ability){
+          this.activePlayer.executePassive(monster.ability);
+        }
+      }
     };
 
     const activate = () => {
 
     };
-
     this.actions = {
       attack,
       passive,
       activate
     };
+
   }
   findActivePlayer(){
     for(const player of this.players){
