@@ -15,11 +15,11 @@ class App extends Component {
       websocket.send('Hello!?');
     });
   }
-
   render() {
     return (
-
-      <Router monsters={ this.state.monsters }>
+      <Routes />
+    );
+      <Router>
         <div>
           <ul>
             <li><Link to="/">Monsters</Link></li>
@@ -40,7 +40,6 @@ class App extends Component {
   }
 }
 
-// TODO: Break these into components
 const Store = () => (
   <div>
     <h2>Store</h2>
