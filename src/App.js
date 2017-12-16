@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Battle from './Battle.jsx';
 import Monsters from './Monsters.jsx';
+import Monster from './Monster.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class App extends Component {
           <hr/>
 
           <Route exact path="/" component={ Monsters } />
+          <Route path="/monsters/:id" component={ Monster } />
           <Route path="/store" component={ Store } />
           <Route path="/teams" component={ Teams } />
           <Route path="/battle" component={ Battle }/>
