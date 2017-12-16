@@ -4,7 +4,8 @@ class Player {
   constructor(userid, team) {
     this.id = userid;
     this.team = team;
-    this.turn = true;
+    this.turn = false;
+    this.activeMonster = undefined;
   }
   // Function takes an object of changes and applies them to the player.
   // Object should be equivalent to how the player is constructed.
@@ -25,18 +26,25 @@ class Player {
     }
   }
   executeActive(activeAction){
-    const changes = {};
-    changes[this.id] = {};
+    let changes = {};
     if (activeAction) {
-      changes[this.id] = activeAction(this);
+      changes = activeAction(this);
     }
-    changes[this.id]['turn'] = false;
+    changes['turn'] = false;
     return changes;
   }
   executePassive(passiveAction){
     const changes = {};
-    changes[this.id] = passiveAction(this);
-    return changes;
+    return passiveAction(this);
+  }
+  findActiveMonster(){
+    for(const monsterId in this.team){
+      const monster = this.team[monsterId];
+      if(monster.bench === false){
+        this.activeMonster = monster;
+        break;
+      }
+    }
   }
 }
 

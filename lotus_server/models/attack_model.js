@@ -5,19 +5,10 @@ const Attack = bookshelf.Model.extend({
 });
 
 const attackFuncs = {
-  scratch: function(){
+  scratch: function(player){
     // Attacks return a function which calls a state change on an object.
-    return (player) => {
-      let target = {};
-      const damage = 1;
-      // find the currently active monster.
-      for(const monster in player.team){
-        if(player.team[monster].bench === false){
-          target = player.team[monster];
-        }
-      }
-      return target.takeDamage(damage);
-    };
+    const damage = 1;
+    return player.activeMonster.takeDamage(damage);
   }
 };
 
