@@ -7,16 +7,7 @@ import Monster from './Monster.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.socket = new WebSocket('ws://localhost:3001');
   }
-
-  componentDidMount() {
-    let websocket = this.socket;
-    websocket.addEventListener('open', event => {
-      websocket.send('Hello!?');
-    });
-  }
-  
   render() {
     return (
       <Router>
@@ -37,7 +28,7 @@ class App extends Component {
           <Route path="/battle" component={ Battle }/>
         </div>
       </Router>
-    )
+    );
   }
 }
 
@@ -45,12 +36,12 @@ const Store = () => (
   <div>
     <h2>Store</h2>
   </div>
-)
+);
 
 const Teams = () => (
   <div>
     <h2>Teams</h2>
   </div>
-)
+);
 
 export default App;
