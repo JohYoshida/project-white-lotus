@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Monsters extends Component {
   constructor(props) {
@@ -11,15 +11,12 @@ class Monsters extends Component {
   }
 
   componentDidMount() {
-
     // TODO: move to helper function
     fetch('/monsters').then(res => {
       res.json().then(data => {
-        this.setState(monsters => {
-          return {monsters: data}
-        });
+        this.setState({monsters: data});
         this.setState({ready: true});
-      })
+      });
     });
   }
 
@@ -28,11 +25,15 @@ class Monsters extends Component {
     const monsterArray = [];
     for(let monster of monsters){
       monsterArray.push(
-        <li key={monster.name}>
-          <p>{monster.name}</p>
-          <p>{monster.body.creature}</p>
-          <img src={monster.body.image_url} alt='monster icon'></img>
-          <p>{monster.body.hp} HP</p>
+        <li key={monster.id}>
+          <Link to={`/monsters/${monster.id}`}>
+            <button onClick={this.showOne} id={monster.id}>
+              {monster.name}
+            </button>
+          </Link>
+          <p>{monster.creature}</p>
+          <img src={monster.image_url} alt='monster icon' />
+          <p>{monster.hp} HP</p>
           <p>Type: {monster.type.name}</p>
         </li>
       );
@@ -52,4 +53,4 @@ class Monsters extends Component {
   }
 }
 
-export default Monsters
+export default Monsters;
