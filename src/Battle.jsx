@@ -12,7 +12,6 @@ class Battle extends Component {
         this.socket.send(JSON.stringify({team:'123', userid: this.state.id}));
       });
       this.socket.addEventListener('message', (event) => {
-        console.log(event.data);
         this.setState({players: JSON.parse(event.data)});
         this.setState({ready:true})
       });

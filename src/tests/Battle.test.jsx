@@ -20,7 +20,6 @@ const samplePlayersArr= [{'id':1,
 ];
 
 test('The battle should update the state with the new playerInfo', done => {
-  // Render a checkbox with label in the document
   const mockServer = new Server('ws://localhost:3001/battles/1');
   mockServer.on('message', () => {
     mockServer.send(JSON.stringify(samplePlayersArr));
