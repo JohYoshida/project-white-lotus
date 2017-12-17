@@ -6,24 +6,24 @@ const generatePlayer = require('../lib/generate_player');
 module.exports = (server) => {
   const expressws = require('express-ws')(server);
   const socketRouter = express.Router();
-  const rooms = {};
+  socketRouter.rooms = {};
   // generates a room
   socketRouter.genBattle = function(id){
     this.ws(`/${id}`, (ws) => {
       ws.on('message', function(msg) {
-        const playerInfo = JSON.parse(msg);
-        let room = rooms[`battle_${id}`];
-        // If the room doesn't exist.
-        if(!room){
-          room = {};
+        /* @TODO add more intelligence to this on message event */
+
+        // If the game room for this socket doesn't exist.
+        if(!socketRouter.rooms[`battle_${id}`]){
+          const playerInfo = JSON.parse(msg);
+          socketRouter.rooms[`battle_${id}`] = {};
+          let room = socketRouter.rooms[`battle_${id}`];
           generatePlayer(playerInfo.userid, playerInfo.team.split('')).then(player => {
-            let players = room['players'];
-            players = [player];
-            ws.send(JSON.stringify(players));
+            room['players'] = [player];
+            ws.send(JSON.stringify(room.players));
           });
           return;
         }
-        /* @TODO: Add a better else */
         ws.send(`Echo from /battle/, ${msg}`);
       });
     });
