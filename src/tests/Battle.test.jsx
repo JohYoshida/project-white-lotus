@@ -19,20 +19,23 @@ const samplePlayersArr= [{'id':1,
     '3':{'id':3,'name':'Mecha Gojira','creature':'kaiju','maxHp':12,'hp':12,'type':{'id':2,'name':'water','weakness':3},'image_url':'https://api.adorable.io/avatars/285/mecha_gojira.png','bench':true,'passiveActive':true,'attack':[{}]}},'turn':false}
 ];
 
-test('The battle should update the state with the new playerInfo', done => {
+let battle = undefined;
+
+beforeAll(() => {
   const mockServer = new Server('ws://localhost:3001/battles/1');
   mockServer.on('message', () => {
     mockServer.send(JSON.stringify(samplePlayersArr));
   });
-  const battle = mount(<Battle />);
-  battle.find('button').simulate('click');
+  battle = mount(<Battle />);
+});
 
-  // Wait a second to let the states update.
+test('The battle should update the state with the new playerInfo', done => {
+  battle.find('button').simulate('click');
   setTimeout(() => {
-    const ready = battle.state('ready');
-    const players = battle.state('players');
     // A try/catch block is necessary when using a timeout with the done(); function. Otherwise thrown error goes no where.
     try {
+      const ready = battle.state('ready');
+      const players = battle.state('players');
       expect(ready).toBe(true);
       expect(players[0].id).toBe(1);
       done();
@@ -42,6 +45,14 @@ test('The battle should update the state with the new playerInfo', done => {
   }, 1000);
 });
 
-test('The battle page should display a button that lets the player select the primary monster', done => {
-  done();
+test('The battle page should display a button for each monster that lets the player select the primary monster', done => {
+  battle.find('button').simulate('click');
+  setTimeout(() => {
+    try {
+      expect(battle.find('.selectMonster').length).toBe(3);
+      done();
+    } catch (error) {
+      done.fail(error);
+    }
+  }, 2000);
 });

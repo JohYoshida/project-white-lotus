@@ -17,7 +17,7 @@ module.exports = (server) => {
         if(!room){
           room = {};
           generatePlayer(playerInfo.userid, playerInfo.team.split('')).then(player => {
-            let players = rooms[`battle_${id}`]['players'];
+            let players = room['players'];
             players = [player];
             ws.send(JSON.stringify(players));
           });

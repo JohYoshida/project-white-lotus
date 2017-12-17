@@ -24,7 +24,7 @@ test('The game should take and execute an action', done => {
     game.players[1].findActiveMonster();
 
     expect(game.players[0].turn).toBe(true);
-    game.takeAction({attack: 'scratch'});
+    game.takeAction({action: 'attack', name:'scratch', options: null});
 
     expect(game.players[0].turn).toBe(false);
     expect(game.players[1].activeMonster.hp).toBe(4);
@@ -46,7 +46,7 @@ test('The game should take and execute a passive action', done => {
 
     expect(game.players[0].turn).toBe(true);
     expect(game.players[1].turn).toBe(false);
-    game.takeAction({passive: null});
+    game.takeAction({action: 'passive'});
     expect(game.players[0].turn).toBe(true);
     expect(game.players[1].turn).toBe(false);
     expect(game.players[0].activeMonster.hp).toBe(11);
@@ -70,7 +70,7 @@ test('The game should take set a monster to active', done => {
 
     expect(game.players[0].turn).toBe(true);
     expect(game.players[1].turn).toBe(false);
-    game.takeAction({activate: '2'});
+    game.takeAction({action:'activate', 'monsterId': '2'});
     expect(game.players[0].turn).toBe(false);
     expect(game.players[1].turn).toBe(true);
 

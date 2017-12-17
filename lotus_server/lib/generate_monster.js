@@ -27,6 +27,8 @@ class CompleteMonster {
     this.bench = true;
     // Can passive be used?
     this.passiveActive = true;
+    // dot passive objects go here.
+    this.dot = [];
   }
   takeDamage(damage){
     this.hp -= damage;
@@ -37,18 +39,25 @@ class CompleteMonster {
   becomeBenched(){
     this.bench = true;
   }
-  set_attacks(name, alt_name) {
-    const attackOne = {};
-    const attackTwo = {};
+  set_attacks(attributes, altAttributes) {
+    // assign all the attack attributes
+    const {id, name, description} = attributes;
+    const {altId, altName, altDescription} = altAttributes;
+    let attackOne = {};
+    let attackTwo = {};
     const attacks = [];
-    attackOne[name] = attackFuncs[name].bind(this);
-    if(alt_name){
-      attackTwo[alt_name] = attackFuncs[alt_name].bind(this);
+    // build the first attack
+    attackOne = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
+    attacks.push(attackOne);
+    if(altName){
+      attackTwo = {id: altId, name: altName, description: altDescription || 'Attack 2 description', func: attackFuncs[altName].bind(this)};
       attacks.push(attackTwo);
     }
-    this.attack = attacks;
+    // set this.attacks to the attacks array.
+    this.attacks = attacks;
   }
   set_ability(name) {
+    /* @TODO: apply the above pattern to abilities */
     this.ability = abilityFuncs[name].bind(this);
   }
 }
@@ -57,7 +66,8 @@ const getCreature = (id) => {
   return new Monster({'id': id}).fetch({withRelated: ['body', 'arm', 'head', 'type', 'attack', 'alt_attack', 'ability']}).then((prod) => {
     const {attack, alt_attack, ability} = prod.relations;
     const monster = new CompleteMonster(prod);
-    monster.set_attacks(attack.attributes.name, alt_attack.attributes.name);
+    // After monster has been created set attacks and abilities
+    monster.set_attacks(attack.attributes, alt_attack.attributes);
     if(ability.attributes.name){
       monster.set_ability(ability.attributes.name);
     }

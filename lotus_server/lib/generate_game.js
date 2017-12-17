@@ -10,13 +10,13 @@ class Game{
     // action handlers
     const attack = (actionObj) => {
       const {activePlayer, idlePlayer} = this;
-      const actionOptions = actionObj[Object.keys(actionObj)[1]];
-      const actionFuncName = actionObj[Object.keys(actionObj)[0]];
+      const actionOptions = actionObj.opts;
+      const actionFuncName = actionObj.name;
       let attackFunc = null;
       // Find the attack function in the active player
-      for(let attack of activePlayer.activeMonster.attack){
-        if(Object.keys(attack)[0] === actionFuncName){
-          attackFunc = attack[actionFuncName];
+      for(let attack of activePlayer.activeMonster.attacks){
+        if(attack.name === actionFuncName){
+          attackFunc = attack.func;
         }
       }
       // Execute the attack function so that it effects the idle player. Set attacking player's turn to false.
@@ -24,6 +24,8 @@ class Game{
       activePlayer.executeActive();
     };
 
+    // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field
+    // actionObj to trigger this should look like {action:'passive'}
     const passive = () => {
       for(let monsterId in this.activePlayer.team){
         const {team} = this.activePlayer;
@@ -31,23 +33,29 @@ class Game{
         if(monster.bench && monster.passiveActive && monster.ability){
           this.activePlayer.executePassive(monster.ability);
         }
+        // if there is a dot on the monster, activate it.
+        /* @TODO: implment DOT */
+        if(monster.dot.length > 1){
+          monster.dot.forEach(dot => {
+            this.activePlayer.executePassive(dot.func);
+          })
+        }
       }
     };
-
+    // this is used to execute position shifts, takes the id of the monster through the action object
+    // actionObj should look like {action:'activate', id:{monster_id}}
     const activate = (actionObj) => {
       const {activePlayer, idlePlayer} = this;
-      const monsterId = actionObj[Object.keys(actionObj)[0]];
+      const monsterId = actionObj.monsterId;
       activePlayer.activateMonster(monsterId);
       activePlayer.executeActive();
       idlePlayer.turn = true;
     };
-
     this.actions = {
       attack,
       passive,
       activate
     };
-
   }
   findActivePlayer(){
     for(const player of this.players){
@@ -59,9 +67,8 @@ class Game{
     }
   }
   takeAction(actionObj){
-    // @todo: put this if block into an object
-    const actionName = Object.keys(actionObj)[0];
-    this.actions[actionName](actionObj);
+    // Look for the appropriate action.
+    this.actions[actionObj.action](actionObj);
     this.findActivePlayer();
   }
 }
