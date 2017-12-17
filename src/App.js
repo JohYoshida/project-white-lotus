@@ -10,7 +10,6 @@ class App extends Component {
     this.state={loggedin :false};
   }
   login = (state) => {
-
     console.log(state);
     this.setState({loggedin:true});
   }

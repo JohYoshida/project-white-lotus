@@ -5,22 +5,35 @@ class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {ready: false, id:1};
-    this.joinGame = () => {
-      const battleComponent = this;
-      this.socket = new WebSocket('ws://localhost:3001/battles/1');
-      this.socket.addEventListener('open', () => {
-        /* @TODO: Make this.state.id a prop passed down from app. */
-        this.socket.send(JSON.stringify({team:'123', userid: this.state.id}));
-      });
-      this.socket.addEventListener('message', (event) => {
-        battleComponent.setState({players: JSON.parse(event.data)});
-        battleComponent.setState({ready:true});
-      });
-    };
+    this.joinGame = this.joinGame.bind(this);
     this.sendAttack = this.sendAttack.bind(this);
     this.generateUserCards = this.generateUserCards.bind(this);
     this.unBench = this.unBench.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+  }
+  joinGame(){
+    const battleComponent = this;
+    this.socket = new WebSocket('ws://localhost:3001/battles/1');
+    this.socket.addEventListener('open', () => {
+      /* @TODO: Make this.state.id a prop passed down from app. */
+      this.socket.send(JSON.stringify({team:'123', userid: this.state.id}));
+    });
+    this.socket.addEventListener('message', (event) => {
+      let message = event.data;
+      let isJSON = true;
+      // test if the message is json
+      try{
+        JSON.parse(message);
+      } catch(_) {
+        isJSON = false;
+      }
+      if(isJSON){
+        battleComponent.setState({players: JSON.parse(message)});
+        battleComponent.state.ready ? null : battleComponent.setState({ready:true});
+        return;
+      }
+      console.log(message);
+    });
   }
   generateUserCards(){
     let user = undefined;
@@ -59,7 +72,7 @@ class Battle extends Component {
     this.sendMessage(JSON.stringify({action:'activate', monsterId: event.target.dataset.id}));
   }
   sendMessage(message){
-    this.socket.send(JSON.parse(message));
+    this.socket.send(JSON.stringify(message));
   }
   sendAttack(event){
     const attackName = event.target.dataset.name;
