@@ -4,6 +4,7 @@ import Battle from './Battle.jsx';
 import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Login from './Login.jsx'
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,15 @@ class App extends Component {
   }
   login = (state) => {
     console.log(state);
-    this.setState({loggedin:true});
+    fetch(`/users/${state.email}/${state.password}`).then(res => {
+      res.json().then(data => {
+        if(data!=='Not found'){
+          console.log(data);
+            this.setState({loggedin:true});
+            this.setState({user:data});
+          }
+        });
+    });
   }
   render() {
 
