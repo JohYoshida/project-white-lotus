@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import MessageBox from './components/MessageBox.jsx';
 
 
 class Battle extends Component {
   constructor(props) {
     super(props);
-    this.state = {ready: false, id:1, players:[], messages: []};
+    this.state = {ready: false, id:'1', players:[], messages: []};
     this.joinGame = this.joinGame.bind(this);
     this.sendAttack = this.sendAttack.bind(this);
     this.generateUserCards = this.generateUserCards.bind(this);
@@ -12,12 +13,14 @@ class Battle extends Component {
     this.unBench = this.unBench.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
   }
-  joinGame(){
+  // Handles sending join game requests.
+  joinGame(event){
     const battleComponent = this;
+    const button = event.target
     this.socket = new WebSocket('ws://localhost:3001/battles/1');
     this.socket.addEventListener('open', () => {
       /* @TODO: Make this.state.id a prop passed down from app. */
-      this.socket.send(JSON.stringify({team:'1,2,3', userid: this.state.id}));
+      this.socket.send(JSON.stringify({team:'1,2,3', userid: button.innerHTML}));
     });
     this.socket.addEventListener('message', (event) => {
       // test if the message is json
@@ -29,14 +32,15 @@ class Battle extends Component {
       }
       if(isJSON){
         const parsedMessage = JSON.parse(event.data);
-        const {players, msg} = parsedMessage;
+        const {players, message} = parsedMessage;
         battleComponent.setState({players});
-        battleComponent.state.messages.push(msg);
+        battleComponent.state.messages.push(message);
         battleComponent.state.ready || battleComponent.setState({ready:true});
         return;
       }
     });
   }
+  // Generates the monster info for the user.
   generateUserCards(){
     if(this.state.players.length !== 2){
       return (<p>Waiting for other player</p>);
@@ -69,6 +73,8 @@ class Battle extends Component {
     }
     return cards;
   }
+  
+  // Generates monster info for the opponent
   generateOpponentCards(){
     if(this.state.players.length !== 2){
       return;
@@ -102,9 +108,15 @@ class Battle extends Component {
   render() {
     return (
       <main>
-        {!this.state.ready && <button onClick={this.joinGame}>Join</button>}
+        {!this.state.ready && <button onClick={this.joinGame}>1</button>}
+        {!this.state.ready && <button onClick={this.joinGame}>2</button>}
+        <h2>Player</h2>
         {this.state.ready && this.generateUserCards()}
+
+        <h2>Opponent</h2>
         {this.state.ready && this.generateOpponentCards()}
+        <h3>Messages</h3>
+        <MessageBox messages={this.state.messages} />
       </main>
     );
   }
