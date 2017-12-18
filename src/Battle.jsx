@@ -16,7 +16,7 @@ class Battle extends Component {
     this.socket = new WebSocket('ws://localhost:3001/battles/1');
     this.socket.addEventListener('open', () => {
       /* @TODO: Make this.state.id a prop passed down from app. */
-      this.socket.send(JSON.stringify({team:'123', userid: this.state.id}));
+      this.socket.send(JSON.stringify({team:'1,2,3', userid: this.state.id}));
     });
     this.socket.addEventListener('message', (event) => {
       let message = event.data;
