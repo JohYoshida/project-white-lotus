@@ -1,58 +1,40 @@
 'uses strict';
 
+// Server setup
 require('dotenv').config();
-const generatePlayer = require('./lib/generate_player.js');
-const getCreature = require('./models/monster_builder');
 const express = require('express')
-const WebSocket = require('ws');
-const SocketServer = WebSocket.Server;
 const server = express();
-
-
-const getMonsters = require('./models/monster_builder');
-const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
-const knex = require('knex')(dbconfig);
+const PORT = 3001;
+const WebSocket = require('ws');
+const expressws = require('express-ws')(server);
 const bodyParser = require('body-parser')
 
-const PORT = 3001;
+// Routes
+const socketRouter = require('./routes/battles_routes')(server);
+// Functions
+const buildMonstersJSON = require('./lib/build_monsters_json');
+const buildMonsterJSON = require('./lib/build_monster_json');
+const generatePlayer = require('./lib/generate_player');
+// Body Parser
+server.use(bodyParser.urlencoded({ extended: false }));
 
-// WebSocket
-const wss = new SocketServer({ server });
-wss.on('connection', (ws) => {
-  console.log("A client connected");
 
-  ws.on('close', () => {
-    console.log("A client disconnected");
-  });
-});
+// Default room for testing.
+socketRouter.genBattle('1');
+server.use('/battles', socketRouter);
 
-server.use(bodyParser.urlencoded({ extended: false }))
-
-server.get('/battle/:id', (req, res) => {
-  console.log(req.query);
-  generatePlayer(req.query.userid, req.query.team.split('')).then(team => {
-    res.send(JSON.stringify(team));
-  });
-
-});
-
-// Find monsters so they can be fetched by React App component
+// Find monsters so they can be fetched by React Monsters component
 server.get('/monsters', (req, res) => {
   // Get all monster IDs
-  knex.from('monsters').column('id')
-    .then(ids => {
-      const monsterIDs = [];
-      for (let index of ids) {
-        // Create promise with a complete monster associated with each ID
-        monsterIDs.push(getMonsters(index.id));
-      }
-      // When all promises are made, send as JSON to App
-      Promise.all(monsterIDs).then(results => {
-        res.send(JSON.stringify(results));
-      });
-    });
+  buildMonstersJSON(res);
 });
 
+// Find a single monster so it can be fetched by React Monster component
+server.get('/monsters/:id', (req, res) => {
+  buildMonsterJSON(res, req.params.id);
+});
+
+// Start server
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
 });
