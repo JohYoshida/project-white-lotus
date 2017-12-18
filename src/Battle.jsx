@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class Battle extends Component {
   constructor(props) {
     super(props);
-    this.state = {ready: false, id:1, players:[]};
+    this.state = {ready: false, id:1, players:[], messages: []};
     this.joinGame = this.joinGame.bind(this);
     this.sendAttack = this.sendAttack.bind(this);
     this.generateUserCards = this.generateUserCards.bind(this);
@@ -20,20 +20,21 @@ class Battle extends Component {
       this.socket.send(JSON.stringify({team:'1,2,3', userid: this.state.id}));
     });
     this.socket.addEventListener('message', (event) => {
-      let message = event.data;
-      let isJSON = true;
       // test if the message is json
+      let isJSON = true;
       try{
-        JSON.parse(message);
+        JSON.parse(event.data);
       } catch(_) {
         isJSON = false;
       }
       if(isJSON){
-        battleComponent.setState({players: JSON.parse(message)});
-        battleComponent.state.ready ? null : battleComponent.setState({ready:true});
+        const parsedMessage = JSON.parse(event.data);
+        const {players, msg} = parsedMessage;
+        battleComponent.setState({players});
+        battleComponent.state.messages.push(msg);
+        battleComponent.state.ready || battleComponent.setState({ready:true});
         return;
       }
-      console.log(message);
     });
   }
   generateUserCards(){
@@ -72,9 +73,23 @@ class Battle extends Component {
     if(this.state.players.length !== 2){
       return;
     }
+    let opponent = undefined;
+    let cards = [];
+    // compile attacks into buttons for display
+    for(let player of this.state.players){
+      if(player.id !== this.state.id) opponent = player;
+    }
+    for(const monsterid in opponent.team){
+      const monster = opponent.team[monsterid];
+      cards.push(
+        <article key={monster.id} className='user-card'>
+          <h3>{monster.name}</h3>
+        </article>
+      );
+    }
+    return cards;
   }
   unBench(event){
-    console.log('sending', JSON.stringify({action:'activate', monsterId: event.target.dataset.id}));
     this.sendMessage(JSON.stringify({action:'activate', monsterId: event.target.dataset.id}));
   }
   sendMessage(message){
