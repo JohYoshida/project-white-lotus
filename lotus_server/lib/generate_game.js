@@ -3,12 +3,13 @@ const generatePlayer = require('./generate_player');
 class Game{
   constructor(players){
     this.players = players;
-    this.start = true;
+    // First player to join given first turn.
     this.players[0].turn = true;
     this.activePlayer = null;
     this.idlePlayer = null;
     this.findActivePlayer();
 
+    /* @TODO put these functions in a seperate file and import them */
     // action handlers
 
     // Used to execute attack abilities. Options are optional.
@@ -25,11 +26,12 @@ class Game{
         }
       }
       // Execute the attack function so that it effects the idle player. Set attacking player's turn to false.
+      // Idle player's turn is set to true in the attack.
       idlePlayer.executePassive(attackFunc(actionOptions));
       activePlayer.executeActive();
     };
 
-    // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field
+    // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
     // actionObj = {action:'passive'}
     const passive = () => {
       for(let monsterId in this.activePlayer.team){
@@ -53,9 +55,11 @@ class Game{
       const {activePlayer, idlePlayer} = this;
       const monsterId = actionObj.monsterId;
       activePlayer.activateMonster(monsterId);
+      // adjusts turns
       activePlayer.executeActive();
       idlePlayer.turn = true;
     };
+    // All possible actions collected here.
     this.actions = {
       attack,
       passive,
@@ -85,10 +89,8 @@ Game.generateGame = (playerObj1, playerObj2) => {
     generatePlayer(playerObj1.id, playerObj1.team),
     generatePlayer(playerObj2.id, playerObj2.team)
   ]).then(players => {
-    // @todo: create a new game with players array
     return new Game(players);
   });
 };
-
 
 module.exports = Game;
