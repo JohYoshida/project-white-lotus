@@ -13,22 +13,45 @@ module.exports = (server) => {
     this.ws(`/${id}`, (ws) => {
       ws.on('message', function(msg) {
         const room = socketRouter.rooms[`battle_${id}`];
-        // If the game room for this socket doesn't exist.
-        if(!room){
-          setupRoom(msg).catch((error) => {
-            delete socketRouter.rooms[`battle_${id}`];
-            console.log('There was an error during room creation, room has been deleted. Message:', error);
-          }).catch(e => {console.log(e)});
-          return;
+
+        let parsedMsg = JSON.parse(msg);
+        switch(parsedMsg.messageType) {
+          case 'team':
+            console.log('Team Message:', msg);
+            // If the game room for this socket doesn't exist.
+            if(!room) {
+              setupRoom(msg).catch((error) => {
+                delete socketRouter.rooms[`battle_${id}`];
+                console.log('There was an error during room creation, room has been deleted. Message:', error);
+              }).catch(e => {console.log(e)});
+              return;
+            }
+            if(room) {
+              startGame(msg).then(game => {
+                delete room.players;
+                room.game = game;
+                ws.send(JSON.stringify({game: game, message:'Game started!'}));
+              }).catch(e => {console.log(e)});
+              return;
+            }
+            break;
+          case 'action':
+            console.log('Action Message:', msg);
+            switch(parsedMsg.action) {
+              case 'activate':
+                console.log('yay!');
+                break;
+              case 'attack':
+
+                break;
+              default:
+                console.log('Didn\'t recognize that action type.');
+            }
+            break;
+          default:
+          console.log('Didn\'t recognize that message type.');
         }
-        if(room){
-          startGame(msg).then(game => {
-            delete room.players;
-            room.game = game;
-            ws.send(JSON.stringify({game: game, message:'Game started!'}));
-          }).catch(e => {console.log(e)});
-          return;
-        }
+
         ws.send(`Echo from /battle/, ${msg}`);
       });
     });
