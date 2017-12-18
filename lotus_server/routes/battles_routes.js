@@ -41,7 +41,9 @@ module.exports = (server) => {
               case 'activate':
                 console.log('Unbench Monster with ID#', parsedMsg.monsterId);
                 room.game.takeAction(parsedMsg);
-                ws.send(JSON.stringify({game: room.game, message: 'Changed active monster'}));
+                let activePlayer = room.game.activePlayer.id;
+                let activeMonster = room.game.idlePlayer.activeMonster.name
+                ws.send(JSON.stringify({game: room.game, message: `Changed Player ${activePlayer}\'s active monster to ${activeMonster}`}));
                 break;
               case 'attack':
 
