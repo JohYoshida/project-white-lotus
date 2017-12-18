@@ -1,14 +1,4 @@
 const Game = require('../lib/generate_game');
-test('The game should start', done => {
-  // when there are two players in the socket
-  Game.generateGame({id: '1', team:[1,2,3]}, {id: '2', team:[1,2,3]}).then(game => {
-    expect(game.start).toBe(true);
-    const playerIds = Object.keys(game.players);
-    expect(playerIds.length).toBe(2);
-    expect(game.players['1'].team['1'].name).toBe('Gojira');
-    done();
-  });
-});
 
 test('The game should take and execute an action', done => {
   Game.generateGame({id: '1', team:[1,2,3]}, {id: '2', team:[1,2,3]}).then(game => {
