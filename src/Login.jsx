@@ -5,7 +5,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username:"",
+      email:"",
       password:""
     }
   }
@@ -14,8 +14,8 @@ class Login extends Component {
     console.log(this.state)
     this.props.login(this.state);
   }
-  changeName = (e) =>{
-    this.setState({username:e.target.value});
+  changeEmail = (e) =>{
+    this.setState({email:e.target.value});
   }
   changePass = (e) =>{
     this.setState({password:e.target.value});
@@ -25,8 +25,8 @@ class Login extends Component {
 
         <div>
           <label>
-          Name:
-          <input onChange  = {this.changeName} />
+          Email:
+          <input onChange  = {this.changeEmail} />
           </label>
           <label>
           Password
