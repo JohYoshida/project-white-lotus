@@ -10,6 +10,9 @@ class Game{
     this.findActivePlayer();
 
     // action handlers
+
+    // Used to execute attack abilities. Options are optional.
+    // actionObj = {action:'attack', name:{{attack_name}}, [options:{options}]}
     const attack = (actionObj) => {
       const {activePlayer, idlePlayer} = this;
       const actionOptions = actionObj.opts;
@@ -27,7 +30,7 @@ class Game{
     };
 
     // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field
-    // actionObj to trigger this should look like {action:'passive'}
+    // actionObj = {action:'passive'}
     const passive = () => {
       for(let monsterId in this.activePlayer.team){
         const {team} = this.activePlayer;
@@ -45,7 +48,7 @@ class Game{
       }
     };
     // this is used to execute position shifts, takes the id of the monster through the action object
-    // actionObj should look like {action:'activate', id:{monster_id}}
+    // actionObj = {action:'activate', id:{monster_id}}
     const activate = (actionObj) => {
       const {activePlayer, idlePlayer} = this;
       const monsterId = actionObj.monsterId;
@@ -59,6 +62,7 @@ class Game{
       activate
     };
   }
+  // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
     for(const player of this.players){
       if(player.turn === true){
@@ -68,13 +72,14 @@ class Game{
       }
     }
   }
+  // Used to sort the action object into the appropriate function.
   takeAction(actionObj){
     // Look for the appropriate action.
     this.actions[actionObj.action](actionObj);
     this.findActivePlayer();
   }
 }
-
+// class method used to generate a game, for testing.
 Game.generateGame = (playerObj1, playerObj2) => {
   return Promise.all([
     generatePlayer(playerObj1.id, playerObj1.team),

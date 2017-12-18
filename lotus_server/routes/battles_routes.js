@@ -23,6 +23,7 @@ module.exports = (server) => {
         }
         if(room){
           startGame(msg).then(game => {
+            room.game = game;
             ws.send(JSON.stringify({game: game, message:'Game started!'}));
           }).catch(e => {console.log(e)});
           return;

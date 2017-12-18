@@ -7,12 +7,14 @@ class Player {
     this.turn = false;
     this.activeMonster = undefined;
   }
+  // Executes an active action and switches turn. Can be passed an action (such as unbenching a monster), or just be used to switch turns.
   executeActive(activeAction){
     if (activeAction) {
       activeAction(this);
     }
     this.turn = false;
   }
+  // Executes a passive acction, like taking damage. A passive acton is essentially "being attacked".
   executePassive(passiveAction){
     passiveAction(this);
   }
