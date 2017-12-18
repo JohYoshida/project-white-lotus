@@ -21,6 +21,9 @@ module.exports = (server) => {
           generatePlayer(playerInfo.userid, playerInfo.team.split(',')).then(player => {
             room['players'] = [player];
             ws.send(JSON.stringify(room.players));
+          }).catch((e) => {
+            delete socketRouter.rooms[`battle_${id}`];
+            console.log(socketRouter.rooms);
           });
           return;
         }
