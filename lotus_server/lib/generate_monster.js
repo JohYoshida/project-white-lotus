@@ -30,15 +30,11 @@ class CompleteMonster {
     // dot passive objects go here.
     this.dot = [];
   }
+  // simple helper to cause damage to be taken. Takes an integer to represent damage.
   takeDamage(damage){
     this.hp -= damage;
   }
-  becomeActive(){
-    this.bench = false;
-  }
-  becomeBenched(){
-    this.bench = true;
-  }
+  // sets up this.attacks property, attributes is a bookshelf attack object
   set_attacks(attributes, altAttributes) {
     // assign all the attack attributes
     const {id, name, description} = attributes;
@@ -56,6 +52,7 @@ class CompleteMonster {
     // set this.attacks to the attacks array.
     this.attacks = attacks;
   }
+  // Sets up abilities, should be implemented as above.
   set_ability(name) {
     /* @TODO: apply the above pattern to abilities */
     this.ability = abilityFuncs[name].bind(this);
