@@ -17,7 +17,7 @@ module.exports = (server) => {
         let parsedMsg = JSON.parse(msg);
         switch(parsedMsg.messageType) {
           case 'team':
-            console.log('Team Message:', msg);
+            console.log('User connected:', msg);
             // If the game room for this socket doesn't exist.
             if(!room) {
               setupRoom(msg).catch((error) => {
@@ -39,7 +39,9 @@ module.exports = (server) => {
             console.log('Action Message:', msg);
             switch(parsedMsg.action) {
               case 'activate':
-                console.log('yay!');
+                console.log('Unbench Monster with ID#', parsedMsg.monsterId);
+                room.game.takeAction(parsedMsg);
+                ws.send(JSON.stringify({game: room.game, message: 'Changed active monster'}));
                 break;
               case 'attack':
 
