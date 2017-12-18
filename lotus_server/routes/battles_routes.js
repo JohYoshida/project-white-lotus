@@ -23,7 +23,7 @@ module.exports = (server) => {
             ws.send(JSON.stringify(room.players));
           }).catch((e) => {
             delete socketRouter.rooms[`battle_${id}`];
-            console.log(socketRouter.rooms);
+            console.log('There was an error during room creation, room has been deleted.');
           });
           return;
         }
