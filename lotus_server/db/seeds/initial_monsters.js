@@ -3,7 +3,6 @@ exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return Promise.all([
     knex('monsters').del(),
-    knex('users').del(),
     knex('teams_monster').del(),
     knex('bodies').del(),
     knex('heads').del(),

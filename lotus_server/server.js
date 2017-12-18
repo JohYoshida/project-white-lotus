@@ -13,9 +13,13 @@ const bodyParser = require('body-parser');
 const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
 const knex = require('knex')(dbconfig);
 
+// functions
+const generateUser = require('./lib/generate_user');
+
 // Routes
 const socketRouter = require('./routes/battles_routes')(server);
 const monsterRouter = require('./routes/monster_routes')(knex);
+
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 
@@ -24,6 +28,12 @@ socketRouter.genBattle('1');
 
 server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);
+
+server.get('/users/:email/:password', (req, res) => {
+  // find a user by email
+  generateUser(res, req.params.email);
+});
+
 
 // Start server
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
