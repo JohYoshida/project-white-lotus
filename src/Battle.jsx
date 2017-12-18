@@ -43,10 +43,10 @@ class Battle extends Component {
       <main>
         {!this.state.ready && <button onClick={this.joinGame}>1</button>}
         {!this.state.ready && <button onClick={this.joinGame}>2</button>}
-        <h2>Player</h2>
+        <h2>Player {this.state.game.activePlayer && this.state.game.activePlayer.id}</h2>
         {this.state.ready && <Player game={this.state.game} socket={this.socket} curUserId={this.state.id} />}
 
-        <h2>Opponent</h2>
+        <h2>Opponent {this.state.game.idlePlayer && this.state.game.idlePlayer.id}</h2>
         <Opponent game={this.state.game} curUserId={this.state.id} />
         <h3>Messages</h3>
         <MessageBox messages={this.state.messages} />
