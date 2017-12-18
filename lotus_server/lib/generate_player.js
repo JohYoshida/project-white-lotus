@@ -4,39 +4,37 @@ class Player {
   constructor(userid, team) {
     this.id = userid;
     this.team = team;
-    this.turn = true;
-  }
-  // Function takes an object of changes and applies them to the player.
-  // Object should be equivalent to how the player is constructed.
-  setState(changesObj){
-    for(const propertyName in changesObj){
-      const property = changesObj[propertyName];
-      // if there isn't a deeper object that needs to be updated.
-      if(typeof property !== 'object'){
-        this[propertyName] = property;
-        continue;
-      }
-      for(const bodyPartName in property){
-        const bodyPart = property[bodyPartName];
-        for(const bodyPartAttribute in bodyPart){
-          this[propertyName][bodyPartName][bodyPartAttribute] = bodyPart[bodyPartAttribute];
-        }
-      }
-    }
+    this.turn = false;
+    this.activeMonster = undefined;
   }
   executeActive(activeAction){
-    const changes = {};
-    changes[this.id] = {};
     if (activeAction) {
-      changes[this.id] = activeAction(this);
+      activeAction(this);
     }
-    changes[this.id]['turn'] = false;
-    return changes;
+    this.turn = false;
   }
   executePassive(passiveAction){
-    const changes = {};
-    changes[this.id] = passiveAction(this);
-    return changes;
+    passiveAction(this);
+  }
+  activateMonster(monsterId){
+    const {team} = this;
+    for(const id in team){
+      if(monsterId === id){
+        team[id].bench = false;
+      } else {
+        team[id].bench = true;
+      }
+    }
+    this.findActiveMonster();
+  }
+  findActiveMonster(){
+    for(const monsterId in this.team){
+      const monster = this.team[monsterId];
+      if(monster.bench === false){
+        this.activeMonster = monster;
+        break;
+      }
+    }
   }
 }
 

@@ -18,7 +18,7 @@ class Player extends Component {
         team.push(
           <article key={monster.id}>
             <h2>{monster.name}</h2>
-            <img src={monster.image_url}/>
+            <img src={monster.image_url} alt={monster.name}/>
             {monster.bench && <button onClick={this.activate}>Activate</button>}
           </article>
         );

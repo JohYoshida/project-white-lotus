@@ -1,4 +1,4 @@
-const getCreature = require('../models/monster_builder');
+const getCreature = require('../lib/generate_monster');
 const generatePlayer = require('../lib/generate_player');
 
 test('There should be three monsters in play.', done => {
