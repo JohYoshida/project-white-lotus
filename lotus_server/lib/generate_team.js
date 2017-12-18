@@ -1,4 +1,4 @@
-const getCreature = require('../models/monster_builder');
+const getCreature = require('./generate_monster');
 
 const generateTeam = (team) => {
   const teamMembers = [];
@@ -16,4 +16,4 @@ const generateTeam = (team) => {
   });
 };
 
-module.exports = generateTeam
+module.exports = generateTeam;

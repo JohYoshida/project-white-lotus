@@ -14,9 +14,7 @@ class Monsters extends Component {
     // TODO: move to helper function
     fetch('/monsters').then(res => {
       res.json().then(data => {
-        this.setState(monsters => {
-          return {monsters: data}
-        });
+        this.setState({monsters: data});
         this.setState({ready: true});
       });
     });
@@ -33,9 +31,9 @@ class Monsters extends Component {
               {monster.name}
             </button>
           </Link>
-          <p>{monster.body.creature}</p>
-          <img src={monster.body.image_url} alt='monster icon' />
-          <p>{monster.body.hp} HP</p>
+          <p>{monster.creature}</p>
+          <img src={monster.image_url} alt='monster icon' />
+          <p>{monster.hp} HP</p>
           <p>Type: {monster.type.name}</p>
         </li>
       );

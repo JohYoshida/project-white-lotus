@@ -5,10 +5,10 @@ const Ability = bookshelf.Model.extend({
 });
 
 const abilityFuncs = {
-  avoid: function(creature){
-    return (player) => {
-      creature ? player.team[creature.id].body.hp += 1 : null;
-    };
+  avoid: function(player){
+    player.activeMonster.hp += 1;
+    // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
+    this.passiveActive = false;
   }
 };
 
