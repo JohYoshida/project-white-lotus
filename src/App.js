@@ -10,39 +10,34 @@ class App extends Component {
     this.state={loggedin :false};
   }
   login = (state) => {
-
     console.log(state);
     this.setState({loggedin:true});
   }
   render() {
 
     if(this.state.loggedin){
-          return (
-            <Router>
-
-              <div>
-                <ul>
-                  <li><Link to="/">Monsters</Link></li>
-                  <li><Link to="/store">Store</Link></li>
-                  <li><Link to="/teams">Teams</Link></li>
-                  <li><Link to="/battle">Battle</Link></li>
-                </ul>
-
-                <hr/>
-
-                <Route exact path="/" component={ Monsters } />
-                <Route path="/monsters/:id" component={ Monster } />
-                <Route path="/store" component={ Store } />
-                <Route path="/teams" component={ Teams } />
-                <Route path="/battle" component={ Battle }/>
-              </div>
-            </Router>
-          );
-  }else{
-        return (<Login state = {this.state} login = {this.login}/>);
+      return (
+        <Router>
+          <div>
+            <ul>
+              <li><Link to="/">Monsters</Link></li>
+              <li><Link to="/store">Store</Link></li>
+              <li><Link to="/teams">Teams</Link></li>
+              <li><Link to="/battle">Battle</Link></li>
+            </ul>
+            <hr/>
+            <Route exact path="/" component={ Monsters } />
+            <Route path="/monsters/:id" component={ Monster } />
+            <Route path="/store" component={ Store } />
+            <Route path="/teams" component={ Teams } />
+            <Route path="/battle" component={ Battle }/>
+          </div>
+        </Router>
+      );
+    } else {
+      return (<Login state = {this.state} login = {this.login}/>);
+    }
   }
-
-      }
 }
 const Store = () => (
   <div>

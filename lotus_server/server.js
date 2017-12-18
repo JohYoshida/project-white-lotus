@@ -9,35 +9,19 @@ const WebSocket = require('ws');
 const expressws = require('express-ws')(server);
 const bodyParser = require('body-parser')
 
+// Routes
+const socketRouter = require('./routes/battles_routes')(server);
 // Functions
 const buildMonstersJSON = require('./lib/build_monsters_json');
 const buildMonsterJSON = require('./lib/build_monster_json');
-
+const generatePlayer = require('./lib/generate_player');
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 
-function genBattle(id){
-  server.ws(`/battles/${id}`, (ws) => {
-    ws.on('message', function(msg) {
-      ws.send(`Echo from /battle/, ${msg}`);
-    });
-  });
-  server.get(`/battles/${id}`, (req, res) => {
-    res.send(`in the Get of /battles/${id}`);
-  });
-  server.post(`/battles/${id}`, (req, res) => {
-    res.send(`in the Post of /battles/${id}`);
-  });
-}
 
-server.get('/battles',(req,res) => {
-  res.render('gen.ejs');
-});
-
-server.post('/battles',(req,res) => {
-  genBattle(req.body.roomname);
-  res.send(`Room Created at ${req.body.roomname}`);
-});
+// Default room for testing.
+socketRouter.genBattle('1');
+server.use('/battles', socketRouter);
 
 // Find monsters so they can be fetched by React Monsters component
 server.get('/monsters', (req, res) => {
