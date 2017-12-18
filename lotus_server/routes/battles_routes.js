@@ -18,7 +18,7 @@ module.exports = (server) => {
           const playerInfo = JSON.parse(msg);
           socketRouter.rooms[`battle_${id}`] = {};
           let room = socketRouter.rooms[`battle_${id}`];
-          generatePlayer(playerInfo.userid, playerInfo.team.split('')).then(player => {
+          generatePlayer(playerInfo.userid, playerInfo.team.split(',')).then(player => {
             room['players'] = [player];
             ws.send(JSON.stringify(room.players));
           });

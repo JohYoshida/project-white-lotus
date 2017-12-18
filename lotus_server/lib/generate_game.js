@@ -38,7 +38,7 @@ class Game{
         if(monster.dot.length > 1){
           monster.dot.forEach(dot => {
             this.activePlayer.executePassive(dot.func);
-          })
+          });
         }
       }
     };
