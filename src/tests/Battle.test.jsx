@@ -11,7 +11,7 @@ import Battle from '../Battle.jsx';
 import {mount} from 'enzyme';
 import { Server } from 'mock-socket';
 
-// Sample players array object containing just one player
+// Sample players array object containing both players
 const samplePlayersArr= {players: [{'id':1,'team':{'1':{'id':1,'name':'Gojira','creature':'kaiju','maxHp':10,'hp':10,'type':{'id':1,'name':'fire','weakness':2},'image_url':'https://api.adorable.io/avatars/285/gojira.png','bench':true,'passiveActive':true,'dot':[],'attacks':[{'id':1,'name':'scratch','description':'Attack 1 description'}]},'2':{'id':2,'name':'Rhino','creature':'mecha','maxHp':5,'hp':5,'type':{'id':1,'name':'fire','weakness':2},'image_url':'https://api.adorable.io/avatars/285/rhino.png','bench':true,'passiveActive':true,'dot':[],'attacks':[{'id':1,'name':'scratch','description':'Attack 1 description'}]},'3':{'id':3,'name':'Mecha Gojira','creature':'kaiju','maxHp':12,'hp':12,'type':{'id':2,'name':'water','weakness':3},'image_url':'https://api.adorable.io/avatars/285/mecha_gojira.png','bench':true,'passiveActive':true,'dot':[],'attacks':[{'id':1,'name':'scratch','description':'Attack 1 description'}]}},'turn':false},
 {'id':2,'team':{'1':{'id':1,'name':'Gojira','creature':'kaiju','maxHp':10,'hp':10,'type':{'id':1,'name':'fire','weakness':2},'image_url':'https://api.adorable.io/avatars/285/gojira.png','bench':true,'passiveActive':true,'dot':[],'attacks':[{'id':1,'name':'scratch','description':'Attack 1 description'}]},'2':{'id':2,'name':'Rhino','creature':'mecha','maxHp':5,'hp':5,'type':{'id':1,'name':'fire','weakness':2},'image_url':'https://api.adorable.io/avatars/285/rhino.png','bench':true,'passiveActive':true,'dot':[],'attacks':[{'id':1,'name':'scratch','description':'Attack 1 description'}]},'3':{'id':3,'name':'Mecha Gojira','creature':'kaiju','maxHp':12,'hp':12,'type':{'id':2,'name':'water','weakness':3},'image_url':'https://api.adorable.io/avatars/285/mecha_gojira.png','bench':true,'passiveActive':true,'dot':[],'attacks':[{'id':1,'name':'scratch','description':'Attack 1 description'}]}},'turn':false}], message: "test"};
 
@@ -26,7 +26,7 @@ beforeAll(() => {
 });
 
 test('The battle should update the state with the new playerInfo', done => {
-  battle.find('button').simulate('click');
+  battle.first('button').simulate('click');
   setTimeout(() => {
     // A try/catch block is necessary when using a timeout with the done(); function. Otherwise thrown error goes no where.
     try {
@@ -42,7 +42,7 @@ test('The battle should update the state with the new playerInfo', done => {
 });
 
 test('The battle page should display a button for each monster that lets the player select the primary monster', done => {
-  battle.find('button').simulate('click');
+  battle.first('button').simulate('click');
   setTimeout(() => {
     try {
       expect(battle.find('.selectMonster').length).toBe(3);

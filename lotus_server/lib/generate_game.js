@@ -4,9 +4,11 @@ class Game{
   constructor(players){
     this.players = players;
     this.start = true;
+    this.players[0].turn = true;
     this.activePlayer = null;
     this.idlePlayer = null;
-
+    this.findActivePlayer();
+    
     // action handlers
     const attack = (actionObj) => {
       const {activePlayer, idlePlayer} = this;
@@ -71,16 +73,16 @@ class Game{
     this.actions[actionObj.action](actionObj);
     this.findActivePlayer();
   }
+  generateGame(playerObj1, playerObj2){
+    return Promise.all([
+      generatePlayer(playerObj1.id, playerObj1.team),
+      generatePlayer(playerObj2.id, playerObj2.team)
+    ]).then(players => {
+      // @todo: create a new game with players array
+      return new Game(players);
+    });
+  };
 }
 
-const generateGame = (playerObj1, playerObj2) => {
-  return Promise.all([
-    generatePlayer(playerObj1.id, playerObj1.team),
-    generatePlayer(playerObj2.id, playerObj2.team)
-  ]).then(players => {
-    // @todo: create a new game with players array
-    return new Game(players);
-  });
-};
 
-module.exports = generateGame;
+module.exports = Game;
