@@ -4,10 +4,11 @@ import React, { Component } from 'react';
 class Battle extends Component {
   constructor(props) {
     super(props);
-    this.state = {ready: false, id:1};
+    this.state = {ready: false, id:1, players:[]};
     this.joinGame = this.joinGame.bind(this);
     this.sendAttack = this.sendAttack.bind(this);
     this.generateUserCards = this.generateUserCards.bind(this);
+    this.generateOpponentCards = this.generateOpponentCards .bind(this);
     this.unBench = this.unBench.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
   }
@@ -36,6 +37,9 @@ class Battle extends Component {
     });
   }
   generateUserCards(){
+    if(this.state.players.length !== 2){
+      return (<p>Waiting for other player</p>);
+    }
     let user = undefined;
     let cards = [];
     // compile attacks into buttons for display
@@ -65,7 +69,9 @@ class Battle extends Component {
     return cards;
   }
   generateOpponentCards(){
-
+    if(this.state.players.length !== 2){
+      return;
+    }
   }
   unBench(event){
     console.log('sending', JSON.stringify({action:'activate', monsterId: event.target.dataset.id}));
@@ -83,6 +89,7 @@ class Battle extends Component {
       <main>
         {!this.state.ready && <button onClick={this.joinGame}>Join</button>}
         {this.state.ready && this.generateUserCards()}
+        {this.state.ready && this.generateOpponentCards()}
       </main>
     );
   }
