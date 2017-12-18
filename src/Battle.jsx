@@ -18,7 +18,7 @@ class Battle extends Component {
     this.socket = new WebSocket('ws://localhost:3001/battles/1');
     this.socket.addEventListener('open', () => {
       /* @TODO: Make this.state.id a prop passed down from app. */
-      this.socket.send(JSON.stringify({team:'1,2,3', userid: button.innerHTML}));
+      this.socket.send(JSON.stringify({messageType: 'team', team:'1,2,3', userid: button.innerHTML}));
     });
     this.socket.addEventListener('message', (event) => {
       // test if the message is json
