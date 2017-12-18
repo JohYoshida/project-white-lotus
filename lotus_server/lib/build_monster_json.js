@@ -1,10 +1,10 @@
 const dbconfig = require('../knexfile.js')[process.env.DB_ENV];
 const knex = require('knex')(dbconfig);
-const getMonsters = require('../models/monster_builder');
+const getMonster = require('./generate_monster');
 
 
 const generateMonstersJSON = (res, id) => {
-  getMonsters(id).then(result => {
+  getMonster(id).then(result => {
     res.json(result);
   });
 }
