@@ -4,33 +4,56 @@ import Battle from './Battle.jsx';
 import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Login from './Login.jsx'
-
+import { instanceOf } from 'prop-types';
+import {withCookies,Cookies} from 'react-cookie';
 class App extends Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
   constructor(props) {
     super(props);
     this.state={loggedin :false};
   }
+  componentWillMount() {
+    const { cookies } = this.props;
+    if(cookies.get('email')){
+      this.setState ({email:cookies.get('email'),loggedin:true});
+    }else{
+      this.setState({loggedin:false});
+    }
+
+  }
   login = (state) => {
+    const { cookies } = this.props;
     fetch(`/users/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
         if(data!=='Not found'){
-          console.log(data);
-            this.setState({loggedin:true});
-            this.setState({user:data});
+            cookies.set('email',data.email,{path:'/'});
+            this.setState({loggedin:true,user:data,email:data.email});
+            //cookie.save('email',data.email,{path:'/'});
+
           }
         }).catch((err)=>{
           console.log("Promise error in generate_user.js"+err);
     });
     });
   }
+  logout = (event)=>{
+    const { cookies } = this.props;
+    cookies.remove('email');
+
+    this.setState({loggedin:false,email:""});
+  }
   register = (state) => {
+    const { cookies } = this.props;
     console.log(state);
     fetch(`/create/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
         if(data!=='Not found'){
-          console.log(data);
-            this.setState({loggedin:true});
-            this.setState({user:data});
+            cookies.set('email',data.email,{path:'/'});
+            this.setState({loggedin:true,user:data,email:data.email});
+
+            //cookie.save('email',data.email,{path:'/'});
           }
         }).catch((err)=>{
           console.log("Promise error in add_user.js"+err);
@@ -39,11 +62,14 @@ class App extends Component {
     });
   }
   render() {
-
-    if(this.state.loggedin){
+      const { email } = this.state;
+      if(this.state.loggedin){
       return (
         <Router>
-          <div>
+      <div>
+          <h1> {email}</h1>
+          <button onClick = {(event)=> this.logout(event)} >Log out</button>
+          <div hidden={!this.state.loggedin}>
             <ul>
               <li><Link to="/">Monsters</Link></li>
               <li><Link to="/store">Store</Link></li>
@@ -57,10 +83,11 @@ class App extends Component {
             <Route path="/teams" component={ Teams } />
             <Route path="/battle" component={ Battle }/>
           </div>
+          </div>
         </Router>
       );
-    } else {
-      return (<Login state = {this.state} login = {this.login} register = {this.register}/>);
+    }else{
+      return(<Login state = {this.state} login = {this.login} register = {this.register} hidden = {this.state.loggedin}/>);
     }
   }
 }
@@ -76,4 +103,4 @@ const Teams = () => (
   </div>
 );
 
-export default App;
+export default withCookies(App);

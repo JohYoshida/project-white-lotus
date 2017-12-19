@@ -31,7 +31,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
+      <div >
         <div hidden = {this.state.register}>
           Login
           <br/>
@@ -52,7 +52,7 @@ class Login extends Component {
 
           <br/>
 
-          <div hidden = {!this.state.register}>
+          <div hidden = {!this.state.register }>
             <button onClick = {(event)=> this.toggle(event)}>Login</button>
             <br/>
             Please input your email and password
