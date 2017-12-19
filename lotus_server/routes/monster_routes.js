@@ -21,6 +21,7 @@ module.exports = (db) => {
 
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
+    console.log('Request Body:', req.body);
     const {creature, userid} = req.body;
     if(!creature || !userid){
       return;
@@ -34,6 +35,7 @@ module.exports = (db) => {
       user.buyMonster(creature).then(monster => {
         const monsterId = monster[0];
         db('monsters').where('id', monsterId).then(monster => {
+          console.log(monster[0]);
           res.send(JSON.stringify(monster[0]));
         });
       });
