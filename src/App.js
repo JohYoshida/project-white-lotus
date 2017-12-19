@@ -10,72 +10,71 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state={loggedin: false};
-    this.chargeUser = this.chargeUser.bind(this);
+    this.purchaseEgg = this.purchaseEgg.bind(this);
+    this.purchaseCrate = this.purchaseCrate.bind(this);
   }
+
   login = (state) => {
     fetch(`/users/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
         if(data!=='Not found'){
-          console.log(data);
-            this.setState({loggedin:true});
-            this.setState({user:data});
-          }
-        }).catch((err)=>{
-          console.log("Promise error in generate_user.js"+err);
-    });
+          this.setState({loggedin:true});
+          this.setState({user:data});
+        }
+      }).catch((err)=>{
+        console.log(`Promise error in generate_user.js${err}`);
+      });
     });
   }
+
   register = (state) => {
     console.log(state);
     fetch(`/create/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
         if(data!=='Not found'){
           console.log(data);
-            this.setState({loggedin:true});
-            this.setState({user:data});
-          }
-        }).catch((err)=>{
-          console.log("Promise error in add_user.js"+err);
+          this.setState({loggedin:true});
+          this.setState({user:data});
+        }
+      }).catch((err)=>{
+        console.log(`Promise error in add_user.js ${err}`);
       });
-
-    });
-  }
-
-  clientReimburse(cost) {
-    // let charge = 0 - cost;
-    // this.clientCharge(charge);
-    console.log('clientReimburse', this.state.user.brouzoff);
-    this.setState({
-      user: {
-        brouzoff: this.state.user.brouzoff
-      }
     });
   }
 
   clientCharge(cost) {
-    let success;
     this.setState({
-      user: {
-        brouzoff: this.state.user.brouzoff - cost
-      }
-    }, () => {
-      success = true;
+      user: { brouzoff: this.state.user.brouzoff - cost }
     });
-    return success;
   }
 
-  serverCharge() {
-
+  fetchNewMonster(event, creature) {
+    fetch('/monsters/', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({creature: creature, userid: 1})
+    }).then(res => {
+      res.json().then(data => {
+        console.log('New Monster:', data);
+      });
+    });
   }
 
-  chargeUser() {
-    if (this.clientCharge(100)) {
-      console.log('Charge',this.state.user.brouzoff);
-    }
+  purchaseEgg(event) {
+    event.preventDefault();
+    this.clientCharge(50);
+    this.fetchNewMonster(event, 'kaiju');
+  }
+
+  purchaseCrate(event) {
+    event.preventDefault();
+    this.clientCharge(50);
+    this.fetchNewMonster(event, 'mecha');
   }
 
   render() {
-
     if(this.state.loggedin){
       return (
         <Router>
@@ -90,7 +89,7 @@ class App extends Component {
             <Route exact path="/" component={ Monsters } />
             <Route path="/monsters/:id" component={ Monster } />
             <Route path="/store" render={(props) => (
-              <Store {...props} user={this.state.user} chargeUser={this.chargeUser}/>
+              <Store {...props} user={this.state.user} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
             )} />
             <Route path="/teams" component={ Teams } />
             <Route path="/battle" component={ Battle }/>
