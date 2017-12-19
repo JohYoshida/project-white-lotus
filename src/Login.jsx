@@ -29,7 +29,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
+      <div >
         <div hidden = {this.state.register}>
           Login
           <br/>

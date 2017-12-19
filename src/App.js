@@ -5,36 +5,55 @@ import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Store from './Store.jsx'
 import Login from './Login.jsx'
-
+import { instanceOf } from 'prop-types';
+import {withCookies,Cookies} from 'react-cookie';
 class App extends Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
   constructor(props) {
     super(props);
-    this.state={loggedin: false};
+    this.state={ loggedin: false };
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
   }
 
+  componentWillMount() {
+    const { cookies } = this.props;
+    if (cookies.get('id')){
+      this.setState ({ id: cookies.get('id'), loggedin: true });
+    } else {
+      this.setState({ loggedin: false });
+    }
+  }
+
   login = (state) => {
+    const { cookies } = this.props;
     fetch(`/users/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
-        if(data!=='Not found'){
-          this.setState({loggedin:true});
-          this.setState({user:data});
+        if (data!=='Not found'){
+          cookies.set('id', data.id, { path:'/' });
+          this.setState({ loggedin: true, user: data, id: data.id });
         }
       }).catch((err)=>{
-        console.log(`Promise error in generate_user.js${err}`);
+        console.log(`Promise error in generate_user.js ${err}`);
       });
     });
   }
+  logout = (event)=>{
+    const { cookies } = this.props;
+    cookies.remove('id');
+    this.setState({loggedin:false,id:""});
+  }
 
   register = (state) => {
+    const { cookies } = this.props;
     console.log(state);
     fetch(`/create/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
-        if(data!=='Not found'){
-          console.log(data);
-          this.setState({loggedin:true});
-          this.setState({user:data});
+        if (data !== 'Not found'){
+          cookies.set('id', data.id, { path:'/' });
+          this.setState({ loggedin: true, user: data, id: data.id  });
         }
       }).catch((err)=>{
         console.log(`Promise error in add_user.js ${err}`);
@@ -75,29 +94,40 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.loggedin){
-      return (
+    const { id } = this.state;
+    if (this.state.loggedin) {
+      return(
         <Router>
           <div>
-            <ul>
-              <li><Link to="/">Monsters</Link></li>
-              <li><Link to="/store">Store</Link></li>
-              <li><Link to="/teams">Teams</Link></li>
-              <li><Link to="/battle">Battle</Link></li>
-            </ul>
-            <hr/>
-            <Route exact path="/" component={ Monsters } />
-            <Route path="/monsters/:id" component={ Monster } />
-            <Route path="/store" render={(props) => (
-              <Store {...props} user={this.state.user} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
-            )} />
-            <Route path="/teams" component={ Teams } />
-            <Route path="/battle" component={ Battle }/>
+            <h1> {id}</h1>
+            <button onClick = {(event)=> this.logout(event)} >Log out</button>
+            <div hidden={!this.state.loggedin}>
+              <ul>
+                <li><Link to="/">Monsters</Link></li>
+                <li><Link to="/store">Store</Link></li>
+                <li><Link to="/teams">Teams</Link></li>
+                <li><Link to="/battle">Battle</Link></li>
+              </ul>
+              <hr/>
+              <Route exact path="/" component={ Monsters } />
+              <Route path="/monsters/:id" component={ Monster } />
+              <Route path="/store" render={(props) => (
+                <Store {...props} user={this.state.user} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
+              )} />
+              <Route path="/teams" component={ Teams } />
+              <Route path="/battle" component={ Battle }/>
+            </div>
           </div>
         </Router>
       );
     } else {
-      return (<Login state = {this.state} login = {this.login} register = {this.register}/>);
+      return(
+        <Login
+          state = {this.state}
+          login = {this.login}
+          register = {this.register}
+          hidden = {this.state.loggedin}
+        />);
     }
   }
 }
@@ -108,4 +138,4 @@ const Teams = () => (
   </div>
 );
 
-export default App;
+export default withCookies(App);

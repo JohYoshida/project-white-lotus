@@ -16,53 +16,57 @@ module.exports = (server) => {
 
         let parsedMsg = JSON.parse(msg);
         switch(parsedMsg.messageType) {
-          case 'team':
-            console.log('User connected:', msg);
-            // If the game room for this socket doesn't exist.
-            if(!room) {
-              setupRoom(msg).catch((error) => {
-                delete socketRouter.rooms[`battle_${id}`];
-                console.log('There was an error during room creation, room has been deleted. Message:', error);
-              }).catch(e => {console.log(e)});
-              return;
-            }
-            if(room) {
-              startGame(msg).then(game => {
-                delete room.players;
-                room.game = game;
-                ws.send(JSON.stringify({game: game, message:'Game started!'}));
-              }).catch(e => {console.log(e)});
-              return;
-            }
+        case 'team':
+          console.log('User connected:', msg);
+          // If the game room for this socket doesn't exist.
+          if(!room) {
+            setupRoom(msg).catch((error) => {
+              delete socketRouter.rooms[`battle_${id}`];
+              console.log('There was an error during room creation, room has been deleted. Message:', error);
+            }).catch(e => {console.log(e)});
+            return;
+          }
+          if(room) {
+            startGame(msg).then(game => {
+              delete room.players;
+              room.game = game;
+              ws.send(JSON.stringify({game: game, message:'Game started!'}));
+            }).catch(e => {console.log(e)});
+            return;
+          }
+          break;
+        case 'action' : {
+          console.log('Action Message:', msg);
+          switch(parsedMsg.action) {
+          case 'activate': {
+            room.game.takeAction(parsedMsg);
+            let player = room.game.idlePlayer.id;
+            let activeMonster = room.game.idlePlayer.activeMonster.name
+            ws.send(JSON.stringify({
+              game: room.game,
+              message: `Changed Player ${player}\'s active monster to ${activeMonster}`
+            }));
             break;
-          case 'action':
-            console.log('Action Message:', msg);
-            switch(parsedMsg.action) {
-              case 'activate':
-                room.game.takeAction(parsedMsg);
-                let player = room.game.idlePlayer.id;
-                let activeMonster = room.game.idlePlayer.activeMonster.name
-                ws.send(JSON.stringify({
-                  game: room.game,
-                  message: `Changed Player ${player}\'s active monster to ${activeMonster}`
-                }));
-                break;
-              case 'attack':
-                let playerMonster = room.game.activePlayer.activeMonster.name;
-                let enemyMonster = room.game.idlePlayer.activeMonster.name;
-                let prevHealth = room.game.idlePlayer.activeMonster.hp;
-                room.game.takeAction(parsedMsg);
-                let newHealth = room.game.activePlayer.activeMonster.hp;
-                ws.send(JSON.stringify({
-                  game: room.game,
-                  message: `${playerMonster} dealt ${prevHealth - newHealth} damage to ${enemyMonster}`
-                }));
-                break;
-              default:
-                console.log('Didn\'t recognize that action type.');
-            }
+          }
+          case 'attack': {
+            let playerMonster = room.game.activePlayer.activeMonster.name;
+            let enemyMonster = room.game.idlePlayer.activeMonster.name;
+            let prevHealth = room.game.idlePlayer.activeMonster.hp;
+            room.game.takeAction(parsedMsg);
+            let newHealth = room.game.activePlayer.activeMonster.hp;
+            // If there is gameover info, send back game is over!
+            ws.send(JSON.stringify({
+              game: room.game,
+              message: room.game.gameOver ? 'Game is over!' : `${playerMonster} dealt ${prevHealth - newHealth} damage to ${enemyMonster}`
+            }));
             break;
+          }
           default:
+            console.log('Didn\'t recognize that action type.');
+          }
+          break;
+        }
+        default:
           console.log('Didn\'t recognize that message type.');
         }
 
