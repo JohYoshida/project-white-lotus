@@ -8,8 +8,9 @@ class Game{
     this.activePlayer = null;
     this.idlePlayer = null;
     this.findActivePlayer();
+    this.gameOver = false;
 
-    /* @TODO put these functions in a seperate file and import them */
+    /* @TODO put these functions in a seperate file and import them ?*/
     // action handlers
 
     // Used to execute attack abilities. Options are optional.
@@ -69,6 +70,10 @@ class Game{
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
     for(const player of this.players){
+      if(player.team.aliveMonsters() === 0){
+        this.gameOver = true;
+        return;
+      }
       if(player.turn === true){
         this.activePlayer = player;
       } else {
