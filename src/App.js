@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Battle from './Battle.jsx';
 import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
+import Store from './Store.jsx'
 import Login from './Login.jsx'
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state={loggedin :false};
+    this.state={loggedin: false};
+    this.chargeUser = this.chargeUser.bind(this);
   }
   login = (state) => {
     console.log(state);
@@ -22,6 +24,40 @@ class App extends Component {
         });
     });
   }
+
+  clientReimburse(cost) {
+    // let charge = 0 - cost;
+    // this.clientCharge(charge);
+    console.log('clientReimburse', this.state.user.brouzoff);
+    this.setState({
+      user: {
+        brouzoff: this.state.user.brouzoff
+      }
+    });
+  }
+
+  clientCharge(cost) {
+    let success;
+    this.setState({
+      user: {
+        brouzoff: this.state.user.brouzoff - cost
+      }
+    }, () => {
+      success = true;
+    });
+    return success;
+  }
+
+  serverCharge() {
+
+  }
+
+  chargeUser() {
+    if (this.clientCharge(100)) {
+      console.log('Charge',this.state.user.brouzoff);
+    }
+  }
+
   render() {
 
     if(this.state.loggedin){
@@ -37,7 +73,9 @@ class App extends Component {
             <hr/>
             <Route exact path="/" component={ Monsters } />
             <Route path="/monsters/:id" component={ Monster } />
-            <Route path="/store" component={ Store } />
+            <Route path="/store" render={(props) => (
+              <Store {...props} user={this.state.user} chargeUser={this.chargeUser}/>
+            )} />
             <Route path="/teams" component={ Teams } />
             <Route path="/battle" component={ Battle }/>
           </div>
@@ -48,11 +86,6 @@ class App extends Component {
     }
   }
 }
-const Store = () => (
-  <div>
-    <h2>Store</h2>
-  </div>
-);
 
 const Teams = () => (
   <div>
