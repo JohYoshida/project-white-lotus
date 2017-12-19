@@ -1,6 +1,7 @@
 // Server setup
 const buildMonstersJSON = require('../lib/build_monsters_json');
 const buildMonsterJSON = require('../lib/build_monster_json');
+const User = require('../models/user_model');
 const express = require('express');
 
 // returns a random element from a table
@@ -29,23 +30,33 @@ module.exports = (db) => {
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
     const {creature, userid} = req.body;
-    Promise.all([
-      db.select('id').from('bodies').where('creature', creature),
-      db.select('id').from('heads').where('creature', creature),
-      db.select('id').from('arms').where('creature', creature)
-    ]).then(components => {
-      const bodies = components[0];
-      const heads = components[1];
-      const arms = components[2];
-      const newMonster = {
-        arm_id: randomComponentId(arms),
-        body_id: randomComponentId(bodies),
-        head_id: randomComponentId(heads),
-        name: 'Talonridge',
-        user_id: userid
-      };
-      db('monsters').insert(newMonster, 'id').then(monster => {
-        res.send(JSON.stringify(monster));
+
+    new User({id: userid}).fetch().then(user => {
+      if(user.attributes.brouzoff < 50){
+        res.send(JSON.stringify({error: 'Sorry, not enough Brouzoff'}));
+        return;
+      }
+      user.set({brouzoff: user.attributes.brouzoff - 50});
+      user.save().then(() => {
+        Promise.all([
+          db.select('id').from('bodies').where('creature', creature),
+          db.select('id').from('heads').where('creature', creature),
+          db.select('id').from('arms').where('creature', creature)
+        ]).then(components => {
+          const bodies = components[0];
+          const heads = components[1];
+          const arms = components[2];
+          const newMonster = {
+            arm_id: randomComponentId(arms),
+            body_id: randomComponentId(bodies),
+            head_id: randomComponentId(heads),
+            name: 'Talonridge',
+            user_id: userid
+          };
+          db('monsters').insert(newMonster, 'id').then(monster => {
+            res.send(JSON.stringify(monster));
+          });
+        });
       });
     });
   });
