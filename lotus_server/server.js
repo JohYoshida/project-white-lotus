@@ -16,6 +16,7 @@ const buildMonstersJSON = require('./lib/build_monsters_json');
 const buildMonsterJSON = require('./lib/build_monster_json');
 const generatePlayer = require('./lib/generate_player');
 const generateUser = require('./lib/generate_user');
+const addUser = require('./lib/add_user')
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 
@@ -32,6 +33,10 @@ server.get('/monsters', (req, res) => {
 server.get('/users/:email/:password', (req, res) => {
   // find a user by email
   generateUser(res, req.params.email);
+});
+server.get('/create/:email/:password', (req, res) => {
+  // find a user by email
+  addUser(res, req.params.email,req.params.password);
 });
 // Find a single monster so it can be fetched by React Monster component
 server.get('/monsters/:id', (req, res) => {
