@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -20,7 +19,6 @@ class Login extends Component {
     }
   }
   login = (event) =>{
-    console.log(this.state)
     this.props.login(this.state);
   }
   changeEmail = (e) =>{
@@ -53,7 +51,6 @@ class Login extends Component {
           <br/>
 
           <div hidden = {!this.state.register}>
-            <button onClick = {(event)=> this.toggle(event)}>Login</button>
             <br/>
             Please input your email and password
             <br/>
@@ -68,6 +65,8 @@ class Login extends Component {
           </label>
           <br/>
            <button onClick={(event )=> this.props.register(this.state)}>Submit</button>
+           <p>Already have an account?</p>
+           <button onClick = {(event)=> this.toggle(event)}>Login</button>
           </div>
           </div>
     );
