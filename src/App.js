@@ -16,8 +16,8 @@ class App extends Component {
   }
   componentWillMount() {
     const { cookies } = this.props;
-    if(cookies.get('email')){
-      this.setState ({email:cookies.get('email'),loggedin:true});
+    if(cookies.get('id')){
+      this.setState ({id:cookies.get('id'),loggedin:true});
     }else{
       this.setState({loggedin:false});
     }
@@ -28,9 +28,9 @@ class App extends Component {
     fetch(`/users/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
         if(data!=='Not found'){
-            cookies.set('email',data.email,{path:'/'});
-            this.setState({loggedin:true,user:data,email:data.email});
-            //cookie.save('email',data.email,{path:'/'});
+            cookies.set('id',data.id,{path:'/'});
+            this.setState({loggedin:true,user:data,id:data.id});
+
 
           }
         }).catch((err)=>{
@@ -40,9 +40,8 @@ class App extends Component {
   }
   logout = (event)=>{
     const { cookies } = this.props;
-    cookies.remove('email');
-
-    this.setState({loggedin:false,email:""});
+    cookies.remove('id');
+    this.setState({loggedin:false,id:""});
   }
   register = (state) => {
     const { cookies } = this.props;
@@ -50,10 +49,10 @@ class App extends Component {
     fetch(`/create/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
         if(data!=='Not found'){
-            cookies.set('email',data.email,{path:'/'});
-            this.setState({loggedin:true,user:data,email:data.email});
+            cookies.set('id',data.id,{path:'/'});
+            this.setState({loggedin:true,user:data,id:data.id});
 
-            //cookie.save('email',data.email,{path:'/'});
+
           }
         }).catch((err)=>{
           console.log("Promise error in add_user.js"+err);
@@ -62,12 +61,12 @@ class App extends Component {
     });
   }
   render() {
-      const { email } = this.state;
+      const { id } = this.state;
       if(this.state.loggedin){
       return (
         <Router>
       <div>
-          <h1> {email}</h1>
+          <h1> {id}</h1>
           <button onClick = {(event)=> this.logout(event)} >Log out</button>
           <div hidden={!this.state.loggedin}>
             <ul>
