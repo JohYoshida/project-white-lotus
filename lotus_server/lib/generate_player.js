@@ -12,7 +12,7 @@ class Player {
     const {team} = this;
     for(const monstId in team){
       const monster = team[monstId];
-      if(monster.hp < 0){
+      if(monster.hp < 1){
         delete team[monstId];
         // If the monster that died is the active monster, the game will automatically set the next monster in the list as the active monster.
         if(monster.bench === false && team.aliveMonsters() > 0){

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MessageBox from './components/MessageBox.jsx';
+import Modal from './components/Modal.jsx';
 import Opponent from './components/Opponent.jsx';
 import Player from './components/Player.jsx';
 
@@ -38,9 +39,18 @@ class Battle extends Component {
       }
     });
   }
+  isWinner(){
+    const {gameOver} = this.state.game;
+    if(gameOver.winner.id === this.state.id){
+      /* @TODO award money here through a PUT to /users/:id */
+      return (<p>You won!</p>);
+    }
+    return(<p>You lost!</p>);
+  }
   render() {
     return (
       <main>
+        {this.state.game.gameOver && <Modal header="Game over" mainContent={this.isWinner()} footer={<a href="/">Done</a>} />}
         {!this.state.ready && <button onClick={this.joinGame}>1</button>}
         {!this.state.ready && <button onClick={this.joinGame}>2</button>}
         <h2>Player {this.state.game.activePlayer && this.state.game.activePlayer.id}</h2>
