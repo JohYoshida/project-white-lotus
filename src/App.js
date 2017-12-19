@@ -13,7 +13,6 @@ class App extends Component {
     this.chargeUser = this.chargeUser.bind(this);
   }
   login = (state) => {
-    console.log(state);
     fetch(`/users/${state.email}/${state.password}`).then(res => {
       res.json().then(data => {
         if(data!=='Not found'){
@@ -21,7 +20,24 @@ class App extends Component {
             this.setState({loggedin:true});
             this.setState({user:data});
           }
-        });
+        }).catch((err)=>{
+          console.log("Promise error in generate_user.js"+err);
+    });
+    });
+  }
+  register = (state) => {
+    console.log(state);
+    fetch(`/create/${state.email}/${state.password}`).then(res => {
+      res.json().then(data => {
+        if(data!=='Not found'){
+          console.log(data);
+            this.setState({loggedin:true});
+            this.setState({user:data});
+          }
+        }).catch((err)=>{
+          console.log("Promise error in add_user.js"+err);
+      });
+
     });
   }
 
@@ -82,7 +98,7 @@ class App extends Component {
         </Router>
       );
     } else {
-      return (<Login state = {this.state} login = {this.login}/>);
+      return (<Login state = {this.state} login = {this.login} register = {this.register}/>);
     }
   }
 }
