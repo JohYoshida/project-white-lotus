@@ -1,21 +1,13 @@
 // Server setup
 const buildMonstersJSON = require('../lib/build_monsters_json');
 const buildMonsterJSON = require('../lib/build_monster_json');
-const User = require('../models/user_model');
 const express = require('express');
-
-// returns a random element from a table
-const randomComponentId = (collection) => {
-  return collection[Math.floor(Math.random()*(collection.length-1))].id;
-};
 
 /* @TODO implement random kaiju name generator */
 
-
 module.exports = (db) => {
-
+  const User = require('../models/user_model')(db);
   const monsterRouter = express.Router();
-
   // Find monsters so they can be fetched by React Monsters component
   monsterRouter.get('/', (req, res) => {
     // Get all monster IDs
@@ -30,32 +22,16 @@ module.exports = (db) => {
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
     const {creature, userid} = req.body;
-
+    // Pull the user model and buy dat monster
     new User({id: userid}).fetch().then(user => {
       if(user.attributes.brouzoff < 50){
         res.send(JSON.stringify({error: 'Sorry, not enough Brouzoff'}));
         return;
       }
-      user.set({brouzoff: user.attributes.brouzoff - 50});
-      user.save().then(() => {
-        Promise.all([
-          db.select('id').from('bodies').where('creature', creature),
-          db.select('id').from('heads').where('creature', creature),
-          db.select('id').from('arms').where('creature', creature)
-        ]).then(components => {
-          const bodies = components[0];
-          const heads = components[1];
-          const arms = components[2];
-          const newMonster = {
-            arm_id: randomComponentId(arms),
-            body_id: randomComponentId(bodies),
-            head_id: randomComponentId(heads),
-            name: 'Talonridge',
-            user_id: userid
-          };
-          db('monsters').insert(newMonster, 'id').then(monster => {
-            res.send(JSON.stringify(monster));
-          });
+      user.buyMonster(creature).then(monster => {
+        const monsterId = monster[0];
+        db('monsters').where('id', monsterId).then(monster => {
+          res.send(JSON.stringify(monster[0]));
         });
       });
     });
@@ -63,7 +39,11 @@ module.exports = (db) => {
 
   // For updating monster name
   monsterRouter.put('/:id', (req, res) => {
-    /* @TODO add user authentication */
+    db('monsters').update({name: req.body.name}).where('id', req.params.id).then(() => {
+      db('monsters').where('id', req.params.id).then(monster => {
+        res.send(JSON.stringify(monster[0]));
+      });
+    });
   });
 
   return monsterRouter;
