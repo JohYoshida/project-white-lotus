@@ -27,6 +27,8 @@ const monsterRouter = require('./routes/monster_routes')(knex);
 
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
+// This is required to parse POST fetch requests for the store
+server.use(bodyParser.json());
 
 // Default room for testing.
 socketRouter.genBattle('1');
