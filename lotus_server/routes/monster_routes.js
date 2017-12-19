@@ -22,6 +22,9 @@ module.exports = (db) => {
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
     const {creature, userid} = req.body;
+    if(!creature || !userid){
+      return;
+    }
     // Pull the user model and buy dat monster
     new User({id: userid}).fetch().then(user => {
       if(user.attributes.brouzoff < 50){
@@ -39,8 +42,13 @@ module.exports = (db) => {
 
   // For updating monster name
   monsterRouter.put('/:id', (req, res) => {
-    db('monsters').update({name: req.body.name}).where('id', req.params.id).then(() => {
-      db('monsters').where('id', req.params.id).then(monster => {
+    const {id} = req.params;
+    const {name} = req.body;
+    if(!name){
+      return;
+    }
+    db('monsters').update({name: name}).where('id', id).then(() => {
+      db('monsters').where('id', id).then(monster => {
         res.send(JSON.stringify(monster[0]));
       });
     });
