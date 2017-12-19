@@ -71,7 +71,9 @@ class Game{
   findActivePlayer(){
     for(const player of this.players){
       if(player.team.aliveMonsters() === 0){
-        this.gameOver = true;
+        const losingPlayerIndex = this.players.indexOf(player);
+        const winningPlayerIndex = 1 - losingPlayerIndex;
+        this.gameOver = {winner:this.players[winningPlayerIndex], loser: this.players[losingPlayerIndex]};
         return;
       }
       if(player.turn === true){
