@@ -1,5 +1,17 @@
 const getCreature = require('./generate_monster');
 
+class Team{
+  constructor(team){
+    for(const monster of team){
+      this[monster.id] = monster;
+    }
+  }
+  // returns number of alive monsters
+  aliveMonsters(){
+    return Object.keys(this).length;
+  }
+}
+
 const generateTeam = (team) => {
   const teamMembers = [];
   // spin up the promises
@@ -7,12 +19,8 @@ const generateTeam = (team) => {
     teamMembers.push(getCreature(creature));
   });
   // Once all the teamMembers are pulled.
-  return Promise.all(teamMembers).then(team => {
-    const teamObj = {};
-    team.forEach(monster => {
-      teamObj[monster.id] = monster;
-    });
-    return teamObj;
+  return Promise.all(teamMembers).then(teamMembers => {
+    return new Team(teamMembers);
   });
 };
 
