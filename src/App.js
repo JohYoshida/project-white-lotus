@@ -26,7 +26,6 @@ class App extends Component {
       this.setState({ loggedin: false });
     }
   }
-
   login = (state) => {
     const { cookies } = this.props;
     fetch(`/users/${state.email}/${state.password}`).then(res => {
@@ -117,6 +116,7 @@ class App extends Component {
               <Route path="/teams" component={ Teams } />
               <Route path="/battle" component={ Battle }/>
             </div>
+          </div>
           </div>
         </Router>
       );
