@@ -8,20 +8,20 @@ import Player from './components/Player.jsx';
 class Battle extends Component {
   constructor(props) {
     super(props);
-    this.state = {ready: false, id:null, game:{}, messages: []};
+    this.state = {ready: false, game:{}, messages: []};
     this.joinGame = this.joinGame.bind(this);
   }
   // Handles sending join game requests.
   joinGame(event){
     this.state.ready || this.setState({ready:true});
-    this.setState({id:uuid()})
+    this.setState({battlerId:uuid()})
     const battleComponent = this;
     const button = event.target;
     // build the WebSocket.
     this.socket = new WebSocket('ws://localhost:3001/battles/1');
     this.socket.addEventListener('open', () => {
       /* @TODO: Make this.state.id a prop passed down from app. */
-      this.socket.send(JSON.stringify({messageType: 'team', team:'1,2,3', userid: this.state.userid}));
+      this.socket.send(JSON.stringify({messageType: 'team', team:'1,2,3', battlerId: this.state.battlerId}));
     });
     this.socket.addEventListener('message', (event) => {
       // test if the message is json

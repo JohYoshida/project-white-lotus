@@ -33,8 +33,7 @@ class Player {
       }
     }
     this.findActiveMonster();
-    this.turn = false;
-    return {messages: [`User has changed their active monster to ${this.activeMonster.name}`]};
+    return [`User has changed their active monster to ${this.activeMonster.name}`];
   }
   findActiveMonster(){
     for(const monsterId in this.team){

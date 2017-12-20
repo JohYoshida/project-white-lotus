@@ -16,7 +16,8 @@ class Game{
       const {activePlayer, idlePlayer} = this;
       const {options, name} = actionObj;
       const messages = activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
-      idlePlayer.checkForDeath();
+      // switch turns, check for deaths
+      this.switchTurns();
       return messages;
     };
 
@@ -46,9 +47,9 @@ class Game{
     // this is used to execute position shifts, takes the id of the monster through the action object
     // actionObj = {action:'activate', id:{monster_id}}
     const activate = (actionObj) => {
-      const {activePlayer, idlePlayer} = this;
+      const {activePlayer} = this;
       const monsterId = actionObj.monsterId;
-      idlePlayer.turn = true;
+      this.switchTurns();
       return activePlayer.activateMonster(monsterId);
     };
     // All possible actions collected here.
@@ -58,6 +59,12 @@ class Game{
       activate
     };
     this.findActivePlayer();
+  }
+  // handles switching turns and checking for deaths.
+  switchTurns(){
+    this.idlePlayer.checkForDeath();
+    this.activePlayer.turn = false;
+    this.idlePlayer.turn = true;
   }
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
@@ -75,15 +82,16 @@ class Game{
   }
   // Used to sort the action object into the appropriate function.
   takeAction(actionObj){
-    // Look for the appropriate action.
-    const messageObj = this.actions[actionObj.action](actionObj);
+    const messages = this.actions[actionObj.action](actionObj);
+    // After action is over, check active players and run passives if applicable.
     const passiveMessages = this.findActivePlayer(actionObj);
     if(passiveMessages){
       for(const message of passiveMessages){
-        messageObj.messages.push(message);
+        messages.push(message);
       }
     }
-    return messageObj;
+    // Returns log of changes.
+    return messages;
   }
 }
 // class method used to generate a game, for testing.
