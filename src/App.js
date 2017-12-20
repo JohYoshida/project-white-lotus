@@ -12,6 +12,7 @@ class App extends Component {
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
   };
+
   constructor(props) {
     super(props);
     this.register = this.register.bind(this);
@@ -32,7 +33,7 @@ class App extends Component {
     }
   }
 
-  login(event){
+  login(event) {
     event.preventDefault();
     const { cookies } = this.props;
     const form = event.target.parentNode;
@@ -56,13 +57,13 @@ class App extends Component {
     });
   }
 
-  logout(event){
+  logout(event) {
     const { cookies } = this.props;
     cookies.remove('id');
     this.setState({ id: '', loggedin: false});
   }
 
-  register(event){
+  register(event) {
     event.preventDefault();
     const { cookies } = this.props;
     const form = event.target.parentNode;
@@ -100,23 +101,23 @@ class App extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({creature: creature})
+      body: JSON.stringify({creature: creature, cost: 50})
     }).then(res => {
       res.json().then(data => {
-        console.log('New Monster:', data);
+        this.setState({brouzoff: data.brouzoff});
       });
     });
   }
 
   purchaseEgg(event) {
     event.preventDefault();
-    this.clientCharge(50);
+    // this.clientCharge(50);
     this.fetchNewMonster(event, 'kaiju');
   }
 
   purchaseCrate(event) {
     event.preventDefault();
-    this.clientCharge(50);
+    // this.clientCharge(50);
     this.fetchNewMonster(event, 'mecha');
   }
 
