@@ -31,10 +31,13 @@ class Battle extends Component {
       }
       if(isJSON){
         const parsedMessage = JSON.parse(event.data);
-        const {game, message} = parsedMessage;
-        const messages = battleComponent.state.messages;
-        messages.push(message);
-        battleComponent.setState({game, messages});
+        const {game, messages} = parsedMessage;
+        const messagesInState = battleComponent.state.messages;
+        // put new messages in the state
+        if(messages){
+          messages.forEach(message => messagesInState.push(message));
+        }
+        battleComponent.setState({game, messages: messagesInState});
         return;
       }
     });
