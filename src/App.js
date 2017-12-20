@@ -41,7 +41,7 @@ class App extends Component {
       }
     }).then(res => {
       res.json().then(data => {
-        if(data!=='Not found'){
+        if(!data.error){
             cookies.set('id',data.id,{path:'/'});
             this.setState({loggedin:true});
           }
@@ -88,11 +88,12 @@ class App extends Component {
 
   fetchNewMonster(event, creature) {
     fetch('/monsters/', {
+      credentials: 'same-origin',
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({creature: creature, userid: 1})
+      body: JSON.stringify({creature: creature})
     }).then(res => {
       res.json().then(data => {
         console.log('New Monster:', data);
