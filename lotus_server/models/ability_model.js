@@ -6,6 +6,9 @@ const Ability = bookshelf.Model.extend({
 
 const abilityFuncs = {
   avoid: function(player){
+    if (!player.activeMonster) {
+      return;
+    }
     player.activeMonster.hp += 1;
     // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
     this.passiveActive = false;

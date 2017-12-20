@@ -36,28 +36,21 @@ module.exports = (server) => {
           }
           break;
         case 'action' : {
-          console.log('Action Message:', msg);
           switch(parsedMsg.action) {
           case 'activate': {
             room.game.takeAction(parsedMsg);
-            let player = room.game.idlePlayer.id;
-            let activeMonster = room.game.idlePlayer.activeMonster.name
             ws.send(JSON.stringify({
               game: room.game,
-              message: `Changed Player ${player}\'s active monster to ${activeMonster}`
+              message: 'Changed Player active monster to activeMonster.'
             }));
             break;
           }
           case 'attack': {
-            let playerMonster = room.game.activePlayer.activeMonster.name;
-            let enemyMonster = room.game.idlePlayer.activeMonster.name;
-            let prevHealth = room.game.idlePlayer.activeMonster.hp;
             room.game.takeAction(parsedMsg);
-            let newHealth = room.game.activePlayer.activeMonster.hp;
             // If there is gameover info, send back game is over!
             ws.send(JSON.stringify({
               game: room.game,
-              message: room.game.gameOver ? 'Game is over!' : `${playerMonster} dealt ${prevHealth - newHealth} damage to ${enemyMonster}`
+              message: room.game.gameOver ? 'Game is over!' : 'playerMonster dealt int damage to enemyMonster'
             }));
             break;
           }

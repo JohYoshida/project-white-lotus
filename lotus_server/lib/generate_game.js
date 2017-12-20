@@ -7,7 +7,6 @@ class Game{
     this.players[0].turn = true;
     this.activePlayer = null;
     this.idlePlayer = null;
-    this.findActivePlayer();
     this.gameOver = false;
 
     /* @TODO put these functions in a seperate file and import them ?*/
@@ -35,6 +34,9 @@ class Game{
     // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
     // actionObj = {action:'passive'}
     const passive = () => {
+      if(!this.activePlayer.activeMonster){
+        return;
+      }
       for(let monsterId in this.activePlayer.team){
         const {team} = this.activePlayer;
         const monster = team[monsterId];
@@ -66,6 +68,7 @@ class Game{
       passive,
       activate
     };
+    this.findActivePlayer();
   }
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
@@ -76,12 +79,14 @@ class Game{
         this.gameOver = {winner:this.players[winningPlayerIndex], loser: this.players[losingPlayerIndex]};
         return;
       }
-      if(player.turn === true){
-        this.activePlayer = player;
-      } else {
-        this.idlePlayer = player;
+      // If the turn hasn't changed
+      if(player.turn && this.activePlayer === player){
+        return;
       }
+      player.turn ? this.activePlayer = player : this.idlePlayer = player;
     }
+    // executes passives
+    this.actions.passive();
   }
   // Used to sort the action object into the appropriate function.
   takeAction(actionObj){
