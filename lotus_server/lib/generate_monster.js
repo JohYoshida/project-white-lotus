@@ -36,21 +36,13 @@ class CompleteMonster {
   }
   // sets up this.attacks property, attributes is a bookshelf attack object
   set_attacks(attributes, altAttributes) {
-    // assign all the attack attributes
+    this.attacks = {};
     const {id, name, description} = attributes;
     const {altId, altName, altDescription} = altAttributes;
-    let attackOne = {};
-    let attackTwo = {};
-    const attacks = [];
-    // build the first attack
-    attackOne = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
-    attacks.push(attackOne);
+    this.attacks[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
     if(altName){
-      attackTwo = {id: altId, name: altName, description: altDescription || 'Attack 2 description', func: attackFuncs[altName].bind(this)};
-      attacks.push(attackTwo);
+      this.attacks[altName]  = {id: altId, name: altName, description: altDescription || 'Attack 2 description', func: attackFuncs[altName].bind(this)};
     }
-    // set this.attacks to the attacks array.
-    this.attacks = attacks;
   }
   // Sets up abilities, should be implemented as above.
   set_ability(name) {

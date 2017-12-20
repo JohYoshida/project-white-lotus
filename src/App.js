@@ -41,7 +41,7 @@ class App extends Component {
       }
     }).then(res => {
       res.json().then(data => {
-        if(data!=='Not found'){
+        if(!data.error){
             cookies.set('id',data.id,{path:'/'});
             this.setState({loggedin:true});
           }
