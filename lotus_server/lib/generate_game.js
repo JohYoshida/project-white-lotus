@@ -8,59 +8,51 @@ class Game{
     this.activePlayer = null;
     this.idlePlayer = null;
     this.gameOver = false;
-
-    // action handlers
-    // Used to execute attack abilities. Options are optional.
-    // actionObj = {action:'attack', name:{{attack_name}}, [options:{options}]}
-    const attack = (actionObj) => {
-      const {activePlayer, idlePlayer} = this;
-      const {options, name} = actionObj;
-      const messages = activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
-      // switch turns, check for deaths
-      this.switchTurns();
-      return messages;
-    };
-
-    // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
-    // actionObj = {action:'passive'}
-    const passive = () => {
-      const {activePlayer} = this;
-      const {team} = activePlayer;
-      const messages = [];
-      if(!activePlayer.activeMonster){
-        return;
-      }
-      for(let monsterId in this.activePlayer.team){
-        const monster = team[monsterId];
-        if(monster.bench && monster.passiveActive && monster.ability){
-          messages.push(monster.ability(activePlayer));
-        }
-        // if there is a dot on the monster, activate it.
-        if(monster.dot.length > 1){
-          monster.dot.forEach(dot => {
-            messages.push(dot.func(activePlayer));
-          });
-        }
-      }
-      return messages;
-    };
-    // this is used to execute position shifts, takes the id of the monster through the action object
-    // actionObj = {action:'activate', id:{monster_id}}
-    const activate = (actionObj) => {
-      const {activePlayer} = this;
-      const monsterId = actionObj.monsterId;
-      this.switchTurns();
-      return activePlayer.activateMonster(monsterId);
-    };
-    // All possible actions collected here.
-    this.actions = {
-      attack,
-      passive,
-      activate
-    };
     this.findActivePlayer();
   }
-  // handles switching turns and checking for deaths.
+  // Used to execute attack abilities. Options are optional.
+  // actionObj = {action:'attack', name:{{attack_name}}, [options:{options}]}
+  attackDo(actionObj){
+    const {activePlayer, idlePlayer} = this;
+    const {options, name} = actionObj;
+    const messages = activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
+    // switch turns, check for deaths
+    this.switchTurns();
+    return messages;
+  }
+  // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
+  passive(){
+    const {activePlayer} = this;
+    const {team} = activePlayer;
+    const messages = [];
+    if(!activePlayer.activeMonster){
+      return;
+    }
+    for(let monsterId in team){
+      const monster = team[monsterId];
+      if(monster.bench && monster.passiveActive && monster.ability){
+        messages.push(monster.ability(activePlayer));
+      }
+      // if there is a dot on the monster, activate it.
+      if(monster.dot.length > 1){
+        monster.dot.forEach(dot => {
+          messages.push(dot.func(activePlayer));
+        });
+      }
+    }
+    return messages;
+  }
+  // this is used to execute position shifts, takes the id of the monster through the action object
+  // actionObj = {action:'activate', id:{monster_id}}
+  activateDo(actionObj){
+    const {activePlayer} = this;
+    const monsterId = actionObj.monsterId;
+    if(!monsterId){
+      return;
+    }
+    this.switchTurns();
+    return activePlayer.activateMonster(monsterId);
+  }
   switchTurns(){
     this.idlePlayer.checkForDeath();
     this.activePlayer.turn = false;
@@ -78,11 +70,10 @@ class Game{
       player.turn ? this.activePlayer = player : this.idlePlayer = player;
     }
     // executes passives
-    return this.actions.passive();
+    return this.passive();
   }
-  // Used to sort the action object into the appropriate function.
   takeAction(actionObj){
-    const messages = this.actions[actionObj.action](actionObj);
+    const messages = this[actionObj.action + 'Do'](actionObj);
     // After action is over, check active players and run passives if applicable.
     const passiveMessages = this.findActivePlayer(actionObj);
     if(passiveMessages){
