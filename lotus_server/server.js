@@ -8,6 +8,7 @@ const PORT = 3001;
 const WebSocket = require('ws');
 const expressws = require('express-ws')(server);
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // database setup
 const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
@@ -29,6 +30,7 @@ const monsterRouter = require('./routes/monster_routes')(knex);
 server.use(bodyParser.urlencoded({ extended: false }));
 // This is required to parse POST fetch requests for the store
 server.use(bodyParser.json());
+server.use(cookieParser())
 
 // Default room for testing.
 socketRouter.genBattle('1');
@@ -36,19 +38,15 @@ socketRouter.genBattle('1');
 server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);
 
-server.get('/users/:email/:password', (req, res) => {
+server.post('/login', (req, res) => {
   // find a user by email
-  generateUser(res, req.params.email);
+  console.log(req.body);
+  generateUser(res, req.body.email, req.body.password);
 });
-server.get('/create/:email/:password', (req, res) => {
+server.post('/users', (req, res) => {
   // find a user by email
   addUser(res, req.params.email,req.params.password);
 });
-// Find a single monster so it can be fetched by React Monster component
-server.get('/monsters/:id', (req, res) => {
-  buildMonsterJSON(res, req.params.id);
-});
-
 
 // Start server
 server.listen(PORT, '0.0.0.0', 'localhost', () => {

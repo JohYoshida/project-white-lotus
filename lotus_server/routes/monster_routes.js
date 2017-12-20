@@ -11,7 +11,7 @@ module.exports = (db) => {
   // Find monsters so they can be fetched by React Monsters component
   monsterRouter.get('/', (req, res) => {
     // Get all monster IDs
-    buildMonstersJSON(res);
+    buildMonstersJSON(res, req.cookies.id);
   });
 
   // Find a single monster so it can be fetched by React Monster component
@@ -21,8 +21,9 @@ module.exports = (db) => {
 
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
-    console.log('Request Body:', req.body);
-    const {creature, userid} = req.body;
+    const {userid} = req.cookies;
+    const {creature} = req.body;
+    
     if(!creature || !userid){
       return;
     }
