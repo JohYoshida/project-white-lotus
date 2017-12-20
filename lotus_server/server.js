@@ -40,7 +40,6 @@ server.use('/monsters', monsterRouter);
 
 server.post('/login', (req, res) => {
   // find a user by email
-  console.log(req.body);
   generateUser(res, req.body.email, req.body.password);
 });
 server.post('/users', (req, res) => {
