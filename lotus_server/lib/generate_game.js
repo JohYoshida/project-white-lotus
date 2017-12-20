@@ -15,32 +15,29 @@ class Game{
     const attack = (actionObj) => {
       const {activePlayer, idlePlayer} = this;
       const {options, name} = actionObj;
-      console.log('actionObj', actionObj);
-      console.log('name', name);
-      console.log(activePlayer.activeMonster.attacks);
+      const messages = activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
       idlePlayer.checkForDeath();
-      return activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
+      return messages;
     };
 
     // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
     // actionObj = {action:'passive'}
     const passive = () => {
       const {activePlayer} = this;
+      const {team} = activePlayer;
       const messages = [];
       if(!activePlayer.activeMonster){
         return;
       }
       for(let monsterId in this.activePlayer.team){
-        const {team} = activePlayer;
         const monster = team[monsterId];
         if(monster.bench && monster.passiveActive && monster.ability){
-          messages.push(activePlayer.executePassive(monster.ability));
+          messages.push(monster.ability(activePlayer));
         }
         // if there is a dot on the monster, activate it.
-        /* @TODO: implment DOT */
         if(monster.dot.length > 1){
           monster.dot.forEach(dot => {
-            messages.push(activePlayer.executePassive(dot.func));
+            messages.push(dot.func(activePlayer));
           });
         }
       }
@@ -63,8 +60,7 @@ class Game{
     this.findActivePlayer();
   }
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
-  findActivePlayer(actionbObj){
-    console.log(actionbObj);
+  findActivePlayer(){
     for(const player of this.players){
       if(player.team.aliveMonsters() === 0){
         const losingPlayerIndex = this.players.indexOf(player);

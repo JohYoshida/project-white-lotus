@@ -23,19 +23,6 @@ class Player {
       }
     }
   }
-  // Executes an active action and switches turn. Can be passed an action (such as unbenching a monster), or just be used to switch turns.
-  executeActive(activeAction){
-    if (activeAction) {
-      activeAction(this);
-    }
-    this.checkForDeath();
-    this.turn = false;
-  }
-  // Executes a passive acction, like taking damage. A passive acton is essentially "being attacked".
-  executePassive(passiveAction){
-    /* @TODO this should apply rather than pass this, makes for more succinct attack functions */
-    passiveAction(this);
-  }
   activateMonster(monsterId){
     const {team} = this;
     for(const id in team){

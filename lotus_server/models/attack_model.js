@@ -11,7 +11,7 @@ const attackFuncs = {
     attackedPlayer.activeMonster.takeDamage(damage);
     // We set the player turn here because, so it's optional.
     attackedPlayer.turn = true;
-    return {'messages': [`${attackedPlayer.activeMonster.name} took ${damage}! They have ${attackedPlayer.activeMonster.hp}!`]}
+    return {'messages': [`${attackedPlayer.activeMonster.name} took ${damage} damage! They have ${attackedPlayer.activeMonster.hp} hp!`]}
   }
 };
 
