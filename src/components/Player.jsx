@@ -9,28 +9,23 @@ class Player extends Component {
     this.unBench = this.unBench.bind(this);
   }
   generateUserCards(){
-    const {players} = this.props.game;
-    if(!players){
+    const player = this.props.game.activePlayer;
+    if(!player){
       return (<p>Waiting for other player</p>);
     }
     let cards = [];
     // compile attacks into buttons for display, takes a monster argument as a function
-    for(let player of players){
-      if(player.id === this.props.game.activePlayer.id){
-        for(const monsterid in player.team){
-          const monster = player.team[monsterid];
-          /* @TODO: Add unbenchning functionality */
-          cards.push(
-            <article key={monster.id} className='user-card'>
-              <h3>{monster.name}</h3>
-              <p>{monster.hp}HP</p>
-              {monster.bench ? <button onClick={this.unBench} data-id={monster.id} className="selectMonster">Unbench</button> : this.showAttacks(monster)}
-            </article>
-          );
-        }
-        return cards;
-      }
+    for(const monsterid in player.team){
+      const monster = player.team[monsterid];
+      cards.push(
+        <article key={monster.id} className='user-card'>
+          <h3>{monster.name}</h3>
+          <p>{monster.hp}HP</p>
+          {monster.bench ? <button onClick={this.unBench} data-id={monster.id} className="selectMonster">Unbench</button> : this.showAttacks(monster)}
+        </article>
+      );
     }
+    return cards;
   }
   showAttacks(monster){
     const attacks = [];
