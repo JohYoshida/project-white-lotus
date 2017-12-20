@@ -5,71 +5,42 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      email:"",
-      password:"",
-      register:false,
-      buttontxt:"Sign up"
-    }
+    this.state = {register:false};
+    this.toggle = this.toggle.bind(this);
   }
-  toggle = (event) =>{
+  toggle(event){
     if(this.state.register){
-    this.setState({register:false,buttontxt:"Login"});
+      this.setState({register:false, buttontxt:"Login"});
     }else{
-      this.setState({register:true,buttontxt:"Sign up"});
+      this.setState({register:true, buttontxt:"Sign up"});
     }
-  }
-  login = (event) =>{
-    console.log(this.state)
-    this.props.login(this.state);
-  }
-  changeEmail = (e) =>{
-    this.setState({email:e.target.value});
-  }
-  changePass = (e) =>{
-    this.setState({password:e.target.value});
   }
   render() {
     return (
-      <div >
-        <div hidden = {this.state.register}>
-          Login
-          <br/>
-          <label>
-          Email:
-          <input onChange  = {this.changeEmail} />
-          </label>
-          <br/>
-          <label>
-          Password
-          <input type = "password" onChange = {this.changePass} />
-          </label>
-
-          <button onClick={(event )=> this.login(event)}>Submit</button>
-           Or
-          <button onClick = {(event)=> this.toggle(event)}>Sign Up</button>
-          </div>
-
-          <br/>
-
-          <div hidden = {!this.state.register }>
-            <button onClick = {(event)=> this.toggle(event)}>Login</button>
-            <br/>
-            Please input your email and password
-            <br/>
-          <label>
-          Email:
-          <input onChange  = {this.changeEmail} />
-          </label>
-          <br/>
-          <label>
-          Password
-          <input type = "password" onChange = {this.changePass} />
-          </label>
-          <br/>
-           <button onClick={(event )=> this.props.register(this.state)}>Submit</button>
-          </div>
-          </div>
+      <div>
+        <div hidden={this.state.register}>
+          <form id="loginForm">
+            <h4>Login</h4>
+            <label>Username</label>
+            <input id='username' />
+            <label>Password</label>
+            <input id='password' type='password' />
+            <button onClick={this.props.login}>Submit</button>
+          </form>
+          <p>Or <button onClick = {this.toggle}>Sign Up</button></p>
+        </div>
+        <div hidden={!this.state.register}>
+          Please input your email and password
+          <form id="registerForm">
+            <h4>Login</h4>
+            <label>Username</label>
+            <input id='username' />
+            <label>Password</label>
+            <input id='password' type='password' />
+            <button onClick={this.props.register}>Submit</button>
+          </form>
+        </div>
+      </div>
     );
   }
 }

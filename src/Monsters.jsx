@@ -12,7 +12,7 @@ class Monsters extends Component {
 
   componentDidMount() {
     // TODO: move to helper function
-    fetch('/monsters').then(res => {
+    fetch('/monsters', {credentials: 'same-origin'}).then(res => {
       res.json().then(data => {
         this.setState({monsters: data});
         this.setState({ready: true});
