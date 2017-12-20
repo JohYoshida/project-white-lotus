@@ -3,30 +3,35 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Battle from './Battle.jsx';
 import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
-import Store from './Store.jsx'
-import Login from './Login.jsx'
+import Store from './Store.jsx';
+import Login from './Login.jsx';
 import { instanceOf } from 'prop-types';
 import {withCookies,Cookies} from 'react-cookie';
+
 class App extends Component {
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
   };
   constructor(props) {
     super(props);
+    this.register = this.register.bind(this);
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
-    this.state = {loggedin :false};
-    this.login = this.login.bind(this);
-    this.register = this.register.bind(this);
-    this.logout = this.logout.bind(this);
+    this.state = {
+      id: '',
+      loggedin: false
+    };
   }
 
   componentWillMount() {
     const { cookies } = this.props;
     if(cookies.get('id')){
-      this.setState ({id:cookies.get('id'), loggedin:true});
+      this.setState ({ id: cookies.get('id'), loggedin: true });
     }
   }
+
   login(event){
     event.preventDefault();
     const { cookies } = this.props;
@@ -43,18 +48,20 @@ class App extends Component {
       res.json().then(data => {
         if(!data.error){
             cookies.set('id',data.id,{path:'/'});
-            this.setState({loggedin:true});
+            this.setState({ id: cookies.get('id'), loggedin: true });
           }
         }).catch((err)=>{
-          console.log("Promise error in generate_user.js", err);
+          console.log('Promise error in generate_user.js', err);
         });
     });
   }
+
   logout(event){
     const { cookies } = this.props;
     cookies.remove('id');
-    this.setState({loggedin:false,id:""});
+    this.setState({ id: '', loggedin: false});
   }
+
   register(event){
     event.preventDefault();
     const { cookies } = this.props;
@@ -66,13 +73,13 @@ class App extends Component {
       method: 'POST',
       body: encodeURI(`email=${userName}&password=${password}`),
       headers: {
-        'content-type' : 'application/x-www-form-urlencoded'
+        'content-type': 'application/x-www-form-urlencoded'
       }
     }).then(res => {
       res.json().then(data => {
         if(!data.error){
-            cookies.set('id',data.id,{path:'/'});
-            this.setState({loggedin:true});
+            cookies.set('id', data.id, {path: '/'});
+            this.setState({ id: cookies.get('id'), loggedin: true });
           }
         }).catch((err)=>{
           console.log("Promise error in generate_user.js", err);
@@ -115,11 +122,11 @@ class App extends Component {
 
   render() {
       const { id } = this.state;
-      if(this.state.loggedin){
+      if (this.state.loggedin){
         return (
           <Router>
             <div>
-            <h1> {id}</h1>
+            <h1>{ id }</h1>
             <button onClick = {(event)=> this.logout(event)} >Log out</button>
             <div hidden={!this.state.loggedin}>
               <ul>
@@ -149,7 +156,6 @@ class App extends Component {
           hidden = {this.state.loggedin}
         />);
     }
-    return(<Login state = {this.state} login = {this.login} register = {this.register} hidden = {this.state.loggedin}/>);
   }
 }
 
