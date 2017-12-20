@@ -34,7 +34,8 @@ class Player extends Component {
   }
   showAttacks(monster){
     const attacks = [];
-    for(const attack of monster.attacks){
+    for(const attackName in monster.attacks){
+      const attack = monster.attacks[attackName];
       attacks.push(<button key={attack.id} onClick={this.sendAttack} data-name={attack.name} title={attack.description}>{attack.name}</button>);
     }
     return (
