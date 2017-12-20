@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 class Opponent extends Component {
-  constructor(props) {
-    super(props);
-  }
   generateUserCards(){
     const {players} = this.props.game;
     if(!players){
@@ -19,7 +16,7 @@ class Opponent extends Component {
           cards.push(
             <article key={monster.id} className='user-card'>
               <h3>{monster.name}</h3>
-              <p>{monster.hp}</p>
+              <p>{monster.hp}HP</p>
             </article>
           );
         }

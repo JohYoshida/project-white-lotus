@@ -3,8 +3,8 @@ const knex = require('knex')(dbconfig);
 const getMonster = require('./generate_monster');
 
 
-const generateMonstersJSON = (res) => {
-  knex.from('monsters').column('id')
+const generateMonstersJSON = (res, userid) => {
+  knex.from('monsters').column('id').where('user_id', userid)
     .then(ids => {
       const monsterIDs = [];
       for (let index of ids) {

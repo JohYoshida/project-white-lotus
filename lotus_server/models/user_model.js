@@ -2,7 +2,7 @@ const bookshelf = require('./lib/bookshelf');
 
 // returns a random element from a table
 const randomComponentId = (collection) => {
-  return collection[Math.floor(Math.random()*(collection.length-1))].id;
+  return collection[Math.round(Math.random()*(collection.length-1))].id;
 };
 
 module.exports = (db) => {
