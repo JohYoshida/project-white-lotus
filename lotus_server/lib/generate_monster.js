@@ -41,13 +41,13 @@ class CompleteMonster {
     const {altId, altName, altDescription} = altAttributes;
     let attackOne = {};
     let attackTwo = {};
-    const attacks = [];
+    const attacks = {};
     // build the first attack
     attackOne = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
-    attacks.push(attackOne);
+    attacks[attackOne.name] = attackOne;
     if(altName){
       attackTwo = {id: altId, name: altName, description: altDescription || 'Attack 2 description', func: attackFuncs[altName].bind(this)};
-      attacks.push(attackTwo);
+      attacks[attackTwo.name] = attackTwo;
     }
     // set this.attacks to the attacks array.
     this.attacks = attacks;

@@ -5,14 +5,13 @@ const Attack = bookshelf.Model.extend({
 });
 
 const attackFuncs = {
-  scratch: function(){
-    return (player) => {
-      // Attacks return a function which calls a state change on an object.
-      const damage = 1;
-      player.activeMonster.takeDamage(damage);
-      // We set the player turn here because, so it's optional.
-      player.turn = true;
-    };
+  scratch: function(attackedPlayer, options){
+    // Attacks return a function which calls a state change on an object.
+    const damage = 1;
+    attackedPlayer.activeMonster.takeDamage(damage);
+    // We set the player turn here because, so it's optional.
+    attackedPlayer.turn = true;
+    return {'messages': [`${attackedPlayer.activeMonster.name} took ${damage}! They have ${attackedPlayer.activeMonster.hp}!`]}
   }
 };
 

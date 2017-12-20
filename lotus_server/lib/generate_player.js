@@ -35,7 +35,6 @@ class Player {
   executePassive(passiveAction){
     /* @TODO this should apply rather than pass this, makes for more succinct attack functions */
     passiveAction(this);
-    this.checkForDeath();
   }
   activateMonster(monsterId){
     const {team} = this;
@@ -47,6 +46,8 @@ class Player {
       }
     }
     this.findActiveMonster();
+    this.turn = false;
+    return {messages: [`User has changed their active monster to ${this.activeMonster.name}`]};
   }
   findActiveMonster(){
     for(const monsterId in this.team){

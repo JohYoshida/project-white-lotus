@@ -36,33 +36,21 @@ module.exports = (server) => {
           }
           break;
         case 'action' : {
-          switch(parsedMsg.action) {
-          case 'activate': {
-            room.game.takeAction(parsedMsg);
-            ws.send(JSON.stringify({
-              game: room.game,
-              message: 'Changed Player active monster to activeMonster.'
-            }));
-            break;
+          const {action} = parsedMsg;
+          if(!action){
+            return;
           }
-          case 'attack': {
-            room.game.takeAction(parsedMsg);
-            // If there is gameover info, send back game is over!
-            ws.send(JSON.stringify({
-              game: room.game,
-              message: room.game.gameOver ? 'Game is over!' : 'playerMonster dealt int damage to enemyMonster'
-            }));
-            break;
-          }
-          default:
-            console.log('Didn\'t recognize that action type.');
-          }
+          const messages = room.game.takeAction(parsedMsg).messages;
+          // If there is gameover info, send back game is over!
+          ws.send(JSON.stringify({
+            game: room.game,
+            messages: room.game.gameOver ? ['Game is over!'] : messages
+          }));
           break;
         }
         default:
           console.log('Didn\'t recognize that message type.');
         }
-
         ws.send(`Echo from /battle/, ${msg}`);
       });
     });
