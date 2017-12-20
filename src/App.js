@@ -20,6 +20,7 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
+    this.getBrouzoff = this.getBrouzoff.bind(this);
     this.state = {
       id: '',
       loggedin: false
@@ -30,6 +31,18 @@ class App extends Component {
     const { cookies } = this.props;
     if(cookies.get('id')){
       this.setState ({ id: cookies.get('id'), loggedin: true });
+    }
+  }
+
+  getBrouzoff() {
+    const { cookies } = this.props;
+    if(cookies.get('id')){
+      // get Brouzoff
+      fetch(`/users/${this.state.id}`).then(res => {
+        res.json().then(data => {
+          this.setState({brouzoff: data.brouzoff});
+        });
+      });
     }
   }
 
@@ -48,9 +61,11 @@ class App extends Component {
     }).then(res => {
       res.json().then(data => {
         if(!data.error){
-            cookies.set('id',data.id,{path:'/'});
+            cookies.set('id', data.id, {path: '/'});
             this.setState({ id: cookies.get('id'), loggedin: true });
           }
+        }).then(() => {
+          this.getBrouzoff();
         }).catch((err)=>{
           console.log('Promise error in generate_user.js', err);
         });
@@ -60,7 +75,7 @@ class App extends Component {
   logout(event) {
     const { cookies } = this.props;
     cookies.remove('id');
-    this.setState({ id: '', loggedin: false});
+    this.setState({ id: null, loggedin: false, brouzoff: null});
   }
 
   register(event) {
@@ -81,6 +96,7 @@ class App extends Component {
         if(!data.error){
             cookies.set('id', data.id, {path: '/'});
             this.setState({ id: cookies.get('id'), loggedin: true });
+            this.getBrouzoff();
           }
         }).catch((err)=>{
           console.log("Promise error in generate_user.js", err);
