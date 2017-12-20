@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+// This will throw warning 'Route is defined but never used'
+// but it's required for
+import { BrowserRouter as Route, Link } from 'react-router-dom';
 
 class Monsters extends Component {
   constructor(props) {
@@ -27,7 +29,7 @@ class Monsters extends Component {
       monsterArray.push(
         <li key={monster.id}>
           <Link to={`/monsters/${monster.id}`}>
-            <button onClick={this.showOne} id={monster.id}>
+            <button id={monster.id}>
               {monster.name}
             </button>
           </Link>

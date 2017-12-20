@@ -23,6 +23,7 @@ module.exports = (db) => {
   monsterRouter.post('/', (req, res) => {
     const {userid} = req.cookies;
     const {creature} = req.body;
+    
     if(!creature || !userid){
       return;
     }
@@ -35,6 +36,7 @@ module.exports = (db) => {
       user.buyMonster(creature).then(monster => {
         const monsterId = monster[0];
         db('monsters').where('id', monsterId).then(monster => {
+          console.log(monster[0]);
           res.send(JSON.stringify(monster[0]));
         });
       });
