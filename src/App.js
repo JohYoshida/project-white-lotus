@@ -99,7 +99,7 @@ class App extends Component {
             this.getBrouzoff();
           }
         }).catch((err)=>{
-          console.log("Promise error in generate_user.js", err);
+          console.log('Promise error in generate_user.js', err);
         });
     });
   }
@@ -144,7 +144,9 @@ class App extends Component {
           <Router>
             <div>
             <h1>{ id }</h1>
-            <button onClick = {this.logout} >Log out</button>
+            <Link to="/">
+              <button onClick = {this.logout} >Log out</button>
+            </Link>
             <div hidden={!this.state.loggedin}>
               <ul>
                 <li><Link to="/">Monsters</Link></li>
