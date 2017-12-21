@@ -12,6 +12,7 @@ import Login from './Login.jsx';
 
 // Functions
 import {postLogin, postRegister, setUserState} from './helpers/user_auth.js';
+import {postNewMonster} from './helpers/store.js';
 
 class App extends Component {
   static propTypes = {
@@ -77,15 +78,8 @@ class App extends Component {
     });
   }
 
-  fetchNewMonster(event, creature) {
-    fetch('/monsters/', {
-      credentials: 'same-origin',
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({creature: creature, cost: 50})
-    }).then(res => {
+  fetchNewMonster(creature) {
+    postNewMonster(creature).then(res => {
       res.json().then(data => {
         this.setState({brouzoff: data.brouzoff});
       });
@@ -95,13 +89,13 @@ class App extends Component {
   purchaseEgg(event) {
     event.preventDefault();
     // this.clientCharge(50);
-    this.fetchNewMonster(event, 'kaiju');
+    this.fetchNewMonster('kaiju');
   }
 
   purchaseCrate(event) {
     event.preventDefault();
     // this.clientCharge(50);
-    this.fetchNewMonster(event, 'mecha');
+    this.fetchNewMonster('mecha');
   }
 
   render() {
