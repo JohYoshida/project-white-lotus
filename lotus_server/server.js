@@ -15,12 +15,6 @@ const socketRouter = require('./routes/battles_routes')(server);
 const monsterRouter = require('./routes/monster_routes')(knex);
 
 // Functions
-const buildMonstersJSON = require('./lib/build_monsters_json');
-const buildMonsterJSON = require('./lib/build_monster_json');
-const generatePlayer = require('./lib/generate_player');
-const addUser = require('./lib/add_user');
-
-// Functions
 const loginUser = require('./lib/login_user');
 const registerUser = require('./lib/register_user');
 
@@ -43,8 +37,7 @@ server.post('/login', (req, res) => {
 });
 
 server.post('/users', (req, res) => {
-  // find a user by email
-  addUser(res, req.body.email, req.body.password);
+  registerUser(res, req.body.email, req.body.password);
 });
 
 server.get('/users/:id', (req, res) => {

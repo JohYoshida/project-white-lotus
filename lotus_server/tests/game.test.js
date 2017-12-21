@@ -60,6 +60,5 @@ test('Game should set state to game over if all monsters are dead', () => {
   }
   player.checkForDeath();
   game.findActivePlayer();
-  console.log(game);
   expect(game.gameOver.winner.id).toBe('2');
 });

@@ -144,7 +144,7 @@ class App extends Component {
           <Router>
             <div>
             <h1>{ id }</h1>
-            <button onClick = {(event)=> this.logout(event)} >Log out</button>
+            <button onClick = {this.logout} >Log out</button>
             <div hidden={!this.state.loggedin}>
               <ul>
                 <li><Link to="/">Monsters</Link></li>

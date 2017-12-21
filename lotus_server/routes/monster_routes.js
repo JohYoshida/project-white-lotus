@@ -28,7 +28,7 @@ module.exports = (db) => {
       return;
     }
     // Pull the user model and buy dat monster
-    new User({id: id}).fetch().then(user => {
+    new User({id}).fetch().then(user => {
       if (user.attributes.brouzoff < cost){
         res.send(JSON.stringify({error: 'Sorry, not enough Brouzoff'}));
         return;
@@ -36,7 +36,6 @@ module.exports = (db) => {
       user.buyMonster(creature, cost).then(monster => {
         const monsterId = monster[0];
         db('monsters').where('id', monsterId).then(monster => {
-          console.log(`User #${user.attributes.id}'s new monster:`, monster[0]);
           res.send(JSON.stringify({monster: monster[0], brouzoff: user.attributes.brouzoff}));
         });
       });
