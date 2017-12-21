@@ -5,7 +5,7 @@ import Modal from './components/Modal.jsx';
 import Opponent from './components/Opponent.jsx';
 import Player from './components/Player.jsx';
 import generateBattleSocket from './lib/websocket.js';
-import awardMoney from './lib/awardMoney.js';
+import editBrouzoff from './lib/editBrouzoff.js';
 
 class Battle extends Component {
   constructor(props) {

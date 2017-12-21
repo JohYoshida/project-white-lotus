@@ -1,4 +1,4 @@
-function awardMoney(playerId, amount) {
+function editBrouzoff(playerId, amount) {
   fetch(`http://localhost:3000/users/${playerId}`, {
       method: 'PATCH',
       body: encodeURI(`money=${amount}`),
@@ -14,4 +14,4 @@ function awardMoney(playerId, amount) {
   // ajax.send(JSON.stringify(BODY));
 }
 
-module.exports = awardMoney;
+module.exports = editBrouzoff;
