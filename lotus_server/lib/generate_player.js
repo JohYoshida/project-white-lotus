@@ -27,6 +27,7 @@ class Player {
     const {team} = this;
     for(const id in team){
       monsterId === id ? team[id].bench = false : team[id].bench = true;
+      if(team[id].bench) team[id].dots = [];
     }
     this.findActiveMonster();
     return [`User has changed their active monster to ${this.activeMonster.name}`];
