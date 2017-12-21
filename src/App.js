@@ -158,7 +158,7 @@ class App extends Component {
               <Route exact path="/" component={ Monsters } />
               <Route path="/monsters/:id" component={ Monster } />
               <Route path="/store" render={(props) => (
-                <Store {...props} user={this.state.user} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
+                <Store {...props} brouzoff={this.state.brouzoff} test={'test'} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
               )} />
               <Route path="/teams" component={ Teams } />
               <Route path="/battle" component={ Battle }/>
