@@ -21,23 +21,22 @@ module.exports = (db) => {
 
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
-    const {userid} = req.cookies;
-    const {creature} = req.body;
+    const {id} = req.cookies;
+    const {creature, cost} = req.body;
 
-    if(!creature || !userid){
+    if (!creature || !id){
       return;
     }
     // Pull the user model and buy dat monster
-    new User({id: userid}).fetch().then(user => {
-      if(user.attributes.brouzoff < 50){
+    new User({id}).fetch().then(user => {
+      if (user.attributes.brouzoff < cost){
         res.send(JSON.stringify({error: 'Sorry, not enough Brouzoff'}));
         return;
       }
-      user.buyMonster(creature).then(monster => {
+      user.buyMonster(creature, cost).then(monster => {
         const monsterId = monster[0];
         db('monsters').where('id', monsterId).then(monster => {
-          console.log(monster[0]);
-          res.send(JSON.stringify(monster[0]));
+          res.send(JSON.stringify({monster: monster[0], brouzoff: user.attributes.brouzoff}));
         });
       });
     });
