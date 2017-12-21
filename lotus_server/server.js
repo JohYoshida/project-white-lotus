@@ -22,7 +22,9 @@ const registerUser = require('./lib/register_user');
 server.use(bodyParser.urlencoded({ extended: false }));
 // This is required to parse POST fetch requests for the store
 server.use(bodyParser.json());
-server.use(cookieParser());
+
+// Cookie Parser
+server.use(cookieParser())
 
 // Default room for testing.
 socketRouter.genBattle('1');
@@ -33,8 +35,17 @@ server.use('/monsters', monsterRouter);
 server.post('/login', (req, res) => {
   loginUser(res, req.body.email, req.body.password);
 });
+
 server.post('/users', (req, res) => {
-  registerUser(res, req.params.email,req.params.password);
+  registerUser(res, req.body.email, req.body.password);
+});
+
+server.get('/users/:id', (req, res) => {
+  const { id } = req.params;
+  knex('users').first('brouzoff').where('id', id)
+    .then(brouzoff => {
+      res.send(JSON.stringify(brouzoff));
+    });
 });
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {

@@ -6,35 +6,54 @@ configure({ adapter: new Adapter() });
 // Required for this test file
 import React from 'react';
 import Battle from '../Battle.jsx';
-import sampleGameStartObj from './sample_game_start_obj'
+import sampleObjs from './sample_game_start_obj'
+
+const {sampleGameStartObj, sampleAttackObj, sampleUnbenchObj, sampleGameOverObj} = sampleObjs;
 
 // extensions
 import {mount} from 'enzyme';
-import { Server } from 'mock-socket';
-
+import { WebSocket, Server } from 'mock-socket';
 let battle = undefined;
 let mockServer = undefined;
 
-beforeEach(() => {
+beforeAll(() => {
   mockServer = new Server('ws://localhost:3001/battles/1');
-  mockServer.on('message', () => {
-    mockServer.send(JSON.stringify(sampleGameStartObj));
-  });
   battle = mount(<Battle />);
 });
 
-test('The battle should update the state with the new playerInfo', done => {
+test('The battle should update the state with the unbench buttons', done => {
+  mockServer.on('message', () => {
+    mockServer.send(JSON.stringify(sampleGameStartObj));
+  });
   battle.find('button').first().simulate('click');
   setTimeout(() => {
-    // A try/catch block is necessary when using a timeout with the done(); function. Otherwise thrown error goes no where.
     try {
-      const ready = battle.state('ready');
-      const game = battle.state('game');
-      expect(ready).toBe(true);
-      expect(game.players[0].id).toBe('1');
-      mockServer.stop(done);
+      battle.update();
+      expect(battle.find('button').length).toBe(3);
+      done();
     } catch (error) {
       done.fail(error);
     }
   }, 1000);
+});
+
+test('Click the attack button should cause damage to occur', done => {
+  mockServer.on('message', () => {
+    mockServer.send(JSON.stringify(sampleAttackObj));
+  });
+  battle.setState({game:sampleUnbenchObj.game});
+  expect(battle.state('game').idlePlayer.activeMonster.hp).toBe(11);
+  battle.update();
+  battle.find('button').first().simulate('click');
+  battle.update();
+  expect(battle.state('game').activePlayer.activeMonster.hp).toBe(10);
+  done();
+});
+
+test('When the game is over, a modal should appear.', done => {
+  battle.setState({game:sampleGameOverObj.game});
+  battle.update();
+  expect(battle.state('game').gameOver).toBeTruthy;
+  expect(battle.find('.modal').length).toBe(1);
+  done();
 });

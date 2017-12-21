@@ -1,4 +1,5 @@
 const bookshelf = require('./lib/bookshelf');
+const uuidv1 = require('uuid/v1');
 
 // returns a random element from a table
 const randomComponentId = (collection) => {
@@ -9,11 +10,11 @@ module.exports = (db) => {
   // Make the user model
   const User = bookshelf.Model.extend({
     tableName: 'users',
-    buyMonster: function(creature){
+    buyMonster: function(creature, cost){
       const user = this;
       // Returns a promise of a new monster.
       return new Promise(function(resolve){
-        user.set({brouzoff: user.attributes.brouzoff - 50});
+        user.set({brouzoff: user.attributes.brouzoff - cost});
         user.save().then(() => {
           Promise.all([
             db.select('id').from('bodies').where('creature', creature),
@@ -23,6 +24,7 @@ module.exports = (db) => {
             const bodies = components[0], heads = components[1], arms = components[2];
             // Make the monster.
             return {
+              id: uuidv1(),
               arm_id: randomComponentId(arms),
               body_id: randomComponentId(bodies),
               head_id: randomComponentId(heads),
