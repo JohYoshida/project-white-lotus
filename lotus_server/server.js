@@ -48,9 +48,12 @@ server.get('/users/:id', (req, res) => {
     });
 });
 
-// Give the place money
+// Change the player's money
 server.patch('/users/:id', (req, res) => {
-  console.log(req.body.money);
+  const userId = req.params.id;
+  let brouzoffChange = req.body.brouzoffChange;
+  knex.select().from('users').where('id', '=', userId)
+    .increment('brouzoff', brouzoffChange).then();
   res.status(204).send();
 });
 

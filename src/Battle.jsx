@@ -12,6 +12,7 @@ class Battle extends Component {
     super(props);
     this.state = {ready: false, game:{}, messages: []};
     this.joinGame = this.joinGame.bind(this);
+
   }
   // Handles sending join game requests.
   joinGame(event){
@@ -20,6 +21,7 @@ class Battle extends Component {
     const button = event.target;
     // build the WebSocket.
     this.socket = generateBattleSocket(this)
+
   }
   isWinner(){
     const {gameOver} = this.state.game;
