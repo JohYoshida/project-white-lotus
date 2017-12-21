@@ -32,18 +32,17 @@ module.exports = (wss, id) => {
   const socketFunctionality = (ws) => {
     const clients = wss.getWss(`/${id}`).clients;
     ws.broadcast = (data) => {
-      const {game} = data;
       clients.forEach(client => {
-        if(game.activePlayer.id === client.id){
-          game.activePlayer.id = client.id;
-          delete game.idlePlayer.id;
-        } else {
-          game.idlePlayer.id = client.id;
-          delete game.activePlayer.id;
+        // deep cloning object, note no functions are carried over, OK for this purpose.
+        const copiedData = JSON.parse(JSON.stringify(data));
+        const {game} = copiedData;
+        for(let player of game.players){
+          if(player.id !== client.id){
+            delete player.id;
+          }
         }
-        console.log(data.game.players);
         if(client.readyState === 1){
-          client.send(JSON.stringify(data));
+          client.send(JSON.stringify(copiedData));
         }
       });
     };
@@ -53,22 +52,25 @@ module.exports = (wss, id) => {
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
       case 'join': {
-        ws.id = parsedMsg.battlerId;
+        room.clients.forEach(client => {
+          if(!client.id) client.id = parsedMsg.battlerId;
+        });
         if(!battle) {
           setupRoom(room, parsedMsg).catch(() => delete ws.battle);
         } else {
           startGame(battle, parsedMsg).then(game => {
             delete battle.players;
             battle.game = game;
-            ws.broadcast({game: Object.assign(game), message:['Game started!']});
+            ws.broadcast({game: game, message:['Game started!']});
           });
         }
         break;
       }
       case 'action' : {
         const messages = handleActions(battle, parsedMsg);
+        // console.log(battle.game.players);
         ws.broadcast({
-          game: Object.assign(battle.game),
+          game: battle.game,
           messages: battle.game.gameOver ? ['Game is over!'] : messages
         });
         break;
