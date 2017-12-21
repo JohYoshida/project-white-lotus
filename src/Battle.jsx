@@ -5,6 +5,7 @@ import Modal from './components/Modal.jsx';
 import Opponent from './components/Opponent.jsx';
 import Player from './components/Player.jsx';
 import generateBattleSocket from './lib/websocket.js';
+import editBrouzoff from './lib/editBrouzoff.js';
 import './Battle.css'
 
 class Battle extends Component {
@@ -12,6 +13,7 @@ class Battle extends Component {
     super(props);
     this.state = {ready: false, game:{}, messages: [], player:{}, opponent:{}};
     this.joinGame = this.joinGame.bind(this);
+
   }
   // Handles sending join game requests.
   joinGame(event){
@@ -20,6 +22,7 @@ class Battle extends Component {
     const button = event.target;
     // build the WebSocket.
     this.socket = generateBattleSocket(this)
+
   }
   isWinner(){
     const {gameOver} = this.state.game;

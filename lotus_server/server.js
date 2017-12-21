@@ -48,6 +48,15 @@ server.get('/users/:id', (req, res) => {
     });
 });
 
+// Change the player's money
+server.patch('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  let brouzoffChange = req.body.brouzoffChange;
+  knex.select().from('users').where('id', '=', userId)
+    .increment('brouzoff', brouzoffChange).then();
+  res.status(204).send();
+});
+
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
 });

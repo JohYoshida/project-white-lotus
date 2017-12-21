@@ -17,7 +17,6 @@ const generateBattleSocket = (battleComponent) => {
       game.players.forEach(pc => {
         pc.id ? player = pc : opponent = pc;
       });
-      console.log(player);
       battleComponent.setState({game, messages: messagesInState, player, opponent});
     } catch(e) {
       console.log(e);
