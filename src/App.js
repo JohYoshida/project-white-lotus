@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { instanceOf } from 'prop-types';
+import {withCookies,Cookies} from 'react-cookie';
+
+// Components
 import Battle from './Battle.jsx';
 import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Store from './Store.jsx';
 import Login from './Login.jsx';
-import { instanceOf } from 'prop-types';
-import {withCookies,Cookies} from 'react-cookie';
+
+// Functions
+import {postLogin} from './helpers/user_auth.js';
 
 class App extends Component {
   static propTypes = {
@@ -49,16 +54,7 @@ class App extends Component {
   login(event) {
     event.preventDefault();
     const { cookies } = this.props;
-    const form = event.target.parentNode;
-    const userName = form.elements['username'].value;
-    const password = form.elements['password'].value;
-    fetch(`/login`, {
-      method: 'POST',
-      body: encodeURI(`email=${userName}&password=${password}`),
-      headers: {
-        'content-type' : 'application/x-www-form-urlencoded'
-      }
-    }).then(res => {
+    postLogin(event).then(res => {
       res.json().then(data => {
         if(!data.error){
             cookies.set('id', data.id, {path: '/'});
