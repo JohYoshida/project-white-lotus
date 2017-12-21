@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // This will throw warning 'Route is defined but never used'
-// but it's required for
+// but it's required for routing between monsters#index and monsters#show
 import { BrowserRouter as Route, Link } from 'react-router-dom';
 
 class Monsters extends Component {

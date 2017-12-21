@@ -7,7 +7,7 @@ class Store extends Component {
   }
 
   componentDidMount() {
-    if (this.props.user) {
+    if (this.props.brouzoff) {
       this.setState({ready: true})
     }
   }
@@ -16,7 +16,7 @@ class Store extends Component {
     return (
       <div>
         <h2>Store</h2>
-        <p>You have &#3647;{this.state.ready && this.props.user.brouzoff}</p>
+        <p>You have &#3647;{this.state.ready && this.props.brouzoff}</p>
         <div className="egg">
           <h4>Kaiju Egg</h4>
           <p className="price">&#3647;50</p>

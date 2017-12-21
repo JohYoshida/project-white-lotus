@@ -1,5 +1,15 @@
+const uuidv1 = require('uuid/v1');
 
 exports.seed = function(knex, Promise) {
+
+  const user = 1;
+  const bodies = [uuidv1(), uuidv1(), uuidv1()];
+  const arms = [uuidv1(), uuidv1(), uuidv1()];
+  const heads = [uuidv1(), uuidv1(), uuidv1()];
+  const types = [uuidv1(), uuidv1(), uuidv1()];
+  const weaknesses = [uuidv1(), uuidv1(), uuidv1()];
+  const attacks = [uuidv1()];
+
   // Deletes ALL existing entries
   return Promise.all([
     knex('monsters').del(),
@@ -15,99 +25,99 @@ exports.seed = function(knex, Promise) {
     return Promise.all([
       knex('monsters').insert([
         {
-          id: 1,
+          id: uuidv1(),
           name: 'Gojira',
-          user_id: 1,
-          body_id: 1,
-          arm_id: 1,
-          head_id: 1
+          user_id: user,
+          body_id: bodies[0],
+          arm_id: arms[0],
+          head_id: heads[0]
         },
         {
-          id: 2,
+          id: uuidv1(),
           name: 'Rhino',
-          user_id: 1,
-          body_id: 2,
-          arm_id: 2,
-          head_id: 2
+          user_id: user,
+          body_id: bodies[1],
+          arm_id: arms[1],
+          head_id: heads[1]
         },
         {
-          id: 3,
+          id: uuidv1(),
           name: 'Mecha Gojira',
-          user_id: 1,
-          body_id: 3,
-          arm_id: 3,
-          head_id: 3
+          user_id: user,
+          body_id: bodies[2],
+          arm_id: arms[2],
+          head_id: heads[2]
         },
       ]),
       knex('bodies').insert([
         {
-          id: 1,
+          id: bodies[0],
           image_url:'https://api.adorable.io/avatars/285/gojira.png',
           hp: 10,
-          type_id: 1,
+          type_id: types[0],
           creature: 'kaiju'
         },
         {
-          id: 2,
+          id: bodies[1],
           image_url:'https://api.adorable.io/avatars/285/rhino.png',
           hp: 5,
-          type_id: 1,
+          type_id: types[0],
           creature: 'mecha'
         },
         {
-          id: 3,
+          id: bodies[2],
           image_url:'https://api.adorable.io/avatars/285/mecha_gojira.png',
           hp: 12,
-          type_id: 2,
+          type_id: types[1],
           creature: 'kaiju'
         }
       ]),
       knex('heads').insert([
         {
-          id: 1,
+          id: heads[0],
           image_url: null,
-          attack_id: 1,
+          attack_id: attacks[0],
           ability_id: null,
           creature: 'kaiju'
         },
         {
-          id: 2,
+          id: heads[1],
           image_url: null,
           attack_id: null,
-          ability_id: 1,
+          ability_id: attacks[0],
           creature: 'mecha'
         },
         {
-          id: 3,
+          id: heads[2],
           image_url: null,
-          attack_id: 1,
+          attack_id: attacks[0],
           ability_id: null,
           creature: 'kaiju'
         }
       ]),
       knex('arms').insert([
         {
-          id: 1,
+          id: arms[0],
           image_url: null,
-          attack_id: 1,
+          attack_id: attacks[0],
           creature: 'kaiju'
         },
         {
-          id: 2,
+          id: arms[1],
           image_url: null,
-          attack_id: 1,
+          attack_id: attacks[0],
           creature: 'mecha'
         },
         {
-          id: 3,
+          id: arms[2],
           image_url: null,
-          attack_id: 1,
+          attack_id: attacks[0],
           creature: 'kaiju'
         }
       ]),
       knex('attacks').insert([
         {
-          id: 1,
+          id: attacks[0],
           name: 'scratch',
           aoe:false,
           dot:false
@@ -121,19 +131,19 @@ exports.seed = function(knex, Promise) {
       ]),
       knex('types').insert([
         {
-          id: 1,
+          id: types[0],
           name: 'fire',
-          weakness: 2,
+          weakness: types[1],
         },
         {
-          id: 2,
+          id: types[1],
           name: 'water',
-          weakness: 3,
+          weakness: types[2],
         },
         {
-          id: 3,
+          id: types[2],
           name: 'earth',
-          weakness: 1,
+          weakness: types[0],
         }
       ]),
     ]);

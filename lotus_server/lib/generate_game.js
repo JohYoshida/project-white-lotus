@@ -12,7 +12,7 @@ class Game{
   }
   // Used to execute attack abilities. Options are optional.
   // actionObj = {action:'attack', name:{{attack_name}}, [options:{options}]}
-  attackDo(actionObj){
+  attack(actionObj){
     const {activePlayer, idlePlayer} = this;
     const {options, name} = actionObj;
     const messages = activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
@@ -44,7 +44,7 @@ class Game{
   }
   // this is used to execute position shifts, takes the id of the monster through the action object
   // actionObj = {action:'activate', id:{monster_id}}
-  activateDo(actionObj){
+  activate(actionObj){
     const {activePlayer} = this;
     const monsterId = actionObj.monsterId;
     if(!monsterId){
@@ -73,7 +73,7 @@ class Game{
     return this.passive();
   }
   takeAction(actionObj){
-    const messages = this[actionObj.action + 'Do'](actionObj);
+    const messages = this[actionObj.action](actionObj);
     // After action is over, check active players and run passives if applicable.
     const passiveMessages = this.findActivePlayer(actionObj);
     if(passiveMessages){

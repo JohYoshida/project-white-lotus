@@ -40,13 +40,13 @@ class Player extends Component {
     );
   }
   unBench(event){
-    this.sendMessage({messageType: 'action', action: 'activate', monsterId: event.target.dataset.id});
+    this.sendMessage({messageType: 'action', action: 'activate', monsterId: event.target.getAttribute('data-id')});
   }
   sendMessage(message){
     this.props.socket.send(JSON.stringify(message));
   }
   sendAttack(event){
-    const attackName = event.target.dataset.name;
+    const attackName = event.target.getAttribute('data-name');
     this.sendMessage({messageType: 'action', action: 'attack', 'name': attackName, options: null});
   }
   render() {
