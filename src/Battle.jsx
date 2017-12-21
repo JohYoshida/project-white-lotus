@@ -6,11 +6,12 @@ import Opponent from './components/Opponent.jsx';
 import Player from './components/Player.jsx';
 import generateBattleSocket from './lib/websocket.js';
 import editBrouzoff from './lib/editBrouzoff.js';
+import './Battle.css'
 
 class Battle extends Component {
   constructor(props) {
     super(props);
-    this.state = {ready: false, game:{}, messages: []};
+    this.state = {ready: false, game:{}, messages: [], player:{}, opponent:{}};
     this.joinGame = this.joinGame.bind(this);
 
   }
@@ -37,13 +38,14 @@ class Battle extends Component {
         {this.state.game.gameOver && <Modal header="Game over" mainContent={this.isWinner()} footer={<a href="/">Done</a>} />}
         {!this.state.ready && <button onClick={this.joinGame}>1</button>}
         {!this.state.ready && <button onClick={this.joinGame}>2</button>}
-        <h2>Player {this.state.game.activePlayer && this.state.game.activePlayer.id}</h2>
-        {this.state.ready && <Player game={this.state.game} socket={this.socket} curUserId={this.state.id} />}
+        {/* <h2>Opponent {this.state.game.idlePlayer && this.state.game.idlePlayer.id}</h2> */}
+        {this.state.ready && <Opponent className='opponent' player={this.state.opponent} curUserId={this.state.id} /> }
 
-        <h2>Opponent {this.state.game.idlePlayer && this.state.game.idlePlayer.id}</h2>
-        <Opponent game={this.state.game} curUserId={this.state.id} />
-        <h3>Messages</h3>
-        <MessageBox messages={this.state.messages} />
+        {/* <h2>Player {this.state.game.activePlayer && this.state.game.activePlayer.id}</h2> */}
+        {this.state.ready && <Player className='player' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
+
+        {/* <h3>Messages</h3> */}
+        <MessageBox className='message-box' messages={this.state.messages} />
       </main>
     );
   }

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
+import './App.css';
 
 // Components
 import Battle from './Battle.jsx';
@@ -86,31 +87,23 @@ class App extends Component {
       return (<Router>
         <div>
           <h1>{email}</h1>
-          <Link to="/">
-            <button onClick={this.logout}>Log out</button>
-          </Link>
-          <div hidden={!this.state.loggedin}>
-            <ul>
-              <li>
-                <Link to="/">Monsters</Link>
-              </li>
-              <li>
-                <Link to="/store">Store</Link>
-              </li>
-              <li>
-                <Link to="/teams">Teams</Link>
-              </li>
-              <li>
-                <Link to="/battle">Battle</Link>
-              </li>
-            </ul>
-            <hr/>
-            <Route exact="exact" path="/" component={Monsters}/>
-            <Route path="/monsters/:id" component={Monster}/>
-            <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
-            <Route path="/teams" component={Teams}/>
-            <Route path="/battle" component={Battle}/>
-          </div>
+          <nav className='nav'>
+            <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
+            <span className='float-left'><Link className='nav-link' to="/store">Store</Link></span>
+            <span className='float-left'><Link className='nav-link' to="/teams">Teams</Link></span>
+            <span className='float-left'><Link className='nav-link' to="/battle">Battle</Link></span>
+            <Link to="/">
+              <button onClick={this.logout} className='button button-outline'>Log out</button>
+            </Link>
+          </nav>
+
+          <hr/>
+
+          <Route exact="exact" path="/" component={Monsters}/>
+          <Route path="/monsters/:id" component={Monster}/>
+          <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
+          <Route path="/teams" component={Teams}/>
+          <Route path="/battle" component={Battle}/>
         </div>
       </Router>);
     } else {
