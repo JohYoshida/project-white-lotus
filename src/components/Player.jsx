@@ -21,7 +21,7 @@ class Player extends Component {
         <article key={monster.id} className='user-card'>
           <h3>{monster.name}</h3>
           <p>{monster.hp}HP</p>
-          {monster.bench ? <button onClick={this.unBench} data-id={monster.id} className="selectMonster">Unbench</button> : this.showAttacks(monster)}
+          {monster.bench ? <button className='button button-outline game-button' onClick={this.unBench} data-id={monster.id}>Unbench</button> : this.showAttacks(monster)}
         </article>
       );
     }
@@ -31,7 +31,7 @@ class Player extends Component {
     const attacks = [];
     for(const attackName in monster.attacks){
       const attack = monster.attacks[attackName];
-      attacks.push(<button key={attack.id} onClick={this.sendAttack} data-name={attack.name} title={attack.description}>{attack.name}</button>);
+      attacks.push(<button className='button button-outline game-button' key={attack.id} onClick={this.sendAttack} data-name={attack.name} title={attack.description}>{attack.name}</button>);
     }
     return (
       <section className="Attacks">
@@ -51,9 +51,9 @@ class Player extends Component {
   }
   render() {
     return (
-      <div className="player">
+      <section className="player">
         {this.generateUserCards()}
-      </div>
+      </section>
     );
   }
 }
