@@ -11,7 +11,7 @@ import Store from './Store.jsx';
 import Login from './Login.jsx';
 
 // Functions
-import {postLogin, postRegister} from './helpers/user_auth.js';
+import {postLogin, postRegister, setUserState} from './helpers/user_auth.js';
 
 class App extends Component {
   static propTypes = {
@@ -53,18 +53,8 @@ class App extends Component {
 
   login(event) {
     event.preventDefault();
-    const { cookies } = this.props;
     postLogin(event).then(res => {
-      res.json().then(data => {
-        if(!data.error){
-            cookies.set('id', data.id, {path: '/'});
-            this.setState({ id: cookies.get('id'), loggedin: true });
-          }
-        }).then(() => {
-          this.getBrouzoff();
-        }).catch((err)=>{
-          console.log('Promise error in generate_user.js', err);
-        });
+      setUserState(this, res);
     });
   }
 
@@ -76,17 +66,8 @@ class App extends Component {
 
   register(event) {
     event.preventDefault();
-    const { cookies } = this.props;
     postRegister(event).then(res => {
-      res.json().then(data => {
-        if(!data.error){
-            cookies.set('id', data.id, {path: '/'});
-            this.setState({ id: cookies.get('id'), loggedin: true });
-            this.getBrouzoff();
-          }
-        }).catch((err)=>{
-          console.log('Promise error in generate_user.js', err);
-        });
+      setUserState(this, res);
     });
   }
 
