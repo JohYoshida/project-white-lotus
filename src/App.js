@@ -11,7 +11,7 @@ import Store from './Store.jsx';
 import Login from './Login.jsx';
 
 // Functions
-import {postLogin} from './helpers/user_auth.js';
+import {postLogin, postRegister} from './helpers/user_auth.js';
 
 class App extends Component {
   static propTypes = {
@@ -77,17 +77,7 @@ class App extends Component {
   register(event) {
     event.preventDefault();
     const { cookies } = this.props;
-    const form = event.target.parentNode;
-    const userName = form.elements['username'].value;
-    const password = form.elements['password'].value;
-    // Send user info as a post request
-    fetch(`/users`, {
-      method: 'POST',
-      body: encodeURI(`email=${userName}&password=${password}`),
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded'
-      }
-    }).then(res => {
+    postRegister(event).then(res => {
       res.json().then(data => {
         if(!data.error){
             cookies.set('id', data.id, {path: '/'});
