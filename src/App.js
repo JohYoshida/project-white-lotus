@@ -33,9 +33,6 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-  }
-
   componentWillMount() {
     const {cookies} = this.props;
     if (cookies.get('id')) {
