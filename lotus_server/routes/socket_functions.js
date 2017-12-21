@@ -1,7 +1,7 @@
 const generatePlayer = require('../lib/generate_player');
 const Game = require('../lib/generate_game');
 
-module.exports = (socketRouter, id) => {
+module.exports = (wss, socketRouter, id) => {
   // handles setting up the room
   const setupRoom = (playerInfo) => {
     socketRouter.rooms[`battle_${id}`] = {};
@@ -45,17 +45,25 @@ module.exports = (socketRouter, id) => {
   };
 
   const socketFunctionality = (ws) => {
+    const clients = wss.getWss(`/${id}`).clients
+    ws.broadcast = (data) => {
+      clients.forEach(client => {
+        if(client.readyState === 1){
+          client.send(data);
+        }
+      });
+    };
     ws.on('message', function(msg) {
       const room = socketRouter.rooms[`battle_${id}`];
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
       case 'team': {
-        handleJoinRequest(room, parsedMsg).then(game => game && ws.send(game));
+        handleJoinRequest(room, parsedMsg).then(game => game && ws.broadcast(game));
         break;
       }
       case 'action' : {
         const messages = handleActions(room, parsedMsg);
-        ws.send(JSON.stringify({
+        ws.broadcast(JSON.stringify({
           game: room.game,
           messages: room.game.gameOver ? ['Game is over!'] : messages
         }));
