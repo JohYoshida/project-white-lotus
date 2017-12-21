@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { instanceOf } from 'prop-types';
-import {withCookies,Cookies} from 'react-cookie';
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {instanceOf} from 'prop-types';
+import {withCookies, Cookies} from 'react-cookie';
 
 // Components
 import Battle from './Battle.jsx';
@@ -26,7 +26,6 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
-    this.getBrouzoff = this.getBrouzoff.bind(this);
     this.state = {
       id: '',
       loggedin: false
@@ -34,22 +33,17 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const { cookies } = this.props;
-    if(cookies.get('id')){
-      this.setState ({ id: cookies.get('id'), loggedin: true });
+    const {cookies} = this.props;
+    if (cookies.get('id')) {
+      this.setState({id: cookies.get('id'), loggedin: true});
     }
   }
 
-  getBrouzoff() {
-    const { cookies } = this.props;
-    if(cookies.get('id')){
-      // get Brouzoff
-      fetch(`/users/${this.state.id}`).then(res => {
-        res.json().then(data => {
-          this.setState({brouzoff: data.brouzoff, email: data.email});
-        });
-      });
-    }
+  register(event) {
+    event.preventDefault();
+    postRegister(event).then(res => {
+      setUserState(this, res);
+    });
   }
 
   login(event) {
@@ -60,22 +54,9 @@ class App extends Component {
   }
 
   logout(event) {
-    const { cookies } = this.props;
+    const {cookies} = this.props;
     cookies.remove('id');
-    this.setState({ id: null, loggedin: false, brouzoff: null});
-  }
-
-  register(event) {
-    event.preventDefault();
-    postRegister(event).then(res => {
-      setUserState(this, res);
-    });
-  }
-
-  clientCharge(cost) {
-    this.setState({
-      user: { brouzoff: this.state.user.brouzoff - cost }
-    });
+    this.setState({id: null, loggedin: false, brouzoff: null});
   }
 
   fetchNewMonster(creature) {
@@ -88,61 +69,55 @@ class App extends Component {
 
   purchaseEgg(event) {
     event.preventDefault();
-    // this.clientCharge(50);
     this.fetchNewMonster('kaiju');
   }
 
   purchaseCrate(event) {
     event.preventDefault();
-    // this.clientCharge(50);
     this.fetchNewMonster('mecha');
   }
 
   render() {
-      const { email } = this.state;
-      if (this.state.loggedin){
-        return (
-          <Router>
-            <div>
-            <h1>{ email }</h1>
-            <Link to="/">
-              <button onClick = {this.logout} >Log out</button>
-            </Link>
-            <div hidden={!this.state.loggedin}>
-              <ul>
-                <li><Link to="/">Monsters</Link></li>
-                <li><Link to="/store">Store</Link></li>
-                <li><Link to="/teams">Teams</Link></li>
-                <li><Link to="/battle">Battle</Link></li>
-              </ul>
-              <hr/>
-              <Route exact path="/" component={ Monsters } />
-              <Route path="/monsters/:id" component={ Monster } />
-              <Route path="/store" render={(props) => (
-                <Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
-              )} />
-              <Route path="/teams" component={ Teams } />
-              <Route path="/battle" component={ Battle }/>
-            </div>
+    const {email} = this.state;
+    if (this.state.loggedin) {
+      return (<Router>
+        <div>
+          <h1>{email}</h1>
+          <Link to="/">
+            <button onClick={this.logout}>Log out</button>
+          </Link>
+          <div hidden={!this.state.loggedin}>
+            <ul>
+              <li>
+                <Link to="/">Monsters</Link>
+              </li>
+              <li>
+                <Link to="/store">Store</Link>
+              </li>
+              <li>
+                <Link to="/teams">Teams</Link>
+              </li>
+              <li>
+                <Link to="/battle">Battle</Link>
+              </li>
+            </ul>
+            <hr/>
+            <Route exact="exact" path="/" component={Monsters}/>
+            <Route path="/monsters/:id" component={Monster}/>
+            <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
+            <Route path="/teams" component={Teams}/>
+            <Route path="/battle" component={Battle}/>
           </div>
-        </Router>
-      );
+        </div>
+      </Router>);
     } else {
-      return(
-        <Login
-          state = {this.state}
-          login = {this.login}
-          register = {this.register}
-          hidden = {this.state.loggedin}
-        />);
+      return (<Login state={this.state} login={this.login} register={this.register} hidden={this.state.loggedin}/>);
     }
   }
 }
 
-const Teams = () => (
-  <div>
-    <h2>Teams</h2>
-  </div>
-);
+const Teams = () => (<div>
+  <h2>Teams</h2>
+</div>);
 
 export default withCookies(App);

@@ -26,15 +26,17 @@ export function postRegister(event) {
 
 export function setUserState(component, res) {
   const {cookies} = component.props;
-  return (
-    res.json().then(data => {
-      if(!data.error){
-        cookies.set('id', data.id, {path: '/'});
-        component.setState({ id: cookies.get('id'), loggedin: true });
-        component.getBrouzoff();
-      }
-    }).catch((err)=>{
-      console.log('Promise error in generate_user.js', err);
-    })
-  );
+  return (res.json().then(data => {
+    if (!data.error) {
+      cookies.set('id', data.id, {path: '/'});
+      component.setState({id: cookies.get('id'), loggedin: true});
+      fetch(`/users/${component.state.id}`).then(res => {
+        res.json().then(data => {
+          component.setState({brouzoff: data.brouzoff, email: data.email});
+        });
+      });
+    }
+  }).catch((err) => {
+    console.log('Promise error in generate_user.js', err);
+  }));
 }
