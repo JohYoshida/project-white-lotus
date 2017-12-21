@@ -44,14 +44,24 @@ class Monsters extends Component {
   }
 
   render() {
-    return (
-      <main>
-        <h2>Monsters</h2>
-        <ul>
-          {this.state.ready && this.printMonsters()}
-        </ul>
-      </main>
-    );
+    if (this.state.monsters.length > 0) {
+      return (
+        <main>
+          <h2>Monsters</h2>
+          <ul>
+            {this.state.ready && this.printMonsters()}
+          </ul>
+        </main>
+      );
+    } else {
+      return (
+        <main>
+          <h2>Monsters</h2>
+          <p>You don't have any monsters yet!</p>
+          <Link to='/store'>Store</Link>
+        </main>
+      );
+    }
   }
 }
 
