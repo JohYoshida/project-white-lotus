@@ -37,6 +37,12 @@ server.post('/users', (req, res) => {
   registerUser(res, req.params.email,req.params.password);
 });
 
+// Give the place money
+server.patch('/users/:id', (req, res) => {
+  console.log(req.body.money);
+  res.status(204).send();
+});
+
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
 });
