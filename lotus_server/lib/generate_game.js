@@ -76,6 +76,7 @@ class Game{
     const messages = this[actionObj.action](actionObj);
     // After action is over, check active players and run passives if applicable.
     const passiveMessages = this.findActivePlayer(actionObj);
+    console.log(this.activePlayer);
     if(passiveMessages){
       for(const message of passiveMessages){
         messages.push(message);

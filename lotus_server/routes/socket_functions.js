@@ -1,38 +1,23 @@
 const generatePlayer = require('../lib/generate_player');
 const Game = require('../lib/generate_game');
 
-module.exports = (socketRouter, id) => {
+module.exports = (wss, id) => {
   // handles setting up the room
-  const setupRoom = (playerInfo) => {
-    socketRouter.rooms[`battle_${id}`] = {};
-    let room = socketRouter.rooms[`battle_${id}`];
+  const setupRoom = (room, playerInfo) => {
+    room.battle = {};
+    let battle = room.battle;
     return generatePlayer(playerInfo.battlerId, playerInfo.team.split(',')).then(player => {
-      room['players'] = [player];
+      battle['players'] = [player];
     });
   };
 
   // once both players are in a room, this starts the game.
-  const startGame = (msg) => {
-    const room = socketRouter.rooms[`battle_${id}`];
+  const startGame = (battle, msg) => {
     const playerInfo = msg;
     return generatePlayer(playerInfo.battlerId, playerInfo.team.split(',')).then(player => {
-      room.players.push(player);
-      return new Game(room.players);
+      battle.players.push(player);
+      return new Game(battle.players);
     });
-  };
-
-  const handleJoinRequest = (room, msg) => {
-    // If the game room for this socket doesn't exist.
-    if(!room) {
-      return setupRoom(msg).catch(() => delete socketRouter.rooms[`battle_${id}`]);
-    }
-    if(room) {
-      return startGame(msg).then(game => {
-        delete room.players;
-        room.game = game;
-        return JSON.stringify({game: game, message:['Game started!']});
-      });
-    }
   };
 
   // Executes action on behalf of client.
@@ -45,20 +30,51 @@ module.exports = (socketRouter, id) => {
   };
 
   const socketFunctionality = (ws) => {
+    const clients = wss.getWss(`/${id}`).clients;
+    ws.broadcast = (data) => {
+      clients.forEach(client => {
+        // deep cloning object
+        const copiedData = JSON.parse(JSON.stringify(data));
+        const {game} = copiedData;
+        // delete id so that player doesn't know opponent's info.
+        for(let player of game.players){
+          if(player.id !== client.id){
+            delete player.id;
+          }
+        }
+        if(client.readyState === 1){
+          client.send(JSON.stringify(copiedData));
+        }
+      });
+    };
     ws.on('message', function(msg) {
-      const room = socketRouter.rooms[`battle_${id}`];
+      const room = wss.getWss(`/${id}`);
+      const battle = room.battle;
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
-      case 'team': {
-        handleJoinRequest(room, parsedMsg).then(game => game && ws.send(game));
+      case 'join': {
+        // assign ids to clients.
+        room.clients.forEach(client => {
+          if(!client.id) client.id = parsedMsg.battlerId;
+        });
+        if(!battle) {
+          setupRoom(room, parsedMsg).catch(() => delete ws.battle);
+        } else {
+          startGame(battle, parsedMsg).then(game => {
+            delete battle.players;
+            battle.game = game;
+            ws.broadcast({game: game, message:['Game started!']});
+          });
+        }
         break;
       }
       case 'action' : {
-        const messages = handleActions(room, parsedMsg);
-        ws.send(JSON.stringify({
-          game: room.game,
-          messages: room.game.gameOver ? ['Game is over!'] : messages
-        }));
+        const messages = handleActions(battle, parsedMsg);
+        // console.log(battle.game.players);
+        ws.broadcast({
+          game: battle.game,
+          messages: battle.game.gameOver ? ['Game is over!'] : messages
+        });
         break;
       }
       default:
