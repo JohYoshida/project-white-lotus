@@ -25,7 +25,7 @@ exports.seed = function(knex, Promise) {
     return Promise.all([
       knex('monsters').insert([
         {
-          id: uuidv1(),
+          id: 1,
           name: 'Gojira',
           user_id: user,
           body_id: bodies[0],
@@ -33,7 +33,7 @@ exports.seed = function(knex, Promise) {
           head_id: heads[0]
         },
         {
-          id: uuidv1(),
+          id: 2,
           name: 'Rhino',
           user_id: user,
           body_id: bodies[1],
@@ -41,7 +41,7 @@ exports.seed = function(knex, Promise) {
           head_id: heads[1]
         },
         {
-          id: uuidv1(),
+          id: 3,
           name: 'Mecha Gojira',
           user_id: user,
           body_id: bodies[2],
