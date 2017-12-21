@@ -13,7 +13,7 @@ const Monster = require('../models/monster_model')(Body, Head, Arm, Type, Attack
 class CompleteMonster {
   constructor(monster){
     // arm and head to be used for image compilation functionality.
-    const {body, arm, head, type} = monster.relations;
+    const {body, type} = monster.relations;
     // set attributes
     this.id = monster.attributes.id;
     this.name = monster.attributes.name;
@@ -23,18 +23,13 @@ class CompleteMonster {
     this.type = type.attributes;
     // Will eventually the compiled image.
     this.image_url = body.attributes.image_url;
-    // on bench?
     this.bench = true;
-    // Can passive be used?
     this.passiveActive = true;
-    // dot passive objects go here.
     this.dot = [];
   }
-  // simple helper to cause damage to be taken. Takes an integer to represent damage.
   takeDamage(damage){
     this.hp -= damage;
   }
-  // sets up this.attacks property, attributes is a bookshelf attack object
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
     const {id, name, description} = attributes;
@@ -44,7 +39,6 @@ class CompleteMonster {
       this.attacks[altName]  = {id: altId, name: altName, description: altDescription || 'Attack 2 description', func: attackFuncs[altName].bind(this)};
     }
   }
-  // Sets up abilities, should be implemented as above.
   set_ability(name) {
     /* @TODO: apply the above pattern to abilities */
     this.ability = abilityFuncs[name].bind(this);
@@ -52,7 +46,7 @@ class CompleteMonster {
 }
 
 const getCreature = (id) => {
-  return new Monster({'id': id}).fetch({withRelated: ['body', 'arm', 'head', 'type', 'attack', 'alt_attack', 'ability']}).then((prod) => {
+  return new Monster({'id': id}).fetch({withRelated: ['body', 'arm', 'head', 'type', 'attack', 'alt_attack', 'ability']}).then(prod => {
     const {attack, alt_attack, ability} = prod.relations;
     const monster = new CompleteMonster(prod);
     // After monster has been created set attacks and abilities
@@ -61,7 +55,7 @@ const getCreature = (id) => {
       monster.set_ability(ability.attributes.name);
     }
     return monster;
-  });
+  }).catch(e => console.log(e));
 };
 
 module.exports = getCreature;

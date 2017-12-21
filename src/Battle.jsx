@@ -4,6 +4,7 @@ import MessageBox from './components/MessageBox.jsx';
 import Modal from './components/Modal.jsx';
 import Opponent from './components/Opponent.jsx';
 import Player from './components/Player.jsx';
+import generateBattleSocket from './lib/websocket.js';
 
 class Battle extends Component {
   constructor(props) {
@@ -15,34 +16,9 @@ class Battle extends Component {
   joinGame(event){
     this.state.ready || this.setState({ready:true});
     this.setState({battlerId:uuid()})
-    const battleComponent = this;
     const button = event.target;
     // build the WebSocket.
-    this.socket = new WebSocket('ws://localhost:3001/battles/1');
-    this.socket.addEventListener('open', () => {
-      /* @TODO: Make this.state.id a prop passed down from app. */
-      this.socket.send(JSON.stringify({messageType: 'team', team:'1,2,3', battlerId: this.state.battlerId}));
-    });
-    this.socket.addEventListener('message', (event) => {
-      // test if the message is json
-      let isJSON = true;
-      try{
-        JSON.parse(event.data);
-      } catch(_) {
-        isJSON = false;
-      }
-      if(isJSON){
-        const parsedMessage = JSON.parse(event.data);
-        const {game, messages} = parsedMessage;
-        const messagesInState = battleComponent.state.messages;
-        // put new messages in the state
-        if(messages){
-          messages.forEach(message => messagesInState.push(message));
-        }
-        battleComponent.setState({game, messages: messagesInState});
-        return;
-      }
-    });
+    this.socket = generateBattleSocket(this)
   }
   isWinner(){
     const {gameOver} = this.state.game;
