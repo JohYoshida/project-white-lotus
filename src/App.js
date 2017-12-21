@@ -75,7 +75,7 @@ class App extends Component {
   logout(event) {
     const { cookies } = this.props;
     cookies.remove('id');
-    this.setState({ id: null, loggedin: false, brouzoff: null});
+    this.setState({ id: null, email: null, loggedin: false, brouzoff: null});
   }
 
   register(event) {
