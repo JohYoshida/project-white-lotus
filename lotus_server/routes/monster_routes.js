@@ -23,7 +23,7 @@ module.exports = (db) => {
   monsterRouter.post('/', (req, res) => {
     const {userid} = req.cookies;
     const {creature} = req.body;
-    
+
     if(!creature || !userid){
       return;
     }
