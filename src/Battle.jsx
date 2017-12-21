@@ -28,9 +28,12 @@ class Battle extends Component {
     const {gameOver} = this.state.game;
     if(gameOver.winner.id === this.state.id){
       /* @TODO award money here through a PUT to /users/:id */
+      editBrouzoff(this.state.game, 500)
       return (<p>You won!</p>);
     }
     return(<p>You lost!</p>);
+    editBrouzoff(this.state.game, 250)
+
   }
   render() {
     return (
