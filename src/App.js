@@ -40,7 +40,7 @@ class App extends Component {
       // get Brouzoff
       fetch(`/users/${this.state.id}`).then(res => {
         res.json().then(data => {
-          this.setState({brouzoff: data.brouzoff});
+          this.setState({brouzoff: data.brouzoff, email: data.email});
         });
       });
     }
@@ -138,12 +138,12 @@ class App extends Component {
   }
 
   render() {
-      const { id } = this.state;
+      const { email } = this.state;
       if (this.state.loggedin){
         return (
           <Router>
             <div>
-            <h1>{ id }</h1>
+            <h1>{ email }</h1>
             <Link to="/">
               <button onClick = {this.logout} >Log out</button>
             </Link>
@@ -158,7 +158,7 @@ class App extends Component {
               <Route exact path="/" component={ Monsters } />
               <Route path="/monsters/:id" component={ Monster } />
               <Route path="/store" render={(props) => (
-                <Store {...props} brouzoff={this.state.brouzoff} test={'test'} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
+                <Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>
               )} />
               <Route path="/teams" component={ Teams } />
               <Route path="/battle" component={ Battle }/>
