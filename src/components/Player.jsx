@@ -11,12 +11,11 @@ class Player extends Component {
     let cards = [];
     const {player} = this.props;
     if(!player.team) return (<p>Waiting for other player.</p>);
-    console.log(player);
     for(const monsterid in player.team){
       const monster = player.team[monsterid];
       let action = <p></p>;
       if(player.turn){
-        action = monster.bench ? <button onClick={this.unBench} data-id={monster.id} className="selectMonster">Unbench</button> : this.showAttacks(monster);
+        action = monster.bench ? <button className='button button-outline game-button' onClick={this.unBench} data-id={monster.id}>Unbench</button> : this.showAttacks(monster);
       }
       cards.push(
         <article key={monster.id} className='user-card'>
@@ -32,7 +31,7 @@ class Player extends Component {
     const attacks = [];
     for(const attackName in monster.attacks){
       const attack = monster.attacks[attackName];
-      attacks.push(<button key={attack.id} onClick={this.sendAttack} data-name={attack.name} title={attack.description}>{attack.name}</button>);
+      attacks.push(<button className='button button-outline game-button' key={attack.id} onClick={this.sendAttack} data-name={attack.name} title={attack.description}>{attack.name}</button>);
     }
     return (
       <section className="Attacks">
@@ -52,9 +51,9 @@ class Player extends Component {
   }
   render() {
     return (
-      <div className="player">
+      <section className="player">
         {this.generateUserCards()}
-      </div>
+      </section>
     );
   }
 }

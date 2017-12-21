@@ -33,9 +33,10 @@ module.exports = (wss, id) => {
     const clients = wss.getWss(`/${id}`).clients;
     ws.broadcast = (data) => {
       clients.forEach(client => {
-        // deep cloning object, note no functions are carried over, OK for this purpose.
+        // deep cloning object
         const copiedData = JSON.parse(JSON.stringify(data));
         const {game} = copiedData;
+        // delete id so that player doesn't know opponent's info.
         for(let player of game.players){
           if(player.id !== client.id){
             delete player.id;
@@ -52,6 +53,7 @@ module.exports = (wss, id) => {
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
       case 'join': {
+        // assign ids to clients.
         room.clients.forEach(client => {
           if(!client.id) client.id = parsedMsg.battlerId;
         });
