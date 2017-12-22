@@ -3,12 +3,13 @@ const uuidv1 = require('uuid/v1');
 exports.seed = function(knex, Promise) {
 
   const user = 1;
-  const bodies = [uuidv1(), uuidv1(), uuidv1()];
-  const arms = [uuidv1(), uuidv1(), uuidv1()];
-  const heads = [uuidv1(), uuidv1(), uuidv1()];
-  const types = [uuidv1(), uuidv1(), uuidv1()];
-  const weaknesses = [uuidv1(), uuidv1(), uuidv1()];
-  const attacks = [uuidv1()];
+  const bodies = Array(6).fill(uuidv1());
+  const heads = Array(3).fill(uuidv1());
+  const arms = Array(3).fill(uuidv1());
+  const types = Array(3).fill(uuidv1());
+  const weaknesses = Array(3).fill(uuidv1());
+  const attacks = Array(3).fill(uuidv1());
+  const abilities = Array(1).fill(uuidv1());
 
   // Deletes ALL existing entries
   return Promise.all([
@@ -52,24 +53,51 @@ exports.seed = function(knex, Promise) {
       knex('bodies').insert([
         {
           id: bodies[0],
-          image_url:'https://api.adorable.io/avatars/285/gojira.png',
-          hp: 10,
+          name: 'Blob',
+          image_url:'https://api.adorable.io/avatars/285/blob.png',
+          hp: 30,
           type_id: types[0],
           creature: 'kaiju'
         },
         {
           id: bodies[1],
-          image_url:'https://api.adorable.io/avatars/285/rhino.png',
-          hp: 5,
-          type_id: types[0],
+          name: 'T-Wrex',
+          image_url:'https://api.adorable.io/avatars/285/t-wrex.png',
+          hp: 35,
+          type_id: types[1],
           creature: 'mecha'
         },
         {
           id: bodies[2],
-          image_url:'https://api.adorable.io/avatars/285/mecha_gojira.png',
-          hp: 12,
-          type_id: types[1],
+          name: 'C\'thulumonster',
+          image_url:'https://api.adorable.io/avatars/285/cthulumonster.png',
+          hp: 25,
+          type_id: types[2],
           creature: 'kaiju'
+        },
+        {
+          id: bodies[3],
+          name: 'Shock Top',
+          image_url:'https://api.adorable.io/avatars/285/shocktop.png',
+          hp: 25,
+          type_id: types[2],
+          creature: 'mecha'
+        },
+        {
+          id: bodies[4],
+          name: 'Medi-o-cre',
+          image_url:'https://api.adorable.io/avatars/285/medi-o-cre.png',
+          hp: 20,
+          type_id: types[0],
+          creature: 'mecha'
+        },
+        {
+          id: bodies[5],
+          name: 'Red Knight',
+          image_url:'https://api.adorable.io/avatars/285/red_knight.png',
+          hp: 25,
+          type_id: types[1],
+          creature: 'mecha'
         }
       ]),
       knex('heads').insert([
