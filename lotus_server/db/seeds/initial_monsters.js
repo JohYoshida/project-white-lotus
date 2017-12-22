@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
   const user = 1;
   const bodies = Array(6).fill(uuidv1());
   const heads = Array(12).fill(uuidv1());
-  const arms = Array(3).fill(uuidv1());
+  const arms = Array(9).fill(uuidv1());
   const types = Array(3).fill(uuidv1());
   const weaknesses = Array(3).fill(uuidv1());
   const attacks = Array(3).fill(uuidv1());
@@ -201,20 +201,65 @@ exports.seed = function(knex, Promise) {
       knex('arms').insert([
         {
           id: arms[0],
+          name: 'Blob',
           image_url: null,
-          attack_id: attacks[0],
+          attack_id: attacks[6],
           creature: 'kaiju'
         },
         {
           id: arms[1],
+          name: 'Stubby Wrex Arms',
           image_url: null,
-          attack_id: attacks[0],
-          creature: 'mecha'
+          attack_id: attacks[7],
+          creature: 'kaiju'
         },
         {
           id: arms[2],
+          name: 'C\'thulumonster',
           image_url: null,
-          attack_id: attacks[0],
+          attack_id: attacks[8],
+          creature: 'kaiju'
+        },
+        {
+          id: arms[3],
+          name: 'Shock Top',
+          image_url: null,
+          attack_id: attacks[9],
+          creature: 'mecha'
+        },
+        {
+          id: arms[4],
+          name: 'Medi-o-cre',
+          image_url: null,
+          attack_id: attacks[10],
+          creature: 'mecha'
+        },
+        {
+          id: arms[5],
+          name: 'Red Knight',
+          image_url: null,
+          attack_id: attacks[11],
+          creature: 'mecha'
+        },
+        {
+          id: arms[6],
+          name: 'Mind Siphon',
+          image_url: null,
+          attack_id: attacks[12],
+          creature: 'kaiju'
+        },
+        {
+          id: arms[7],
+          name: 'Snake Hands',
+          image_url: null,
+          attack_id: attacks[13],
+          creature: 'kaiju'
+        },
+        {
+          id: arms[8],
+          name: 'Spider Fang',
+          image_url: null,
+          attack_id: attacks[14],
           creature: 'kaiju'
         }
       ]),
