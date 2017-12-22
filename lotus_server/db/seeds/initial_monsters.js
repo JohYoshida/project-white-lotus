@@ -160,17 +160,17 @@ exports.seed = function(knex, Promise) {
       knex('types').insert([
         {
           id: types[0],
-          name: 'fire',
+          name: 'absorb',
           weakness: types[1],
         },
         {
           id: types[1],
-          name: 'water',
+          name: 'harden',
           weakness: types[2],
         },
         {
           id: types[2],
-          name: 'earth',
+          name: 'reflect',
           weakness: types[0],
         }
       ]),
