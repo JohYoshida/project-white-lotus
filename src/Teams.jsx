@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AddTeamPane from './components/AddTeamPane.jsx';
 
 class Teams extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class Teams extends Component {
     return (
       <section hidden={!this.state.loaded}>
         <button onClick={this.addTeam}>Add a team</button>
+        <AddTeamPane monsters={this.props.monsters} />
         {this.printTeams()}
       </section>
     );
