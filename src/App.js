@@ -104,7 +104,15 @@ class App extends Component {
         </div>
       </Router>);
     } else {
-      return (<Login state={this.state} login={this.login} register={this.register} hidden={this.state.loggedin}/>);
+      return(
+        <div>
+        <Login
+          state = {this.state}
+          login = {this.login}
+          register = {this.register}
+          hidden = {this.state.loggedin}
+        />
+        </div>);
     }
   }
 }
