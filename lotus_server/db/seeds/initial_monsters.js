@@ -6,9 +6,9 @@ exports.seed = function(knex, Promise) {
   const bodies = Array(6).fill(uuidv1());
   const heads = Array(12).fill(uuidv1());
   const arms = Array(9).fill(uuidv1());
+  const attacks = Array(15).fill(uuidv1());
   const types = Array(3).fill(uuidv1());
   const weaknesses = Array(3).fill(uuidv1());
-  const attacks = Array(3).fill(uuidv1());
   const abilities = Array(1).fill(uuidv1());
 
   // Deletes ALL existing entries
@@ -266,16 +266,100 @@ exports.seed = function(knex, Promise) {
       knex('attacks').insert([
         {
           id: attacks[0],
-          name: 'scratch',
-          aoe:false,
-          dot:false
+          name: 'Toxic Slime',
+          aoe: false,
+          dot: true
+        },
+        {
+          id: attacks[1],
+          name: 'Roar',
+          aoe: true,
+          dot: false
+        },
+        {
+          id: attacks[2],
+          name: 'Insanity',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[3],
+          name: 'Decimate',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[4],
+          name: 'Web Sling',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[5],
+          name: 'Deep Knowledge',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[6],
+          name: 'Vomitous Sludge',
+          aoe: false,
+          dot: true
+        },
+        {
+          id: attacks[7],
+          name: 'Steel Jaw',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[8],
+          name: 'Eldrich Horror',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[9],
+          name: 'Neutralize',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[10],
+          name: 'Stimulant',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[11],
+          name: 'Hyper Lance',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[12],
+          name: 'Simulator',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[13],
+          name: 'Snake Handler',
+          aoe: false,
+          dot: false
+        },
+        {
+          id: attacks[14],
+          name: 'Neurotoxin',
+          aoe: false,
+          dot: false
         }
       ]),
       knex('abilities').insert([
         {
           id: 1,
           name: 'avoid'
-        }
+        },
       ]),
       knex('types').insert([
         {
