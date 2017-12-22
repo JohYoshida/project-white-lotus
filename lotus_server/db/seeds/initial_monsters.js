@@ -4,7 +4,7 @@ exports.seed = function(knex, Promise) {
 
   const user = 1;
   const bodies = Array(6).fill(uuidv1());
-  const heads = Array(3).fill(uuidv1());
+  const heads = Array(12).fill(uuidv1());
   const arms = Array(3).fill(uuidv1());
   const types = Array(3).fill(uuidv1());
   const weaknesses = Array(3).fill(uuidv1());
@@ -103,6 +103,7 @@ exports.seed = function(knex, Promise) {
       knex('heads').insert([
         {
           id: heads[0],
+          name: 'Blob Eye Stalk',
           image_url: null,
           attack_id: attacks[0],
           ability_id: null,
@@ -110,17 +111,91 @@ exports.seed = function(knex, Promise) {
         },
         {
           id: heads[1],
+          name: 'T-Wrex Head',
           image_url: null,
-          attack_id: null,
-          ability_id: attacks[0],
-          creature: 'mecha'
+          attack_id: attacks[1],
+          ability_id: null,
+          creature: 'kaiju'
         },
         {
           id: heads[2],
+          name: 'C\'thulu Head',
           image_url: null,
-          attack_id: attacks[0],
+          attack_id: attacks[2],
           ability_id: null,
           creature: 'kaiju'
+        },
+        {
+          id: heads[3],
+          name: 'Shock Top Helm',
+          image_url: null,
+          attack_id: null,
+          ability_id: abilities[0],
+          creature: 'mecha'
+        },
+        {
+          id: heads[4],
+          name: 'Medipad',
+          image_url: null,
+          attack_id: null,
+          ability_id: abilities[1],
+          creature: 'mecha'
+        },
+        {
+          id: heads[5],
+          name: 'Red Knight Helm',
+          image_url: null,
+          attack_id: null,
+          ability_id: abilities[2],
+          creature: 'mecha'
+        },
+        {
+          id: heads[6],
+          name: 'Hydra Heads',
+          image_url: null,
+          attack_id: attacks[3],
+          ability_id: null,
+          creature: 'kaiju'
+        },
+        {
+          id: heads[7],
+          name: 'Spider Head',
+          image_url: null,
+          attack_id: attacks[4],
+          ability_id: null,
+          creature: 'kaiju'
+        },
+        {
+          id: heads[8],
+          name: 'Eye of the Void',
+          image_url: null,
+          attack_id: attacks[5],
+          ability_id: null,
+          creature: 'kaiju'
+        },
+        {
+          id: heads[9],
+          name: 'Cyclone Laser System',
+          image_url: null,
+          attack_id: null,
+          ability_id: abilities[3],
+          creature: 'mecha'
+        },
+        {
+          id: heads[10],
+          name: 'Hypermatter Generator',
+          image_url: null,
+          attack_id: null,
+          ability_id: abilities[4],
+          creature: 'mecha'
+        },
+        {
+          id: heads[11],
+          name: 'Missile Support Platform',
+          image_url: null,
+          attack_id: null,
+          ability_id: abilities[5],
+          creature: 'mecha'
         }
       ]),
       knex('arms').insert([
