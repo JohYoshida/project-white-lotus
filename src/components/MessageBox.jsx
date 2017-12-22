@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import './MessageBox.css';
 
 class MessageBox extends Component {
   renderMessages(){
     const messages = [];
     this.props.messages.forEach((message, i) => {
-      messages.push(<p key={i}>{message}</p>);
+      messages.unshift(<p className='message' key={i}>{message}</p>);
     });
     return messages;
   }

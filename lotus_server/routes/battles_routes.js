@@ -4,12 +4,11 @@ const expressws = require('express-ws');
 const socketFunctions = require('./socket_functions');
 
 module.exports = (server) => {
-  expressws(server);
+  const wss = expressws(server);
   const socketRouter = express.Router();
-  socketRouter.rooms = {};
   // generates a room
   socketRouter.genBattle = function(id){
-    const roomFunctionality = socketFunctions(socketRouter, id);
+    const roomFunctionality = socketFunctions(wss, id);
     this.ws(`/${id}`, roomFunctionality);
   };
   socketRouter.post('/',(req,res) => {
