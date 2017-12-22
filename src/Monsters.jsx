@@ -35,6 +35,7 @@ class Monsters extends Component {
           </Link>
           <p>{monster.creature}</p>
           <img src={monster.image_url} alt='monster icon' />
+          <img src={monster.image} alt='monster icon' />
           <p>{monster.hp} HP</p>
           <p>Type: {monster.type.name}</p>
         </li>

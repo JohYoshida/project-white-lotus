@@ -22,6 +22,7 @@ class CompleteMonster {
     this.type = type.attributes;
     // Will eventually the compiled image
     this.image_url = body.attributes.image_url;
+    this.image= monster.attributes.image;
     this.bench = true;
     this.passiveActive = true;
     this.dot = [];

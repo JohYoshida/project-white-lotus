@@ -22,7 +22,7 @@ const registerUser = require('./lib/register_user');
 server.use(bodyParser.urlencoded({ extended: false }));
 // This is required to parse POST fetch requests for the store
 server.use(bodyParser.json());
-
+server.use(express.static('./models/monsters'))
 // Cookie Parser
 server.use(cookieParser())
 
