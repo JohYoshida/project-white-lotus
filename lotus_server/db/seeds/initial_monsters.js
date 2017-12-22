@@ -1,14 +1,18 @@
-const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
+
+function getNewUUID() {
+  return uuidv4();
+}
 
 exports.seed = function(knex, Promise) {
 
   const user = 1;
-  const bodies = Array(6).fill(uuidv1());
-  const heads = Array(12).fill(uuidv1());
-  const arms = Array(9).fill(uuidv1());
-  const attacks = Array(15).fill(uuidv1());
-  const abilities = Array(6).fill(uuidv1());
-  const types = Array(3).fill(uuidv1());
+  const bodies = Array(6).fill().map(() => uuidv4());
+  const heads = Array(12).fill().map(() => uuidv4());
+  const arms = Array(9).fill().map(() => uuidv4());
+  const attacks = Array(15).fill().map(() => uuidv4());
+  const abilities = Array(6).fill().map(() => uuidv4());
+  const types = Array(3).fill().map(() => uuidv4());
 
   // Deletes ALL existing entries
   return Promise.all([
@@ -26,7 +30,7 @@ exports.seed = function(knex, Promise) {
       knex('monsters').insert([
         {
           id: 1,
-          name: 'Gojira',
+          name: 'Blob',
           user_id: user,
           body_id: bodies[0],
           arm_id: arms[0],
@@ -34,7 +38,7 @@ exports.seed = function(knex, Promise) {
         },
         {
           id: 2,
-          name: 'Rhino',
+          name: 'T-Wrex',
           user_id: user,
           body_id: bodies[1],
           arm_id: arms[1],
@@ -42,11 +46,35 @@ exports.seed = function(knex, Promise) {
         },
         {
           id: 3,
-          name: 'Mecha Gojira',
+          name: 'C\'thulumonster',
           user_id: user,
           body_id: bodies[2],
           arm_id: arms[2],
           head_id: heads[2]
+        },
+        {
+          id: 4,
+          name: 'Shock Top',
+          user_id: user,
+          body_id: bodies[3],
+          arm_id: arms[3],
+          head_id: heads[3]
+        },
+        {
+          id: 5,
+          name: 'Medi-o-cre',
+          user_id: user,
+          body_id: bodies[4],
+          arm_id: arms[4],
+          head_id: heads[4]
+        },
+        {
+          id: 6,
+          name: 'Red Knight',
+          user_id: user,
+          body_id: bodies[5],
+          arm_id: arms[5],
+          head_id: heads[5]
         },
       ]),
       knex('bodies').insert([
@@ -265,91 +293,91 @@ exports.seed = function(knex, Promise) {
       knex('attacks').insert([
         {
           id: attacks[0],
-          name: 'Toxic Slime',
+          name: 'toxic_slime',
           aoe: false,
           dot: true
         },
         {
           id: attacks[1],
-          name: 'Roar',
+          name: 'roar',
           aoe: true,
           dot: false
         },
         {
           id: attacks[2],
-          name: 'Insanity',
+          name: 'insanity',
           aoe: false,
           dot: false
         },
         {
           id: attacks[3],
-          name: 'Decimate',
+          name: 'decimate',
           aoe: false,
           dot: false
         },
         {
           id: attacks[4],
-          name: 'Web Sling',
+          name: 'web_sling',
           aoe: false,
           dot: false
         },
         {
           id: attacks[5],
-          name: 'Deep Knowledge',
+          name: 'deep_knowledge',
           aoe: false,
           dot: false
         },
         {
           id: attacks[6],
-          name: 'Vomitous Sludge',
+          name: 'vomitous_sludge',
           aoe: false,
           dot: true
         },
         {
           id: attacks[7],
-          name: 'Steel Jaw',
+          name: 'steel_jaw',
           aoe: false,
           dot: false
         },
         {
           id: attacks[8],
-          name: 'Eldrich Horror',
+          name: 'eldritch_horror',
           aoe: false,
           dot: false
         },
         {
           id: attacks[9],
-          name: 'Neutralize',
+          name: 'neutralize',
           aoe: false,
           dot: false
         },
         {
           id: attacks[10],
-          name: 'Stimulant',
+          name: 'stimulant',
           aoe: false,
           dot: false
         },
         {
           id: attacks[11],
-          name: 'Hyper Lance',
+          name: 'hyper_lance',
           aoe: false,
           dot: false
         },
         {
           id: attacks[12],
-          name: 'Simulator',
+          name: 'simulate_kaiju',
           aoe: false,
           dot: false
         },
         {
           id: attacks[13],
-          name: 'Snake Handler',
+          name: 'snake_handler',
           aoe: false,
           dot: false
         },
         {
           id: attacks[14],
-          name: 'Neurotoxin',
+          name: 'neurotoxin',
           aoe: false,
           dot: false
         }
@@ -357,27 +385,27 @@ exports.seed = function(knex, Promise) {
       knex('abilities').insert([
         {
           id: abilities[0],
-          name: 'Supercharge'
+          name: 'supercharge'
         },
         {
           id: abilities[1],
-          name: 'Nanomachine Swarm'
+          name: 'nanomachine_swarm'
         },
         {
           id: abilities[2],
-          name: 'Electric Shield'
+          name: 'electric_shield'
         },
         {
           id: abilities[3],
-          name: 'Pierce'
+          name: 'pierce'
         },
         {
           id: abilities[4],
-          name: 'Crush'
+          name: 'crush'
         },
         {
           id: abilities[5],
-          name: 'Spray'
+          name: 'spray'
         }
       ]),
       knex('types').insert([
