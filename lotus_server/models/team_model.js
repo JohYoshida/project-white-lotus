@@ -1,20 +1,28 @@
 const bookshelf = require('./lib/bookshelf');
 const uuidv1 = require('uuid/v1');
 
-// returns a random element from a table
-const randomComponentId = (collection) => {
-  return collection[Math.round(Math.random()*(collection.length-1))].id;
-};
+const Monster =  bookshelf.Model.extend({
+  tableName: 'monsters'
+});
 
-// Make the user model
 const TeamMonster = bookshelf.Model.extend({
-  tableName: 'teams_monsters'
+  tableName: 'teams_monsters',
+  monster: function(){
+    return this.belongsTo(Monster);
+  },
+  getMonster: function(){
+    const teamMonster = this;
+    const {name, id, image} = teamMonster.relations.monster.attributes;
+    const monster = {};
+    monster[id] = {name, image};
+    return monster;
+  }
 });
 const Team = bookshelf.Model.extend({
   tableName: 'teams',
   teamMonster: function() {
-    return this.belongsTo(TeamMonster);
+    return this.hasMany(TeamMonster);
   }
 });
 
-module.exports = {Team, TeamMonster}
+module.exports = {Team, TeamMonster};
