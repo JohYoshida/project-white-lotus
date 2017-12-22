@@ -16,22 +16,22 @@ class Login extends Component {
     return (
       <div>
         <div hidden={this.state.register}>
+          <h4>Login</h4>
+          <p>Or <button onClick = {this.toggle}>Sign Up</button></p>
           <form id="loginForm">
-            <h4>Login</h4>
             <label>Username</label>
-            <input id='username' />
+            <input id='username' type='text'/>
             <label>Password</label>
             <input id='password' type='password' />
             <button onClick={this.props.login}>Submit</button>
           </form>
-          <p>Or <button onClick = {this.toggle}>Sign Up</button></p>
         </div>
         <div hidden={!this.state.register}>
-          Please input your email and password
+          <h4>Register</h4>
+          <p>Or <button onClick = {this.toggle}>Login</button></p>
           <form id="registerForm">
-            <h4>Login</h4>
             <label>Username</label>
-            <input id='username' />
+            <input id='username' type='text'/>
             <label>Password</label>
             <input id='password' type='password' />
             <button onClick={this.props.register}>Submit</button>

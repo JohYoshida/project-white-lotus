@@ -42,10 +42,19 @@ server.post('/users', (req, res) => {
 
 server.get('/users/:id', (req, res) => {
   const { id } = req.params;
-  knex('users').first('brouzoff').where('id', id)
-    .then(brouzoff => {
-      res.send(JSON.stringify(brouzoff));
+  knex('users').first('brouzoff', 'email').where('id', id)
+    .then(data => {
+      res.send(JSON.stringify(data));
     });
+});
+
+// Change the player's money
+server.patch('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  let brouzoffChange = req.body.brouzoffChange;
+  knex.select().from('users').where('id', '=', userId)
+    .increment('brouzoff', brouzoffChange).then();
+  res.status(204).send();
 });
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
