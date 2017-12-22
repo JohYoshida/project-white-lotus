@@ -17,6 +17,7 @@ module.exports = (db) => {
     if(!id) res.send({error: 'Not authorized to complete this transaction.'});
     // req body should look like {members: [monstId1, monstId2, monstId3]}
     const {members} = req.body;
+    console.log(req.body);
     new Team().save({id:uuid(), user_id:id}).then(team => {
       return Promise.all([
         new TeamMonster().save({team_id: team.get('id'), monster_id: members[0]}),
@@ -28,9 +29,7 @@ module.exports = (db) => {
   });
 
   userRouter.get('/teams', (req, res) => {
-    console.log(req.cookies);
     const {id} = req.cookies;
-    console.log(id);
     new User({id}).fetch({withRelated:['team']}).then(user => {
       const teams = user.related('team').serialize();
       const teamPromises = teams.map(team => new TeamMonster().query({where: {team_id: team.id}}).fetchAll({withRelated: ['monster']}));
