@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // but it's required for routing between monsters#index and monsters#show
 import { BrowserRouter as Route, Link } from 'react-router-dom';
 import MonsterInfo from './MonsterInfo';
+import './Monsters.css';
 
 class Monster extends Component {
 
@@ -28,12 +29,14 @@ class Monster extends Component {
     return (
       <div>
         <h2>Monster</h2>
-        <div>
-          <Link to="/">
-            <button>Show All</button>
-          </Link>
-          { this.state.monster ? <MonsterInfo monster={this.state.monster} />
+        <div className='container'>
+          <div className='monster'>
+            <Link to="/">
+              <button className='show-monster'>Show All</button>
+            </Link>
+            { this.state.monster ? <MonsterInfo monster={this.state.monster} />
             : <div /> }
+          </div>
         </div>
       </div>
     );

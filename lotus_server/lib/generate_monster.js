@@ -8,7 +8,6 @@ const Body = require('../models/body_model')(Type);
 const Head = require('../models/head_model')(Ability, Attack);
 const Arm = require('../models/arm_model')(Attack);
 const Monster = require('../models/monster_model')(Body, Head, Arm, Type, Attack, Ability);
-
 // the monster class
 class CompleteMonster {
   constructor(monster){
@@ -21,7 +20,7 @@ class CompleteMonster {
     this.maxHp = body.attributes.hp;
     this.hp = body.attributes.hp;
     this.type = type.attributes;
-    // Will eventually the compiled image.
+    // Will eventually the compiled image
     this.image_url = body.attributes.image_url;
     this.bench = true;
     this.passiveActive = true;
