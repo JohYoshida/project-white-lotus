@@ -7,6 +7,7 @@ let img2 = './parts/RKB.png';
 let img3 = './parts/RKLH.png';
 let img4 = './parts/RKH.png'
 let arr = [img1,img2,img3,img4];
+const uuidv1 = require('uuid/v1');
 function composeSS(x,y){
   return new Promise((resolve,reject)=>{
   Jimp.read(x).then(function (im1) {
@@ -47,23 +48,23 @@ function mash(arr,index,img){
   });
 }
 
-function monsterMash(arr){
+const monsterMash= (arr)=>{
   return new Promise((resolve,reject)=>{
     if(arr.length===1){
       Jimp.read(arr[0]).then(function(r1){
-        resolve(r1);
+         let x = uuidv1();
+          r2.write("${x}.png");
+          resolve("${x}.png");
       });
     }else{
       composeSS(arr[0],arr[1]).then(function(r1){
         mash(arr,2,r1).then(function(r2){
-          resolve(r2);
+          let x = uuidv1();
+          r2.write("${x}.png");
+          resolve("${x}.png");
         });
       });
     }
   });
 }
-monsterMash(arr).then(function(r){
-  r.write("output1.png");
-});
-
-export monsterMash;
+module.exports={monsterMash};
