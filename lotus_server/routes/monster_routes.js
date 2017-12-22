@@ -2,7 +2,6 @@
 const buildMonstersJSON = require('../lib/build_monsters_json');
 const buildMonsterJSON = require('../lib/build_monster_json');
 const express = require('express');
-const newName = require('../lib/generate_name');
 
 /* @TODO implement random kaiju name generator */
 
@@ -28,25 +27,13 @@ module.exports = (db) => {
     if (!creature || !id){
       return;
     }
-
-    // Generate name for monster
-    let name = '';
-    switch(creature) {
-      case 'kaiju':
-        name = newName.getKaiju();
-        break;
-      case 'mecha':
-        name = newName.getMecha();
-        break;
-      default:
-    }
     // Pull the user model and buy dat monster
     new User({id}).fetch().then(user => {
       if (user.attributes.brouzoff < cost){
         res.send(JSON.stringify({error: 'Sorry, not enough Brouzoff'}));
         return;
       }
-      user.buyMonster(creature, cost, name).then(monster => {
+      user.buyMonster(creature, cost).then(monster => {
         const monsterId = monster[0];
         db('monsters').where('id', monsterId).then(monster => {
           res.send(JSON.stringify({monster: monster[0], brouzoff: user.attributes.brouzoff}));

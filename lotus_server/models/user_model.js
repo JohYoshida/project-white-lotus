@@ -10,7 +10,7 @@ module.exports = (db) => {
   // Make the user model
   const User = bookshelf.Model.extend({
     tableName: 'users',
-    buyMonster: function(creature, cost, name){
+    buyMonster: function(creature, cost){
       const user = this;
       // Returns a promise of a new monster.
       return new Promise(function(resolve){
@@ -28,7 +28,7 @@ module.exports = (db) => {
               arm_id: randomComponentId(arms),
               body_id: randomComponentId(bodies),
               head_id: randomComponentId(heads),
-              name: name,
+              name: 'Talonridge',
               user_id: user.attributes.id
             };
           }).then(monster => {
