@@ -20,11 +20,7 @@ class Teams extends Component {
       console.log(teams);
       const getTeamMembers = (teamMember) => {
         const {name, id, image} = teamMember;
-        return (
-          <span key={id} className='team-team-member' data-id={id}>
-            <h3>{name}</h3>
-          </span>
-        );
+        return (<span key={id} className='team-team-member' data-id={id}>{name} </span>);
       };
       return teams.map(team => {
         return (
@@ -40,6 +36,7 @@ class Teams extends Component {
       <section hidden={!this.state.loaded}>
         <button onClick={this.addTeam}>Add a team</button>
         <AddTeamPane monsters={this.props.monsters} />
+        <h2>Your Teams</h2>
         {this.printTeams()}
       </section>
     );
