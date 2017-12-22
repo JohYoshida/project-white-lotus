@@ -17,7 +17,6 @@ class Login extends Component {
       <div>
         <div hidden={this.state.register}>
           <h4>Login</h4>
-          <p>Or <button onClick = {this.toggle}>Sign Up</button></p>
           <form id="loginForm">
             <label>Username</label>
             <input id='username' type='text'/>
@@ -25,10 +24,11 @@ class Login extends Component {
             <input id='password' type='password' />
             <button onClick={this.props.login}>Submit</button>
           </form>
+          <p>Or</p>
+          <button onClick={this.toggle}>Sign Up</button>
         </div>
         <div hidden={!this.state.register}>
           <h4>Register</h4>
-          <p>Or <button onClick = {this.toggle}>Login</button></p>
           <form id="registerForm">
             <label>Username</label>
             <input id='username' type='text'/>
@@ -36,6 +36,8 @@ class Login extends Component {
             <input id='password' type='password' />
             <button onClick={this.props.register}>Submit</button>
           </form>
+          <p>Or</p>
+          <button onClick={this.toggle}>Login</button>
         </div>
       </div>
     );
