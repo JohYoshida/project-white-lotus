@@ -40,6 +40,7 @@ class CompleteMonster {
   }
   set_ability(name) {
     /* @TODO: apply the above pattern to abilities */
+    // this.ability[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
     this.ability = abilityFuncs[name].bind(this);
   }
 }
@@ -54,7 +55,7 @@ const getCreature = (id) => {
       monster.set_ability(ability.attributes.name);
     }
     return monster;
-  }).catch(e => console.log(e));
+  });
 };
 
 module.exports = getCreature;

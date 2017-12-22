@@ -1,5 +1,6 @@
 const bookshelf = require('./lib/bookshelf');
 const uuidv1 = require('uuid/v1');
+const {Team, TeamMonster} = require('./team_model');
 
 // returns a random element from a table
 const randomComponent = (collection) => {
@@ -10,6 +11,12 @@ module.exports = (db) => {
   // Make the user model
   const User = bookshelf.Model.extend({
     tableName: 'users',
+    team: function(){
+      return this.hasMany(Team);
+    },
+    teamMonster: function(){
+      return this.hasMany(TeamMonster).through(Team);
+    },
     buyMonster: function(creature, cost){
       const user = this;
       // Returns a promise of a new monster.

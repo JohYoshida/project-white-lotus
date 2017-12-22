@@ -10,6 +10,7 @@ import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Store from './Store.jsx';
 import Login from './Login.jsx';
+import Teams from './Teams.jsx';
 
 // Functions
 import {postLogin, postRegister, setUserState} from './lib/user_auth.js';
@@ -29,7 +30,9 @@ class App extends Component {
     this.purchaseCrate = this.purchaseCrate.bind(this);
     this.state = {
       id: '',
-      loggedin: false
+      loggedin: false,
+      loaded: false,
+      monsters: []
     };
   }
 
@@ -37,6 +40,18 @@ class App extends Component {
     const {cookies} = this.props;
     if (cookies.get('id')) {
       this.setState({id: cookies.get('id'), loggedin: true});
+    }
+  }
+
+  componentDidMount(){
+    if(this.state.loggedin){
+      fetch('/monsters', {credentials: 'same-origin'}).then(res => {
+        res.json().then(data => {
+          console.log(data);
+          this.setState({monsters: data});
+          this.setState({loaded: true});
+        });
+      });
     }
   }
 
@@ -82,7 +97,7 @@ class App extends Component {
     const {email} = this.state;
     if (this.state.loggedin) {
       return (<Router>
-        <div>
+        <div hidden={!this.state.loaded}>
           <h1>{email}</h1>
           <nav className='nav'>
             <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
@@ -96,10 +111,10 @@ class App extends Component {
 
           <hr/>
 
-          <Route exact path="/" component={Monsters}/>
+          <Route exact="exact" path="/" render={() => (<Monsters monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
           <Route path="/monsters/:id" component={Monster}/>
           <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
-          <Route path="/teams" component={Teams}/>
+          <Route path="/teams" render={() => (<Teams monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
           <Route path="/battle" component={Battle}/>
         </div>
       </Router>);
@@ -116,9 +131,4 @@ class App extends Component {
     }
   }
 }
-
-const Teams = () => (<div>
-  <h2>Teams</h2>
-</div>);
-
 export default withCookies(App);
