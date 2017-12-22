@@ -6,24 +6,14 @@ import { BrowserRouter as Route, Link } from 'react-router-dom';
 class Monsters extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ready: false,
-      monsters: []
-    };
   }
 
   componentDidMount() {
-    // TODO: move to helper function
-    fetch('/monsters', {credentials: 'same-origin'}).then(res => {
-      res.json().then(data => {
-        this.setState({monsters: data});
-        this.setState({ready: true});
-      });
-    });
+
   }
 
   printMonsters() {
-    const monsters = this.state.monsters;
+    const monsters = this.props.monsters;
     const monsterArray = [];
     for(let monster of monsters){
       monsterArray.push(
@@ -44,12 +34,12 @@ class Monsters extends Component {
   }
 
   render() {
-    if (this.state.monsters.length > 0) {
+    if (this.props.monsters.length > 0) {
       return (
         <main>
           <h2>Monsters</h2>
           <ul>
-            {this.state.ready && this.printMonsters()}
+            {this.props.loaded && this.printMonsters()}
           </ul>
         </main>
       );
