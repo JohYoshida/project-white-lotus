@@ -23,20 +23,10 @@ beforeEach(setUpGame);
 
 test('The game should take and execute an action', () => {
   expect(game.players[0].turn).toBe(true);
-  game.takeAction({action: 'attack', name:'scratch', options: null});
+  game.takeAction({action: 'attack', name:'vomitous_sludge', options: null});
 
   expect(game.players[0].turn).toBe(false);
-  expect(game.players[1].activeMonster.hp).toBe(4);
-});
-
-test('The game should take and execute a passive action', () => {
-  expect(game.players[0].turn).toBe(true);
-  expect(game.players[1].turn).toBe(false);
-  game.takeAction({action: 'passive'});
-  expect(game.players[0].turn).toBe(true);
-  expect(game.players[1].turn).toBe(false);
-  expect(game.players[0].activeMonster.hp).toBe(11);
-  expect(game.players[0].team['2'].passiveActive).toBe(false);
+  expect(game.players[1].activeMonster.hp).toBe(25);
 });
 
 test('Game should kill monsters when hp is less than 0', () => {
@@ -50,7 +40,7 @@ test('Game should set a new active monster, if the current active dies', () => {
   const player = game.players[0];
   player.activeMonster.takeDamage(50);
   player.checkForDeath();
-  expect(player.activeMonster.id).toBe(2);
+  expect(player.activeMonster.id).toBe('2');
 });
 
 test('Game should set state to game over if all monsters are dead', () => {
