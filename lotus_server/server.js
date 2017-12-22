@@ -15,6 +15,7 @@ const socketRouter = require('./routes/battles_routes')(server);
 const monsterRouter = require('./routes/monster_routes')(knex);
 
 // Functions
+const User = require('./modesl/user_model')(knex);
 const loginUser = require('./lib/login_user');
 const registerUser = require('./lib/register_user');
 
@@ -55,6 +56,13 @@ server.patch('/users/:id', (req, res) => {
   knex.select().from('users').where('id', '=', userId)
     .increment('brouzoff', brouzoffChange).then();
   res.status(204).send();
+});
+
+server.post('/users/:id/teams', (req, res) => {
+  const {id} = req.params;
+  new User({id}).fetch().then(user => {
+    
+  });
 });
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
