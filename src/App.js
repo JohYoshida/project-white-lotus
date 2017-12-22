@@ -111,7 +111,7 @@ class App extends Component {
 
           <hr/>
 
-          <Route exact="exact" path="/" render={() => (<Monsters monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
+          <Route exact path="/" render={() => (<Monsters monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
           <Route path="/monsters/:id" component={Monster}/>
           <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
           <Route path="/teams" render={() => (<Teams monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
