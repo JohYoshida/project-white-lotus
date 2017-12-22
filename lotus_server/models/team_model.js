@@ -13,9 +13,7 @@ const TeamMonster = bookshelf.Model.extend({
   getMonster: function(){
     const teamMonster = this;
     const {name, id, image} = teamMonster.relations.monster.attributes;
-    const monster = {};
-    monster[id] = {name, image};
-    return monster;
+    return {id, name, image};
   }
 });
 const Team = bookshelf.Model.extend({

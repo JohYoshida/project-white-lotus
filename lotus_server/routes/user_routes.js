@@ -28,7 +28,9 @@ module.exports = (db) => {
   });
 
   userRouter.get('/teams', (req, res) => {
-    const id = req.cookies.id;
+    console.log(req.cookies);
+    const {id} = req.cookies;
+    console.log(id);
     new User({id}).fetch({withRelated:['team']}).then(user => {
       const teams = user.related('team').serialize();
       const teamPromises = teams.map(team => new TeamMonster().query({where: {team_id: team.id}}).fetchAll({withRelated: ['monster']}));

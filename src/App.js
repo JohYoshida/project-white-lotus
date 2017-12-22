@@ -10,6 +10,7 @@ import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Store from './Store.jsx';
 import Login from './Login.jsx';
+import Teams from './Teams.jsx';
 
 // Functions
 import {postLogin, postRegister, setUserState} from './helpers/user_auth.js';
@@ -116,9 +117,4 @@ class App extends Component {
     }
   }
 }
-
-const Teams = () => (<div>
-  <h2>Teams</h2>
-</div>);
-
 export default withCookies(App);
