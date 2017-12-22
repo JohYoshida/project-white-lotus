@@ -5,6 +5,7 @@ import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Store from './Store.jsx';
 import Login from './Login.jsx';
+import Img from './Img.jsx';
 import { instanceOf } from 'prop-types';
 import {withCookies,Cookies} from 'react-cookie';
 
@@ -168,12 +169,15 @@ class App extends Component {
       );
     } else {
       return(
+        <div>
         <Login
           state = {this.state}
           login = {this.login}
           register = {this.register}
           hidden = {this.state.loggedin}
-        />);
+        />
+        <Img/>
+        </div>);
     }
   }
 }
