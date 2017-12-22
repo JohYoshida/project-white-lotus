@@ -27,9 +27,9 @@ class Monsters extends Component {
     const monsterArray = [];
     for(let monster of monsters){
       monsterArray.push(
-        <li key={monster.id}>
+        <div className='monster' key={monster.id}>
           <Link to={`/monsters/${monster.id}`}>
-            <button id={monster.id}>
+            <button className='show-monster' id={monster.id}>
               {monster.name}
             </button>
           </Link>
@@ -37,7 +37,7 @@ class Monsters extends Component {
           <img src={monster.image_url} alt='monster icon' />
           <p>{monster.hp} HP</p>
           <p>Type: {monster.type.name}</p>
-        </li>
+        </div>
       );
     }
     return monsterArray;
@@ -48,9 +48,9 @@ class Monsters extends Component {
       return (
         <main>
           <h2>Monsters</h2>
-          <ul>
+          <div className='container'>
             {this.state.ready && this.printMonsters()}
-          </ul>
+          </div>
         </main>
       );
     } else {

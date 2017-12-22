@@ -12,8 +12,8 @@ import Store from './Store.jsx';
 import Login from './Login.jsx';
 
 // Functions
-import {postLogin, postRegister, setUserState} from './helpers/user_auth.js';
-import {postNewMonster} from './helpers/store.js';
+import {postLogin, postRegister, setUserState} from './lib/user_auth.js';
+import {postNewMonster} from './lib/store.js';
 
 class App extends Component {
   static propTypes = {
@@ -96,7 +96,7 @@ class App extends Component {
 
           <hr/>
 
-          <Route exact="exact" path="/" component={Monsters}/>
+          <Route exact path="/" component={Monsters}/>
           <Route path="/monsters/:id" component={Monster}/>
           <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
           <Route path="/teams" component={Teams}/>
