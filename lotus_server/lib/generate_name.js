@@ -24,7 +24,7 @@ const getMecha = () => {
   const last = [
     'Ronin',
     'Doom',
-    'Paragorn',
+    'Paragon',
     'Knuckle',
     'Paladin',
     'Gear',
@@ -52,7 +52,7 @@ const getMecha = () => {
     'Intercept',
     'Assassin',
     'River',
-    'merit',
+    'Merit',
     '',
   ];
   return first[Math.floor(Math.random()*first.length)] + ' '
@@ -68,7 +68,7 @@ const getKaiju = () => {
     'Hard',
     'Hammer',
     'Leather',
-    'Scum ',
+    'Scum',
     'Knife',
     'Ridge',
     'Knuckle',
