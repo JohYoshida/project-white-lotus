@@ -28,6 +28,7 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
+    this.fetchMonsters = this.fetchMonsters.bind(this);
     this.state = {
       id: '',
       loggedin: false,
@@ -43,16 +44,9 @@ class App extends Component {
     }
   }
 
+
   componentDidMount(){
-    if(this.state.loggedin){
-      fetch('/monsters', {credentials: 'same-origin'}).then(res => {
-        res.json().then(data => {
-          console.log(data);
-          this.setState({monsters: data});
-          this.setState({loaded: true});
-        });
-      });
-    }
+
   }
 
   register(event) {
@@ -75,10 +69,21 @@ class App extends Component {
     this.setState({id: null, loggedin: false, brouzoff: null});
   }
 
+  fetchMonsters(){
+    fetch('/monsters', {credentials: 'same-origin'}).then(res => {
+      res.json().then(data => {
+        console.log(data);
+        this.setState({monsters: data});
+        this.setState({loaded: true});
+      });
+    });
+  }
+
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
         this.setState({brouzoff: data.brouzoff});
+        // window.location = '/'
       });
     });
   }
@@ -111,10 +116,10 @@ class App extends Component {
 
           <hr/>
 
-          <Route exact path="/" render={() => (<Monsters monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
+          <Route exact path="/" render={() => (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
           <Route path="/monsters/:id" component={Monster}/>
           <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
-          <Route path="/teams" render={() => (<Teams monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
+          <Route path="/teams" render={() => (<Teams fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
           <Route path="/battle" component={Battle}/>
         </div>
       </Router>);

@@ -6,7 +6,6 @@ class AddTeamPane extends Component {
     super(props);
     this.state = {};
     this.addCreatureToTeam = this.addCreatureToTeam.bind(this);
-    this.sendTeam = this.sendTeam.bind(this);
   }
   addCreatureToTeam(event){
     event.stopPropagation();
@@ -19,28 +18,6 @@ class AddTeamPane extends Component {
     if(teamList.childNodes.length === 3){
       this.setState({readyToSend:true});
     }
-  }
-  sendTeam(event){
-    event.stopPropagation();
-    const teamList = document.querySelector('.add-team-new-team');
-    if(teamList.childNodes.length < 3){
-      return;
-    }
-    const body = [];
-    for(let monsterCard of teamList.childNodes){
-      body.push(monsterCard.getAttribute('data-id'));
-    }
-    fetch('/user/teams', {
-      credentials: 'same-origin',
-      method:'POST',
-      headers: {
-        'content-type' : 'application/json'
-      },
-      body: JSON.stringify({members: body})
-    }).then(() => {
-      teamList.childNodes.forEach(node => teamList.remove(node));
-      this.forceUpdate();
-    });
   }
   showMonsters(){
     const {monsters} = this.props;
@@ -60,7 +37,7 @@ class AddTeamPane extends Component {
       <section className='add-team'>
         <section className='add-team-new-team'>
         </section>
-        {this.state.readyToSend && <button onClick={this.sendTeam}>Submit team</button>}
+        {this.state.readyToSend && <button onClick={this.props.sendTeam}>Submit team</button>}
         <hr/>
         {this.showMonsters()}
       </section>
