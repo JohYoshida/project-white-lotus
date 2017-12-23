@@ -41,7 +41,7 @@ class Player {
     }
   }
 }
-
+// Takes a userid (string) and a team, (array of strings)
 const generatePlayer = (userid, team) => {
   return generateTeam(team).then(team => {
     return new Player(userid, team);
