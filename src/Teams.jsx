@@ -4,6 +4,7 @@ import AddTeamPane from './components/AddTeamPane.jsx';
 class Teams extends Component {
   constructor(props) {
     super(props);
+    this.state = {teams:null};
     this.sendTeam = this.sendTeam.bind(this);
   }
   componentDidMount(){
