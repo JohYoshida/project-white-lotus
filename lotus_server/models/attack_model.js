@@ -1,5 +1,5 @@
 const bookshelf = require('./lib/bookshelf');
-const Modifier = require('./Modifier.js');
+const Modifier = require('../lib/Modifier.js');
 
 const Attack = bookshelf.Model.extend({
   tableName: 'attacks',
