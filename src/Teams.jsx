@@ -8,7 +8,6 @@ class Teams extends Component {
   }
   componentDidMount(){
     this.props.fetchMonsters();
-    
     fetch('/user/teams', {credentials: 'same-origin'}).then(data => {
       data.json().then(parsedData => {
         console.log('Load confirmed');
