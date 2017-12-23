@@ -1,5 +1,4 @@
 const generateTeam = require('./generate_team');
-
 class Player {
   constructor(userid, team) {
     this.id = userid;

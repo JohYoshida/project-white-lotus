@@ -29,6 +29,10 @@ class Monsters extends Component {
     }
     return monsterArray;
   }
+  
+  componentDidMount(){
+    this.props.fetchMonsters();
+  }
 
   render() {
     if (this.props.monsters.length > 0) {

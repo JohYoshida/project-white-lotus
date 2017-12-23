@@ -1,4 +1,5 @@
 const generatePlayer = require('./generate_player');
+const Modifier = require('./Modifier.js');
 
 class Game{
   constructor(players){
