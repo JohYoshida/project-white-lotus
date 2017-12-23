@@ -25,7 +25,6 @@ test('The modifier should lower the target monster\'s maxHp', () => {
 });
 
 test('The modifier should update a count the each time it\'s update function is called.', () => {
-  // Add run the update function as you would if you were in the game (copy and paste code)
   const game = {};
   game.players = [player];
   // For each player, in the game run the any modifier functions.
