@@ -12,12 +12,12 @@ const formatTeam = require('./team_functions');
 
 module.exports = (db) => {
   const User = getUserModel(db);
+
   userRouter.post('/teams', (req, res) => {
     const {id} = req.cookies;
     if(!id) res.send({error: 'Not authorized to complete this transaction.'});
-    // req body should look like {members: [monstId1, monstId2, monstId3]}
+    // req body should look like {name: "MyTeam", members: [monstId1, monstId2, monstId3]}
     const {members} = req.body;
-    console.log(req.body);
     new Team().save({id:uuid(), user_id:id}).then(team => {
       return Promise.all([
         new TeamMonster().save({team_id: team.get('id'), monster_id: members[0]}),
