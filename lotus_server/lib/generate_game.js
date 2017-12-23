@@ -1,5 +1,4 @@
 const generatePlayer = require('./generate_player');
-const Modifier = require('./Modifier.js');
 
 class Game{
   constructor(players){
@@ -62,6 +61,7 @@ class Game{
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
     for(const player of this.players){
+      player.buffs.forEach(buff => buff.update());
       if(player.team.aliveMonsters() === 0){
         const losingPlayerIndex = this.players.indexOf(player);
         const winningPlayerIndex = 1 - losingPlayerIndex;

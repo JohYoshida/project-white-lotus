@@ -25,6 +25,7 @@ class CompleteMonster {
     this.bench = true;
     this.passiveActive = true;
     this.dot = [];
+    this.modifiers = [];
   }
   takeDamage(damage){
     this.hp -= damage;
