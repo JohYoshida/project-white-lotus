@@ -54,4 +54,5 @@ test('The modifier should remove itself once it\'s remove condition is met.', ()
     }
   }
   expect(player.activeMonster.modifiers.length()).toBe(0);
+  expect(player.activeMonster.maxHp).toBe(30);
 });
