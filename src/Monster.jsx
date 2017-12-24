@@ -14,7 +14,6 @@ class Monster extends Component {
   }
 
   componentDidMount() {
-    // TODO: move to helper function
     fetch(`/monsters/${this.props.match.params.id}`).then(res => {
       res.json().then(data => {
         this.setState({monster: data});

@@ -111,7 +111,7 @@ class App extends Component {
       return (<Router>
         <div hidden={!this.state.loaded}>
           <h1>{email}</h1>
-          <nav className='nav'>
+          <nav>
             <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
             <span className='float-left'><Link className='nav-link' to="/store">Store</Link></span>
             <span className='float-left'><Link className='nav-link' to="/teams">Teams</Link></span>
@@ -121,14 +121,24 @@ class App extends Component {
             </Link>
           </nav>
 
-          <hr/>
-
-          <Route exact path="/" render={() => (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
-          <Route path="/monsters/:id" render={(props) => (<Monster {...props} loadApp={this.loadApp}/>)}/>
-          <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
-          <Route path="/teams" render={() => (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
-          <Route path="/battle/:roomName" render={({match}) => (<Battle roomName={match.params.roomName} fetchTeams={this.fetchTeams}/>)} />
-          <Route path="/create-battle" render={() => (<CreateBattle loadApp={this.loadApp} />)} />
+          <Route exact path="/" render={() =>
+            (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
+          }/>
+          <Route path="/monsters/:id" render={(props) =>
+            (<Monster {...props} loadApp={this.loadApp}/>)
+          }/>
+          <Route path="/store" render={(props) =>
+            (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
+          }/>
+          <Route path="/teams" render={() =>
+            (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
+          }/>
+          <Route path="/battle/:roomName" render={({match}) => (
+            <Battle roomName={match.params.roomName} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
+          }/>
+          <Route path="/create-battle" render={() =>
+            (<CreateBattle loadApp={this.loadApp} />)
+          }/>
         </div>
       </Router>);
     } else {

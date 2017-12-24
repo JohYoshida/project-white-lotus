@@ -12,6 +12,7 @@ class Battle extends Component {
     super(props);
     this.state = {ready:false, game:{}, messages: [], player:{}, opponent:{}};
     this.joinGame = this.joinGame.bind(this);
+    this.renderTeam = this.renderTeam.bind(this);
   }
   componentDidMount(){
     this.props.fetchTeams();
@@ -23,8 +24,9 @@ class Battle extends Component {
     const button = event.target;
     // build the WebSocket.
     this.socket = generateBattleSocket(this);
+    document.querySelector('.battlefield-teams').remove();
+    document.querySelector('nav').remove();
   }
-
   isWinner(){
     const {gameOver} = this.state.game;
     if(gameOver.winner.id === this.state.id){
@@ -34,12 +36,27 @@ class Battle extends Component {
     editBrouzoff(this.state.game, 250);
     return(<p>You lost!</p>);
   }
-
+  renderTeam(team){
+    // right now we're showing the button, but we could render anything with it (icon images, etc)
+    const {teamMembers} = team;
+    const getTeamMembers = (teamMember) => {
+      const {name, id, image} = teamMember;
+      return (<span key={id} className='team-team-member' data-id={id}>{name}, </span>);
+    };
+    return(
+      <div className="button button-outline" onClick={this.joinGame} key={team.id}>
+        <h3>{team.name}</h3>
+        {teamMembers.map(getTeamMembers)}
+      </div>
+    );
+  }
   render() {
     return (
       <main id="battlefield">
         {this.state.game.gameOver && <Modal header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />}
-        <button onClick={this.joinGame}>2</button>
+        <div class="battlefield-teams">
+          {this.props.teams && this.props.teams.map(this.renderTeam)}
+        </div>
         <p>{this.state.game.idlePlayer && this.state.game.idlePlayer.id}</p>
         {this.state.ready && <Opponent className='opponent' player={this.state.opponent} curUserId={this.state.id} /> }
         <p>{this.state.game.activePlayer && this.state.game.activePlayer.id}</p>
