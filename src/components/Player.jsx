@@ -6,6 +6,9 @@ class Player extends Component {
     this.sendAttack = this.sendAttack.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.unBench = this.unBench.bind(this);
+    this.state = {
+      activeMonster: ''
+    }
   }
   generateUserCards(){
     let cards = [];
@@ -18,7 +21,7 @@ class Player extends Component {
         action = monster.bench ? <button className='button button-outline game-button' onClick={this.unBench} data-id={monster.id}>Unbench</button> : this.showAttacks(monster);
       }
       cards.push(
-        <article key={monster.id} className='user-card'>
+        <article key={monster.id} id={monster.id} data-active='false' className='user-card'>
           <h3>{monster.name}</h3>
           <p>{monster.hp}HP</p>
           {action}
@@ -41,7 +44,14 @@ class Player extends Component {
     );
   }
   unBench(event){
-    this.sendMessage({messageType: 'action', action: 'activate', monsterId: event.target.getAttribute('data-id')});
+    let id = event.target.getAttribute('data-id');
+    this.sendMessage({messageType: 'action', action: 'activate', monsterId: id});
+    let benched = this.state.activeMonster;
+    if (this.state.activeMonster && document.getElementById(benched)) {
+      document.getElementById(benched).dataset.active = 'false';
+    }
+    this.setState({activeMonster: id});
+    document.getElementById(id).dataset.active = 'true';
   }
   sendMessage(message){
     this.props.socket.send(JSON.stringify(message));
