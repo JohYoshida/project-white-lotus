@@ -2,6 +2,7 @@
 const generateBattleSocket = (battleComponent) => {
   const {roomName} = battleComponent.props;
   const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  console.log(roomName);
   socket.addEventListener('open', () => {
     /* @TODO: Make this.state.id a prop passed down from app. */
     socket.send(JSON.stringify({messageType: 'join', team:'1,2,3', battlerId: battleComponent.state.battlerId}));
