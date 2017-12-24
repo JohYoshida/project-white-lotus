@@ -32,7 +32,7 @@ class Battle extends Component {
     const {gameOver} = this.state.game;
     if(!gameOver) return;
     toggleModalById('gameOverModal');
-    if(gameOver.winner.id === this.state.id){
+    if(gameOver.winner.id === this.state.battlerId){
       editBrouzoff(this.state.game, 500);
       return (<p>You won!</p>);
     }
