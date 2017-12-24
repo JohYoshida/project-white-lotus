@@ -8,6 +8,7 @@ const Body = require('../models/body_model')(Type);
 const Head = require('../models/head_model')(Ability, Attack);
 const Arm = require('../models/arm_model')(Attack);
 const Monster = require('../models/monster_model')(Body, Head, Arm, Type, Attack, Ability);
+const {ModifierCollection} = require('./Modifier.js');
 
 // the monster class
 class CompleteMonster {
@@ -21,11 +22,12 @@ class CompleteMonster {
     this.maxHp = body.attributes.hp;
     this.hp = body.attributes.hp;
     this.type = type.attributes;
-    // Will eventually the compiled image.
+    // Will eventually the compiled image
     this.image_url = body.attributes.image_url;
     this.bench = true;
     this.passiveActive = true;
     this.dot = [];
+    this.modifiers = new ModifierCollection();
   }
   takeDamage(damage){
     this.hp -= damage;
@@ -41,6 +43,7 @@ class CompleteMonster {
   }
   set_ability(name) {
     /* @TODO: apply the above pattern to abilities */
+    // this.ability[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
     this.ability = abilityFuncs[name].bind(this);
   }
 }
@@ -55,7 +58,7 @@ const getCreature = (id) => {
       monster.set_ability(ability.attributes.name);
     }
     return monster;
-  }).catch(e => console.log(e));
+  });
 };
 
 module.exports = getCreature;

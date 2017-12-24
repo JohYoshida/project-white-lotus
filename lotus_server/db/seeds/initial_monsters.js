@@ -17,7 +17,7 @@ exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return Promise.all([
     knex('monsters').del(),
-    knex('teams_monster').del(),
+    knex('teams_monsters').del(),
     knex('bodies').del(),
     knex('heads').del(),
     knex('arms').del(),
@@ -84,7 +84,8 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/blob.png',
           hp: 30,
           type_id: types[0],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Blob'
         },
         {
           id: bodies[1],
@@ -92,7 +93,8 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/t-wrex.png',
           hp: 35,
           type_id: types[1],
-          creature: 'mecha'
+          creature: 'kaiju',
+          nameword: 'Dino'
         },
         {
           id: bodies[2],
@@ -100,7 +102,9 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/cthulumonster.png',
           hp: 25,
           type_id: types[2],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Horror'
+
         },
         {
           id: bodies[3],
@@ -108,7 +112,8 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/shocktop.png',
           hp: 25,
           type_id: types[2],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Robot'
         },
         {
           id: bodies[4],
@@ -116,7 +121,8 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/medi-o-cre.png',
           hp: 20,
           type_id: types[0],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword:'Medic'
         },
         {
           id: bodies[5],
@@ -124,7 +130,8 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/red_knight.png',
           hp: 25,
           type_id: types[1],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword:'Knight'
         }
       ]),
       knex('heads').insert([
@@ -134,7 +141,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: attacks[0],
           ability_id: null,
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword:'Inexorable'
         },
         {
           id: heads[1],
@@ -142,7 +150,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: attacks[1],
           ability_id: null,
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Chomping'
         },
         {
           id: heads[2],
@@ -150,7 +159,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: attacks[2],
           ability_id: null,
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Mesmerizing'
         },
         {
           id: heads[3],
@@ -158,7 +168,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: null,
           ability_id: abilities[0],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Shocking'
         },
         {
           id: heads[4],
@@ -166,7 +177,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: null,
           ability_id: abilities[1],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Altrusistic'
         },
         {
           id: heads[5],
@@ -174,7 +186,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: null,
           ability_id: abilities[2],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Red'
         },
         {
           id: heads[6],
@@ -182,7 +195,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: attacks[3],
           ability_id: null,
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword:'Serpentine'
         },
         {
           id: heads[7],
@@ -190,7 +204,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: attacks[4],
           ability_id: null,
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword:'Eight-eyed'
         },
         {
           id: heads[8],
@@ -198,7 +213,9 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: attacks[5],
           ability_id: null,
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Unblinking'
+
         },
         {
           id: heads[9],
@@ -206,7 +223,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: null,
           ability_id: abilities[3],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Cyclone'
         },
         {
           id: heads[10],
@@ -214,7 +232,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: null,
           ability_id: abilities[4],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword:'Hypermatter'
         },
         {
           id: heads[11],
@@ -222,7 +241,8 @@ exports.seed = function(knex, Promise) {
           image_url: null,
           attack_id: null,
           ability_id: abilities[5],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Missile'
         }
       ]),
       knex('arms').insert([
@@ -231,63 +251,72 @@ exports.seed = function(knex, Promise) {
           name: 'Blob',
           image_url: null,
           attack_id: attacks[6],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Slimey'
         },
         {
           id: arms[1],
           name: 'Stubby Wrex Arms',
           image_url: null,
           attack_id: attacks[7],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword:'Subby-armed'
         },
         {
           id: arms[2],
           name: 'C\'thulumonster',
           image_url: null,
           attack_id: attacks[8],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Eldritch'
         },
         {
           id: arms[3],
           name: 'Shock Top',
           image_url: null,
           attack_id: attacks[9],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Electro'
         },
         {
           id: arms[4],
           name: 'Medi-o-cre',
           image_url: null,
           attack_id: attacks[10],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Support'
         },
         {
           id: arms[5],
           name: 'Red Knight',
           image_url: null,
           attack_id: attacks[11],
-          creature: 'mecha'
+          creature: 'mecha',
+          nameword: 'Defender'
         },
         {
           id: arms[6],
           name: 'Mind Siphon',
           image_url: null,
           attack_id: attacks[12],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Mind-warping'
         },
         {
           id: arms[7],
           name: 'Snake Hands',
           image_url: null,
           attack_id: attacks[13],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword: 'Striking'
         },
         {
           id: arms[8],
           name: 'Spider Fang',
           image_url: null,
           attack_id: attacks[14],
-          creature: 'kaiju'
+          creature: 'kaiju',
+          nameword:'Biting'
         }
       ]),
       knex('attacks').insert([

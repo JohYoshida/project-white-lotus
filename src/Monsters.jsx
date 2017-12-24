@@ -6,30 +6,17 @@ import { BrowserRouter as Route, Link } from 'react-router-dom';
 class Monsters extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ready: false,
-      monsters: []
-    };
-  }
-
-  componentDidMount() {
-    // TODO: move to helper function
-    fetch('/monsters', {credentials: 'same-origin'}).then(res => {
-      res.json().then(data => {
-        this.setState({monsters: data});
-        this.setState({ready: true});
-      });
-    });
+    console.log(this.props.monsters);
   }
 
   printMonsters() {
-    const monsters = this.state.monsters;
+    const monsters = this.props.monsters;
     const monsterArray = [];
     for(let monster of monsters){
       monsterArray.push(
-        <li key={monster.id}>
+        <div className='monster' key={monster.id}>
           <Link to={`/monsters/${monster.id}`}>
-            <button id={monster.id}>
+            <button className='show-monster' id={monster.id}>
               {monster.name}
             </button>
           </Link>
@@ -37,20 +24,24 @@ class Monsters extends Component {
           <img src={monster.image_url} alt='monster icon' />
           <p>{monster.hp} HP</p>
           <p>Type: {monster.type.name}</p>
-        </li>
+        </div>
       );
     }
     return monsterArray;
   }
+  
+  componentDidMount(){
+    this.props.fetchMonsters();
+  }
 
   render() {
-    if (this.state.monsters.length > 0) {
+    if (this.props.monsters.length > 0) {
       return (
         <main>
           <h2>Monsters</h2>
-          <ul>
-            {this.state.ready && this.printMonsters()}
-          </ul>
+          <div className='container'>
+            {this.printMonsters()}
+          </div>
         </main>
       );
     } else {

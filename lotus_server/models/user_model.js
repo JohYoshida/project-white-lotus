@@ -1,15 +1,22 @@
 const bookshelf = require('./lib/bookshelf');
 const uuidv1 = require('uuid/v1');
+const {Team, TeamMonster} = require('./team_model');
 
 // returns a random element from a table
-const randomComponentId = (collection) => {
-  return collection[Math.round(Math.random()*(collection.length-1))].id;
+const randomComponent = (collection) => {
+  return collection[Math.round(Math.random()*(collection.length-1))];
 };
 
 module.exports = (db) => {
   // Make the user model
   const User = bookshelf.Model.extend({
     tableName: 'users',
+    team: function(){
+      return this.hasMany(Team);
+    },
+    teamMonster: function(){
+      return this.hasMany(TeamMonster).through(Team);
+    },
     buyMonster: function(creature, cost){
       const user = this;
       // Returns a promise of a new monster.
@@ -17,18 +24,22 @@ module.exports = (db) => {
         user.set({brouzoff: user.attributes.brouzoff - cost});
         user.save().then(() => {
           Promise.all([
-            db.select('id').from('bodies').where('creature', creature),
-            db.select('id').from('heads').where('creature', creature),
-            db.select('id').from('arms').where('creature', creature)
+            db.select('id','nameword').from('bodies').where('creature', creature),
+            db.select('id','nameword').from('heads').where('creature', creature),
+            db.select('id','nameword').from('arms').where('creature', creature)
           ]).then(components => {
             const bodies = components[0], heads = components[1], arms = components[2];
             // Make the monster.
+            let arm = randomComponent(arms)
+            let body = randomComponent(bodies)
+            let head = randomComponent(heads)
+
             return {
               id: uuidv1(),
-              arm_id: randomComponentId(arms),
-              body_id: randomComponentId(bodies),
-              head_id: randomComponentId(heads),
-              name: 'Talonridge',
+              arm_id: arm.id,
+              body_id: head.id,
+              head_id: arm.id,
+              name: head.nameword+" "+arm.nameword+" "+body.nameword,
               user_id: user.attributes.id
             };
           }).then(monster => {

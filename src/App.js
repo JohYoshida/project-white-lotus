@@ -10,10 +10,11 @@ import Monsters from './Monsters.jsx';
 import Monster from './Monster.jsx';
 import Store from './Store.jsx';
 import Login from './Login.jsx';
+import Teams from './Teams.jsx';
 
 // Functions
-import {postLogin, postRegister, setUserState} from './helpers/user_auth.js';
-import {postNewMonster} from './helpers/store.js';
+import {postLogin, postRegister, setUserState} from './lib/user_auth.js';
+import {postNewMonster} from './lib/store.js';
 
 class App extends Component {
   static propTypes = {
@@ -27,9 +28,12 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
+    this.fetchMonsters = this.fetchMonsters.bind(this);
     this.state = {
       id: '',
-      loggedin: false
+      loggedin: false,
+      loaded: false,
+      monsters: []
     };
   }
 
@@ -38,6 +42,11 @@ class App extends Component {
     if (cookies.get('id')) {
       this.setState({id: cookies.get('id'), loggedin: true});
     }
+  }
+
+
+  componentDidMount(){
+
   }
 
   register(event) {
@@ -60,10 +69,21 @@ class App extends Component {
     this.setState({id: null, loggedin: false, brouzoff: null});
   }
 
+  fetchMonsters(){
+    fetch('/monsters', {credentials: 'same-origin'}).then(res => {
+      res.json().then(data => {
+        console.log(data);
+        this.setState({monsters: data});
+        this.setState({loaded: true});
+      });
+    });
+  }
+
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
         this.setState({brouzoff: data.brouzoff});
+        // window.location = '/'
       });
     });
   }
@@ -82,7 +102,7 @@ class App extends Component {
     const {email} = this.state;
     if (this.state.loggedin) {
       return (<Router>
-        <div>
+        <div hidden={!this.state.loaded}>
           <h1>{email}</h1>
           <nav className='nav'>
             <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
@@ -96,21 +116,24 @@ class App extends Component {
 
           <hr/>
 
-          <Route exact="exact" path="/" component={Monsters}/>
+          <Route exact="exact" path="/" render={() => (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
           <Route path="/monsters/:id" component={Monster}/>
           <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
-          <Route path="/teams" component={Teams}/>
+          <Route path="/teams" render={() => (<Teams fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
           <Route path="/battle" component={Battle}/>
         </div>
       </Router>);
     } else {
-      return (<Login state={this.state} login={this.login} register={this.register} hidden={this.state.loggedin}/>);
+      return(
+        <div>
+        <Login
+          state = {this.state}
+          login = {this.login}
+          register = {this.register}
+          hidden = {this.state.loggedin}
+        />
+        </div>);
     }
   }
 }
-
-const Teams = () => (<div>
-  <h2>Teams</h2>
-</div>);
-
 export default withCookies(App);
