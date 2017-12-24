@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
 import AddTeamPane from './components/AddTeamPane.jsx';
+import Modal from './components/Modal.jsx';
 
 class Teams extends Component {
   constructor(props) {
     super(props);
-    this.state = {teams:null};
     this.sendTeam = this.sendTeam.bind(this);
   }
   componentDidMount(){
     this.props.fetchMonsters();
-    fetch('/user/teams', {credentials: 'same-origin'}).then(data => {
-      data.json().then(parsedData => {
-        this.setState({teams:parsedData.teams});
-      });
-    });
+    this.props.fetchTeams();
   }
   sendTeam(event){
     event.stopPropagation();
     const teamList = document.querySelector('.add-team-new-team');
-    console.log(teamList);
-    if(teamList.childNodes.length < 3){
+    const name = document.querySelector('#teamNameForm').elements["teamName"].value;
+    if(name.length < 1){
+      /* @TODO add flash message here */
       return;
     }
-    const body = [];
+    if(teamList.childNodes.length < 3){
+      /* @TODO add flash message here */
+      return;
+    }
+    const members = [];
     for(let monsterCard of teamList.childNodes){
-      body.push(monsterCard.getAttribute('data-id'));
+      members.push(monsterCard.getAttribute('data-id'));
     }
     fetch('/user/teams', {
       credentials: 'same-origin',
@@ -32,23 +33,24 @@ class Teams extends Component {
       headers: {
         'content-type' : 'application/json'
       },
-      body: JSON.stringify({members: body})
+      body: JSON.stringify({name, members})
     }).then(() => {
       teamList.childNodes.forEach(node => teamList.remove(node));
       window.location = '/teams'
     });
   }
   printTeams(){
-    if(this.state.teams){
-      const {teams} = this.state;
-      console.log(teams);
+    if(this.props.teams){
+      const {teams} = this.props;
       const getTeamMembers = (teamMember) => {
         const {name, id, image} = teamMember;
         return (<span key={id} className='team-team-member' data-id={id}>{name} </span>);
       };
       return teams.map(team => {
+        console.log(team);
         return (
           <article key={team.id} className='team'>
+            <h3>Name: {team.name}</h3>
             {team.teamMembers.map(getTeamMembers)}
           </article>
         );
@@ -56,8 +58,16 @@ class Teams extends Component {
     }
   }
   render() {
+    const inputForm = () => {
+      return (
+        <form id="teamNameForm">
+          <input type="text" name="teamName" placeholder="Team name" />
+        </form>
+      )
+    };
     return (
       <section>
+        <Modal className='hidden' header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
         <button onClick={this.addTeam}>Add a team</button>
         <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters} />
         <h2>Your Teams</h2>

@@ -29,11 +29,13 @@ class App extends Component {
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
     this.fetchMonsters = this.fetchMonsters.bind(this);
+    this.fetchTeams = this.fetchTeams.bind(this);
     this.state = {
       id: '',
       loggedin: false,
       loaded: false,
-      monsters: []
+      monsters: [],
+      teams:null
     };
   }
 
@@ -43,12 +45,6 @@ class App extends Component {
       this.setState({id: cookies.get('id'), loggedin: true});
     }
   }
-
-
-  componentDidMount(){
-
-  }
-
   register(event) {
     event.preventDefault();
     postRegister(event).then(res => {
@@ -78,7 +74,13 @@ class App extends Component {
       });
     });
   }
-
+  fetchTeams(){
+    fetch('/user/teams', {credentials: 'same-origin'}).then(data => {
+      data.json().then(parsedData => {
+        this.setState({teams:parsedData.teams});
+      });
+    });
+  }
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
@@ -119,7 +121,7 @@ class App extends Component {
           <Route exact="exact" path="/" render={() => (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
           <Route path="/monsters/:id" component={Monster}/>
           <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
-          <Route path="/teams" render={() => (<Teams fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
+          <Route path="/teams" render={() => (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
           <Route path="/battle" component={Battle}/>
         </div>
       </Router>);
