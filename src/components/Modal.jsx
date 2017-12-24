@@ -10,7 +10,7 @@ class Modal extends Component {
   }
   render() {
     return (
-      <section className="modal">
+      <section id={this.props.id || ''} className="modal hidden">
         <header>
           <h3>{this.props.header}</h3>
         </header>

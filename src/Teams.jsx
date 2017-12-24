@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AddTeamPane from './components/AddTeamPane.jsx';
 import Modal from './components/Modal.jsx';
+import {showElementById} from './lib/element_effect_helpers.js';
 
 class Teams extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Teams extends Component {
   sendTeam(event){
     event.stopPropagation();
     const teamList = document.querySelector('.add-team-new-team');
-    const name = document.querySelector('#teamNameForm').elements["teamName"].value;
+    const name = document.querySelector('#teamNameForm').elements['teamName'].value;
     if(name.length < 1){
       /* @TODO add flash message here */
       return;
@@ -36,7 +37,8 @@ class Teams extends Component {
       body: JSON.stringify({name, members})
     }).then(() => {
       teamList.childNodes.forEach(node => teamList.remove(node));
-      window.location = '/teams'
+      // update team's list.
+      this.props.fetchTeams();
     });
   }
   printTeams(){
@@ -44,14 +46,15 @@ class Teams extends Component {
       const {teams} = this.props;
       const getTeamMembers = (teamMember) => {
         const {name, id, image} = teamMember;
-        return (<span key={id} className='team-team-member' data-id={id}>{name} </span>);
+        return (<span key={id} className='team-team-member' data-id={id}>{name}, </span>);
       };
       return teams.map(team => {
         console.log(team);
         return (
           <article key={team.id} className='team'>
             <h3>Name: {team.name}</h3>
-            {team.teamMembers.map(getTeamMembers)}
+            <p>Members: {team.teamMembers.map(getTeamMembers)}</p>
+            <button onClick={this.deleteTeam}>Delete Team</button>
           </article>
         );
       });
@@ -67,10 +70,10 @@ class Teams extends Component {
     };
     return (
       <section>
-        <Modal className='hidden' header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
-        <button onClick={this.addTeam}>Add a team</button>
-        <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters} />
+        <Modal id="submitName" header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
+        <AddTeamPane sendTeam={showElementById('submitName')} monsters={this.props.monsters} />
         <h2>Your Teams</h2>
+        <button onClick={showElementById('addTeamPane')}>Add a team</button>
         {this.printTeams()}
       </section>
     );
