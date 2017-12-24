@@ -9,7 +9,6 @@ class Monster extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ready: false,
       monster: null
     };
   }
@@ -19,7 +18,7 @@ class Monster extends Component {
     fetch(`/monsters/${this.props.match.params.id}`).then(res => {
       res.json().then(data => {
         this.setState({monster: data});
-        this.setState({ready: true});
+        this.props.loadApp();
       });
     });
   }
@@ -33,8 +32,7 @@ class Monster extends Component {
             <Link to="/">
               <button className='show-monster'>Show All</button>
             </Link>
-            { this.state.monster ? <MonsterInfo monster={this.state.monster} />
-            : <div /> }
+            {this.state.monster && <MonsterInfo monster={this.state.monster} />}
           </div>
         </div>
       </div>

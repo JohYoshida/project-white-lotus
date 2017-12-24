@@ -13,6 +13,9 @@ class Battle extends Component {
     this.state = {ready:false, game:{}, messages: [], player:{}, opponent:{}};
     this.joinGame = this.joinGame.bind(this);
   }
+  componentDidMount(){
+    this.props.fetchTeams();
+  }
   // Handles sending join game requests.
   joinGame(event){
     this.state.ready || this.setState({ready:true});
