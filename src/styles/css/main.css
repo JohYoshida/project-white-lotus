@@ -20,15 +20,14 @@ body {
 .hidden {
   display: none; }
 
-.player {
+main#battlefield .player {
   position: absolute;
   text-align: center;
   bottom: 16%;
   width: 100%;
   height: 37%;
   background-color: #A5D6A7; }
-
-.opponent {
+main#battlefield .opponent {
   position: absolute;
   text-align: center;
   bottom: 53%;
@@ -60,6 +59,16 @@ body {
 
 article[data-active='true'] {
   background-color: lightblue; }
+
+section.messages {
+  padding: 5px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 16%;
+  background-color: #B0BEC5; }
+  section.messages p {
+    margin-bottom: 5px; }
 
 section.modal {
   position: fixed;
