@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 // but it's required for routing between monsters#index and monsters#show
 import { BrowserRouter as Route, Link } from 'react-router-dom';
 import MonsterInfo from './MonsterInfo';
-import './Monsters.css';
 
 class Monsters extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class Monsters extends Component {
     }
     return monsterArray;
   }
-  
+
   componentDidMount(){
     this.props.fetchMonsters();
   }

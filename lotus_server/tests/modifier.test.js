@@ -9,10 +9,10 @@ beforeAll(done => {
     pl.findActiveMonster();
 
     // An attack happens, in the attack block, this code runs
-    new Modifier(pl.activeMonster, {maxHp: -2}, function(){
-      this.turnCount ? this.turnCount++ : this.turnCount = 1;
+    new Modifier(pl.activeMonster, {maxHp: -2}, (modifier) => {
+      modifier.turnCount ? modifier.turnCount++ : modifier.turnCount = 1;
       // remove condition
-      if(this.turnCount === 3) this.removeModifier();
+      if(modifier.turnCount === 3) modifier.removeModifier();
     });
 
     player = pl;
@@ -40,7 +40,6 @@ test('The modifier should update a count the each time it\'s update function is 
 });
 
 test('The modifier should remove itself once it\'s remove condition is met.', () => {
-  // Add run the update function as you would if you were in the game (copy and paste code)
   const game = {};
   game.players = [player];
   // Just loop over the turn switch until the count condition is reached

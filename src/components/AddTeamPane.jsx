@@ -34,7 +34,8 @@ class AddTeamPane extends Component {
   }
   render() {
     return (
-      <section className='add-team'>
+      <section id="addTeamPane" className='add-team hidden'>
+        <h2>Create a new team!</h2>
         <section className='add-team-new-team'>
         </section>
         {this.state.readyToSend && <button onClick={this.props.sendTeam}>Submit team</button>}

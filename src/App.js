@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
-import './App.css';
 
 // Components
 import Battle from './Battle.jsx';
@@ -11,6 +10,7 @@ import Monster from './Monster.jsx';
 import Store from './Store.jsx';
 import Login from './Login.jsx';
 import Teams from './Teams.jsx';
+import CreateBattle from './CreateBattle.jsx';
 
 // Functions
 import {postLogin, postRegister, setUserState} from './lib/user_auth.js';
@@ -29,11 +29,14 @@ class App extends Component {
     this.purchaseEgg = this.purchaseEgg.bind(this);
     this.purchaseCrate = this.purchaseCrate.bind(this);
     this.fetchMonsters = this.fetchMonsters.bind(this);
+    this.fetchTeams = this.fetchTeams.bind(this);
+    this.loadApp = this.loadApp.bind(this);
     this.state = {
       id: '',
       loggedin: false,
       loaded: false,
-      monsters: []
+      monsters: [],
+      teams:null
     };
   }
 
@@ -43,12 +46,6 @@ class App extends Component {
       this.setState({id: cookies.get('id'), loggedin: true});
     }
   }
-
-
-  componentDidMount(){
-
-  }
-
   register(event) {
     event.preventDefault();
     postRegister(event).then(res => {
@@ -68,17 +65,27 @@ class App extends Component {
     cookies.remove('id');
     this.setState({id: null, loggedin: false, brouzoff: null});
   }
-
+  // default load app.
+  loadApp(){
+    this.setState({loaded:true});
+  }
   fetchMonsters(){
     fetch('/monsters', {credentials: 'same-origin'}).then(res => {
       res.json().then(data => {
         console.log(data);
         this.setState({monsters: data});
-        this.setState({loaded: true});
+        this.loadApp();
       });
     });
   }
-
+  fetchTeams(){
+    fetch('/user/teams', {credentials: 'same-origin'}).then(data => {
+      data.json().then(parsedData => {
+        this.setState({teams:parsedData.teams});
+        this.loadApp();
+      });
+    });
+  }
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
@@ -104,23 +111,34 @@ class App extends Component {
       return (<Router>
         <div hidden={!this.state.loaded}>
           <h1>{email}</h1>
-          <nav className='nav'>
+          <nav>
             <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
             <span className='float-left'><Link className='nav-link' to="/store">Store</Link></span>
             <span className='float-left'><Link className='nav-link' to="/teams">Teams</Link></span>
-            <span className='float-left'><Link className='nav-link' to="/battle">Battle</Link></span>
+            <span className='float-left'><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
             <Link to="/">
               <button onClick={this.logout} className='button button-outline'>Log out</button>
             </Link>
           </nav>
 
-          <hr/>
-
-          <Route exact path="/" render={() => (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)}/>
-          <Route path="/monsters/:id" component={Monster}/>
-          <Route path="/store" render={(props) => (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)}/>
-          <Route path="/teams" render={() => (<Teams fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded}/>)} />
-          <Route path="/battle" component={Battle}/>
+          <Route exact path="/" render={() =>
+            (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
+          }/>
+          <Route path="/monsters/:id" render={(props) =>
+            (<Monster {...props} loadApp={this.loadApp}/>)
+          }/>
+          <Route path="/store" render={(props) =>
+            (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
+          }/>
+          <Route path="/teams" render={() =>
+            (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
+          }/>
+          <Route path="/battle/:roomName" render={({match}) => (
+            <Battle roomName={match.params.roomName} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
+          }/>
+          <Route path="/create-battle" render={() =>
+            (<CreateBattle loadApp={this.loadApp} />)
+          }/>
         </div>
       </Router>);
     } else {

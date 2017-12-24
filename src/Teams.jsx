@@ -1,30 +1,34 @@
 import React, { Component } from 'react';
 import AddTeamPane from './components/AddTeamPane.jsx';
+import Modal from './components/Modal.jsx';
+import {toggleElementByIdButton, toggleElementById, toggleModalByIdButton, toggleModalById} from './lib/element_effect_helpers.js';
 
 class Teams extends Component {
   constructor(props) {
     super(props);
-    this.state = {teams:null};
     this.sendTeam = this.sendTeam.bind(this);
+    this.deleteTeam = this.deleteTeam.bind(this);
   }
   componentDidMount(){
     this.props.fetchMonsters();
-    fetch('/user/teams', {credentials: 'same-origin'}).then(data => {
-      data.json().then(parsedData => {
-        this.setState({teams:parsedData.teams});
-      });
-    });
+    this.props.fetchTeams();
   }
   sendTeam(event){
+    event.preventDefault();
     event.stopPropagation();
     const teamList = document.querySelector('.add-team-new-team');
-    console.log(teamList);
-    if(teamList.childNodes.length < 3){
+    const name = document.querySelector('#teamNameForm').elements['teamName'].value;
+    if(name.length < 1){
+      /* @TODO add flash message here */
       return;
     }
-    const body = [];
+    if(teamList.childNodes.length < 3){
+      /* @TODO add flash message here */
+      return;
+    }
+    const members = [];
     for(let monsterCard of teamList.childNodes){
-      body.push(monsterCard.getAttribute('data-id'));
+      members.push(monsterCard.getAttribute('data-id'));
     }
     fetch('/user/teams', {
       credentials: 'same-origin',
@@ -32,35 +36,62 @@ class Teams extends Component {
       headers: {
         'content-type' : 'application/json'
       },
-      body: JSON.stringify({members: body})
+      body: JSON.stringify({name, members})
     }).then(() => {
       teamList.childNodes.forEach(node => teamList.remove(node));
-      window.location = '/teams'
+      // update team's list.
+      toggleModalById('submitName');
+      this.props.fetchTeams();
+    });
+  }
+  deleteTeam(event){
+    const teamId = event.target.parentNode.dataset.id;
+    const body = {teamId};
+    fetch('/user/teams', {
+      credentials: 'same-origin',
+      method: 'DELETE',
+      headers: {
+        'content-type' : 'application/json'
+      },
+      body: JSON.stringify(body)
+    }).then(response => {
+      response.json().then(() => {
+        this.props.fetchTeams();
+      });
     });
   }
   printTeams(){
-    if(this.state.teams){
-      const {teams} = this.state;
-      console.log(teams);
+    if(this.props.teams){
+      const {teams} = this.props;
       const getTeamMembers = (teamMember) => {
         const {name, id, image} = teamMember;
-        return (<span key={id} className='team-team-member' data-id={id}>{name} </span>);
+        return (<span key={id} className='team-team-member' data-id={id}>{name}, </span>);
       };
       return teams.map(team => {
         return (
-          <article key={team.id} className='team'>
-            {team.teamMembers.map(getTeamMembers)}
+          <article key={team.id} data-id={team.id} className='team'>
+            <h3>Name: {team.name}</h3>
+            <p>Members: {team.teamMembers.map(getTeamMembers)}</p>
+            <button onClick={this.deleteTeam}>Delete Team</button>
           </article>
         );
       });
     }
   }
   render() {
+    const inputForm = () => {
+      return (
+        <form id="teamNameForm" onSubmit={this.sendTeam}>
+          <input type="text" name="teamName" placeholder="Team name" />
+        </form>
+      )
+    };
     return (
       <section>
-        <button onClick={this.addTeam}>Add a team</button>
-        <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters} />
+        <Modal id="submitName" header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
+        <AddTeamPane sendTeam={toggleModalByIdButton('submitName')} monsters={this.props.monsters} />
         <h2>Your Teams</h2>
+        <button onClick={toggleElementByIdButton('addTeamPane')}>Add a team</button>
         {this.printTeams()}
       </section>
     );

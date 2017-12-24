@@ -18,6 +18,7 @@ exports.seed = function(knex, Promise) {
   return Promise.all([
     knex('monsters').del(),
     knex('teams_monsters').del(),
+    knex('teams').del(),
     knex('bodies').del(),
     knex('heads').del(),
     knex('arms').del(),
