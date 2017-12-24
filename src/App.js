@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
-import './App.css';
 
 // Components
 import Battle from './Battle.jsx';

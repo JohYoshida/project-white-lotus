@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AddTeamPane from './components/AddTeamPane.jsx';
 import Modal from './components/Modal.jsx';
-import {toggleElementByIdButton, toggleElementById} from './lib/element_effect_helpers.js';
+import {toggleElementByIdButton, toggleElementById, toggleModalByIdButton, toggleModalById} from './lib/element_effect_helpers.js';
 
 class Teams extends Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class Teams extends Component {
     this.props.fetchTeams();
   }
   sendTeam(event){
+    event.preventDefault();
     event.stopPropagation();
     const teamList = document.querySelector('.add-team-new-team');
     const name = document.querySelector('#teamNameForm').elements['teamName'].value;
@@ -29,7 +30,6 @@ class Teams extends Component {
     for(let monsterCard of teamList.childNodes){
       members.push(monsterCard.getAttribute('data-id'));
     }
-    toggleElementById('submitName');
     fetch('/user/teams', {
       credentials: 'same-origin',
       method:'POST',
@@ -40,6 +40,7 @@ class Teams extends Component {
     }).then(() => {
       teamList.childNodes.forEach(node => teamList.remove(node));
       // update team's list.
+      toggleModalById('submitName');
       this.props.fetchTeams();
     });
   }
@@ -80,7 +81,7 @@ class Teams extends Component {
   render() {
     const inputForm = () => {
       return (
-        <form id="teamNameForm">
+        <form id="teamNameForm" onSubmit={this.sendTeam}>
           <input type="text" name="teamName" placeholder="Team name" />
         </form>
       )
@@ -88,7 +89,7 @@ class Teams extends Component {
     return (
       <section>
         <Modal id="submitName" header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
-        <AddTeamPane sendTeam={toggleElementByIdButton('submitName')} monsters={this.props.monsters} />
+        <AddTeamPane sendTeam={toggleModalByIdButton('submitName')} monsters={this.props.monsters} />
         <h2>Your Teams</h2>
         <button onClick={toggleElementByIdButton('addTeamPane')}>Add a team</button>
         {this.printTeams()}
