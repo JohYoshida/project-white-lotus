@@ -37,8 +37,8 @@ module.exports = (db) => {
             return {
               id: uuidv1(),
               arm_id: arm.id,
-              body_id: head.id,
-              head_id: arm.id,
+              body_id: body.id,
+              head_id: head.id,
               name: head.nameword+" "+arm.nameword+" "+body.nameword,
               user_id: user.attributes.id
             };

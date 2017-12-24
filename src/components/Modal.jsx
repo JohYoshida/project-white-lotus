@@ -11,15 +11,17 @@ class Modal extends Component {
   render() {
     return (
       <section className="modal">
-        <header>
-          <h3>{this.props.header}</h3>
-        </header>
-        <main>
-          {this.props.mainContent}
-        </main>
-        <footer>
-          {this.props.footer}
-        </footer>
+        <div className='modal-container'>
+          <header className="modal-header">
+            <h3>{this.props.header}</h3>
+          </header>
+          <main classname="modal-main">
+            {this.props.mainContent}
+          </main>
+          <footer classname="modal-footer">
+            {this.props.footer}
+          </footer>
+        </div>
       </section>
     );
   }
