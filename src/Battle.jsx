@@ -37,7 +37,7 @@ class Battle extends Component {
   render() {
     return (
       <main>
-        {this.state.game.gameOver && <Modal header="Game over" mainContent={this.isWinner()} footer={<a href="/">Done</a>} />}
+        {this.state.game.gameOver && <Modal header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />}
         {!this.state.ready && <button onClick={this.joinGame}>1</button>}
         {!this.state.ready && <button onClick={this.joinGame}>2</button>}
         {/* <h2>Opponent {this.state.game.idlePlayer && this.state.game.idlePlayer.id}</h2> */}
