@@ -41,5 +41,26 @@ module.exports = (db) => {
     });
   });
 
+  // Sends back a JSON entry of the deleted team name.
+  userRouter.delete('/teams', (req, res) => {
+    const {teamId} = req.body;
+    const userId = req.cookies.id;
+    new Team({id: teamId}).fetch({withRelated:['teamMonster']}).then(team => {
+      if(team.get('user_id') !== userId){
+        return res.send(JSON.stringify({error: 'Not authorized to complete this transaction'}));
+      }
+      // destroy all the teamMonsterEntries then the team itself.
+      Promise.all(team.related('teamMonster').models.map(teamMonsterEntries => {
+        // to destroy something, there must be a where clause or an id attribute
+        // teamMonsterEntries have a null id by default.
+        teamMonsterEntries.where({team_id: team.get('id')}).destroy();
+      })).then(() => {
+        team.destroy().then(team => {
+          res.send(JSON.stringify({flash: `${team.get('name')} has been deleted.`}));
+        });
+      });
+    });
+  });
+
   return userRouter;
 };

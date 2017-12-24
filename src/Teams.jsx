@@ -7,6 +7,7 @@ class Teams extends Component {
   constructor(props) {
     super(props);
     this.sendTeam = this.sendTeam.bind(this);
+    this.deleteTeam = this.deleteTeam.bind(this);
   }
   componentDidMount(){
     this.props.fetchMonsters();
@@ -41,6 +42,22 @@ class Teams extends Component {
       this.props.fetchTeams();
     });
   }
+  deleteTeam(event){
+    const teamId = event.target.parentNode.dataset.id;
+    const body = {teamId};
+    fetch('/user/teams', {
+      credentials: 'same-origin',
+      method: 'DELETE',
+      headers: {
+        'content-type' : 'application/json'
+      },
+      body: JSON.stringify(body)
+    }).then(response => {
+      response.json().then(() => {
+        this.props.fetchTeams();
+      });
+    });
+  }
   printTeams(){
     if(this.props.teams){
       const {teams} = this.props;
@@ -51,7 +68,7 @@ class Teams extends Component {
       return teams.map(team => {
         console.log(team);
         return (
-          <article key={team.id} className='team'>
+          <article key={team.id} data-id={team.id} className='team'>
             <h3>Name: {team.name}</h3>
             <p>Members: {team.teamMembers.map(getTeamMembers)}</p>
             <button onClick={this.deleteTeam}>Delete Team</button>
