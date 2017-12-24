@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AddTeamPane from './components/AddTeamPane.jsx';
 import Modal from './components/Modal.jsx';
-import {showElementById} from './lib/element_effect_helpers.js';
+import {toggleElementByIdButton, toggleElementById} from './lib/element_effect_helpers.js';
 
 class Teams extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class Teams extends Component {
     for(let monsterCard of teamList.childNodes){
       members.push(monsterCard.getAttribute('data-id'));
     }
+    toggleElementById('submitName');
     fetch('/user/teams', {
       credentials: 'same-origin',
       method:'POST',
@@ -66,7 +67,6 @@ class Teams extends Component {
         return (<span key={id} className='team-team-member' data-id={id}>{name}, </span>);
       };
       return teams.map(team => {
-        console.log(team);
         return (
           <article key={team.id} data-id={team.id} className='team'>
             <h3>Name: {team.name}</h3>
@@ -88,9 +88,9 @@ class Teams extends Component {
     return (
       <section>
         <Modal id="submitName" header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
-        <AddTeamPane sendTeam={showElementById('submitName')} monsters={this.props.monsters} />
+        <AddTeamPane sendTeam={toggleElementByIdButton('submitName')} monsters={this.props.monsters} />
         <h2>Your Teams</h2>
-        <button onClick={showElementById('addTeamPane')}>Add a team</button>
+        <button onClick={toggleElementByIdButton('addTeamPane')}>Add a team</button>
         {this.printTeams()}
       </section>
     );

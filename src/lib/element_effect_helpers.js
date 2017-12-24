@@ -1,10 +1,13 @@
-const showElementById = (id) => {
+const toggleElementByIdButton = (id) => {
   return (event) => {
-    console.log('running');
     event.preventDefault();
     const elt = document.getElementById(id);
-    elt.classList.remove('hidden');
+    elt.classList.toggle('hidden');
   };
 };
+const toggleElementById = (id) => {
+  const elt = document.getElementById(id);
+  elt.classList.toggle('hidden');
+};
 
-export {showElementById};
+export {toggleElementByIdButton, toggleElementById};

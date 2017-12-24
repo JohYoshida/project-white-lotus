@@ -40,3 +40,7 @@
   border-color: rgb(155, 77, 202) !important;
   color: rgb(155, 77, 202) !important;
 }
+
+article[data-active='true'] {
+  background-color: lightblue;
+}
