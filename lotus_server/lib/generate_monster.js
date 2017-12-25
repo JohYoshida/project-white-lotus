@@ -34,11 +34,11 @@ class CompleteMonster {
   }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
-    const {id, name, description} = attributes;
-    const {altId, altName, altDescription} = altAttributes;
-    this.attacks[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
-    if(altName){
-      this.attacks[altName]  = {id: altId, name: altName, description: altDescription || 'Attack 2 description', func: attackFuncs[altName].bind(this)};
+    let {id, name, description} = attributes;
+    this.attacks[name] = {id, name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
+    if(altAttributes.name){
+      let {id, name, description} = altAttributes;
+      this.attacks[name]  = {id, name, description: description || 'Attack 2 description', func: attackFuncs[name].bind(this)};
     }
   }
   set_ability(name) {
