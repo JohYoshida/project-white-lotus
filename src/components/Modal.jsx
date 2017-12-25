@@ -15,10 +15,10 @@ class Modal extends Component {
           <header className="modal-header">
             <h3>{this.props.header}</h3>
           </header>
-          <main classname="modal-main">
+          <main className="modal-main">
             {this.props.mainContent}
           </main>
-          <footer classname="modal-footer">
+          <footer className="modal-footer">
             {this.props.footer}
           </footer>
         </div>
