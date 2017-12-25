@@ -90,7 +90,7 @@ class App extends Component {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
         this.setState({brouzoff: data.brouzoff});
-        // window.location = '/'
+        console.log(data.monster);
       });
     });
   }

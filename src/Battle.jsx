@@ -6,6 +6,7 @@ import Opponent from './components/Opponent.jsx';
 import Player from './components/Player.jsx';
 import generateBattleSocket from './lib/websocket.js';
 import editBrouzoff from './lib/editBrouzoff.js';
+import {toggleModalById} from './lib/element_effect_helpers';
 
 class Battle extends Component {
   constructor(props) {
@@ -29,7 +30,9 @@ class Battle extends Component {
   }
   isWinner(){
     const {gameOver} = this.state.game;
-    if(gameOver.winner.id === this.state.id){
+    if(!gameOver) return;
+    toggleModalById('gameOverModal');
+    if(gameOver.winner.id === this.state.battlerId){
       editBrouzoff(this.state.game, 500);
       return (<p>You won!</p>);
     }
@@ -53,8 +56,7 @@ class Battle extends Component {
   render() {
     return (
       <main id="battlefield">
-        {this.state.game.gameOver && <Modal header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />}
-        <div class="battlefield-teams">
+        <div className="battlefield-teams">
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
         <p>{this.state.game.idlePlayer && this.state.game.idlePlayer.id}</p>
@@ -63,6 +65,7 @@ class Battle extends Component {
         {this.state.ready && <Player className='player' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
 
         {this.state.ready && <MessageBox className='message-box' messages={this.state.messages} />}
+        <Modal id="gameOverModal" header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />
       </main>
     );
   }
