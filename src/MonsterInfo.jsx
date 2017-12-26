@@ -12,7 +12,7 @@ const MonsterInfo = ({monster}) => {
 
   return (
     <div className='monster-show'>
-      <img src={monster.image} alt='monster icon' />
+      <img src={monster.image||monster.image_url} alt='monster icon' />
       <h3>{monster.name}</h3>
       <p>{monster.creature}</p>
       <p>{monster.hp} HP</p>
