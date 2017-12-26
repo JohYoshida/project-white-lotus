@@ -1,6 +1,11 @@
 const bookshelf = require('./lib/bookshelf');
 const uuidv1 = require('uuid/v1');
+<<<<<<< HEAD
 const monsterMash = require('./monstermash');
+=======
+const {Team, TeamMonster} = require('./team_model');
+
+>>>>>>> 94604825990f1d8f1209f252bf06ab1eb3166e2a
 // returns a random element from a table
 const randomComponent = (collection) => {
   return collection[Math.round(Math.random()*(collection.length-1))];
@@ -10,6 +15,12 @@ module.exports = (db) => {
   // Make the user model
   const User = bookshelf.Model.extend({
     tableName: 'users',
+    team: function(){
+      return this.hasMany(Team);
+    },
+    teamMonster: function(){
+      return this.hasMany(TeamMonster).through(Team);
+    },
     buyMonster: function(creature, cost){
       const user = this;
       // Returns a promise of a new monster.
@@ -34,6 +45,7 @@ module.exports = (db) => {
             //console.log(__dirname);
             monsterMash.monsterMash(arr).then((result)=>{;
             return {
+<<<<<<< HEAD
                 id: uuidv1(),
                 arm_id: arm.id,
                 body_id: head.id,
@@ -46,6 +58,17 @@ module.exports = (db) => {
             }).then(monster => {
                 resolve(db('monsters').insert(monster, 'id'));
             });
+=======
+              id: uuidv1(),
+              arm_id: arm.id,
+              body_id: body.id,
+              head_id: head.id,
+              name: head.nameword+" "+arm.nameword+" "+body.nameword,
+              user_id: user.attributes.id
+            };
+          }).then(monster => {
+            resolve(db('monsters').insert(monster, 'id'));
+>>>>>>> 94604825990f1d8f1209f252bf06ab1eb3166e2a
           });
         });
       });

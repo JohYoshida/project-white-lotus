@@ -16,6 +16,6 @@ const generateMonstersJSON = (res, userid) => {
         res.send(JSON.stringify(results));
       });
     });
-}
+};
 
 module.exports = generateMonstersJSON;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './MessageBox.css';
 
 class MessageBox extends Component {
   renderMessages(){
@@ -11,7 +10,7 @@ class MessageBox extends Component {
   }
   render() {
     return (
-      <section className="Messages">
+      <section className="messages">
         {this.renderMessages()}
       </section>
     )

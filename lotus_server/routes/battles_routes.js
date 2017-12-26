@@ -12,8 +12,9 @@ module.exports = (server) => {
     this.ws(`/${id}`, roomFunctionality);
   };
   socketRouter.post('/',(req,res) => {
-    socketRouter.genBattle(req.body.roomname);
-    res.send(JSON.stringify({flash:`Room Created at ${req.body.roomname}`}));
+    const {roomName} = req.body;
+    socketRouter.genBattle(roomName);
+    res.send(JSON.stringify({flash:`http://localhost:3000/battle/${roomName}`}));
   });
   return socketRouter;
 };
