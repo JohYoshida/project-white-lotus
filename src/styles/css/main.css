@@ -28,7 +28,6 @@ div#battlefield {
   div#battlefield .player {
     position: relative;
     display: flex;
-    justify-content: space-between;
     width: 100%;
     margin: 0 auto;
     background-color: #A5D6A7; }
@@ -37,7 +36,6 @@ div#battlefield {
     display: flex;
     width: 100%;
     margin: 0 auto;
-    justify-content: space-between;
     background-color: #EF9A9A; }
 
 /* This should override Milligram's greyed buttons on focus */
@@ -52,7 +50,7 @@ section.messages {
   padding: 5px;
   margin: auto;
   width: 100%;
-  height: 100px;
+  height: 0px;
   background-color: #B0BEC5;
   z-index: -2;
   overflow-y: auto; }
@@ -105,11 +103,16 @@ section.modal {
   padding: 0px; }
 
 .battlefield-active-battler {
-  width: 100%; }
+  width: 200px; }
 
 .active-monster-info {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  width: 100%; }
+
+.card-image-header {
+  width: 90%;
+  margin: auto; }
 
 .battlefield-onBench {
   right: 0;

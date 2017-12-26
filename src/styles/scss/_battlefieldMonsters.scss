@@ -1,9 +1,16 @@
 .battlefield-active-battler{
-  width: 100%;
+  width: 200px;
 }
 .active-monster-info{
   display: flex;
   justify-content: space-between;
+  width: 100%;
+}
+.card-image-header{
+  width: 90%;
+  margin: auto;
+  img{
+  }
 }
 
 .battlefield-onBench{
