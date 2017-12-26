@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  &.modal-open {
+    overflow: hidden;
+  }
+}
+
+.hidden{
+  display: none;
+}
+
+@import 'nav';
+@import 'battle';
+@import 'modal';
+@import 'monsters';

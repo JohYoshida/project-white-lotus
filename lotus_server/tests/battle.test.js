@@ -10,9 +10,9 @@ test('There should be three monsters in play.', done => {
     const gojira = creatures[0];
     const rhino = creatures[1];
     const mechaGojira = creatures[2];
-    expect(gojira.name).toBe("Gojira");
-    expect(rhino.name).toBe("Rhino");
-    expect(mechaGojira.name).toBe("Mecha Gojira");
+    expect(gojira.name).toBe("Blob");
+    expect(rhino.name).toBe("T-Wrex");
+    expect(mechaGojira.name).toBe("C'thulumonster");
     done();
   });
 });
