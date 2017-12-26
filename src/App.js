@@ -120,7 +120,6 @@ class App extends Component {
               <button onClick={this.logout} className='button button-outline'>Log out</button>
             </Link>
           </nav>
-
           <Route exact path="/" render={() =>
             (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
           }/>
