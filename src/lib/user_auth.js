@@ -32,7 +32,7 @@ export function setUserState(component, res) {
       component.setState({id: cookies.get('id'), loggedin: true});
       fetch(`/users/${component.state.id}`).then(res => {
         res.json().then(data => {
-          component.setState({brouzoff: data.brouzoff, email: data.email});
+          component.setState({brouzoff: data.brouzoff, username: data.email});
         });
       });
     }

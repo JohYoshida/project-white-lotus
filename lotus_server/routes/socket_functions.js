@@ -4,8 +4,8 @@ const Game = require('../lib/generate_game');
 module.exports = (wss, id) => {
   // handles setting up the room
   const setupRoom = (room, playerInfo) => {
-    room.battle = {};
-    let battle = room.battle;
+    room[`battle_${id}`] = {};
+    let battle = room[`battle_${id}`];
     return generatePlayer(playerInfo.battlerId, playerInfo.team.split(',')).then(player => {
       battle['players'] = [player];
     });
@@ -49,7 +49,8 @@ module.exports = (wss, id) => {
     };
     ws.on('message', function(msg) {
       const room = wss.getWss(`/${id}`);
-      const battle = room.battle;
+      const battle = room[`battle_${id}`];
+      console.log(battle);
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
       case 'join': {
