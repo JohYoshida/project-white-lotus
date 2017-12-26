@@ -55,16 +55,15 @@ class Battle extends Component {
   }
   render() {
     return (
-      <main id="battlefield">
+      <main>
         <div className="battlefield-teams">
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
-        <p>{this.state.game.idlePlayer && this.state.game.idlePlayer.id}</p>
-        {this.state.ready && <Opponent className='opponent' player={this.state.opponent} curUserId={this.state.id} /> }
-        <p>{this.state.game.activePlayer && this.state.game.activePlayer.id}</p>
-        {this.state.ready && <Player className='player' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
-
-        {this.state.ready && <MessageBox className='message-box' messages={this.state.messages} />}
+        <div id="battlefield">
+          {this.state.ready && <Opponent className='opponent' player={this.state.opponent} curUserId={this.state.id} /> }
+          {this.state.ready && <MessageBox className='message-box' messages={this.state.messages} />}
+          {this.state.ready && <Player className='player' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
+        </div>
         <Modal id="gameOverModal" header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />
       </main>
     );

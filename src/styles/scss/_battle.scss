@@ -1,42 +1,24 @@
-main#battlefield{
-  // height:100%;
+div#battlefield{
+  margin-top: -16px;
+  width:100%;
   .player {
-    position: absolute;
-    text-align: center;
-    bottom: 16%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    height: 37%;
+    margin: 0 auto;
     background-color: #A5D6A7;
   }
   .opponent {
-    position: absolute;
-    text-align: center;
-    bottom: 53%;
+    position: relative;
+    display: flex;
     width: 100%;
-    height: 37%;
+    margin: 0 auto;
+    justify-content: space-between;
+    // text-align: center;
+    // bottom: 16%;
     background-color: #EF9A9A;
   }
-}
-
-
-
-.user-card {
-  text-align: justify;
-  float: left;
-  height: 60%;
-  width: 25%;
-  border: 1px solid black;
-  border-radius: 10px;
-  margin: 5px 12px;
-}
-
-.game-button {
-  position: absolute;
-  bottom: 10px;
-  height: 30px;
-  line-height: 30px;
-  padding: 0px 15px;
-  font-size: 0.7em;
 }
 
 /* This should override Milligram's greyed buttons on focus */
@@ -51,12 +33,13 @@ article[data-active='true'] {
 
 section.messages {
   padding: 5px;
-  position: absolute;
-  bottom: 0;
+  margin: auto;
   width: 100%;
-  height: 16%;
+  height: 100px;
   background-color: #B0BEC5;
+  z-index: -2;
   p {
     margin-bottom: 5px;
   }
+  overflow-y: auto;
 }

@@ -1,0 +1,22 @@
+.battlefield-active-battler{
+  width: 100%;
+}
+.active-monster-info{
+  display: flex;
+  justify-content: space-between;
+}
+
+.battlefield-onBench{
+  right:0;
+  border: 2px solid gray;
+  padding: 2rem;
+  .bench-monster{
+    width: 60px;
+    min-height: 80px;
+    button{
+      width: inherit;
+      padding: 0;
+      font-size: .6rem;
+    }
+  }
+}
