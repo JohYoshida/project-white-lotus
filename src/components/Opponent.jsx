@@ -31,10 +31,10 @@ class Opponent extends Component {
   render() {
     return (
       <section className="opponent">
-        {this.generateActiveMonster()}
         <div class="battlefield-onBench">
-          {this.generateBenchedMonster()};
+        {this.generateBenchedMonster()};
         </div>
+        {this.generateActiveMonster()}
       </section>
     );
   }

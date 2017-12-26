@@ -27,6 +27,8 @@ class Battle extends Component {
     this.socket = generateBattleSocket(this);
     document.querySelector('.battlefield-teams').remove();
     document.querySelector('nav').remove();
+    document.querySelector('#battlefield').classList.remove('hidden');
+
   }
   isWinner(){
     const {gameOver} = this.state.game;
@@ -47,7 +49,7 @@ class Battle extends Component {
       return (<span key={id} className='team-team-member' data-id={id}>{name}, </span>);
     };
     return(
-      <div className="button button-outline" onClick={this.joinGame} key={team.id}>
+      <div className="button" onClick={this.joinGame} key={team.id}>
         <h3>{team.name}</h3>
         {teamMembers.map(getTeamMembers)}
       </div>
@@ -59,7 +61,7 @@ class Battle extends Component {
         <div className="battlefield-teams">
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
-        <div id="battlefield">
+        <div id="battlefield" class='hidden'>
           {this.state.ready && <Opponent className='opponent' player={this.state.opponent} curUserId={this.state.id} /> }
           {this.state.ready && <MessageBox className='message-box' messages={this.state.messages} />}
           {this.state.ready && <Player className='player' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
