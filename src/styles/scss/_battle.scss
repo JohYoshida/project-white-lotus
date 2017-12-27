@@ -1,14 +1,13 @@
 div#battlefield{
   height: 752px;
-  width: 800px;
+  width:50%;
   margin: auto;
 
   .player {
     position: relative;
     display: flex;
     padding: 2rem;
-    justify-content: space-between;
-    width: 800px;
+    justify-content: space-around;
     margin: 0 auto;
     background-color: #A5D6A7;
   }
@@ -16,9 +15,8 @@ div#battlefield{
     position: relative;
     padding: 2rem;
     display: flex;
-    width: 800px;
-    margin: 0 auto;
-    justify-content: space-between;
+    // margin: 0 auto;
+    justify-content: space-around;
     // text-align: center;
     // bottom: 16%;
     background-color: #EF9A9A;
@@ -38,7 +36,6 @@ article[data-active='true'] {
 section.messages {
   padding: 2rem;
   margin: auto;
-  width: 800px;
   height: 125px;
   background-color: #B0BEC5;
   z-index: -2;
@@ -46,4 +43,12 @@ section.messages {
     margin-bottom: 5px;
   }
   overflow-y: auto;
+}
+
+@media (max-width:768px) {
+  div#battlefield{
+    height: 752px;
+    width:100%;
+    margin: auto;
+  }
 }
