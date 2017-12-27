@@ -10,7 +10,7 @@ module.exports = (db) => {
   monsterRouter.get('/', (req, res) => {
     if(!req.cookies.id) res.status(400).send();
     // Get all monster IDs
-    buildMonstersJSON(res, req.cookies.id);
+    buildMonstersJSON(res, req.cookies.id)
   });
 
   // Find a single monster so it can be fetched by React Monster component

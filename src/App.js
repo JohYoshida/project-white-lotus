@@ -72,7 +72,6 @@ class App extends Component {
   fetchMonsters(){
     fetch('/monsters', {credentials: 'same-origin'}).then(res => {
       res.json().then(data => {
-        console.log(data);
         this.setState({monsters: data});
         this.loadApp();
       });
@@ -90,7 +89,6 @@ class App extends Component {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
         this.setState({brouzoff: data.brouzoff});
-        console.log(data.monster);
       });
     });
   }
@@ -120,7 +118,6 @@ class App extends Component {
               <button onClick={this.logout} className='button button-outline'>Log out</button>
             </Link>
           </nav>
-
           <Route exact path="/" render={() =>
             (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
           }/>
