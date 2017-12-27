@@ -11,7 +11,7 @@ const uuidv1 = require('uuid/v1');
 function composeSS(x,y){
   return new Promise((resolve,reject)=>{
   Jimp.read(x).then(function (im1) {
-        console.log("In SS");
+        //console.log("In SS");
         Jimp.read(y).then(function(im2){
           im1.composite(im2,0,0);
           resolve(im1);
@@ -24,7 +24,7 @@ function composeSS(x,y){
 }
 function composeIS(img,str){
   return new Promise((resolve,reject)=>{
-    console.log("In SS");
+    //console.log("In SS");
     Jimp.read(str).then(function(im2){
       img.composite(im2,0,0);
       resolve(img);
@@ -60,11 +60,12 @@ const monsterMash= (arr)=>{
       composeSS(arr[0],arr[1]).then(function(r1){
         mash(arr,2,r1).then(function(r2){
           let x = uuidv1();
-          r2.write("${x}.png");
-          resolve("${x}.png");
+          r2.write("./models/monsters/"+x+".png");
+          resolve(x+".png");
         });
       });
     }
   });
 }
+//monsterMash(arr);
 module.exports={monsterMash};
