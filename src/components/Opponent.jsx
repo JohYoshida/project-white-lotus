@@ -12,7 +12,7 @@ class Opponent extends Component {
 
     if(player.activeMonster){
       const monster = player.activeMonster;
-      return (<ActiveMonster player={player} monster={monster} sendAttack={this.sendAttack} />);
+      return (<ActiveMonster key={monster.id} player={player} monster={monster} sendAttack={this.sendAttack} />);
     }
   }
 
@@ -23,7 +23,7 @@ class Opponent extends Component {
     for(const monsterid in player.team){
       const monster = player.team[monsterid];
       if(monster.bench){
-        cards.push(<BenchedMonster player={player} monster={monster} unBench={this.unBench} />);
+        cards.push(<BenchedMonster key={monster.id} player={player} monster={monster} unBench={this.unBench} />);
       }
     }
     return cards;
