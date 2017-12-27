@@ -6,6 +6,10 @@ const PORT = 3001;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+// Database setup
+const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
+const knex = require('knex')(dbconfig);
+
 // Routes
 const socketRouter = require('./routes/battles_routes')(server);
 const monsterRouter = require('./routes/monster_routes')(knex);
