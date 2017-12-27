@@ -23,7 +23,7 @@ const registerUser = require('./lib/register_user');
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
-
+server.use(express.static('./models/monsters'))
 // Cookie Parser
 server.use(cookieParser());
 
