@@ -31,7 +31,7 @@ class Opponent extends Component {
   render() {
     return (
       <section className="opponent">
-        <div class="battlefield-onBench">
+        <div className="battlefield-onBench">
         {this.generateBenchedMonster()}
         </div>
         {this.generateActiveMonster()}
