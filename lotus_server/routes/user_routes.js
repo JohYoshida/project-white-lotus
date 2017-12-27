@@ -9,9 +9,14 @@ const getUserModel = require('../models/user_model');
 // Functions
 const uuid = require('uuid/v1');
 const formatTeam = require('./team_functions');
+const registerUser = require('../lib/register_user');
 
 module.exports = (db) => {
   const User = getUserModel(db);
+
+  userRouter.post('/', (req, res) => {
+    registerUser(res, req.body.email, req.body.password);
+  });
 
   userRouter.post('/teams', (req, res) => {
     const {id} = req.cookies;

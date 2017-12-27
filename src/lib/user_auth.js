@@ -15,7 +15,7 @@ export function postRegister(event) {
   const form = event.target.parentNode;
   const userName = form.elements['username'].value;
   const password = form.elements['password'].value;
-  return (fetch('/users', {
+  return (fetch('/user', {
     method: 'POST',
     body: encodeURI(`email=${userName}&password=${password}`),
     headers: {

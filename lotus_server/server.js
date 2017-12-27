@@ -17,7 +17,6 @@ const userRouter = require('./routes/user_routes')(knex);
 
 // Functions
 const loginUser = require('./lib/login_user');
-const registerUser = require('./lib/register_user');
 
 // Middleware
 // Body Parser
@@ -36,10 +35,6 @@ server.use('/user', userRouter);
 
 server.post('/login', (req, res) => {
   loginUser(res, req.body.email, req.body.password);
-});
-
-server.post('/users', (req, res) => {
-  registerUser(res, req.body.email, req.body.password);
 });
 
 server.get('/users/:id', (req, res) => {
