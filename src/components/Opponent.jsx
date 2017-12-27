@@ -32,7 +32,7 @@ class Opponent extends Component {
     return (
       <section className="opponent">
         <div class="battlefield-onBench">
-        {this.generateBenchedMonster()};
+        {this.generateBenchedMonster()}
         </div>
         {this.generateActiveMonster()}
       </section>

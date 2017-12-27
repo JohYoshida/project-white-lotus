@@ -46,7 +46,7 @@ class Player extends Component {
     return (
       <section className="player">
         <div class="battlefield-onBench">
-          {this.generateBenchedMonster()};
+          {this.generateBenchedMonster()}
         </div>
         {this.generateActiveMonster()}
       </section>
