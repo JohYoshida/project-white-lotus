@@ -353,19 +353,19 @@ exports.seed = function(knex, Promise) {
         },
         {
           id: attacks[5],
-          name: 'Deep Knowledge',
+          name: 'deep_knowledge',
           aoe: false,
           dot: false
         },
         {
           id: attacks[6],
-          name: 'Vomitous Sludge',
+          name: 'vomitous_sludge',
           aoe: false,
           dot: true
         },
         {
           id: attacks[7],
-          name: 'Steel Jaw',
+          name: 'steel_jaw',
           aoe: false,
           dot: false
         },
