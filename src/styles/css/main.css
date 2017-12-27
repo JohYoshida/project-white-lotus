@@ -91,7 +91,7 @@ section.modal {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: center; }
+  align-items: baseline; }
 
 .monster {
   min-height: 300px;
