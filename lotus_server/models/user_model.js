@@ -29,6 +29,7 @@ module.exports = (db) => {
             db.select('id','nameword').from('arms').where('creature', creature)
           ]).then(components => {
             const bodies = components[0], heads = components[1], arms = components[2];
+            console.log(bodies);
             // Make the monster.
             let arm = randomComponent(arms)
             let body = randomComponent(bodies)
@@ -48,9 +49,9 @@ module.exports = (db) => {
                 name: head.nameword+" "+arm.nameword+" "+body.nameword,
                 user_id: user.attributes.id,
                 image:result
-
               };
             }).then(monster => {
+                console.log(monster);
                 resolve(db('monsters').insert(monster, 'id'));
             });
           });
