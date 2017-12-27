@@ -40,7 +40,7 @@ class CompleteMonster {
     this.attacks[name] = {id, name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
     if(altAttributes.name){
       let {id, name, description} = altAttributes;
-      this.attacks[name]  = {id, name, description: description || 'Attack 2 description', func: attackFuncs[name].bind(this)};
+      this.attacks[name]  = {id, name, description: description || 'Attack 2 description', func: attackFuncs[name].bind(this), alt:true};
     }
   }
   set_ability(name) {
