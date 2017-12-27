@@ -2,6 +2,10 @@
 const express = require('express');
 const userRouter = express.Router();
 
+// database setup
+const dbconfig = require('../knexfile.js')[process.env.DB_ENV];
+const knex = require('knex')(dbconfig);
+
 // Models
 const {Team, TeamMonster} = require('../models/team_model');
 const getUserModel = require('../models/user_model');
@@ -16,6 +20,15 @@ module.exports = (db) => {
 
   userRouter.post('/', (req, res) => {
     registerUser(res, req.body.email, req.body.password);
+  });
+
+  // Change the player's money
+  userRouter.patch('/brouzoff/:id', (req, res) => {
+    const userId = req.params.id;
+    let brouzoffChange = req.body.brouzoffChange;
+    knex.select().from('users').where('id', '=', userId)
+      .increment('brouzoff', brouzoffChange).then();
+    res.status(204).send();
   });
 
   userRouter.post('/teams', (req, res) => {
@@ -64,6 +77,14 @@ module.exports = (db) => {
           res.send(JSON.stringify({flash: `${team.get('name')} has been deleted.`}));
         });
       });
+    });
+  });
+
+  userRouter.get('/:id', (req, res) => {
+    const {id} = req.params;
+    knex('users').first('brouzoff', 'email').where('id', id)
+    .then(data => {
+      res.send(JSON.stringify(data));
     });
   });
 
