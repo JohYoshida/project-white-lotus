@@ -29,7 +29,6 @@ module.exports = (db) => {
             db.select('id','nameword').from('arms').where('creature', creature)
           ]).then(components => {
             const bodies = components[0], heads = components[1], arms = components[2];
-            console.log(bodies);
             // Make the monster.
             let arm = randomComponent(arms)
             let body = randomComponent(bodies)
@@ -39,7 +38,6 @@ module.exports = (db) => {
             let img3 = './models/parts/RKLH.png';
             let img4 = './models/parts/RKH.png';
             let arr = [img1,img2,img3,img4];
-            //console.log(__dirname);
             monsterMash.monsterMash(arr).then((result)=>{;
             return {
                 id: uuidv1(),
@@ -51,7 +49,6 @@ module.exports = (db) => {
                 image:result
               };
             }).then(monster => {
-                console.log(monster);
                 resolve(db('monsters').insert(monster, 'id'));
             });
           });

@@ -11,11 +11,10 @@ const uuidv1 = require('uuid/v1');
 function composeSS(x,y){
   return new Promise((resolve,reject)=>{
   Jimp.read(x).then(function (im1) {
-        //console.log("In SS");
-        Jimp.read(y).then(function(im2){
-          im1.composite(im2,0,0);
-          resolve(im1);
-        });
+    Jimp.read(y).then(function(im2){
+      im1.composite(im2,0,0);
+      resolve(im1);
+    });
     }).catch(function (err) {
         console.error(err);
         reject(err);
@@ -24,7 +23,6 @@ function composeSS(x,y){
 }
 function composeIS(img,str){
   return new Promise((resolve,reject)=>{
-    //console.log("In SS");
     Jimp.read(str).then(function(im2){
       img.composite(im2,0,0);
       resolve(img);

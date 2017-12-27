@@ -16,7 +16,6 @@ class CompleteMonster {
     // arm and head to be used for image compilation functionality.
     const {body, type} = monster.relations;
     // set attributes
-    console.log(body);
     this.id = monster.attributes.id;
     this.name = monster.attributes.name;
     this.creature = body.attributes.creature;
