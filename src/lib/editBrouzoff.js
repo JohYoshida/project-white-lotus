@@ -1,5 +1,5 @@
-function editBrouzoff(playerId, amount) {
-  fetch(`http://localhost:3000/users/${playerId}`, {
+export default function editBrouzoff(playerId, amount) {
+  fetch(`/user/brouzoff/${playerId}`, {
       method: 'PATCH',
       body: encodeURI(`brouzoffChange=${amount}`),
       headers: {
@@ -7,5 +7,3 @@ function editBrouzoff(playerId, amount) {
       }
   });
 }
-
-module.exports = editBrouzoff;

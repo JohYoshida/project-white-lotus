@@ -72,7 +72,6 @@ class App extends Component {
   fetchMonsters(){
     fetch('/monsters', {credentials: 'same-origin'}).then(res => {
       res.json().then(data => {
-        console.log(data);
         this.setState({monsters: data});
         this.loadApp();
       });
@@ -90,7 +89,6 @@ class App extends Component {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
         this.setState({brouzoff: data.brouzoff});
-        console.log(data.monster);
       });
     });
   }
@@ -106,11 +104,11 @@ class App extends Component {
   }
 
   render() {
-    const {email} = this.state;
+    const {username} = this.state;
     if (this.state.loggedin) {
       return (<Router>
         <div hidden={!this.state.loaded}>
-          <h1>{email}</h1>
+          <h1>{username}</h1>
           <nav>
             <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
             <span className='float-left'><Link className='nav-link' to="/store">Store</Link></span>

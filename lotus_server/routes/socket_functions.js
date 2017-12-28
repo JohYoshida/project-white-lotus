@@ -50,7 +50,6 @@ module.exports = (wss, id) => {
     ws.on('message', function(msg) {
       const room = wss.getWss(`/${id}`);
       const battle = room[`battle_${id}`];
-      console.log(battle);
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
       case 'join': {
@@ -71,7 +70,6 @@ module.exports = (wss, id) => {
       }
       case 'action' : {
         const messages = handleActions(battle, parsedMsg);
-        // console.log(battle.game.players);
         ws.broadcast({
           game: battle.game,
           messages: battle.game.gameOver ? ['Game is over!'] : messages

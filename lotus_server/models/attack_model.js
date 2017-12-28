@@ -32,7 +32,6 @@ const attackFuncs = {
     const maxHp = attackedPlayer.activeMonster.maxHp;
     const hp = attackedPlayer.activeMonster.hp;
     const damage = Math.floor(maxHp/hp);
-    console.log(damage);
     attackedPlayer.activeMonster.takeDamage(damage);
     return [`${attackedPlayer.activeMonster.name} took ${damage} damage! They have ${attackedPlayer.activeMonster.hp} hp!`]
   },
