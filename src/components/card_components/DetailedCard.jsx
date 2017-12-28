@@ -26,8 +26,16 @@ class DetailedCard extends Component {
         );
       }
     }
-    /* @TODO sort it so that the primary ability is always first */
     return attacks;
+  }
+  abilityDetails({ability}){
+    if(!ability) return;
+    return(
+      <div className="abilities-ability">
+        <strong><span className="sword-ico"></span>{ability.name}</strong>
+        <p>{ability.description}</p>
+      </div>
+    );
   }
   render() {
     const {monster} = this.props;
@@ -40,6 +48,7 @@ class DetailedCard extends Component {
         <div className="card-details">
           <div className="card-details-abilities">
             {this.attackDetails(monster)}
+            {this.abilityDetails(monster)}
           </div>
         </div>
       </div>

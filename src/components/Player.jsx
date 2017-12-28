@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ActiveMonster from './ActiveMonster.jsx';
 import BenchedMonster from './BenchedMonster.jsx';
 
-
 class Player extends Component {
   constructor(props) {
     super(props);
