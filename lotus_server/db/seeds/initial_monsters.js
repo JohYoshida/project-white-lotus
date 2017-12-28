@@ -325,117 +325,138 @@ exports.seed = function(knex, Promise) {
           id: attacks[0],
           name: 'toxic_slime',
           aoe: false,
-          dot: true
+          dot: true,
+          description: 'Deal 4 damage per turn for 3 turns.'
         },
         {
           id: attacks[1],
           name: 'roar',
           aoe: true,
-          dot: false
+          dot: false,
+          description: 'Deal 3 damage to each enemy.'
         },
         {
           id: attacks[2],
           name: 'insanity',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 6 damage. Reduce the target\'s accuracy by 1 per turn until target is benched. '
         },
         {
           id: attacks[3],
           name: 'decimate',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal floor(target\'s max HP / target\'s current HP) damage.'
         },
         {
           id: attacks[4],
           name: 'web_sling',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\t leave.'
         },
         {
           id: attacks[5],
           name: 'deep_knowledge',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Gain the attack type of a benched monster.'
         },
         {
           id: attacks[6],
           name: 'vomitous_sludge',
           aoe: false,
-          dot: true
+          dot: true,
+          description: 'Deal 10 damage. Deal 1 damage per turn until target is benched.'
         },
         {
           id: attacks[7],
           name: 'steel_jaw',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 14-18 damage.'
         },
         {
           id: attacks[8],
           name: 'eldritch_horror',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 5-8 damage. Swap target with a random benched monster.'
         },
         {
           id: attacks[9],
           name: 'neutralize',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 10-12 damage. Ignore an enemy passive.'
         },
         {
           id: attacks[10],
           name: 'stimulant',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 8 damage. Heal self for 4 HP.'
         },
         {
           id: attacks[11],
           name: 'hyper_lance',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 8-12 damage.'
         },
         {
           id: attacks[12],
           name: 'simulate_kaiju',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 10-12 damage. If enemy is a kaiju, gain its secondary attack.'
         },
         {
           id: attacks[13],
           name: 'snake_handler',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 12-16 damage.'
         },
         {
           id: attacks[14],
           name: 'neurotoxin',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 5-18 damage.'
         }
       ]),
       knex('abilities').insert([
         {
           id: abilities[0],
-          name: 'supercharge'
+          name: 'supercharge',
+          description: 'Active monster\'s attacks affect all enemy monsters.'
         },
         {
           id: abilities[1],
-          name: 'nanomachine_swarm'
+          name: 'nanomachine_swarm',
+          description: 'Heal all mechas on your team by 2 HP per turn.'
         },
         {
           id: abilities[2],
-          name: 'electric_shield'
+          name: 'electric_shield',
+          description: 'Take the first 5 damage the active monster would take.'
         },
         {
           id: abilities[3],
-          name: 'pierce'
+          name: 'pierce',
+          description: 'Active monster\'s attack type becomes Pierce.'
         },
         {
           id: abilities[4],
-          name: 'crush'
+          name: 'crush',
+          description: 'Active monster\'s attack type becomes Crush.'
         },
         {
           id: abilities[5],
-          name: 'spray'
+          name: 'spray',
+          description: 'Active monster\'s attack type becomes Spray.'
         }
       ]),
       knex('types').insert([
