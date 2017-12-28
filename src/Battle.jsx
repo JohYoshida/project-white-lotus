@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
 import MessageBox from './components/MessageBox.jsx';
+import CardModal from './components/CardModal.jsx';
 import Modal from './components/Modal.jsx';
 import Opponent from './components/Opponent.jsx';
 import Player from './components/Player.jsx';
@@ -55,6 +56,20 @@ class Battle extends Component {
       </div>
     );
   }
+  generateModals({players}){
+    const modals = [];
+    players.forEach(player => {
+      console.log(player);
+      const {team} = player;
+      for(let monsterId in team){
+        const monster = team[monsterId];
+        modals.push(
+          <CardModal id={`${monster.id}-modal`} monster={monster}/>
+        );
+      }
+    });
+    return modals;
+  }
   render() {
     return (
       <main>
@@ -67,6 +82,7 @@ class Battle extends Component {
           {this.state.ready && <Player className='player row' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
         </div>
         <Modal id="gameOverModal" header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />
+        {this.state.game.players && this.generateModals(this.state.game)}
       </main>
     );
   }
