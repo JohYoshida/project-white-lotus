@@ -30,11 +30,19 @@ class Opponent extends Component {
   }
   render() {
     return (
-      <section className="opponent">
-        <div className="battlefield-onBench">
-        {this.generateBenchedMonster()}
+      <section className={this.props.className}>
+        <div className="column">
+          <h4>Benched Monster</h4>
+          <div className="battlefield-onBench">
+            {this.generateBenchedMonster()}
+          </div>
         </div>
-        {this.generateActiveMonster()}
+        <div className="column column-40">
+          <h4>Active Monster</h4>
+          <div className="battlefield-activeMonster">
+            {this.generateActiveMonster()}
+          </div>
+        </div>
       </section>
     );
   }

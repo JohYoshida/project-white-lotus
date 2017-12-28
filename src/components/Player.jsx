@@ -29,7 +29,20 @@ class Player extends Component {
       return (<ActiveMonster key={monster.id} isPlayer={true} player={player} monster={monster} sendAttack={this.sendAttack} />);
     }
   }
-
+  showAttacks(){
+    const monster = this.props.player.activeMonster;
+    if(!monster) return;
+    const attacks = [];
+    for(let attackName in monster.attacks){
+      const attack = monster.attacks[attackName];
+      attacks.push(<button disabled={!this.props.player.turn} className='sword-ico' key={attack.id} onClick={this.sendAttack} data-name={attack.name}></button>);
+    }
+    return (
+      <section className="abilities">
+        {attacks}
+      </section>
+    );
+  }
   generateBenchedMonster(){
     let cards = [];
     const {player} = this.props;
@@ -37,18 +50,29 @@ class Player extends Component {
     for(const monsterid in player.team){
       const monster = player.team[monsterid];
       if(monster.bench){
-        cards.push(<BenchedMonster key={monster.id} isPlayer={true} player={player} monster={monster} unBench={this.unBench} />);
+        cards.push(
+          <BenchedMonster key={monster.id} isPlayer={true} player={player} monster={monster} unBench={this.unBench} />
+        );
       }
     }
     return cards;
   }
   render() {
     return (
-      <section className="player">
-        <div className="battlefield-onBench">
-          {this.generateBenchedMonster()}
+      <section className={this.props.className}>
+        {this.showAttacks()}
+        <div className="column">
+          <h4>Benched Monster</h4>
+          <div className="battlefield-onBench">
+            {this.generateBenchedMonster()}
+          </div>
         </div>
-        {this.generateActiveMonster()}
+        <div className="column column-40">
+          <h4>Active Monster</h4>
+          <div className="battlefield-activeMonster">
+            {this.generateActiveMonster()}
+          </div>
+        </div>
       </section>
     );
   }

@@ -23,22 +23,56 @@ nav {
   display: none; }
 
 div#battlefield {
-  height: 752px;
-  width: 50%;
   margin: auto; }
   div#battlefield .player {
     position: relative;
-    display: flex;
-    padding: 2rem;
-    justify-content: space-around;
-    margin: 0 auto;
-    background-color: #A5D6A7; }
+    padding: 1rem;
+    background-color: #A5D6A7;
+    min-height: 175px; }
+    div#battlefield .player .abilities {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 150px;
+      padding: 1rem;
+      background-color: white;
+      display: flex;
+      justify-content: space-around; }
+      div#battlefield .player .abilities .sword-ico {
+        background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-repeat: no-repeat;
+        height: 60px;
+        width: 60px;
+        cursor: pointer; }
   div#battlefield .opponent {
     position: relative;
-    padding: 2rem;
     display: flex;
-    justify-content: space-around;
-    background-color: #EF9A9A; }
+    padding: 1rem;
+    background-color: #EF9A9A;
+    min-height: 175px; }
+    div#battlefield .opponent .bench-monster {
+      position: relative; }
+    div#battlefield .opponent .abilities {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      padding: 1rem;
+      background-color: white;
+      display: flex;
+      justify-content: space-around; }
+      div#battlefield .opponent .abilities .sword-ico {
+        background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-repeat: no-repeat;
+        height: 60px;
+        width: 60px;
+        cursor: pointer; }
 
 /* This should override Milligram's greyed buttons on focus */
 .game-button:focus {
@@ -49,8 +83,8 @@ article[data-active='true'] {
   background-color: lightblue; }
 
 section.messages {
+  display: none;
   padding: 2rem;
-  margin: auto;
   height: 125px;
   background-color: #B0BEC5;
   z-index: -2;
@@ -58,11 +92,6 @@ section.messages {
   section.messages p {
     margin-bottom: 5px; }
 
-@media (max-width: 768px) {
-  div#battlefield {
-    height: 752px;
-    width: 100%;
-    margin: auto; } }
 section.modal {
   position: fixed;
   top: 0;
@@ -86,80 +115,149 @@ section.modal {
     align-items: center;
     align-content: center; }
 
-.container {
-  float: left;
+.monster-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: baseline; }
-
-.monster {
-  min-height: 300px;
-  width: 30%;
-  min-width: 200px;
-  margin: 3px;
-  border: 1px solid black;
-  border-radius: 5px;
-  text-transform: capitalize; }
-
-.show-monster {
-  height: 3em;
-  line-height: 3em;
-  width: 100%;
-  padding: 0px; }
+  justify-content: space-between; }
 
 .battlefield-active-battler {
-  width: 250px;
-  margin: auto;
-  background-color: grey;
-  padding: 2rem;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: black;
   border-radius: 3%;
-  border: 8px solid lightgrey; }
+  border: 4px solid white; }
+  .battlefield-active-battler .card-image-header {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    margin: auto; }
+    .battlefield-active-battler .card-image-header img {
+      width: 100%; }
+  .battlefield-active-battler span.card-hp {
+    position: absolute;
+    padding: .5rem;
+    top: 0;
+    left: 0;
+    background-color: white;
+    border-bottom-right-radius: 10%;
+    font-weight: bold;
+    z-index: 9999; }
+  .battlefield-active-battler span.card-acc {
+    padding: .5rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    border-top-left-radius: 10%;
+    font-weight: bold;
+    z-index: 999; }
 
-.active-monster-info {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 2rem;
-  font-weight: bold;
-  color: white; }
+.battlefield-onBench .bench-monster {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin-right: 1rem;
+  position: relative;
+  background-color: black;
+  border-radius: 3%;
+  border: 4px solid white;
+  font-weight: bold; }
+  .battlefield-onBench .bench-monster img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto; }
+  .battlefield-onBench .bench-monster button {
+    position: absolute;
+    margin: 0;
+    left: 0;
+    bottom: 0; }
+  .battlefield-onBench .bench-monster span.card-hp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: .5rem;
+    background-color: white;
+    border-bottom-right-radius: 10%;
+    font-weight: bold;
+    z-index: 9999; }
+  .battlefield-onBench .bench-monster span.card-acc {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: .5rem;
+    background-color: white;
+    border-bottom-right-radius: 10%;
+    font-weight: bold;
+    z-index: 9999; }
 
-.active-battler-actions-buttons .Attacks {
-  display: flex;
-  justify-content: space-between; }
-  .active-battler-actions-buttons .Attacks .sword-ico {
-    background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
-    background-size: contain;
-    background-position: center;
-    display: inline-block;
-    background-repeat: no-repeat;
-    height: 40px;
-    width: 40px;
-    cursor: pointer; }
-
-.card-image-header {
-  text-align: center;
-  margin: auto; }
-  .card-image-header img {
-    width: 100%; }
-
-.battlefield-onBench {
-  height: 175px;
-  display: flex;
-  justify-content: space-around; }
-  .battlefield-onBench .bench-monster {
-    width: 100px;
-    padding: 1rem;
-    min-height: 100px;
-    background-color: grey;
-    border-radius: 3%;
-    border: 4px solid lightgrey;
+.card-full {
+  box-shadow: 0px 2px 10px black;
+  position: relative;
+  overflow: hidden;
+  width: 340px;
+  height: 340px;
+  margin: 1rem;
+  background-color: grey;
+  padding: 4rem;
+  border-radius: 3%;
+  border: 4px solid lightgrey; }
+  .card-full h3 {
+    position: relative;
+    text-align: center;
     color: white;
     font-weight: bold; }
-    .battlefield-onBench .bench-monster button {
-      display: block;
-      width: 100%;
-      padding: 0;
-      font-size: 1rem; }
+  .card-full div.card-image-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    margin: auto;
+    z-index: 0;
+    opacity: 0.5; }
+    .card-full div.card-image-header img {
+      width: 100%; }
+  .card-full .card-details {
+    position: relative;
+    background-color: white;
+    border-radius: 3%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: .5rem;
+    padding-top: .5rem; }
+    .card-full .card-details div.active-monster-info {
+      color: grey; }
+
+span.card-hp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: white;
+  border-bottom-right-radius: 10%;
+  font-weight: bold;
+  z-index: 9999; }
+
+span.card-acc {
+  padding: 1rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  border-top-left-radius: 10%;
+  font-weight: bold;
+  z-index: 999; }
 
 /*# sourceMappingURL=main.css.map */

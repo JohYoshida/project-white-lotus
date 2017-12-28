@@ -46,7 +46,7 @@ class Battle extends Component {
     const {teamMembers} = team;
     const getTeamMembers = (teamMember) => {
       const {name, id, image} = teamMember;
-      return (<span key={id} className='team-team-member' data-id={id}>{name}, </span>);
+      return (<span key={id} className='team-team-member' data-id={id}>{name}></span>);
     };
     return(
       <div className="button" onClick={this.joinGame} key={team.id}>
@@ -62,9 +62,9 @@ class Battle extends Component {
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
         <div id="battlefield" className='hidden'>
-          {this.state.ready && <Opponent className='opponent' player={this.state.opponent} curUserId={this.state.id} /> }
-          {this.state.ready && <MessageBox className='message-box' messages={this.state.messages} />}
-          {this.state.ready && <Player className='player' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
+          {this.state.ready && <Opponent className='opponent row' player={this.state.opponent} curUserId={this.state.id} /> }
+          {this.state.ready && <MessageBox className='messages row' messages={this.state.messages} />}
+          {this.state.ready && <Player className='player row' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
         </div>
         <Modal id="gameOverModal" header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />
       </main>

@@ -107,7 +107,7 @@ class App extends Component {
     const {username} = this.state;
     if (this.state.loggedin) {
       return (<Router>
-        <div hidden={!this.state.loaded}>
+        <div className="container" hidden={!this.state.loaded}>
           <h1>{username}</h1>
           <nav>
             <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>

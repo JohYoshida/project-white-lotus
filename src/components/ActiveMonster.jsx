@@ -6,19 +6,6 @@ class ActiveMonster extends Component {
   constructor(props) {
     super(props);
   }
-  showAttacks(){
-    const {monster, sendAttack} = this.props;
-    const attacks = [];
-    for(let attackName in monster.attacks){
-      const attack = monster.attacks[attackName];
-      attacks.push(<span disabled={!this.props.player.turn} className='sword-ico' key={attack.id} onClick={sendAttack} data-name={attack.name}></span>);
-    }
-    return (
-      <section className="Attacks">
-        {attacks}
-      </section>
-    );
-  }
   render() {
     const {monster} = this.props;
     const renderButtons = (monster) => {
@@ -26,14 +13,10 @@ class ActiveMonster extends Component {
     };
     return (
       <div class="battlefield-active-battler" id={monster.id}>
+        <span class="card-hp">{monster.hp}</span>
+        <span class="card-acc">{monster.accuracy_bonus || '+2'}</span>
         <div class="active-monster-stats">
           {cardImageHeader(monster)}
-          {cardInfo(monster)}
-        </div>
-        <div class="active-battler-actions">
-          <div class="active-battler-actions-buttons">
-            {this.props.isPlayer && renderButtons(monster)}
-          </div>
         </div>
       </div>
     );
