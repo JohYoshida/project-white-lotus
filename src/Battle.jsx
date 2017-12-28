@@ -61,7 +61,7 @@ class Battle extends Component {
         <div className="battlefield-teams">
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
-        <div id="battlefield" class='hidden'>
+        <div id="battlefield" className='hidden'>
           {this.state.ready && <Opponent className='opponent' player={this.state.opponent} curUserId={this.state.id} /> }
           {this.state.ready && <MessageBox className='message-box' messages={this.state.messages} />}
           {this.state.ready && <Player className='player' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}

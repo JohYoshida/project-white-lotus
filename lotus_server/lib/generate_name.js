@@ -92,8 +92,4 @@ const getKaiju = () => {
          + last[Math.floor(Math.random()*last.length)];
 };
 
-// console.log(getMecha());
-// console.log(getKaiju());
-
-
 module.exports = {getMecha, getKaiju};

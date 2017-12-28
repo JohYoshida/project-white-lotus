@@ -15,7 +15,7 @@ export function postRegister(event) {
   const form = event.target.parentNode;
   const userName = form.elements['username'].value;
   const password = form.elements['password'].value;
-  return (fetch('/users', {
+  return (fetch('/user', {
     method: 'POST',
     body: encodeURI(`email=${userName}&password=${password}`),
     headers: {
@@ -30,9 +30,9 @@ export function setUserState(component, res) {
     if (!data.error) {
       cookies.set('id', data.id, {path: '/'});
       component.setState({id: cookies.get('id'), loggedin: true});
-      fetch(`/users/${component.state.id}`).then(res => {
+      fetch(`/user/${component.state.id}`).then(res => {
         res.json().then(data => {
-          component.setState({brouzoff: data.brouzoff, email: data.email});
+          component.setState({brouzoff: data.brouzoff, username: data.email});
         });
       });
     }

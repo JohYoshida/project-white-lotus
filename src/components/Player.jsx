@@ -26,7 +26,7 @@ class Player extends Component {
 
     if(player.activeMonster){
       const monster = player.activeMonster;
-      return (<ActiveMonster isPlayer={true} player={player} monster={monster} sendAttack={this.sendAttack} />);
+      return (<ActiveMonster key={monster.id} isPlayer={true} player={player} monster={monster} sendAttack={this.sendAttack} />);
     }
   }
 
@@ -37,7 +37,7 @@ class Player extends Component {
     for(const monsterid in player.team){
       const monster = player.team[monsterid];
       if(monster.bench){
-        cards.push(<BenchedMonster isPlayer={true} player={player} monster={monster} unBench={this.unBench} />);
+        cards.push(<BenchedMonster key={monster.id} isPlayer={true} player={player} monster={monster} unBench={this.unBench} />);
       }
     }
     return cards;
@@ -45,8 +45,8 @@ class Player extends Component {
   render() {
     return (
       <section className="player">
-        <div class="battlefield-onBench">
-          {this.generateBenchedMonster()};
+        <div className="battlefield-onBench">
+          {this.generateBenchedMonster()}
         </div>
         {this.generateActiveMonster()}
       </section>

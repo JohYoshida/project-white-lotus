@@ -13,6 +13,14 @@ module.exports = (db) => {
     buildMonstersJSON(res, req.cookies.id)
   });
 
+  // For deleting a monster
+  monsterRouter.delete('/:id', (req, res) => {
+    const {id} = req.params
+    db('monsters').where('id', id).del().then(monster => {
+      res.send(JSON.stringify({flash: `Monster ${id} has been deleted.`}))
+    });
+  });
+
   // Find a single monster so it can be fetched by React Monster component
   monsterRouter.get('/:id', (req, res) => {
     buildMonsterJSON(res, req.params.id);
