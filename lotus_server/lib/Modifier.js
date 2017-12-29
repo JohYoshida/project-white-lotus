@@ -23,8 +23,8 @@ class Modifier{
   removeModifier(){
     // Reset monster attributes.
     for(const attribute in this.savedAttributes){
-      const attributeValue = this.savedAttributes[attribute];
-      this.monster[attribute] = attributeValue;
+      const savedAttributeValue = this.savedAttributes[attribute];
+      this.monster[attribute] = savedAttributeValue;
     }
     delete this.monster.modifiers[this.id];
   }

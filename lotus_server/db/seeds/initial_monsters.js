@@ -354,14 +354,14 @@ exports.seed = function(knex, Promise) {
           name: 'web_sling',
           aoe: false,
           dot: false,
-          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\t leave.'
+          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\'t leave field.'
         },
         {
           id: attacks[5],
           name: 'deep_knowledge',
           aoe: false,
           dot: false,
-          description: 'Gain the attack type of a benched monster.'
+          description: 'Take the type of the opposing player\'s active monster.'
         },
         {
           id: attacks[6],
@@ -389,7 +389,7 @@ exports.seed = function(knex, Promise) {
           name: 'neutralize',
           aoe: false,
           dot: false,
-          description: 'Deal 10-12 damage. Ignore an enemy passive.'
+          description: 'Deal 10-12 damage. Ignore an enemy passive until they are activated.'
         },
         {
           id: attacks[10],

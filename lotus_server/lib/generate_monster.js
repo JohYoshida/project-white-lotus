@@ -16,7 +16,6 @@ class CompleteMonster {
     // arm and head to be used for image compilation functionality.
     const {body, type} = monster.relations;
     // set attributes
-    console.log(body);
     this.id = monster.attributes.id;
     this.name = monster.attributes.name;
     this.creature = body.attributes.creature;
@@ -27,6 +26,7 @@ class CompleteMonster {
     this.image_url = monster.attributes.image || body.attributes.image_url;
     this.image= monster.attributes.image;
     this.bench = true;
+    this.canBench = true;
     this.passiveActive = true;
     this.modifiers = new ModifierCollection();
   }
@@ -36,10 +36,10 @@ class CompleteMonster {
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
     let {id, name, description} = attributes;
-    this.attacks[name] = {id, name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
+    this.attacks[name] = {id, name, description: description, func: attackFuncs[name].bind(this)};
     if(altAttributes.name){
       let {id, name, description} = altAttributes;
-      this.attacks[name]  = {id, name, description: description || 'Attack 2 description', func: attackFuncs[name].bind(this), isAlt:true};
+      this.attacks[name]  = {id, name, description: description, func: attackFuncs[name].bind(this), isAlt:true};
     }
   }
   set_ability({name, description}) {

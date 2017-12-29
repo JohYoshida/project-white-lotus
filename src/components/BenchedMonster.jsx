@@ -7,12 +7,14 @@ class BenchedMonster extends Component {
   }
   render() {
     const {monster} = this.props;
+    const {player} = this.props;
+    const {activeMonster} = this.props.player;
     return (
       <div data-id={monster.id} disabled={!this.props.player.turn} className="bench-monster">
         <img onClick={toggleModalByIdButton(`${monster.id}-modal`)} src={monster.image_url} alt={monster.name} />
         <span className="card-hp">{monster.hp}</span>
         <span className="card-acc">{monster.accuracy_bonus || "+2"}</span>
-        {this.props.isPlayer && <button data-id={monster.id} disabled={!this.props.player.turn} onClick={this.props.unBench}>s</button>}
+        {this.props.isPlayer && <button data-id={monster.id} disabled={!player.turn || !activeMonster.canBench} onClick={this.props.unBench}>Ico</button>}
       </div>
     );
   }

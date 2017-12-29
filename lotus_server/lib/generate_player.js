@@ -1,5 +1,4 @@
 const generateTeam = require('./generate_team');
-const {ModifierCollection} = require('./Modifier.js');
 // Generate player function takes a userId to apply to the player and an array of 3 ids representing monsters
 // to be on the player's team.
 class Player {
@@ -42,6 +41,23 @@ class Player {
         break;
       }
     }
+  }
+  // gets a random monster from the player's team. Can take a filter object e.g. {bench: true}.
+  getRandomMonster(filterObject){
+    let filteredTeam = undefined;
+    // Build a filtered team if the filterObject is prevent.
+    if(filterObject){
+      filteredTeam = [];
+      for(const monsterId in this.team){
+        const monster = this.team[monsterId];
+        for(const attribute in filterObject){
+          if(monster[attribute] !== filterObject[attribute]) continue;
+          filteredTeam.push(monster);
+        }
+      }
+    }
+    const playerTeamIds = Object.keys(filteredTeam || this.team);
+    return this.team[playerTeamIds[Math.round(Math.random()*playerTeamIds.length)]];
   }
 }
 // Takes a userid (string) and a team, (array of strings)
