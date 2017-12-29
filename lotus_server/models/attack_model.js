@@ -9,6 +9,10 @@ const getRandomNumber = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 }
 
+const compareTyping = (attacker, defender) => {
+
+}
+
 const attackFuncs = {
   // TODO: Add DOT, AOE, and other functionality
   toxic_slime: function(attackedPlayer){
