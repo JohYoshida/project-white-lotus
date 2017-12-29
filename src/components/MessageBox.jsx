@@ -10,7 +10,7 @@ class MessageBox extends Component {
   }
   render() {
     return (
-      <section className="messages">
+      <section className={this.props.className}>
         {this.renderMessages()}
       </section>
     )

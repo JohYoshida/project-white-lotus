@@ -31,7 +31,7 @@ class Game{
     for(let monsterId in team){
       const monster = team[monsterId];
       if(monster.bench && monster.passiveActive && monster.ability){
-        messages.push(monster.ability(activePlayer));
+        messages.push(monster.ability.func(activePlayer));
       }
       // if there is a dot on the monster, activate it.
       if(monster.dot.length > 1){

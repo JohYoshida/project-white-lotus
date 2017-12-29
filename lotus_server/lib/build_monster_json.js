@@ -5,8 +5,9 @@ const getMonster = require('./generate_monster');
 
 const generateMonstersJSON = (res, id) => {
   getMonster(id).then(result => {
+    console.log(result);
     res.json(result);
   });
-}
+};
 
 module.exports = generateMonstersJSON;

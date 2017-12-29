@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
@@ -11,6 +12,7 @@ import Store from './Store.jsx';
 import Login from './Login.jsx';
 import Teams from './Teams.jsx';
 import CreateBattle from './CreateBattle.jsx';
+import {toggleModalById} from './lib/element_effect_helpers';
 
 // Functions
 import {postLogin, postRegister, setUserState} from './lib/user_auth.js';
@@ -88,7 +90,8 @@ class App extends Component {
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
-        this.setState({brouzoff: data.brouzoff});
+        this.setState({brouzoff: data.brouzoff, purchasedMonster: data.monster});
+        toggleModalById(data.monster.id);
       });
     });
   }
@@ -107,7 +110,7 @@ class App extends Component {
     const {username} = this.state;
     if (this.state.loggedin) {
       return (<Router>
-        <div hidden={!this.state.loaded}>
+        <div className="container" hidden={!this.state.loaded}>
           <h1>{username}</h1>
           <nav>
             <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
@@ -125,7 +128,7 @@ class App extends Component {
             (<Monster {...props} loadApp={this.loadApp}/>)
           }/>
           <Route path="/store" render={(props) =>
-            (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
+            (<Store {...props} brouzoff={this.state.brouzoff} loadApp={this.loadApp} purchasedMonster={this.state.purchasedMonster} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
           }/>
           <Route path="/teams" render={() =>
             (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
