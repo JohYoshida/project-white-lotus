@@ -59,7 +59,7 @@ const monsterMash= (arr)=>{
         mash(arr,2,r1).then(function(r2){
           let x = uuidv1();
           r2.write("./models/monsters/"+x+".png");
-          resolve(x+".png");
+          resolve(`/${x}.png`);
         });
       });
     }
