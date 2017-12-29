@@ -41,7 +41,9 @@
       color:grey;
     }
     div.card-details-abilities{
-
+      .abilities-name {
+        text-transform: capitalize;
+      }
     }
   }
 }
