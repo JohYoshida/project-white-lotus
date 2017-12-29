@@ -251,6 +251,8 @@ section.modal {
     padding-top: .5rem; }
     .card-full .card-details div.active-monster-info {
       color: grey; }
+    .card-full .card-details div.card-details-abilities .abilities-name {
+      text-transform: capitalize; }
 
 span.card-hp {
   position: absolute;
