@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import CardModal from './components/CardModal.jsx';
 
 class Store extends Component {
   constructor(props) {
     super(props);
-    this.state={ready: false}
+    this.state = {ready: false}
   }
 
   componentDidMount() {
     if (this.props.brouzoff) {
-      this.setState({ready: true})
+      this.setState({ready: true});
     }
+    this.props.loadApp();
   }
 
   render() {
@@ -29,6 +31,7 @@ class Store extends Component {
           <p className="price">&#3647;50</p>
           <button onClick={this.props.purchaseCrate}>Purchase</button>
         </div>
+        {this.props.purchasedMonster && <CardModal id={this.props.purchasedMonster.id} monster={this.props.purchasedMonster} /> }
       </div>
     );
   }

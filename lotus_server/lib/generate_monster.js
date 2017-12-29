@@ -16,6 +16,7 @@ class CompleteMonster {
     // arm and head to be used for image compilation functionality.
     const {body, type} = monster.relations;
     // set attributes
+    console.log(body);
     this.id = monster.attributes.id;
     this.name = monster.attributes.name;
     this.creature = body.attributes.creature;
@@ -23,7 +24,7 @@ class CompleteMonster {
     this.hp = body.attributes.hp;
     this.type = type.attributes;
     // Will eventually the compiled image
-    this.image_url = body.attributes.image_url;
+    this.image_url = monster.attributes.image || body.attributes.image_url;
     this.image= monster.attributes.image;
     this.bench = true;
     this.passiveActive = true;
@@ -39,13 +40,12 @@ class CompleteMonster {
     this.attacks[name] = {id, name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
     if(altAttributes.name){
       let {id, name, description} = altAttributes;
-      this.attacks[name]  = {id, name, description: description || 'Attack 2 description', func: attackFuncs[name].bind(this)};
+      this.attacks[name]  = {id, name, description: description || 'Attack 2 description', func: attackFuncs[name].bind(this), isAlt:true};
     }
   }
-  set_ability(name) {
-    /* @TODO: apply the above pattern to abilities */
+  set_ability({name, description}) {
     // this.ability[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
-    this.ability = abilityFuncs[name].bind(this);
+    this.ability = {name, description, func: abilityFuncs[name].bind(this)};
   }
 }
 
@@ -56,8 +56,9 @@ const getCreature = (id) => {
     // After monster has been created set attacks and abilities
     monster.set_attacks(attack.attributes, alt_attack.attributes);
     if(ability.attributes.name){
-      monster.set_ability(ability.attributes.name);
+      monster.set_ability(ability.attributes);
     }
+    console.log(monster);
     return monster;
   }).catch(e => console.log(e));
 };

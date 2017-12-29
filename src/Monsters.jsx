@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // but it's required for routing between monsters#index and monsters#show
 import { BrowserRouter as Route, Link } from 'react-router-dom';
 import MonsterInfo from './components/MonsterInfo';
-
+import DetailedCard from './components/card_components/DetailedCard.jsx';
 class Monsters extends Component {
   constructor(props) {
     super(props);
@@ -14,14 +14,7 @@ class Monsters extends Component {
     const monsterArray = [];
     for(let monster of monsters){
       monsterArray.push(
-        <div className='monster' key={monster.id}>
-          <Link to={`/monsters/${monster.id}`}>
-            <button className='show-monster' id={monster.id}>
-              {monster.name}
-            </button>
-          </Link>
-          <MonsterInfo monster={monster} />
-        </div>
+        <DetailedCard monster={monster} />
       );
     }
     return monsterArray;
@@ -36,7 +29,7 @@ class Monsters extends Component {
       return (
         <main>
           <h2>Monsters</h2>
-          <div className='container'>
+          <div className='monster-container'>
             {this.printMonsters()}
           </div>
         </main>
