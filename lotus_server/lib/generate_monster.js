@@ -57,7 +57,6 @@ const getCreature = (id) => {
     if(ability.attributes.name){
       monster.set_ability(ability.attributes);
     }
-    console.log(monster);
     return monster;
   }).catch(e => console.log(e));
 };

@@ -62,13 +62,10 @@ class Battle extends Component {
   generateModals({players}){
     const modals = [];
     players.forEach(player => {
-      console.log(player);
       const {team} = player;
       for(let monsterId in team){
         const monster = team[monsterId];
-        modals.push(
-          <CardModal id={`${monster.id}-modal`} monster={monster}/>
-        );
+        modals.push(<CardModal id={`${monster.id}-modal`} monster={monster}/>);
       }
     });
     return modals;

@@ -83,7 +83,6 @@ article[data-active='true'] {
   background-color: lightblue; }
 
 section.messages {
-  display: none;
   padding: 2rem;
   height: 125px;
   background-color: #B0BEC5;

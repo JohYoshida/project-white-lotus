@@ -6,7 +6,6 @@ const uuid = require('uuid/v1');
 class Modifier{
   constructor(monster, attributesToChange, updateFunction){
     this.id = uuid();
-    this.monster = monster;
     this.savedAttributes = {};
     // change monster attributes
     for(const attribute in attributesToChange){
@@ -18,16 +17,17 @@ class Modifier{
       updateFunction(this);
     };
     monster.modifiers[this.id] = this;
+    this.removeModifier = () => {
+      // Reset monster attributes.
+      for(const attribute in this.savedAttributes){
+        const savedAttributeValue = this.savedAttributes[attribute];
+        monster[attribute] = savedAttributeValue;
+      }
+      delete monster.modifiers[this.id];
+    }
   }
   // remove the modifier from the monster to whom it belongs
-  removeModifier(){
-    // Reset monster attributes.
-    for(const attribute in this.savedAttributes){
-      const savedAttributeValue = this.savedAttributes[attribute];
-      this.monster[attribute] = savedAttributeValue;
-    }
-    delete this.monster.modifiers[this.id];
-  }
+
 }
 
 class ModifierCollection{

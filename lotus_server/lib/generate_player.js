@@ -47,17 +47,18 @@ class Player {
     let filteredTeam = undefined;
     // Build a filtered team if the filterObject is prevent.
     if(filterObject){
-      filteredTeam = [];
+      filteredTeam = {};
       for(const monsterId in this.team){
         const monster = this.team[monsterId];
         for(const attribute in filterObject){
           if(monster[attribute] !== filterObject[attribute]) continue;
-          filteredTeam.push(monster);
+          filteredTeam[monster.id] = monster;
         }
       }
     }
     const playerTeamIds = Object.keys(filteredTeam || this.team);
-    return this.team[playerTeamIds[Math.round(Math.random()*playerTeamIds.length)]];
+    const randomIndex = Math.floor(Math.random()*playerTeamIds.length);
+    return this.team[playerTeamIds[randomIndex]];
   }
 }
 // Takes a userid (string) and a team, (array of strings)

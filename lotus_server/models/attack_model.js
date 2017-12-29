@@ -1,5 +1,5 @@
 const bookshelf = require('./lib/bookshelf');
-const Modifier = require('../lib/Modifier.js');
+const {Modifier} = require('../lib/Modifier.js');
 const uuidv1 = require('uuid/v1');
 
 const Attack = bookshelf.Model.extend({
@@ -54,14 +54,13 @@ const attackFuncs = {
       modifier.count ? modifier.count++ : modifier.count = 1;
       if(modifier.count >= 3) return modifier.removeModifier();
 
-      const {monster} = modifier;
-      monster.takeDamage(damage);
-      return `${monster.name} took ${damage} damage! They have ${monster.hp} hp!`;
+      targetMonster.takeDamage(damage);
+      return `${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`;
     });
   },
   roar: function(attackedPlayer){
     const messages = [];
-    for(const monsterId of attackedPlayer.team){
+    for(const monsterId in attackedPlayer.team){
       const curMonster = attackedPlayer.team[monsterId];
       const damage = damageCalculator(3, compareTyping(this, curMonster));
       curMonster.takeDamage(damage);
@@ -74,11 +73,10 @@ const attackFuncs = {
     const damage = damageCalculator(6, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
     new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, (modifier) => {
-      const {monster} = modifier;
       // If the monster is on the bench, remove the modifier.
-      if(monster.bench) modifier.removeModifier();
-      monster.accuracy_bonus -= 1;
-      return `${monster.name} lost 1 accuracy! They have ${monster.accuracy_bonus} accuracy!`;
+      if(targetMonster.bench) modifier.removeModifier();
+      targetMonster.accuracy_bonus -= 1;
+      return `${targetMonster.name} lost 1 accuracy! They have ${targetMonster.accuracy_bonus} accuracy!`;
     });
     return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp! They are less accurate...`];
   },
@@ -111,10 +109,9 @@ const attackFuncs = {
     const damage = damageCalculator(10, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
     new Modifier(targetMonster, {}, (modifier) => {
-      const {monster} = modifier;
-      if(this.bench) return modifier.removeModifier();
-      monster.hp -= 1;
-      return `The sludge causes ${monster.name} to lose 1 hp! They have ${monster.hp} hp.`;
+      if(targetMonster.bench) return modifier.removeModifier();
+      targetMonster.hp -= 1;
+      return `The sludge causes ${targetMonster.name} to lose 1 hp! They have ${targetMonster.hp} hp.`;
     });
     return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp. The sludge envelopes them.`];
   },
@@ -130,7 +127,8 @@ const attackFuncs = {
     targetMonster.takeDamage(damage);
 
     // Get a random monster id and activate it.
-    attackedPlayer.activateMonster(attackedPlayer.getRandomMonster().id);
+    const randomId = attackedPlayer.getRandomMonster({bench:true}).id;
+    attackedPlayer.activateMonster(randomId);
     attackedPlayer.findActiveMonster();
     const messages = [
       `${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`,
@@ -145,9 +143,9 @@ const attackFuncs = {
     // removes the passive ability of a random benched monster.
     const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true});
     new Modifier(randomBenchedMonster, {passiveActive: false}, modifier => {
-      if(!modifier.monster.bench) {
+      if(!randomBenchedMonster.bench) {
         modifier.removeModifier();
-        return `${modifier.monster.name}'s passive has been reactivated!`;
+        return `${randomBenchedMonster.name}'s passive has been reactivated!`;
       }
     });
     return [
