@@ -1,4 +1,7 @@
 const generateTeam = require('./generate_team');
+const {ModifierCollection} = require('./Modifier.js');
+// Generate player function takes a userId to apply to the player and an array of 3 ids representing monsters
+// to be on the player's team.
 class Player {
   constructor(userid, team) {
     this.id = userid;
@@ -24,9 +27,9 @@ class Player {
   }
   activateMonster(monsterId){
     const {team} = this;
-    for(const id in team){
-      monsterId === id ? team[id].bench = false : team[id].bench = true;
-      if(team[id].bench) team[id].dots = [];
+    for(const monstId in team){
+      const monster = team[monstId];
+      monsterId === monstId ? monster.bench = false : monster.bench = true;
     }
     this.findActiveMonster();
     return [`User has changed their active monster to ${this.activeMonster.name}`];

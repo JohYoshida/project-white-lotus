@@ -5,7 +5,6 @@ const Ability = bookshelf.Model.extend({
 });
 
 const abilityFuncs = {
-  // TODO: Implement these with the proper effects
   supercharge: function(player){
     if (!player.activeMonster) {
       return;

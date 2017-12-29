@@ -1,5 +1,6 @@
 const bookshelf = require('./lib/bookshelf');
 const Modifier = require('../lib/Modifier.js');
+const uuidv1 = require('uuid/v1');
 
 const Attack = bookshelf.Model.extend({
   tableName: 'attacks',
@@ -9,24 +10,43 @@ const getRandomNumber = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 }
 
+// TODO: Add DOT, AOE, and other functionality
+// These attack functions are applied to monsters, and are called when an attack message is sent.
+// After executing their functionality, they return a message array that is sent with the game update.
 const attackFuncs = {
-  // TODO: Add DOT, AOE, and other functionality
   toxic_slime: function(attackedPlayer){
-    // Attacks return a function which calls a state change on an object.
     const damage = 4;
-    attackedPlayer.activeMonster.takeDamage(damage);
-    // We set the player turn here because, so it's optional.
-    return [`${attackedPlayer.activeMonster.name} took ${damage} damage! They have ${attackedPlayer.activeMonster.hp} hp!`]
+    new Modifier(attackedPlayer.activeMonster, {}, (modifier) => {
+      const monster = attackedPlayer.activeMonster;
+      // check turn count
+      modifier.count ? modifier.count++ : modifier.count = 1;
+      if(modifier.count >= 3) return modifier.removeModifier();
+      // Inflict 4 damage
+      modifier.monster.takeDamage(damage);
+      return `${monster.name} took ${damage} damage! They have ${monster.hp} hp!`
+    });
   },
   roar: function(attackedPlayer){
     const damage = 3;
-    attackedPlayer.activeMonster.takeDamage(damage);
-    return [`${attackedPlayer.activeMonster.name} took ${damage} damage! They have ${attackedPlayer.activeMonster.hp} hp!`]
+    const messages = [];
+    for(const monsterId of attackedPlayer.team){
+      const monster = attackedPlayer.team[monsterId];
+      monster.takeDamage(damage);
+      messages.push(`${monster.name} took ${damage} damage! They have ${monster.hp} hp!`);
+    }
+    return messages;
   },
   insanity: function(attackedPlayer){
     const damage = 6;
-    attackedPlayer.activeMonster.takeDamage(damage);
-    return [`${attackedPlayer.activeMonster.name} took ${damage} damage! They have ${attackedPlayer.activeMonster.hp} hp!`]
+    const {monster} = attackedPlayer.activeMonster;
+    monster.takeDamage(damage);
+    new Modifier(monster, {accuracy_bonus: monster.accuracy_bonus - 1}, (modifier) => {
+      // If the monster is on the bench, remove the modifier.
+      if(modifier.monster.bench) modifier.removeModifier();
+      modifier.monster.accuracy_bonus -= 1;
+      return `${monster.name} lost 1 accuracy! They have ${monster.accuracy_bonus} accuracy!`;
+    });
+    return [`${monster.name} took ${damage} damage! They have ${monster.hp} hp! They are less accurate...`];
   },
   decimate: function(attackedPlayer){
     const maxHp = attackedPlayer.activeMonster.maxHp;

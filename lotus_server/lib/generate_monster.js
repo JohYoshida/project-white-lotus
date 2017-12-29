@@ -28,7 +28,6 @@ class CompleteMonster {
     this.image= monster.attributes.image;
     this.bench = true;
     this.passiveActive = true;
-    this.dot = [];
     this.modifiers = new ModifierCollection();
   }
   takeDamage(damage){
