@@ -23,13 +23,16 @@ class Battle extends Component {
   joinGame(event){
     this.state.ready || this.setState({ready:true});
     this.setState({battlerId:uuid()});
-    const button = event.target;
-    // build the WebSocket.
-    this.socket = generateBattleSocket(this);
+    const team = [];
+    const button = event.currentTarget;
+    for(const child of button.children){
+      if(!child.dataset.id) continue;
+      team.push(child.dataset.id);
+    }
+    this.socket = generateBattleSocket(this, team.join(','));
     document.querySelector('.battlefield-teams').remove();
     document.querySelector('nav').remove();
     document.querySelector('#battlefield').classList.remove('hidden');
-
   }
   isWinner(){
     const {gameOver} = this.state.game;
@@ -47,10 +50,10 @@ class Battle extends Component {
     const {teamMembers} = team;
     const getTeamMembers = (teamMember) => {
       const {name, id, image} = teamMember;
-      return (<span key={id} className='team-team-member' data-id={id}>{name}></span>);
+      return (<span key={id} className='team-team-member' data-id={id}>{name}</span>);
     };
     return(
-      <div className="button" onClick={this.joinGame} key={team.id}>
+      <div onClick={this.joinGame} key={team.id}>
         <h3>{team.name}</h3>
         {teamMembers.map(getTeamMembers)}
       </div>
