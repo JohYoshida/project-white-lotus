@@ -108,7 +108,7 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(10, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    
+
     new Modifier(targetMonster, {}, (modifier) => {
       if(targetMonster.bench) return modifier.removeModifier();
       targetMonster.hp -= 1;
@@ -138,7 +138,7 @@ const attackFuncs = {
     return messages;
   },
   neutralize: function(attackedPlayer){
-    const targetMonster = attackedPlayer.activateMonster;
+    const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(getRandomNumber(10, 12), compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
     // removes the passive ability of a random benched monster.
