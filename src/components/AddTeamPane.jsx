@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Modal from './Modal.jsx'
 import DetailedCard from './card_components/DetailedCard.jsx';
 
-
 class AddTeamPane extends Component {
   constructor(props) {
     super(props);
