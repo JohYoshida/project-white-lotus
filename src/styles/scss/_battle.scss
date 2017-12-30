@@ -6,10 +6,11 @@ div#battlefield{
     position: relative;
     padding: 1rem;
     background-color: #A5D6A7;
-    min-height: 175px;
+    height: 300px;
     .abilities{
       position: absolute;
-      bottom:0;
+      border-bottom-left-radius: 5px;
+      top:0;
       right:0;
       width: 150px;
       padding: 1rem;
@@ -33,7 +34,7 @@ div#battlefield{
     display: flex;
     padding: 1rem;
     background-color: #EF9A9A;
-    min-height: 175px;
+    height: 300px;
 
     .battlefield-activeMonster{
     }
@@ -75,13 +76,22 @@ article[data-active='true'] {
 }
 
 section.messages {
-  // display: none;
   padding: 2rem;
-  height: 125px;
+  height: 200px;
   background-color: #B0BEC5;
+  font-size: 1.5em;
   z-index: -2;
   p {
-    margin-bottom: 5px;
+    margin-bottom: 16px;
   }
   overflow-y: auto;
+}
+
+@media (max-width:812px) {
+  section.messages{
+    display: none;
+  }
+  .player, .opponent {
+    height: 175px;
+  }
 }
