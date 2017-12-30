@@ -84,6 +84,7 @@ exports.seed = function(knex, Promise) {
           name: 'Blob',
           image_url:'https://api.adorable.io/avatars/285/blob.png',
           hp: 30,
+          accuracy_bonus: 0,
           type_id: types[0],
           creature: 'kaiju',
           nameword: 'Blob'
@@ -93,6 +94,7 @@ exports.seed = function(knex, Promise) {
           name: 'T-Wrex',
           image_url:'https://api.adorable.io/avatars/285/t-wrex.png',
           hp: 35,
+          accuracy_bonus: -1,
           type_id: types[1],
           creature: 'kaiju',
           nameword: 'Dino'
@@ -103,6 +105,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/cthulumonster.png',
           hp: 25,
           type_id: types[2],
+          accuracy_bonus: +1,
           creature: 'kaiju',
           nameword: 'Horror'
 
@@ -112,6 +115,7 @@ exports.seed = function(knex, Promise) {
           name: 'Shock Top',
           image_url:'https://api.adorable.io/avatars/285/shocktop.png',
           hp: 25,
+          accuracy_bonus: +1,
           type_id: types[2],
           creature: 'mecha',
           nameword: 'Robot'
@@ -122,6 +126,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/medi-o-cre.png',
           hp: 20,
           type_id: types[0],
+          accuracy_bonus: +1,
           creature: 'mecha',
           nameword:'Medic'
         },
@@ -131,6 +136,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/red_knight.png',
           hp: 25,
           type_id: types[1],
+          accuracy_bonus: +2,
           creature: 'mecha',
           nameword:'Knight'
         }

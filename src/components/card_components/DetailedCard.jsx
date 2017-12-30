@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import cardImageHeader from './cardImageHeader.jsx';
-import cardInfo from './cardInfo.jsx';
 
 class DetailedCard extends Component {
   constructor(props) {
@@ -42,7 +41,7 @@ class DetailedCard extends Component {
     return (
       <div className="card-full">
         <span class="card-hp">{monster.hp}</span>
-        <span class="card-acc">{monster.accuracy_bonus || '+2'}</span>
+        <span class="card-acc">{monster.accuracy_bonus}</span>
         {cardImageHeader(monster)}
         <h3>{monster.name}</h3>
         <div className="card-details">
