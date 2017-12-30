@@ -53,10 +53,11 @@ const attackFuncs = {
       // check turn count
       modifier.count ? modifier.count++ : modifier.count = 1;
       if(modifier.count >= 3) return modifier.removeModifier();
-
       targetMonster.takeDamage(damage);
+      console.log();
       return `${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`;
     });
+    return [`${targetMonster.name} becomes enveloped in slime...`]
   },
   roar: function(attackedPlayer){
     const messages = [];

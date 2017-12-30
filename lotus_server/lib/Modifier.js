@@ -14,7 +14,7 @@ class Modifier{
       monster[attribute] = attributeValue;
     }
     this.update = () => {
-      updateFunction(this);
+      return updateFunction(this);
     };
     monster.modifiers[this.id] = this;
     this.removeModifier = () => {

@@ -31,11 +31,17 @@ class Game{
     for(let monsterId in team){
       const monster = team[monsterId];
       if(monster.bench && monster.passiveActive && monster.ability){
-        messages.push(monster.ability.func(activePlayer));
+        const message = monster.ability.func(activePlayer);
+        messages.push(message);
       }
       // Loop over each modifier and update them.
-      monster.modifiers.forEach(modifier => messages.push(modifier.update()));
+      monster.modifiers.forEach(modifier => {
+        console.log(modifier.update());
+        const message = modifier.update();
+        messages.push(message);
+      });
     }
+    // console.log(messages);
     return messages;
   }
   // this is used to execute position shifts, takes the id of the monster through the action object
@@ -69,7 +75,7 @@ class Game{
     return this.passive();
   }
   takeAction(actionObj){
-    const messages = this[actionObj.action](actionObj);
+    const messages = this[actionObj.action](actionObj) || [];
     // After action is over, check active players and run passives if applicable.
     const passiveMessages = this.findActivePlayer(actionObj);
     if(passiveMessages){
