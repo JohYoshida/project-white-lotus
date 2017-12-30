@@ -1,0 +1,8 @@
+.addTeamPane-container, .addTeamPane-new-team{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.addTeamPane-new-team{
+  justify-content: left;
+}

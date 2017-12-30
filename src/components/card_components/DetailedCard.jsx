@@ -13,14 +13,14 @@ class DetailedCard extends Component {
       if(attack.isAlt){
         attacks.push(
           <div class="abilities-ability">
-            <strong className="abilities-name"><span className="sword-ico">{attackName.replace('_', ' ')}</span></strong>
+            <strong className="abilities-name"><span className="sword-ico">{attackName.replace('_', ' ')}(ATK)</span></strong>
             <p>{attack.description}</p>
           </div>
         );
       } else {
         attacks.push(
           <div className="abilities-ability">
-            <strong className="abilities-name"><span className="sword-ico"></span>{attackName.replace('_', ' ')}</strong>
+            <strong className="abilities-name"><span className="sword-ico"></span>{attackName.replace('_', ' ')}(ATK)</strong>
             <p>{attack.description}</p>
           </div>
         );
@@ -32,7 +32,7 @@ class DetailedCard extends Component {
     if(!ability) return;
     return(
       <div className="abilities-ability">
-        <strong className="abilities-name"><span className="sword-ico"></span>{ability.name}</strong>
+        <strong className="abilities-name"><span className="sword-ico"></span>{ability.name.replace('_', ' ')}(ABL)</strong>
         <p>{ability.description}</p>
       </div>
     );
@@ -46,6 +46,10 @@ class DetailedCard extends Component {
         {cardImageHeader(monster)}
         <h3>{monster.name}</h3>
         <div className="card-details">
+          <div className="stats">
+            <p><strong>Type:</strong> {monster.type.name}</p>
+            <p><strong>Creature:</strong> {monster.creature}</p>
+          </div>
           <div className="card-details-abilities">
             {this.attackDetails(monster)}
             {this.abilityDetails(monster)}

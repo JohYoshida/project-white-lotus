@@ -1,6 +1,5 @@
 const bookshelf = require('./lib/bookshelf');
 const {Modifier} = require('../lib/Modifier.js');
-const uuidv1 = require('uuid/v1');
 
 const Attack = bookshelf.Model.extend({
   tableName: 'attacks',
@@ -14,7 +13,7 @@ const getRandomNumber = (min, max) => {
 const compareTyping = (attacker, defendingMonster) => {
   const attackerType = attacker.type;
   const defenderType = defendingMonster.type;
-  let result = "";
+  let result = '';
 
   if (attackerType.id === defenderType.weakness){
     result = 'strong';
@@ -26,7 +25,7 @@ const compareTyping = (attacker, defendingMonster) => {
     result = 'normal';
   }
   return result;
-}
+};
 
 const damageCalculator = (damage, effectiveness) => {
   switch (effectiveness) {
@@ -54,10 +53,9 @@ const attackFuncs = {
       modifier.count ? modifier.count++ : modifier.count = 1;
       if(modifier.count >= 3) return modifier.removeModifier();
       targetMonster.takeDamage(damage);
-      console.log();
-      return `${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`;
+      return `Toxic Slime: ${targetMonster.name} took ${damage} damage!`;
     });
-    return [`${targetMonster.name} becomes enveloped in slime...`]
+    return [`${targetMonster.name} becomes enveloped in slime...`];
   },
   roar: function(attackedPlayer){
     const messages = [];
@@ -65,7 +63,7 @@ const attackFuncs = {
       const curMonster = attackedPlayer.team[monsterId];
       const damage = damageCalculator(3, compareTyping(this, curMonster));
       curMonster.takeDamage(damage);
-      messages.push(`${curMonster.name} took ${damage} damage! They have ${curMonster.hp} hp!`);
+      messages.push(`${curMonster.name} took ${damage} damage!`);
     }
     return messages;
   },
@@ -77,9 +75,9 @@ const attackFuncs = {
       // If the monster is on the bench, remove the modifier.
       if(targetMonster.bench) modifier.removeModifier();
       targetMonster.accuracy_bonus -= 1;
-      return `${targetMonster.name} lost 1 accuracy! They have ${targetMonster.accuracy_bonus} accuracy!`;
+      return `Insanity: ${targetMonster.name} loses 1 accuracy!`;
     });
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp! They are less accurate...`];
+    return [`${targetMonster.name} took ${damage} damage! They are less accurate...`];
   },
   decimate: function(attackedPlayer){
     const targetMonster = attackedPlayer.activeMonster;
@@ -88,7 +86,7 @@ const attackFuncs = {
     const damage = damageCalculator(Math.floor(maxHp/hp), compareTyping(this, attackedPlayer));
 
     targetMonster.takeDamage(damage);
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`];
+    return [`${targetMonster.name} took ${damage} damage!`];
   },
   // Adds +2 to the attacking monster's accuracy and prevents the attacked monster from benching
   web_sling: function(attackedPlayer){
@@ -98,10 +96,11 @@ const attackFuncs = {
     // Increase accuracy
     new Modifier(this, {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
     new Modifier(targetMonster, {canBench: false}, (modifier) => modifier.removeModifier());
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp. Webbing prevents them from moving!`];
+    return [`${targetMonster.name} took ${damage} damage! Webbing prevents them from moving!`];
   },
   deep_knowledge: function(attackedPlayer){
     const {activeMonster} = attackedPlayer;
+
     new Modifier(this, {type: activeMonster.type}, (modifier) => this.bench && modifier.removeModifier());
     return [`${this.name}'s type changed to ${activeMonster.type} type.`];
   },
@@ -109,18 +108,19 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(10, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
+    
     new Modifier(targetMonster, {}, (modifier) => {
       if(targetMonster.bench) return modifier.removeModifier();
       targetMonster.hp -= 1;
-      return `The sludge causes ${targetMonster.name} to lose 1 hp! They have ${targetMonster.hp} hp.`;
+      return `The sludge causes ${targetMonster.name} to lose 1 hp!`;
     });
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp. The sludge envelopes them.`];
+    return [`${targetMonster.name} took ${damage} damage! The sludge envelopes them.`];
   },
   steel_jaw: function(attackedPlayer){
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(getRandomNumber(14, 18), compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`];
+    return [`${targetMonster.name} took ${damage} damage!`];
   },
   eldritch_horror: function(attackedPlayer){
     const targetMonster = attackedPlayer.activeMonster;
@@ -132,8 +132,8 @@ const attackFuncs = {
     attackedPlayer.activateMonster(randomId);
     attackedPlayer.findActiveMonster();
     const messages = [
-      `${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`,
-      `${attackedPlayer.activeMonster.name} is now activated`
+      `${targetMonster.name} took ${damage} damage!`,
+      `${attackedPlayer.activeMonster.name} is now on the field.`
     ];
     return messages;
   },
@@ -160,8 +160,8 @@ const attackFuncs = {
     targetMonster.takeDamage(damage);
     this.hp += 4;
     return [
-      `${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`,
-      `${this.name} healed self for 4hp. They now have ${this.hp}.`
+      `${this.name} drains ${targetMonster.name}. They took ${damage} damage!`,
+      `${this.name} heals 4hp.`
     ];
   },
   hyper_lance: function(attackedPlayer){
@@ -169,13 +169,13 @@ const attackFuncs = {
     const damage = damageCalculator(getRandomNumber(8, 12), compareTyping(this, attackedPlayer));
 
     targetMonster.takeDamage(damage);
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`];
+    return [`${this.name}'s Hyper Lance pierces ${targetMonster.name}. They take ${damage} damage!`];
   },
   simulate_kaiju: function(attackedPlayer){
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(getRandomNumber(10, 12), compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    const messages = [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`];
+    const messages = [`${targetMonster.name} took ${damage} damage!`];
     // get the secondary attack if the opposing creature is a kaiju.
     if(targetMonster.creature === 'kaiju'){
       const {id, name, description, func} = targetMonster.attacks[1];
@@ -188,13 +188,13 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(getRandomNumber(12, 16), compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`];
+    return [`${targetMonster.name} took ${damage} damage!`];
   },
   neurotoxin: function(attackedPlayer){
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(getRandomNumber(5, 18), compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    return [`${targetMonster.name} took ${damage} damage! They have ${targetMonster.hp} hp!`];
+    return [`${targetMonster.name} took ${damage} damage!`];
   }
 };
 
