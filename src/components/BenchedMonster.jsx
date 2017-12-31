@@ -8,7 +8,8 @@ class BenchedMonster extends Component {
   render() {
     const {monster} = this.props;
     const {player} = this.props;
-    const canBench = this.props.player.activeMonster ? this.props.player.activeMonster.canBench : true;
+    let canBench = true;
+    if(player.activeMonster) canBench = player.activeMonster.canBench;
     return (
       <div data-id={monster.id} disabled={!this.props.player.turn} className="bench-monster">
         <img onClick={toggleModalByIdButton(`${monster.id}-modal`)} src={monster.image_url} alt={monster.name} />

@@ -110,7 +110,12 @@ const attackFuncs = {
     // Increase accuracy
     new Modifier(this, {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
     // Prevents benching
-    new Modifier(targetMonster, {canBench: false}, (modifier) => modifier.removeModifier());
+    new Modifier(targetMonster, {canBench: false}, (modifier) => {
+      this.count ? this.count++ : this.count = 1;
+      if(this.count > 1){
+        modifier.removeModifier();
+      }
+    });
     return [`${targetMonster.name} took ${damage} damage! Webbing prevents them from moving!`];
   },
   // Secondary attack

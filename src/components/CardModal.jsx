@@ -15,7 +15,7 @@ class Modal extends Component {
       <section id={this.props.id || ''} className="modal hidden" onClick={toggleModalByIdButton(this.props.id)}>
         <div className='card-modal-container'>
           <main>
-            <DetailedCard monster={this.props.monster} />
+            <DetailedCard className='card-full card-modal' monster={this.props.monster} />
           </main>
         </div>
       </section>

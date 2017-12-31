@@ -26,7 +26,7 @@ class AddTeamPane extends Component {
       /* @TODO add a display creature feature (modal that appears) */
       return (
         <section key={monster.id} data-id={monster.id}>
-          <DetailedCard monster={monster} />
+          <DetailedCard className='card-full' monster={monster} />
           <button onClick={this.addCreatureToTeam}>Add to team</button>
         </section>
       );
