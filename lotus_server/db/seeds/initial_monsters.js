@@ -12,7 +12,7 @@ exports.seed = function(knex, Promise) {
   const arms = Array(9).fill().map(() => uuidv4());
   const attacks = Array(15).fill().map(() => uuidv4());
   const abilities = Array(6).fill().map(() => uuidv4());
-  const types = Array(3).fill().map(() => uuidv4());
+  const types = [1, 2, 3];
 
   // Deletes ALL existing entries
   return Promise.all([
@@ -468,17 +468,17 @@ exports.seed = function(knex, Promise) {
       knex('types').insert([
         {
           id: types[0],
-          name: 'absorb',
+          name: 'pierce',
           weakness: types[1],
         },
         {
           id: types[1],
-          name: 'harden',
+          name: 'crush',
           weakness: types[2],
         },
         {
           id: types[2],
-          name: 'reflect',
+          name: 'spray',
           weakness: types[0],
         }
       ]),

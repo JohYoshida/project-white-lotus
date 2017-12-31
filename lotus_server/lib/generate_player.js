@@ -45,7 +45,6 @@ class Player {
       // resets certain passive monster attributes when a new active monster is searched for.
       monster.passiveActive = true;
       monster.protector = null;
-      monster.modifiers = new ModifierCollection();
     }
   }
   // gets a random monster from the player's team. Can take a filter object e.g. {bench: true}.
