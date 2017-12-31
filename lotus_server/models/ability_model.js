@@ -9,9 +9,9 @@ const abilityFuncs = {
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.hp += 1;
+    player.activeMonster.supercharged = true;
     this.passiveActive = false;
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 1`;
+    return `${this.name} has supercharged ${player.activeMonster.name}`;
   },
   nanomachine_swarm: function(player){
     if (!player.activeMonster) {

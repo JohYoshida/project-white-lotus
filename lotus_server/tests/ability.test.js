@@ -19,7 +19,7 @@ describe('electric_shield', () => {
     expect(player2.activeMonster.protector).toBeTruthy();
     expect(player2.team[6].passiveActive).toBeFalsy();
   });
-  
+
   test('ability should work again if a new monster is set to active.', () => {
     player2.activateMonster('1');
     player2.findActiveMonster();
@@ -35,5 +35,33 @@ describe('electric_shield', () => {
     expect(player2.activeMonster.hp).toBe(10);
     expect(player2.team[6].hp).toBe(20);
   });
+});
 
+describe('Supercharge', () => {
+  let player1 = null;
+  let player2 = null;
+  beforeAll(done => {
+    Promise.all([generatePlayer(1, [1,2,4]), generatePlayer(2, [1,2,4])]).then(players => {
+      player1 = players[0];
+      player2 = players[1];
+      player1.activateMonster('4');
+      player1.findActiveMonster();
+      player2.activateMonster('2');
+      player2.findActiveMonster();
+      player2.team[4].ability.func(player2);
+      done();
+    });
+  });
+
+  test('ability should set Supercharge to the attacking monster', () => {
+    expect(player2.activeMonster.supercharged).toBeTruthy();
+  });
+
+  test('t-wrex\'s steel jaw should harm all monsters on the enemy team', () => {
+    const {team} = player1;
+    player2.activeMonster.attacks['steel_jaw'].func(player1);
+    expect(team[1].hp).toBeLessThan(30);
+    expect(team[2].hp).toBeLessThan(35);
+    expect(team[4].hp).toBeLessThan(20);
+  });
 });
