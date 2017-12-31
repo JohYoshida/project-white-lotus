@@ -2,7 +2,8 @@ const generateTeam = require('./generate_team');
 // Generate player function takes a userId to apply to the player and an array of 3 ids representing monsters
 // to be on the player's team.
 class Player {
-  constructor(userid, team) {
+  constructor(userid, team, name) {
+    if(name) this.name = name;
     this.id = userid;
     this.team = team;
     this.turn = false;
@@ -62,9 +63,9 @@ class Player {
   }
 }
 // Takes a userid (string) and a team, (array of strings)
-const generatePlayer = (userid, team) => {
+const generatePlayer = (userid, team, name) => {
   return generateTeam(team).then(team => {
-    return new Player(userid, team);
+    return new Player(userid, team, name);
   });
 };
 

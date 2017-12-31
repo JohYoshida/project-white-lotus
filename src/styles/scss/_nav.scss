@@ -6,6 +6,14 @@ nav {
   height: 80;
   margin-bottom: 20px;
   border-bottom: 1px solid grey;
+  clear: both;
+  button{
+    float: right;
+  }
+}
+
+section.nav-links{
+  float: left;
   a.nav-link {
     padding: 0px 5px;
   }

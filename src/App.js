@@ -15,7 +15,7 @@ import CreateBattle from './CreateBattle.jsx';
 import {toggleModalById} from './lib/element_effect_helpers';
 
 // Functions
-import {postLogin, postRegister, setUserState} from './lib/user_auth.js';
+import {postLogin, fetchUserDetails, postRegister, setUserState} from './lib/user_auth.js';
 import {postNewMonster} from './lib/store.js';
 
 class App extends Component {
@@ -45,7 +45,10 @@ class App extends Component {
   componentWillMount() {
     const {cookies} = this.props;
     if (cookies.get('id')) {
-      this.setState({id: cookies.get('id'), loggedin: true});
+      console.log(cookies.get('id'));
+      this.setState({id: cookies.get('id'), loggedin: true}, () => {
+        fetchUserDetails(this);
+      });
     }
   }
   register(event) {
@@ -111,15 +114,17 @@ class App extends Component {
     if (this.state.loggedin) {
       return (<Router>
         <div className="container" hidden={!this.state.loaded}>
-          <h1>{username}</h1>
           <nav>
-            <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
-            <span className='float-left'><Link className='nav-link' to="/store">Store</Link></span>
-            <span className='float-left'><Link className='nav-link' to="/teams">Teams</Link></span>
-            <span className='float-left'><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
-            <Link to="/">
-              <button onClick={this.logout} className='button button-outline'>Log out</button>
-            </Link>
+            <h1>{username}</h1>
+            <section className="nav-links">
+              <span><Link className='nav-link' to="/">Monsters</Link></span>
+              <span><Link className='nav-link' to="/store">Store</Link></span>
+              <span><Link className='nav-link' to="/teams">Teams</Link></span>
+              <span><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
+              </section>
+              <Link to="/">
+                <button onClick={this.logout} className='button button-outline'>Log out</button>
+              </Link>
           </nav>
           <Route exact path="/" render={() =>
             (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
@@ -134,7 +139,7 @@ class App extends Component {
             (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
           }/>
           <Route path="/battle/:roomName" render={({match}) => (
-            <Battle roomName={match.params.roomName} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
+            <Battle roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
           }/>
           <Route path="/create-battle" render={() =>
             (<CreateBattle loadApp={this.loadApp} />)

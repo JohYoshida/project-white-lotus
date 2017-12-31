@@ -36,12 +36,10 @@ class Game{
       }
       // Loop over each modifier and update them.
       monster.modifiers.forEach(modifier => {
-        console.log(modifier.update());
         const message = modifier.update();
         messages.push(message);
       });
     }
-    // console.log(messages);
     return messages;
   }
   // this is used to execute position shifts, takes the id of the monster through the action object
