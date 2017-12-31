@@ -178,6 +178,7 @@ section.modal {
     border-radius: 3%;
     border: 4px solid white; }
     .battlefield-active .battlefield-active-battler .card-image-header {
+      overflow: hidden;
       position: absolute;
       width: 100%;
       height: 100%;
