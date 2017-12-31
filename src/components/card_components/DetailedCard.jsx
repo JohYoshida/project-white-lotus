@@ -12,14 +12,14 @@ class DetailedCard extends Component {
       if(attack.isAlt){
         attacks.push(
           <div class="abilities-ability">
-            <strong className="abilities-name"><span className="sword-ico">{attackName.replace('_', ' ')}(ATK)</span></strong>
+            <strong className="abilities-name"><span className="sword-ico">ATK: {attackName.replace('_', ' ')}</span></strong>
             <p>{attack.description}</p>
           </div>
         );
       } else {
         attacks.push(
           <div className="abilities-ability">
-            <strong className="abilities-name"><span className="sword-ico"></span>{attackName.replace('_', ' ')}(ATK)</strong>
+            <strong className="abilities-name"><span className="sword-ico"></span>ATK: {attackName.replace('_', ' ')}</strong>
             <p>{attack.description}</p>
           </div>
         );
@@ -31,7 +31,7 @@ class DetailedCard extends Component {
     if(!ability) return;
     return(
       <div className="abilities-ability">
-        <strong className="abilities-name"><span className="sword-ico"></span>{ability.name.replace('_', ' ')}(ABL)</strong>
+        <strong className="abilities-name"><span className="sword-ico"></span>ABL: {ability.name.replace('_', ' ')}</strong>
         <p>{ability.description}</p>
       </div>
     );

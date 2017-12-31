@@ -4,10 +4,33 @@ $opponent-color:#EF9A9A;
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Press Start 2P', cursive;
+  background-color: #E9626F;
+  a {
+    color: white;
+  }
+  button, .button, .button-outline{
+    background-color: white;
+    border-color: white;
+    color: black;
+    text-transform: none;
+  }
+  button.button.button-outline {
+    border-color: white;
+    color: white;
+    &:hover{
+      background-color: white;
+      border-color:white;
+      color:black;
+    }
+  }
   &.modal-open {
     overflow: hidden;
   }
+}
+h1,h2,h3,h4{
+  color:white;
+  font-weight: bold;
 }
 
 .hidden{

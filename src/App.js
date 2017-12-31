@@ -115,16 +115,18 @@ class App extends Component {
       return (<Router>
         <div className="container" hidden={!this.state.loaded}>
           <nav>
-            <h1>{username}</h1>
             <section className="nav-links">
               <span><Link className='nav-link' to="/">Monsters</Link></span>
               <span><Link className='nav-link' to="/store">Store</Link></span>
               <span><Link className='nav-link' to="/teams">Teams</Link></span>
               <span><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
-              </section>
+            </section>
+            <section className="nav-user">
+              <h4>Hi, {username}</h4>
               <Link to="/">
                 <button onClick={this.logout} className='button button-outline'>Log out</button>
               </Link>
+            </section>
           </nav>
           <Route exact path="/" render={() =>
             (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)

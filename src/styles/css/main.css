@@ -1,9 +1,28 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif; }
+  font-family: 'Press Start 2P', cursive;
+  background-color: #E9626F; }
+  body a {
+    color: white; }
+  body button, body .button, body .button-outline {
+    background-color: white;
+    border-color: white;
+    color: black;
+    text-transform: none; }
+  body button.button.button-outline {
+    border-color: white;
+    color: white; }
+    body button.button.button-outline:hover {
+      background-color: white;
+      border-color: white;
+      color: black; }
   body.modal-open {
     overflow: hidden; }
+
+h1, h2, h3, h4 {
+  color: white;
+  font-weight: bold; }
 
 .hidden {
   display: none; }
@@ -13,17 +32,28 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  height: 80;
-  margin-bottom: 20px;
-  border-bottom: 1px solid grey;
-  clear: both; }
-  nav button {
-    float: right; }
+  height: 80px;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem; }
 
 section.nav-links {
-  float: left; }
+  display: flex; }
   section.nav-links a.nav-link {
-    padding: 0px 5px; }
+    padding: 1rem;
+    display: block;
+    margin-right: 2rem; }
+    section.nav-links a.nav-link:hover {
+      background-color: white;
+      height: 80px; }
+
+section.nav-user {
+  display: flex; }
+  section.nav-user h4 {
+    padding: 1rem;
+    line-height: 3.5rem;
+    margin-right: 3rem; }
 
 .hidden {
   display: none; }
@@ -188,22 +218,22 @@ section.modal {
 span.card-hp {
   position: absolute;
   padding: 1rem;
-  font-size: 1.5em;
+  font-size: 1em;
   top: 0;
   left: 0;
   background-color: white;
-  border-bottom-right-radius: 10%;
+  border-bottom-right-radius: 10px;
   font-weight: bold;
   z-index: 9999; }
 
 span.card-acc {
   padding: 1rem;
   position: absolute;
-  font-size: 1.5em;
+  font-size: 1.2em;
   bottom: 0;
   right: 0;
   background-color: white;
-  border-top-left-radius: 10%;
+  border-top-left-radius: 10px;
   font-weight: bold;
   z-index: 999; }
 
@@ -216,16 +246,17 @@ span.card-acc {
   margin-bottom: 4rem;
   background-color: grey;
   padding: 3rem;
-  border-radius: 3%;
+  border-radius: 10px;
   border: 4px solid lightgrey; }
   .card-full h3 {
+    font-size: 1.8rem;
     position: relative;
     text-align: center;
     color: white;
     font-weight: bold; }
   .card-full p {
     margin: 0;
-    font-size: 1.3rem; }
+    font-size: 1.4rem; }
   .card-full div.card-image-header {
     position: absolute;
     top: 0;
@@ -238,38 +269,33 @@ span.card-acc {
     opacity: 0.5; }
     .card-full div.card-image-header img {
       width: 100%; }
+  .card-full:hover .card-details {
+    display: block; }
   .card-full .card-details {
-    position: relative;
-    background-color: white;
-    border-radius: 3%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: .5rem;
-    padding-top: .5rem; }
-    .card-full .card-details div.active-monster-info {
-      color: grey; }
-    .card-full .card-details div.card-details-abilities .abilities-name {
+    display: none;
+    position: relative; }
+    .card-full .card-details div.stats {
+      background-color: white;
+      border-radius: 10px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: .5rem;
+      padding-top: .5rem;
+      margin-bottom: 2rem;
       text-transform: capitalize; }
-
-span.card-hp {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: white;
-  border-bottom-right-radius: 10%;
-  font-weight: bold;
-  z-index: 9999; }
-
-span.card-acc {
-  padding: 1rem;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: white;
-  border-top-left-radius: 10%;
-  font-weight: bold;
-  z-index: 999; }
+    .card-full .card-details div.card-details-abilities {
+      background-color: white;
+      border-radius: 10px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: .5rem;
+      padding-top: .5rem; }
+      .card-full .card-details div.card-details-abilities .abilities-name {
+        font-size: 1.1rem;
+        text-transform: capitalize; }
+      .card-full .card-details div.card-details-abilities p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem; }
 
 .addTeamPane-container, .addTeamPane-new-team {
   display: flex;
