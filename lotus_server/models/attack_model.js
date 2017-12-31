@@ -177,7 +177,7 @@ const attackFuncs = {
     if(this.supercharged) {
       messages = doAOEAttack(attackedPlayer, messages, dmg, this);
     } else {
-      damage = damageCalculator(getRandomNumber(10, 12), compareTyping(this, targetMonster));
+      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
       targetMonster.takeDamage(damage);
       messages = [`${this.name}'s Hyper Lance pierces ${targetMonster.name}. They take ${damage} damage!`];
     }
