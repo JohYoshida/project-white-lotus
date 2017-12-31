@@ -32,7 +32,13 @@ class CompleteMonster {
     this.modifiers = new ModifierCollection();
   }
   takeDamage(damage){
-    this.hp -= damage;
+    if(!this.protector) return this.hp = damage;
+    
+    // If a passive monster has an electric_shield ability.
+    const protectorDamage = damage > 5 ? damage - 5 : damage;
+    this.protector.hp -= protectorDamage;
+    this.hp -= damage - protectorDamage;
+    return;
   }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
