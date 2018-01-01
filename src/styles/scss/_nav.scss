@@ -17,8 +17,20 @@ section.nav-links{
     margin-right: 2rem;
     &:hover{
       background-color: white;
+      color: $coral-color;
       height: 80px;
+      border-radius:1rem;
     }
+    &:focus{
+      color:white;
+    }
+    &:active{
+      color:$coral-color;
+    }
+  }
+  a.nav-link.on-page::after{
+    display: block;
+    content: "^"
   }
 }
 section.nav-user{

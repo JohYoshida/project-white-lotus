@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// cardImageHeader is the background photo
 import cardImageHeader from './card_components/cardImageHeader.jsx';
 import {toggleModalByIdButton} from '../lib/element_effect_helpers';
 

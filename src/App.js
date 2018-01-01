@@ -116,10 +116,10 @@ class App extends Component {
         <div className="container" hidden={!this.state.loaded}>
           <nav>
             <section className="nav-links">
+              <span><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
+              <span><Link className='nav-link' to="/teams">Teams</Link></span>
               <span><Link className='nav-link' to="/">Monsters</Link></span>
               <span><Link className='nav-link' to="/store">Store</Link></span>
-              <span><Link className='nav-link' to="/teams">Teams</Link></span>
-              <span><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
             </section>
             <section className="nav-user">
               <h4>Hi, {username}</h4>

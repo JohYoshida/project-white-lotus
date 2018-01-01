@@ -67,24 +67,3 @@
     }
   }
 }
-
-span.card-hp{
-  position: absolute;
-  padding: 1rem;
-  font-size: 1em;
-  top:0; left:0;
-  background-color: white;
-  border-bottom-right-radius: 10px;
-  font-weight: bold;
-  z-index: 9999;
-}
-span.card-acc{
-  padding: 1rem;
-  position: absolute;
-  font-size: 1.2em;
-  bottom:0; right:0;
-  background-color: white;
-  border-top-left-radius: 10px;
-  font-weight: bold;
-  z-index: 999;
-}

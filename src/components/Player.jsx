@@ -74,7 +74,6 @@ class Player extends Component {
           </div>
           {this.showAttacks()}
         </div>
-        <h1 className={player.turn ? 'player-turn' : ''}>{player.name}</h1>
       </section>
     );
   }
