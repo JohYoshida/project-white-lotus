@@ -31,14 +31,14 @@ class Game{
     for(let monsterId in team){
       const monster = team[monsterId];
       if(monster.bench && monster.passiveActive && monster.ability){
-        messages.push(monster.ability.func(activePlayer));
+        const message = monster.ability.func(activePlayer);
+        messages.push(message);
       }
-      // if there is a dot on the monster, activate it.
-      if(monster.dot.length > 1){
-        monster.dot.forEach(dot => {
-          messages.push(dot.func(activePlayer));
-        });
-      }
+      // Loop over each modifier and update them.
+      monster.modifiers.forEach(modifier => {
+        const message = modifier.update();
+        messages.push(message);
+      });
     }
     return messages;
   }
@@ -61,10 +61,6 @@ class Game{
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
     for(const player of this.players){
-      for(const memberId in player.team){
-        const teamMember = player.team[memberId];
-        teamMember.modifiers.forEach(modifier => modifier.update());
-      }
       if(player.team.aliveMonsters() === 0){
         const losingPlayerIndex = this.players.indexOf(player);
         const winningPlayerIndex = 1 - losingPlayerIndex;
@@ -73,11 +69,11 @@ class Game{
       }
       player.turn ? this.activePlayer = player : this.idlePlayer = player;
     }
-    // executes passives
+    // executes passives and push the returning message to the messages list.
     return this.passive();
   }
   takeAction(actionObj){
-    const messages = this[actionObj.action](actionObj);
+    const messages = this[actionObj.action](actionObj) || [];
     // After action is over, check active players and run passives if applicable.
     const passiveMessages = this.findActivePlayer(actionObj);
     if(passiveMessages){

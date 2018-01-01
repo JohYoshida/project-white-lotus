@@ -16,7 +16,7 @@ class Teams extends Component {
   sendTeam(event){
     event.preventDefault();
     event.stopPropagation();
-    const teamList = document.querySelector('.add-team-new-team');
+    const teamList = document.querySelector('.addTeamPane-new-team');
     const name = document.querySelector('#teamNameForm').elements['teamName'].value;
     if(name.length < 1){
       /* @TODO add flash message here */

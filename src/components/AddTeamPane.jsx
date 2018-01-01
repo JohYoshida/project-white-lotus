@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from './Modal.jsx'
+import DetailedCard from './card_components/DetailedCard.jsx';
 
 class AddTeamPane extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class AddTeamPane extends Component {
   }
   addCreatureToTeam(event){
     event.stopPropagation();
-    const teamList = document.querySelector('.add-team-new-team');
+    const teamList = document.querySelector('.addTeamPane-new-team');
     const monsterCard = event.target.parentNode;
     if(teamList.childNodes.length === 3){
       return;
@@ -24,11 +25,10 @@ class AddTeamPane extends Component {
     return monsters.map(monster => {
       /* @TODO add a display creature feature (modal that appears) */
       return (
-        <article className='monster' onClick={this.displayCreature} key={monster.id} data-id={monster.id}>
-          <h3>{monster.name}</h3>
-          <img src={monster.image_url} />
+        <section key={monster.id} data-id={monster.id}>
+          <DetailedCard monster={monster} />
           <button onClick={this.addCreatureToTeam}>Add to team</button>
-        </article>
+        </section>
       );
     });
   }
@@ -36,11 +36,11 @@ class AddTeamPane extends Component {
     return (
       <section id="addTeamPane" className='add-team hidden'>
         <h2>Create a new team!</h2>
-        <section className='add-team-new-team container'>
+        <section className='addTeamPane-new-team'>
         </section>
         {this.state.readyToSend && <button onClick={this.props.sendTeam}>Submit team</button>}
         <hr/>
-        <div className='container'>{this.showMonsters()}</div>
+        <div className='addTeamPane-container'>{this.showMonsters()}</div>
       </section>
     );
   }

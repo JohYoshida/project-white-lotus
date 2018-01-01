@@ -1,87 +1,79 @@
 div#battlefield{
   margin: auto;
-  // width:500px;
-
-  .player {
+  color:black;
+  .opponent {
+    background-color: $opponent-color;
+    display: flex;
+    height: 355px;
+    padding: 4rem;
     position: relative;
-    padding: 1rem;
-    background-color: #A5D6A7;
-    min-height: 175px;
-    .abilities{
-      position: absolute;
+    h1{
       bottom:0;
-      right:0;
-      width: 150px;
-      padding: 1rem;
-      background-color: white;
-      display: flex;
-      justify-content: space-around;
-      .sword-ico{
-        background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
-        background-size: contain;
-        background-position: center;
-        display: inline-block;
-        background-repeat: no-repeat;
-        height: 60px;
-        width: 60px;
-        cursor: pointer;
-      }
+      color: darken($opponent-color, 30%);
+      left:4rem;
+      position: absolute;
+    }
+    h1.player-turn{
+      color:white;
     }
   }
-  .opponent {
-    position: relative;
-    display: flex;
-    padding: 1rem;
-    background-color: #EF9A9A;
-    min-height: 175px;
-
-    .battlefield-activeMonster{
+  section.messages {
+    padding: 2rem;
+    height: 200px;
+    background-color: #B0BEC5;
+    font-size: 1em;
+    z-index: -2;
+    overflow:hidden;
+    p {
+      margin-bottom: 20px;
     }
-    .bench-monster{
-      position: relative;
+  }
+  .player {
+    background-color: $player-color;
+    height: 355px;
+    padding: 4rem;
+    position: relative;
+    h1{
+      bottom:0;
+      color: darken($player-color, 30%);
+      left:4rem;
+      position: absolute;
+    }
+    h1.player-turn{
+      color:white;
     }
     .abilities{
-      position: absolute;
-      top:0;
-      right:0;
-      width: 300px;
-      padding: 1rem;
-      background-color: white;
+      background-color: darken($player-color, 15%);
+      border-top-left-radius: 5px;
       display: flex;
       justify-content: space-around;
+      padding: 1rem;
+      position: absolute;
+      bottom:0; right:0;
+      width: 150px;
+      z-index: 9999;
       .sword-ico{
-        // border: 2px solid red;
         background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
-        background-size: contain;
         background-position: center;
-        display: inline-block;
         background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        display: inline-block;
         height: 60px;
         width: 60px;
-        cursor: pointer;
       }
     }
   }
 }
 
 /* This should override Milligram's greyed buttons on focus */
-.game-button:focus {
-  border-color: rgb(155, 77, 202) !important;
-  color: rgb(155, 77, 202) !important;
-}
 
-article[data-active='true'] {
-  background-color: lightblue;
-}
 
-section.messages {
-  display: none;
-  padding: 2rem;
-  height: 125px;
-  background-color: #B0BEC5;
-  z-index: -2;
-  p {
-    margin-bottom: 5px;
+@media (max-width:812px) {
+  section.messages{
+    display: none;
   }
-  overflow-y: auto;
+  .player, .opponent {
+    height: 175px;
+  }
 }

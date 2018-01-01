@@ -29,6 +29,7 @@ class Opponent extends Component {
     return cards;
   }
   render() {
+    const {player} = this.props;
     return (
       <section className={this.props.className}>
         <div className="column">
@@ -37,12 +38,13 @@ class Opponent extends Component {
             {this.generateBenchedMonster()}
           </div>
         </div>
-        <div className="column column-40">
+        <div className="battlefield-active column column-40">
           <h4>Active Monster</h4>
           <div className="battlefield-activeMonster">
             {this.generateActiveMonster()}
           </div>
         </div>
+        <h1 className={player.turn ? 'player-turn' : ''}>{player.name}</h1>
       </section>
     );
   }

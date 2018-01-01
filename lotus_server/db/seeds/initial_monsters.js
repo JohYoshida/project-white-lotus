@@ -12,7 +12,7 @@ exports.seed = function(knex, Promise) {
   const arms = Array(9).fill().map(() => uuidv4());
   const attacks = Array(15).fill().map(() => uuidv4());
   const abilities = Array(6).fill().map(() => uuidv4());
-  const types = Array(3).fill().map(() => uuidv4());
+  const types = [1, 2, 3];
 
   // Deletes ALL existing entries
   return Promise.all([
@@ -84,6 +84,7 @@ exports.seed = function(knex, Promise) {
           name: 'Blob',
           image_url:'https://api.adorable.io/avatars/285/blob.png',
           hp: 30,
+          accuracy_bonus: 0,
           type_id: types[0],
           creature: 'kaiju',
           nameword: 'Blob'
@@ -93,6 +94,7 @@ exports.seed = function(knex, Promise) {
           name: 'T-Wrex',
           image_url:'https://api.adorable.io/avatars/285/t-wrex.png',
           hp: 35,
+          accuracy_bonus: -1,
           type_id: types[1],
           creature: 'kaiju',
           nameword: 'Dino'
@@ -103,6 +105,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/cthulumonster.png',
           hp: 25,
           type_id: types[2],
+          accuracy_bonus: +1,
           creature: 'kaiju',
           nameword: 'Horror'
 
@@ -112,6 +115,7 @@ exports.seed = function(knex, Promise) {
           name: 'Shock Top',
           image_url:'https://api.adorable.io/avatars/285/shocktop.png',
           hp: 25,
+          accuracy_bonus: +1,
           type_id: types[2],
           creature: 'mecha',
           nameword: 'Robot'
@@ -122,6 +126,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/medi-o-cre.png',
           hp: 20,
           type_id: types[0],
+          accuracy_bonus: +1,
           creature: 'mecha',
           nameword:'Medic'
         },
@@ -131,6 +136,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/red_knight.png',
           hp: 25,
           type_id: types[1],
+          accuracy_bonus: +2,
           creature: 'mecha',
           nameword:'Knight'
         }
@@ -354,14 +360,14 @@ exports.seed = function(knex, Promise) {
           name: 'web_sling',
           aoe: false,
           dot: false,
-          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\t leave.'
+          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\'t leave field.'
         },
         {
           id: attacks[5],
           name: 'deep_knowledge',
           aoe: false,
           dot: false,
-          description: 'Gain the attack type of a benched monster.'
+          description: 'Take the type of the opposing player\'s active monster.'
         },
         {
           id: attacks[6],
@@ -389,7 +395,7 @@ exports.seed = function(knex, Promise) {
           name: 'neutralize',
           aoe: false,
           dot: false,
-          description: 'Deal 10-12 damage. Ignore an enemy passive.'
+          description: 'Deal 10-12 damage. Ignore an enemy passive until they are activated.'
         },
         {
           id: attacks[10],
@@ -462,17 +468,17 @@ exports.seed = function(knex, Promise) {
       knex('types').insert([
         {
           id: types[0],
-          name: 'absorb',
+          name: 'pierce',
           weakness: types[1],
         },
         {
           id: types[1],
-          name: 'harden',
+          name: 'crush',
           weakness: types[2],
         },
         {
           id: types[2],
-          name: 'reflect',
+          name: 'spray',
           weakness: types[0],
         }
       ]),

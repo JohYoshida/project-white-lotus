@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import cardImageHeader from './cardImageHeader.jsx';
-import cardInfo from './cardInfo.jsx';
 
 class DetailedCard extends Component {
   constructor(props) {
@@ -13,14 +12,14 @@ class DetailedCard extends Component {
       if(attack.isAlt){
         attacks.push(
           <div class="abilities-ability">
-            <strong className="abilities-name"><span className="sword-ico">{attackName.replace('_', ' ')}</span></strong>
+            <strong className="abilities-name"><span className="sword-ico">ATK: {attackName.replace('_', ' ')}</span></strong>
             <p>{attack.description}</p>
           </div>
         );
       } else {
         attacks.push(
           <div className="abilities-ability">
-            <strong className="abilities-name"><span className="sword-ico"></span>{attackName.replace('_', ' ')}</strong>
+            <strong className="abilities-name"><span className="sword-ico"></span>ATK: {attackName.replace('_', ' ')}</strong>
             <p>{attack.description}</p>
           </div>
         );
@@ -32,7 +31,7 @@ class DetailedCard extends Component {
     if(!ability) return;
     return(
       <div className="abilities-ability">
-        <strong className="abilities-name"><span className="sword-ico"></span>{ability.name}</strong>
+        <strong className="abilities-name"><span className="sword-ico"></span>ABL: {ability.name.replace('_', ' ')}</strong>
         <p>{ability.description}</p>
       </div>
     );
@@ -42,10 +41,14 @@ class DetailedCard extends Component {
     return (
       <div className="card-full">
         <span class="card-hp">{monster.hp}</span>
-        <span class="card-acc">{monster.accuracy_bonus || '+2'}</span>
+        <span class="card-acc">{monster.accuracy_bonus}</span>
         {cardImageHeader(monster)}
         <h3>{monster.name}</h3>
         <div className="card-details">
+          <div className="stats">
+            <p><strong>Type:</strong> {monster.type.name}</p>
+            <p><strong>Creature:</strong> {monster.creature}</p>
+          </div>
           <div className="card-details-abilities">
             {this.attackDetails(monster)}
             {this.abilityDetails(monster)}
