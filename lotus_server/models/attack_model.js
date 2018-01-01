@@ -179,7 +179,7 @@ const attackFuncs = {
     } else {
       damage = damageCalculator(dmg, compareTyping(this, targetMonster));
       targetMonster.takeDamage(damage);
-      messages = [`${this.name}'s Hyper Lance pierces ${targetMonster.name}. They take ${damage} damage!`];
+      messages = [`${this.name} strikes ${targetMonster.name} for ${damage} damage and neutralizes its passive ability!`]
     }
     // removes the passive ability of a random benched monster.
     const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true});
