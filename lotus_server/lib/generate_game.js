@@ -32,12 +32,12 @@ class Game{
       const monster = team[monsterId];
       if(monster.bench && monster.passiveActive && monster.ability){
         const message = monster.ability.func(activePlayer);
-        messages.push(message);
+        messages.unshift(message);
       }
       // Loop over each modifier and update them.
       monster.modifiers.forEach(modifier => {
         const message = modifier.update();
-        messages.push(message);
+        messages.unshift(message);
       });
     }
     return messages;
@@ -78,7 +78,7 @@ class Game{
     const passiveMessages = this.findActivePlayer(actionObj);
     if(passiveMessages){
       for(const message of passiveMessages){
-        messages.push(message);
+        messages.unshift(message);
       }
     }
     // Returns log of changes.

@@ -20,7 +20,7 @@ const abilityFuncs = {
       const curMonster = team[monsterId];
       if(curMonster.creature === 'mecha') curMonster.hp += 2;
     }
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 2`;
+    return `${this.name} heals all mecha's by 2hp`;
   },
   electric_shield: function(player){
     if (!player.activeMonster) {

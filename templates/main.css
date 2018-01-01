@@ -1,0 +1,84 @@
+.battlefield{
+  position: relative;
+  height:355px;
+  background-color: red;
+}
+
+.player-monster-bench-1{
+  position: absolute;
+  transform: scaleX(-1);
+  background-image: url('./monster.png');
+  background-size: contain;
+  height:200px;
+  width:100px;
+  background-repeat: no-repeat;
+  left:20px;
+  bottom:0;
+}
+
+.player-monster-bench-2{
+  position: absolute;
+  transform: scaleX(-1);
+  background-image: url('./monster.png');
+  background-size: contain;
+  height:200px;
+  width:100px;
+  background-repeat: no-repeat;
+  left:120px;
+  bottom:0;
+}
+
+.player-monster-active{
+  position: absolute;
+  transform: scaleX(-1);
+  background-image: url('./monster.png');
+  background-size: contain;
+  height:200px;
+  width:100px;
+  background-repeat: no-repeat;
+  left:280px;
+  bottom:0;
+}
+.player-stats{
+  position: absolute;
+  left:0;
+  top:0;
+}
+.opponent-monster-bench-1{
+  position: absolute;
+  background-image: url('./monster.png');
+  background-size: contain;
+  height:200px;
+  width:100px;
+  background-repeat: no-repeat;
+  right:20px;
+  bottom:0;
+}
+
+.opponent-monster-bench-2{
+  position: absolute;
+  background-image: url('./monster.png');
+  background-size: contain;
+  height:200px;
+  width:100px;
+  background-repeat: no-repeat;
+  right:120px;
+  bottom:0;
+}
+
+.opponent-monster-active{
+  position: absolute;
+  background-image: url('./monster.png');
+  background-size: contain;
+  height:200px;
+  width:100px;
+  background-repeat: no-repeat;
+  right:280px;
+  bottom:0;
+}
+
+.opponent-stats{
+  position: absolute;
+  right:0;
+  top:0;
+}

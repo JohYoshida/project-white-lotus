@@ -201,7 +201,8 @@ section.modal {
   border-radius: 3%;
   border: 4px solid white;
   font-weight: bold; }
-  .battlefield-onBench .bench-monster img {
+  .battlefield-onBench .bench-monster .card-image-header {
+    overflow: hidden;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -209,7 +210,10 @@ section.modal {
     left: 0;
     right: 0;
     bottom: 0;
+    text-align: center;
     margin: auto; }
+    .battlefield-onBench .bench-monster .card-image-header img {
+      width: 100%; }
   .battlefield-onBench .bench-monster button {
     position: absolute;
     margin: 0;
@@ -245,7 +249,7 @@ span.card-acc {
   width: 350px;
   height: 350px;
   margin-bottom: 4rem;
-  background-color: grey;
+  background-color: black;
   padding: 3rem;
   border-radius: 10px;
   border: 4px solid lightgrey; }
@@ -311,5 +315,92 @@ span.card-acc {
 
 .addTeamPane-new-team {
   justify-content: left; }
+
+.battlefield-visual {
+  position: relative;
+  height: 355px;
+  background-color: #508D93; }
+
+.player-monster-bench-1 {
+  position: absolute;
+  transform: scaleX(-1);
+  height: 200px;
+  width: 100px;
+  left: 4rem;
+  bottom: 0; }
+
+.player-monster-bench-2 {
+  position: absolute;
+  transform: scaleX(-1);
+  height: 200px;
+  width: 100px;
+  left: 14rem;
+  bottom: 0; }
+
+.player-monster-bench-3 {
+  position: absolute;
+  transform: scaleX(-1);
+  height: 200px;
+  width: 100px;
+  left: 24rem;
+  bottom: 0; }
+
+.player-monster-active {
+  position: absolute;
+  transform: scaleX(-1);
+  height: 200px;
+  width: 100px;
+  left: 34rem;
+  bottom: 0; }
+
+.player-stats {
+  position: absolute;
+  left: 4rem;
+  top: 2rem; }
+  .player-stats span {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.5rem; }
+  .player-stats span.activeMonster-stats {
+    color: #EF9A9A; }
+
+.opponent-monster-bench-1 {
+  position: absolute;
+  height: 200px;
+  width: 100px;
+  right: 4rem;
+  bottom: 0; }
+
+.opponent-monster-bench-2 {
+  position: absolute;
+  height: 200px;
+  width: 100px;
+  right: 14rem;
+  bottom: 0; }
+
+.opponent-monster-bench-3 {
+  position: absolute;
+  height: 200px;
+  width: 100px;
+  right: 24rem;
+  bottom: 0; }
+
+.opponent-monster-active {
+  position: absolute;
+  height: 200px;
+  width: 100px;
+  right: 34rem;
+  bottom: 0; }
+
+.opponent-stats {
+  position: absolute;
+  right: 4rem;
+  top: 2rem; }
+  .opponent-stats span {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.5rem; }
+  .opponent-stats span.activeMonster-stats {
+    color: white; }
 
 /*# sourceMappingURL=main.css.map */

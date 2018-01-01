@@ -74,7 +74,7 @@ const attackFuncs = {
       const curMonster = attackedPlayer.team[monsterId];
       const damage = damageCalculator(3, compareTyping(this, curMonster));
       curMonster.takeDamage(damage);
-      messages.push(`${curMonster.name} took ${damage} damage!`);
+      messages.unshift(`${curMonster.name} took ${damage} damage!`);
     }
     return messages;
   },
@@ -170,7 +170,7 @@ const attackFuncs = {
     const randomId = attackedPlayer.getRandomMonster({bench:true}).id;
     attackedPlayer.activateMonster(randomId);
     attackedPlayer.findActiveMonster();
-    messages.push(`${attackedPlayer.activeMonster.name} is now on the field.`);
+    messages.unshift(`${attackedPlayer.activeMonster.name} is now on the field.`);
     return messages;
   },
   // primary attack
@@ -194,7 +194,7 @@ const attackFuncs = {
         return `${randomBenchedMonster.name}'s passive has been reactivated!`;
       }
     });
-    messages.push(`${randomBenchedMonster.name}'s passive is disabled.`);
+    messages.unshift(`${randomBenchedMonster.name}'s passive is disabled.`);
     return messages;
   },
   // primary attack
@@ -211,7 +211,7 @@ const attackFuncs = {
       messages = [`${this.name} drains ${targetMonster.name}. They took ${damage} damage!`];
     }
     this.hp += 4;
-    messages.push(`${this.name} heals 4hp.`);
+    messages.unshift(`${this.name} heals 4hp.`);
     return messages;
   },
   // primary attack
@@ -245,7 +245,7 @@ const attackFuncs = {
     if(targetMonster.creature === 'kaiju'){
       const {id, name, description, func} = targetMonster.attacks[1];
       this.attacks.push({id, name, description, func: func.bind(this)});
-      messages.push(`${this.name} has gained ${this.attacks[1].name}.`);
+      messages.unshift(`${this.name} has gained ${this.attacks[1].name}.`);
     }
     return messages;
   },

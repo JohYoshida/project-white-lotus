@@ -1,3 +1,5 @@
+
+// Styling the player cards.
 .battlefield-active{
   position: relative;
   border: 3px dashed black;
@@ -42,7 +44,8 @@
     border-radius: 3%;
     border: 4px solid white;
     font-weight: bold;
-    img{
+    .card-image-header{
+      overflow: hidden;
       position: absolute;
       width:100%;
       height:100%;
@@ -50,7 +53,11 @@
       left:0;
       right:0;
       bottom:0;
+      text-align: center;
       margin: auto;
+      img{
+        width: 100%;
+      }
     }
     button{
       position: absolute;
