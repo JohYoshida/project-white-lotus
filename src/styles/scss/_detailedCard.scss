@@ -5,7 +5,8 @@
   width: 350px;
   height:350px;
   margin-bottom:4rem;
-  background-color: black;
+  background-image: url('/monster-bg.png');
+  background-size: contain;
   padding: 3rem;
   border-radius: 1rem;
   border: 4px solid white;
@@ -78,7 +79,8 @@ span.card-hp{
   color: white;
   font-size: 1em;
   top:0; left:0;
-  background-color: $coral-color;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
   border-bottom-right-radius: 10px;
   font-weight: bold;
   z-index: 9999;
@@ -89,7 +91,8 @@ span.card-acc{
   font-size: 1.2em;
   bottom:0; right:0;
   color: white;
-  background-color: $coral-color;
+  border-top: 2px solid white;
+  border-left: 2px solid white;
   border-top-left-radius: 10px;
   font-weight: bold;
   z-index: 999;

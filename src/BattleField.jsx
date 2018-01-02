@@ -51,7 +51,7 @@ class Monster extends Component {
   render() {
     const {player, opponent} = this.props;
     return (
-      <section className="battlefield-visual">
+      <section className="battlefield-visual row">
         <div className="player-side">
           <div className="player-stats">
             {this.generateMonsterStats(player)}

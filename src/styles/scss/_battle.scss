@@ -1,12 +1,12 @@
-$messages-color: #B0BEC5;
-
 div#battlefield{
   margin: auto;
   color:black;
+  padding-top: 5rem;
   section.messages {
     padding: 2rem;
     height: 150px;
     background-color: $messages-color;
+    border: 2px solid $message-border-color;
     font-size: 1rem;
     z-index: -2;
     overflow-y:hidden;
@@ -16,18 +16,18 @@ div#battlefield{
 
     section.messages-content{
       padding: 2rem;
-      border: 2px solid darken($messages-color, 30%);
       border-radius: 1rem;
       height:100%;
       p {
         margin-bottom: 20px;
-        color: darken($messages-color, 60%);
+        color: white;
       }
     }
   }
   .player {
     background-color: $player-color;
-    height: 355px;
+    border: 2px solid $message-border-color;
+    height: 300px;
     padding: 4rem;
     position: relative;
     border-radius: 1rem;
@@ -42,23 +42,34 @@ div#battlefield{
     }
     .abilities{
       background-color: darken($player-color, 15%);
-      border-top-left-radius: 5px;
+      border-radius: 1rem;
       display: flex;
-      justify-content: space-around;
-      padding: 1rem;
+      // justify-content: space-around;
+      padding: 1rem 1rem;
       position: absolute;
-      bottom:0; right:0;
-      width: 150px;
+      bottom:2rem; right:0;
+      // width: 150px;
       z-index: 9999;
-      .sword-ico{
+      button.sword-ico:first-of-type{
+        margin-right: .5rem;
+      }
+      button.sword-ico{
+        display: block;
         background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
+        padding: 0;
         cursor: pointer;
-        display: inline-block;
-        height: 60px;
-        width: 60px;
+        display: block;
+        // margin-right: .5rem;
+        margin-bottom: 0px;
+        height: 50px;
+        width: 50px;
+        &:hover{
+          background-color: white;
+          border-color: white;
+        }
       }
     }
   }

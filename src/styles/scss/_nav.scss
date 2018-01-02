@@ -11,26 +11,40 @@ nav {
 }
 section.nav-links{
   display: flex;
-  a.nav-link {
-    padding: 1rem;
-    display: block;
-    margin-right: 2rem;
-    &:hover{
-      background-color: white;
-      color: $coral-color;
-      height: 80px;
-      border-radius:1rem;
-    }
-    &:focus{
-      color:white;
-    }
-    &:active{
-      color:$coral-color;
-    }
+}
+a.nav-link {
+  padding: 1rem;
+  display: block;
+  margin-right: 2rem;
+  &:hover{
+    background-color: white;
+    color: $coral-color;
+    height: 80px;
+    border-radius:1rem;
   }
-  a.nav-link.on-page::after{
-    display: block;
-    content: "^"
+  &:focus{
+    color:white;
+  }
+  &:active{
+    color:$coral-color;
+  }
+}
+a.nav-link.on-page::after{
+  display: block;
+  content: "^"
+}
+
+a.nav-link.leave-game{
+  border: 2px solid $message-border-color;
+  border-radius: 1rem;
+  text-transform: capitalize;
+  width:25%;
+  margin: auto;
+  margin-top: 2rem;
+  text-align: center;
+  height: auto;
+  &:hover{
+    background-color: $message-border-color;
   }
 }
 section.nav-user{
