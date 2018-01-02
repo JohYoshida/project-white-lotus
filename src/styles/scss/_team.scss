@@ -1,8 +1,36 @@
+.teams-list{
+  margin-bottom: 4rem;
+}
+
 .addTeamPane-container, .addTeamPane-new-team{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  .monster-card {
+    margin-bottom: 4rem;
+    .card-full{
+      margin-right: 1rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+  button{
+    display: block;
+    margin: auto;
+  }
+  // justify-content: space-between;
 }
-.addTeamPane-new-team{
-  justify-content: left;
+.addTeamPane-container{
+  .monster-card {
+    margin-bottom: 4rem;
+    .card-full{
+      margin-right: 1rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+  button{
+    display: block;
+    margin: auto;
+  }
+}
+button.add-a-team{
+  margin-bottom: 2rem;
 }

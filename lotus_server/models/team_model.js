@@ -1,5 +1,6 @@
 const bookshelf = require('./lib/bookshelf');
 const uuidv1 = require('uuid/v1');
+const getCreature = require('../lib/generate_monster');
 
 const Monster =  bookshelf.Model.extend({
   tableName: 'monsters'
@@ -21,7 +22,7 @@ const TeamMonster = bookshelf.Model.extend({
   getMonster: function(){
     const teamMonster = this;
     const {name, id, image} = teamMonster.relations.monster.attributes;
-    return {id, name, image};
+    return getCreature(id);
   }
 });
 

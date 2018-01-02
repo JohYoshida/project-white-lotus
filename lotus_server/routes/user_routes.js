@@ -53,8 +53,10 @@ module.exports = (db) => {
       const teamPromises = teams.map(team => new TeamMonster().query({where: {team_id: team.id}}).fetchAll({withRelated: ['monster', 'team']}));
       Promise.all(teamPromises).then(teams => {
         const formattedTeams = teams.map(formatTeam);
-        // remove any null entries before sending.
-        res.send(JSON.stringify({teams: formattedTeams.filter(team => team)}));
+        Promise.all(formattedTeams).then(teams => {
+          // remove any null entries before sending.
+          res.send(JSON.stringify({teams: teams.filter(team => team)}));
+        });
       });
     });
   });

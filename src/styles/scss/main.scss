@@ -58,7 +58,7 @@ div#root{
 }
 
 .hidden{
-  display: none;
+  display: none !important;
 }
 
 @import 'nav';

@@ -37,7 +37,7 @@ div#root {
   background: linear-gradient(#E9626F, #E867A5); }
 
 .hidden {
-  display: none; }
+  display: none !important; }
 
 nav {
   position: relative;
@@ -370,13 +370,32 @@ span.card-acc {
   .card-full.card-modal .card-details {
     display: block; }
 
+.teams-list {
+  margin-bottom: 4rem; }
+
 .addTeamPane-container, .addTeamPane-new-team {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; }
+  flex-wrap: wrap; }
+  .addTeamPane-container .monster-card, .addTeamPane-new-team .monster-card {
+    margin-bottom: 4rem; }
+    .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
+      margin-right: 1rem;
+      margin-bottom: 1.5rem; }
+  .addTeamPane-container button, .addTeamPane-new-team button {
+    display: block;
+    margin: auto; }
 
-.addTeamPane-new-team {
-  justify-content: left; }
+.addTeamPane-container .monster-card {
+  margin-bottom: 4rem; }
+  .addTeamPane-container .monster-card .card-full {
+    margin-right: 1rem;
+    margin-bottom: 1.5rem; }
+.addTeamPane-container button {
+  display: block;
+  margin: auto; }
+
+button.add-a-team {
+  margin-bottom: 2rem; }
 
 .battlefield-visual {
   position: relative;
