@@ -58,7 +58,7 @@ const monsterMash = (arr) => {
       composeSS(arr[0],arr[1]).then(function(r1){
         mash(arr, 2, r1).then(function(r2){
           let x = uuidv1();
-          r2.write("../dist/assets/monsters/"+x+".png");
+          r2.write("./dist/assets/monsters/"+x+".png");
           resolve(`/assets/monsters/${x}.png`);
         });
       });

@@ -33,7 +33,7 @@ module.exports = (db) => {
             let arm = randomComponent(arms)
             let body = randomComponent(bodies)
             let head = randomComponent(heads)
-            let img1 = '../models/parts/RKRH.png';
+            let img1 = './models/parts/RKRH.png';
             let img2 = './models/parts/RKB.png';
             let img3 = './models/parts/RKLH.png';
             let img4 = './models/parts/RKH.png';

@@ -9,7 +9,7 @@ $monster-card-bg-color:#736073;
 
 $border-radius: 1rem;
 @mixin card-background-image(){
-  background-image: url('/monster-bg.png');
+  background-image: url('/assets/images/monster-bg.png');
 }
 
 body {

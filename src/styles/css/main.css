@@ -189,7 +189,7 @@ section.modal {
     position: relative;
     width: 150px;
     height: 150px;
-    background-image: url("/monster-bg.png");
+    background-image: url("/assets/images/monster-bg.png");
     background-size: contain;
     border-radius: 1rem;
     border: 2px solid white; }
@@ -243,7 +243,7 @@ section.modal {
   height: 150px;
   margin-right: 1rem;
   position: relative;
-  background-image: url("/monster-bg.png");
+  background-image: url("/assets/images/monster-bg.png");
   background-size: contain;
   border-radius: 1rem;
   border: 2px solid white;
@@ -278,7 +278,7 @@ section.modal {
   width: 350px;
   height: 350px;
   margin-bottom: 4rem;
-  background-image: url("/monster-bg.png");
+  background-image: url("/assets/images/monster-bg.png");
   background-size: contain;
   padding: 3rem;
   border-radius: 1rem;
