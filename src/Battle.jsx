@@ -3,7 +3,7 @@ import uuid from 'uuid';
 import MessageBox from './components/MessageBox.jsx';
 import CardModal from './components/CardModal.jsx';
 import Modal from './components/Modal.jsx';
-import Opponent from './components/Opponent.jsx';
+import BattleField from './BattleField.jsx';
 import Player from './components/Player.jsx';
 import generateBattleSocket from './lib/websocket.js';
 import editBrouzoff from './lib/editBrouzoff.js';
@@ -77,9 +77,10 @@ class Battle extends Component {
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
         <div id="battlefield" className='hidden'>
-          {this.state.ready && <Opponent className='opponent row' player={this.state.opponent} curUserId={this.state.id} /> }
+          {this.state.game.players && <BattleField player={this.state.player} opponent={this.state.opponent} battlerId={this.state.battlerId} /> }
           {this.state.ready && <MessageBox className='messages row' messages={this.state.messages} />}
           {this.state.ready && <Player className='player row' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
+          {this.state.ready && <section><span><a className='nav-link leave-game' href="/">Leave game</a></span></section>}
         </div>
         <Modal id="gameOverModal" header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />
         {this.state.game.players && this.generateModals(this.state.game)}

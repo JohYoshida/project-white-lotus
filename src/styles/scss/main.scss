@@ -1,11 +1,14 @@
-$player-color:#508D93;
+$player-color:#826682;
 $opponent-color:#EF9A9A;
+$coral-color:#E9626F;
+$messages-color: #826682;
+$message-border-color: #B0BEC5;
+$monster-card-bg-color:#736073;
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Press Start 2P', cursive;
-  background-color: #E9626F;
   a {
     color: white;
   }
@@ -14,10 +17,12 @@ body {
     border-color: white;
     color: black;
     text-transform: none;
+    border-radius: 1rem;
   }
   button.button.button-outline {
     border-color: white;
     color: white;
+    border-radius: 1rem;
     &:hover{
       background-color: white;
       border-color:white;
@@ -32,6 +37,10 @@ h1,h2,h3,h4{
   color:white;
   font-weight: bold;
 }
+div#root{
+  min-height: 100vh;
+  background: linear-gradient($coral-color, #E867A5);
+}
 
 .hidden{
   display: none;
@@ -44,3 +53,4 @@ h1,h2,h3,h4{
 @import 'battlefieldMonsters';
 @import 'detailedCard';
 @import 'team';
+@import 'battlefield';

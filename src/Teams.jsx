@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import AddTeamPane from './components/AddTeamPane.jsx';
 import Modal from './components/Modal.jsx';
@@ -19,7 +20,6 @@ class Teams extends Component {
     const teamList = document.querySelector('.addTeamPane-new-team');
     const name = document.querySelector('#teamNameForm').elements['teamName'].value;
     if(name.length < 1){
-      /* @TODO add flash message here */
       return;
     }
     if(teamList.childNodes.length < 3){

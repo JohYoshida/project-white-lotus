@@ -39,7 +39,7 @@ class DetailedCard extends Component {
   render() {
     const {monster} = this.props;
     return (
-      <div className="card-full">
+      <div className={this.props.className}>
         <span class="card-hp">{monster.hp}</span>
         <span class="card-acc">{monster.accuracy_bonus}</span>
         {cardImageHeader(monster)}

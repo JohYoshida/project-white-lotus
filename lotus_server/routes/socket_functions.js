@@ -6,7 +6,6 @@ module.exports = (wss, id) => {
   const setupRoom = (room, playerInfo) => {
     room[`battle_${id}`] = {};
     let battle = room[`battle_${id}`];
-    console.log(playerInfo);
     return generatePlayer(playerInfo.battlerId, playerInfo.team.split(','), playerInfo.name).then(player => {
       battle['players'] = [player];
     });
