@@ -5,19 +5,23 @@ body {
   body a {
     color: white; }
   body button, body .button, body .button-outline {
+    font-family: 'Press Start 2P', cursive;
     background-color: white;
     border-color: white;
     color: black;
     text-transform: none;
-    border-radius: 1rem; }
+    border-radius: 1rem;
+    margin-bottom: 0; }
   body button.button.button-outline {
+    font-family: 'Press Start 2P', cursive;
     border-color: white;
     color: white;
-    border-radius: 1rem; }
+    border-radius: 1rem;
+    margin-bottom: 0; }
     body button.button.button-outline:hover {
+      color: #E9626F;
       background-color: white;
-      border-color: white;
-      color: black; }
+      border-color: white; }
   body.modal-open {
     overflow: hidden; }
 
@@ -78,10 +82,12 @@ a.nav-link.leave-game {
 
 section.nav-user {
   display: flex; }
-  section.nav-user h4 {
+  section.nav-user p {
+    color: white;
     padding: 1rem;
-    line-height: 3.5rem;
     margin-right: 3rem; }
+  section.nav-user button {
+    margin-top: 3px; }
 
 .hidden {
   display: none; }
@@ -122,32 +128,6 @@ div#battlefield {
       position: absolute; }
     div#battlefield .player h1.player-turn {
       color: white; }
-    div#battlefield .player .abilities {
-      background-color: #574457;
-      border-radius: 1rem;
-      display: flex;
-      padding: 1rem 1rem;
-      position: absolute;
-      bottom: 2rem;
-      right: 0;
-      z-index: 9999; }
-      div#battlefield .player .abilities button.sword-ico:first-of-type {
-        margin-right: .5rem; }
-      div#battlefield .player .abilities button.sword-ico {
-        display: block;
-        background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        padding: 0;
-        cursor: pointer;
-        display: block;
-        margin-bottom: 0px;
-        height: 50px;
-        width: 50px; }
-        div#battlefield .player .abilities button.sword-ico:hover {
-          background-color: white;
-          border-color: white; }
 
 /* This should override Milligram's greyed buttons on focus */
 @media (max-width: 812px) {
@@ -230,6 +210,32 @@ section.modal {
       font-size: 1rem; }
     .battlefield-active .battlefield-active-battler span.card-acc {
       font-size: 1rem; }
+  .battlefield-active .abilities {
+    background-color: #574457;
+    border-radius: 1rem;
+    display: flex;
+    padding: 1rem 1rem;
+    position: absolute;
+    bottom: 17px;
+    left: 200px;
+    z-index: 9999; }
+    .battlefield-active .abilities button.sword-ico:first-of-type {
+      margin-right: .5rem; }
+    .battlefield-active .abilities button.sword-ico {
+      display: block;
+      background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      padding: 0;
+      cursor: pointer;
+      display: block;
+      margin-bottom: 0px;
+      height: 50px;
+      width: 50px; }
+      .battlefield-active .abilities button.sword-ico:hover {
+        background-color: white;
+        border-color: white; }
 
 .battlefield-onBench .bench-monster {
   display: inline-block;
@@ -294,8 +300,7 @@ section.modal {
     bottom: 0;
     width: 100%;
     margin: auto;
-    z-index: 0;
-    opacity: 0.5; }
+    z-index: 0; }
     .card-full div.card-image-header img {
       width: 100%; }
   .card-full:hover .card-details {
@@ -314,7 +319,7 @@ section.modal {
       text-transform: capitalize; }
     .card-full .card-details div.card-details-abilities {
       background-color: white;
-      border-radius: 10px;
+      border-radius: 1rem;
       padding-left: 1rem;
       padding-right: 1rem;
       padding-bottom: .5rem;
@@ -414,18 +419,6 @@ span.monster-hp {
     width: 100%;
     height: 100%; }
 
-.player-stats {
-  display: none;
-  position: absolute;
-  left: 4rem;
-  top: 2rem; }
-  .player-stats span {
-    font-size: 1.4rem;
-    display: block;
-    margin-bottom: 0.5rem; }
-  .player-stats span.activeMonster-stats {
-    color: #EF9A9A; }
-
 .opponent-monster, .opponent-monster-bench-1, .opponent-monster-bench-2, .opponent-monster-bench-3, .opponent-monster-active {
   position: absolute;
   height: 200px;
@@ -455,17 +448,5 @@ span.monster-hp {
   .opponent-monster-active img {
     width: 100%;
     height: 100%; }
-
-.opponent-stats {
-  display: none;
-  position: absolute;
-  right: 4rem;
-  top: 2rem; }
-  .opponent-stats span {
-    font-size: 1.4rem;
-    display: block;
-    margin-bottom: 0.5rem; }
-  .opponent-stats span.activeMonster-stats {
-    color: white; }
 
 /*# sourceMappingURL=main.css.map */

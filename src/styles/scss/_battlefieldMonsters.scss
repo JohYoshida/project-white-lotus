@@ -1,10 +1,7 @@
-
-// Styling the player cards.
-
+// Styling the player cards
 .battlefield-active{
   position: relative;
-  // border: 2px solid darken($player-color, 30%);
-  border-radius: 1rem;
+  border-radius: $border-radius;
   h4{
     margin-left: 2rem;
   }
@@ -14,9 +11,9 @@
     position: relative;
     width:150px;
     height:150px;
-    background-image: url('/monster-bg.png');
+    @include card-background-image();
     background-size: contain;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     border: 2px solid white;
     .card-image-header{
       overflow: hidden;
@@ -40,6 +37,36 @@
       font-size: 1rem;
     }
   }
+  .abilities{
+    background-color: darken($player-color, 15%);
+    border-radius: $border-radius;
+    display: flex;
+    padding: 1rem 1rem;
+    position: absolute;
+    bottom:17px; left:200px;
+    z-index: 9999;
+    button.sword-ico:first-of-type{
+      margin-right: .5rem;
+    }
+    button.sword-ico{
+      display: block;
+      background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      padding: 0;
+      cursor: pointer;
+      display: block;
+      // margin-right: .5rem;
+      margin-bottom: 0px;
+      height: 50px;
+      width: 50px;
+      &:hover{
+        background-color: white;
+        border-color: white;
+      }
+    }
+  }
 }
 
 .battlefield-onBench{
@@ -49,10 +76,9 @@
     height:150px;
     margin-right: 1rem;
     position: relative;
-    // background-color: $monster-card-bg-color;
-    background-image: url('/monster-bg.png');
+    @include card-background-image();
     background-size: contain;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     border: 2px solid white;
     font-weight: bold;
     .card-image-header{

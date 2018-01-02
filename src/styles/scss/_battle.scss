@@ -10,13 +10,13 @@ div#battlefield{
     font-size: 1rem;
     z-index: -2;
     overflow-y:hidden;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     margin-top: 1rem;
     margin-bottom: 1rem;
 
     section.messages-content{
       padding: 2rem;
-      border-radius: 1rem;
+      border-radius: $border-radius;
       height:100%;
       p {
         margin-bottom: 20px;
@@ -30,7 +30,7 @@ div#battlefield{
     height: 300px;
     padding: 4rem;
     position: relative;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     h1{
       bottom:0;
       color: darken($player-color, 30%);
@@ -39,38 +39,6 @@ div#battlefield{
     }
     h1.player-turn{
       color:white;
-    }
-    .abilities{
-      background-color: darken($player-color, 15%);
-      border-radius: 1rem;
-      display: flex;
-      // justify-content: space-around;
-      padding: 1rem 1rem;
-      position: absolute;
-      bottom:2rem; right:0;
-      // width: 150px;
-      z-index: 9999;
-      button.sword-ico:first-of-type{
-        margin-right: .5rem;
-      }
-      button.sword-ico{
-        display: block;
-        background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        padding: 0;
-        cursor: pointer;
-        display: block;
-        // margin-right: .5rem;
-        margin-bottom: 0px;
-        height: 50px;
-        width: 50px;
-        &:hover{
-          background-color: white;
-          border-color: white;
-        }
-      }
     }
   }
 }

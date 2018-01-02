@@ -5,10 +5,10 @@
   width: 350px;
   height:350px;
   margin-bottom:4rem;
-  background-image: url('/monster-bg.png');
+  @include card-background-image();
   background-size: contain;
   padding: 3rem;
-  border-radius: 1rem;
+  border-radius: $border-radius;
   border: 4px solid white;
   h3{
     font-size: 1.8rem;
@@ -30,7 +30,6 @@
     width:100%;
     margin: auto;
     z-index: 0;
-    opacity: 0.5;
     img{
       width: 100%;
     }
@@ -46,7 +45,7 @@
     position: relative;
     div.stats{
       background-color: white;
-      border-radius: 1rem;
+      border-radius: $border-radius;
       padding-left:1rem;
       padding-right:1rem;
       padding-bottom: .5rem;
@@ -56,7 +55,7 @@
     }
     div.card-details-abilities{
       background-color: white;
-      border-radius: 10px;
+      border-radius: $border-radius;
       padding-left:1rem;
       padding-right:1rem;
       padding-bottom: .5rem;

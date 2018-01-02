@@ -2,7 +2,7 @@
   position: relative;
   height:350px;
   background-image: url('/bg.png');
-  border-radius: 1rem;
+  border-radius: $border-radius;
   border: 2px solid #BBBBBB;
   width: 1100px;
 }
@@ -60,21 +60,6 @@ span.monster-hp{
     height: 100%;
   }
 }
-.player-stats{
-  display: none;
-  position: absolute;
-  left:4rem;
-  top:2rem;
-
-  span {
-    font-size: 1.4rem;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  span.activeMonster-stats{
-    color:$opponent-color;
-  }
-}
 
 .opponent-monster{
   position: absolute;
@@ -119,20 +104,5 @@ span.monster-hp{
   img {
     width: 100%;
     height: 100%;
-  }
-}
-
-.opponent-stats{
-  display: none;
-  position: absolute;
-  right:4rem;
-  top:2rem;
-  span {
-    font-size: 1.4rem;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  span.activeMonster-stats{
-    color:white;
   }
 }

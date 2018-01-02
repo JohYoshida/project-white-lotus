@@ -9,20 +9,6 @@ class Monster extends Component {
   constructor(props) {
     super(props);
   }
-  generateMonsterStats(player){
-    const {team, activeMonster} = player;
-    const stats = [];
-    // add benched monsters
-    for(const monsterId in team){
-      const curMonster = team[monsterId];
-      if(activeMonster && monsterId === activeMonster.id){
-        stats.push(<span className="activeMonster-stats">{curMonster.name}<br/> HP:{curMonster.hp}, ACC: {curMonster.accuracy_bonus}</span>);
-        continue;
-      }
-      stats.push(<span>{curMonster.name}<br/> HP:{curMonster.hp} ACC: {curMonster.accuracy_bonus}</span>);
-    }
-    return stats;
-  }
   // Places monster images on the battlefield. Prefix is either player or opponent as a string.
   generateMonsterImages(player, prefix){
     const {team, activeMonster} = player;
@@ -53,15 +39,9 @@ class Monster extends Component {
     return (
       <section className="battlefield-visual row">
         <div className="player-side">
-          <div className="player-stats">
-            {this.generateMonsterStats(player)}
-          </div>
           {this.generateMonsterImages(player, 'player')}
         </div>
         <div className="opponent-side">
-          <div className="opponent-stats">
-            {this.generateMonsterStats(opponent)}
-          </div>
           {this.generateMonsterImages(opponent, 'opponent')}
         </div>
       </section>

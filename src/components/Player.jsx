@@ -62,7 +62,7 @@ class Player extends Component {
     return (
       <section className={this.props.className}>
         <div className="column">
-          <h4>Benched Monster</h4>
+          <h4>Benched Monsters</h4>
           <div className="battlefield-onBench">
             {this.generateBenchedMonster()}
           </div>

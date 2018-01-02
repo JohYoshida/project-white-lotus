@@ -33,23 +33,23 @@ module.exports = (db) => {
             let arm = randomComponent(arms)
             let body = randomComponent(bodies)
             let head = randomComponent(heads)
-            let img1 = './models/parts/RKRH.png';
+            let img1 = '../models/parts/RKRH.png';
             let img2 = './models/parts/RKB.png';
             let img3 = './models/parts/RKLH.png';
             let img4 = './models/parts/RKH.png';
             let arr = [img1,img2,img3,img4];
-            monsterMash.monsterMash(arr).then((result)=>{;
-            return {
+            monsterMash(arr).then((result)=> {
+              return {
                 id: uuidv1(),
                 arm_id: arm.id,
                 body_id: body.id,
                 head_id: head.id,
-                name: head.nameword+" "+arm.nameword+" "+body.nameword,
+                name: `${arm.nameword} ${body.nameword}`,
                 user_id: user.attributes.id,
                 image:result
               };
             }).then(monster => {
-                resolve(db('monsters').insert(monster, 'id'));
+              resolve(db('monsters').insert(monster, 'id'));
             });
           });
         });

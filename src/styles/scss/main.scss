@@ -1,9 +1,16 @@
+
+// Palette
 $player-color:#826682;
 $opponent-color:#EF9A9A;
 $coral-color:#E9626F;
 $messages-color: #826682;
 $message-border-color: #B0BEC5;
 $monster-card-bg-color:#736073;
+
+$border-radius: 1rem;
+@mixin card-background-image(){
+  background-image: url('/monster-bg.png');
+}
 
 body {
   margin: 0;
@@ -13,20 +20,24 @@ body {
     color: white;
   }
   button, .button, .button-outline{
+    font-family: 'Press Start 2P', cursive;
     background-color: white;
     border-color: white;
     color: black;
     text-transform: none;
     border-radius: 1rem;
+    margin-bottom: 0;
   }
   button.button.button-outline {
+    font-family: 'Press Start 2P', cursive;
     border-color: white;
     color: white;
     border-radius: 1rem;
+    margin-bottom: 0;
     &:hover{
+      color: $coral-color;
       background-color: white;
       border-color:white;
-      color:black;
     }
   }
   &.modal-open {

@@ -122,7 +122,7 @@ class App extends Component {
               <span><Link className='nav-link' to="/store">Store</Link></span>
             </section>
             <section className="nav-user">
-              <h4>Hi, {username}</h4>
+              <p>Hi, {username}</p>
               <Link to="/">
                 <button onClick={this.logout} className='button button-outline'>Log out</button>
               </Link>

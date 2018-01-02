@@ -22,7 +22,7 @@ const loginUser = require('./lib/login_user');
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
-server.use(express.static('./models/monsters'))
+server.use(express.static('./dist/'))
 // Cookie Parser
 server.use(cookieParser());
 
