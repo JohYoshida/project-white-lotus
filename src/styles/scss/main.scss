@@ -6,8 +6,8 @@ $coral-color:#E9626F;
 $messages-color: #826682;
 $message-border-color: #B0BEC5;
 $monster-card-bg-color:#736073;
-
 $border-radius: 1rem;
+
 @mixin card-background-image(){
   background-image: url('/assets/images/monster-bg.png');
 }
@@ -15,7 +15,11 @@ $border-radius: 1rem;
 body {
   margin: 0;
   padding: 0;
+  background: linear-gradient($coral-color, #E867A5);
   font-family: 'Press Start 2P', cursive;
+  p{
+    color: #22222;
+  }
   a {
     color: white;
   }
@@ -23,7 +27,7 @@ body {
     font-family: 'Press Start 2P', cursive;
     background-color: white;
     border-color: white;
-    color: black;
+    color: $coral-color;
     text-transform: none;
     border-radius: 1rem;
     margin-bottom: 0;
@@ -65,3 +69,4 @@ div#root{
 @import 'detailedCard';
 @import 'team';
 @import 'battlefield';
+@import 'store'

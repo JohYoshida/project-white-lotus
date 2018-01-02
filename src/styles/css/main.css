@@ -1,14 +1,17 @@
 body {
   margin: 0;
   padding: 0;
+  background: linear-gradient(#E9626F, #E867A5);
   font-family: 'Press Start 2P', cursive; }
+  body p {
+    color: #22222; }
   body a {
     color: white; }
   body button, body .button, body .button-outline {
     font-family: 'Press Start 2P', cursive;
     background-color: white;
     border-color: white;
-    color: black;
+    color: #E9626F;
     text-transform: none;
     border-radius: 1rem;
     margin-bottom: 0; }
@@ -452,5 +455,35 @@ span.monster-hp {
   .opponent-monster-active img {
     width: 100%;
     height: 100%; }
+
+.store-items {
+  margin-bottom: 2rem; }
+
+.store-item {
+  margin-top: 2rem;
+  display: inline-block; }
+  .store-item .store-item-details {
+    width: 320px;
+    height: 320px;
+    background-color: #826682;
+    border-radius: 1rem;
+    padding: 2rem; }
+    .store-item .store-item-details h4 {
+      margin-top: 2rem;
+      text-align: center; }
+    .store-item .store-item-details img {
+      display: block;
+      width: 50%;
+      margin: auto;
+      margin-bottom: 2rem; }
+    .store-item .store-item-details p.price {
+      text-align: center;
+      margin-bottom: 0; }
+  .store-item button {
+    display: block;
+    margin: 2rem auto; }
+
+div.egg {
+  margin-right: 4rem; }
 
 /*# sourceMappingURL=main.css.map */
