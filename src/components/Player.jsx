@@ -39,7 +39,10 @@ class Player extends Component {
     }
     return (
       <section className="abilities">
-        {attacks}
+        <h4>Actions</h4>
+        <section className="abilities-actions">
+          {attacks}
+        </section>
       </section>
     );
   }

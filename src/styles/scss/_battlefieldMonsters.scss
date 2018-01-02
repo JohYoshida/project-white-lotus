@@ -38,32 +38,41 @@
     }
   }
   .abilities{
-    background-color: darken($player-color, 15%);
-    border-radius: $border-radius;
-    display: flex;
-    padding: 1rem 1rem;
     position: absolute;
-    bottom:17px; left:200px;
-    z-index: 9999;
-    button.sword-ico:first-of-type{
-      margin-right: .5rem;
+    bottom:18px; left:200px;
+    h4{
+      font-size: 1.1em;
+      margin-left: 0;
+      // margin-bottom: 3.3rem;
+      // display: block;
+    }
+    .abilities-actions{
+      background-color: darken($player-color, 15%);
+      // border: 2px solid darken($player-color, 15%);
+      border-radius: $border-radius;
+      display: flex;
+      padding: 1rem 1rem;
+      // flex-wrap: wrap;
     }
     button.sword-ico{
+      background-color: darken($player-color, 15%);
+      border-color: darken($player-color, 15%);
       display: block;
-      background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
+      background-image: url("/assets/icons/prime_attack_black.png");
       background-position: center;
       background-repeat: no-repeat;
-      background-size: contain;
-      padding: 0;
+      background-size: cover;
       cursor: pointer;
       display: block;
-      // margin-right: .5rem;
-      margin-bottom: 0px;
-      height: 50px;
-      width: 50px;
+      height: 64px;
+      width: 64px;
       &:hover{
-        background-color: white;
-        border-color: white;
+        border-color:darken($player-color, 15%);
+        background-color:darken($player-color, 15%);
+        opacity: 0.5;
+      }
+      &:first-of-type{
+        margin-right: .5rem;
       }
     }
   }
