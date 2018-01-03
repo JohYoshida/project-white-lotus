@@ -64,6 +64,8 @@
       padding-right:1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
+      height: 120px;
+      overflow-y: auto;
       strong.abilities-name {
         font-size: .8rem;
         text-transform: capitalize;
@@ -78,6 +80,13 @@
   }
 }
 
+.delete-monster-button{
+  position: absolute;
+  bottom:2rem;
+  font-size: .5em;
+  padding: 0rem 1rem;
+  z-index: 10;
+}
 span.card-hp{
   position: absolute;
   padding: 1rem;
@@ -109,5 +118,8 @@ span.card-acc{
   height:500px;
   .card-details {
     display: block;
+    div.card-details-abilities{
+      height: auto;
+    }
   }
 }
