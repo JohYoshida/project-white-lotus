@@ -144,6 +144,7 @@ const attackFuncs = {
     let damage = null;
     const dmg = getRandomNumber(14, 18) ;
     const targetMonster = attackedPlayer.activeMonster;
+    // If the monster is supercharged perform an AOE attack
     if(this.supercharged) {
       messages = doAOEAttack(attackedPlayer, messages, dmg, this);
     } else {
@@ -167,8 +168,11 @@ const attackFuncs = {
       messages = [`${targetMonster.name} took ${damage} damage!`];
     }
     // Get a random monster id and activate it.
-    const randomId = attackedPlayer.getRandomMonster({bench:true}).id;
-    attackedPlayer.activateMonster(randomId);
+    const randomBenchedMonster = attackedPlayer.getRandomMonster({bench:true});
+    if(!randomBenchedMonster){
+      return messages;
+    }
+    attackedPlayer.activateMonster(randomBenchedMonster.id);
     attackedPlayer.findActiveMonster();
     messages.unshift(`${attackedPlayer.activeMonster.name} is now on the field.`);
     return messages;
@@ -184,10 +188,13 @@ const attackFuncs = {
     } else {
       damage = damageCalculator(dmg, compareTyping(this, targetMonster));
       targetMonster.takeDamage(damage);
-      messages = [`${this.name}'s Hyper Lance pierces ${targetMonster.name}. They take ${damage} damage!`];
+      messages = [`${this.name}'s neutralizes ${targetMonster.name}. They take ${damage} damage!`];
     }
     // removes the passive ability of a random benched monster.
     const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true});
+    if(!randomBenchedMonster){
+      return messages;
+    }
     new Modifier(randomBenchedMonster, {passiveActive: false}, modifier => {
       if(!randomBenchedMonster.bench) {
         modifier.removeModifier();
