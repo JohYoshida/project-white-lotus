@@ -44,9 +44,8 @@ class App extends Component {
 
   componentWillMount() {
     const {cookies} = this.props;
-    if (cookies.get('id')) {
-      console.log(cookies.get('id'));
-      this.setState({id: cookies.get('id'), loggedin: true}, () => {
+    if (cookies.get('loggedin')) {
+      this.setState({loggedin: cookies.get('loggedin')}, () => {
         fetchUserDetails(this);
       });
     }
@@ -67,8 +66,8 @@ class App extends Component {
 
   logout(event) {
     const {cookies} = this.props;
-    cookies.remove('id');
-    this.setState({id: null, loggedin: false, brouzoff: null});
+    cookies.remove('loggedin');
+    this.setState({id: null, loggedin: cookies.get('loggedin'), brouzoff: null});
   }
   // default load app.
   loadApp(){

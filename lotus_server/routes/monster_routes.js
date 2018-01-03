@@ -17,7 +17,7 @@ module.exports = (db) => {
 
   // For deleting a monster
   monsterRouter.delete('/:id', (req, res) => {
-    const userId = req.cookies.id;
+    const userId = req.session.id;
     const {id} = req.params;
     new Monster({id}).fetch().then(monster => {
       if(monster.get('user_id') !== userId){
@@ -37,7 +37,7 @@ module.exports = (db) => {
 
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
-    const {id} = req.cookies;
+    const {id} = req.session;
     const {creature, cost} = req.body;
 
     if (!creature || !id){
@@ -54,20 +54,6 @@ module.exports = (db) => {
         getCreature(monsterId).then(monster => {
           res.send(JSON.stringify({monster, brouzoff: user.attributes.brouzoff}));
         });
-      });
-    });
-  });
-
-  // For updating monster name
-  monsterRouter.put('/:id', (req, res) => {
-    const {id} = req.params;
-    const {name} = req.body;
-    if(!name){
-      return;
-    }
-    db('monsters').update({name: name}).where('id', id).then(() => {
-      db('monsters').where('id', id).then(monster => {
-        res.send(JSON.stringify(monster[0]));
       });
     });
   });

@@ -18,7 +18,7 @@ const monsterRouter = require('./routes/monster_routes')(knex);
 const userRouter = require('./routes/user_routes')(knex);
 
 // Functions
-const loginUser = require('./lib/login_user');
+const loginUser = require('./lib/login_user')(knex);
 
 // Middleware
 // Body Parser
@@ -38,11 +38,7 @@ socketRouter.genBattle('1');
 server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);
 server.use('/user', userRouter);
-
-server.post('/login', (req, res) => {
-  console.log(req.body);
-  loginUser(res, req, req.body.email, req.body.password);
-});
+server.post('/login', loginUser);
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);

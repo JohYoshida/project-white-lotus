@@ -33,7 +33,7 @@ module.exports = (db) => {
 
   // For adding a new team
   userRouter.post('/teams', (req, res) => {
-    const {id} = req.cookies;
+    const {id} = req.session;
     if(!id) res.send({error: 'Not authorized to complete this transaction.'});
     // req body should look like {name: "MyTeam", members: [monstId1, monstId2, monstId3]}
     const {name, members} = req.body;
@@ -48,7 +48,7 @@ module.exports = (db) => {
 
   // sends all teams
   userRouter.get('/teams', (req, res) => {
-    const {id} = req.cookies;
+    const {id} = req.session;
     new User({id}).fetch({withRelated:['team']}).then(user => {
       // puts all the teams in an array
       const teams = user.related('team').serialize();
@@ -69,7 +69,7 @@ module.exports = (db) => {
   // Sends back a JSON entry of the deleted team name.
   userRouter.delete('/teams', (req, res) => {
     const {teamId} = req.body;
-    const userId = req.cookies.id;
+    const userId = req.session.id;
     new Team({id: teamId}).fetch({withRelated:['teamMonster']}).then(team => {
       if(team.get('user_id') !== userId){
         return res.send(JSON.stringify({error: 'Not authorized to complete this transaction'}));
@@ -94,10 +94,8 @@ module.exports = (db) => {
       res.status(400).send();
       return;
     }
-    console.log(req.session.id);
-    knex('users').first('brouzoff', 'email').where('id', req.session.id)
+    knex('users').first('brouzoff', 'email').where('id', id)
       .then(data => {
-        console.log('sending data', data);
         res.send(JSON.stringify(data));
       });
   });
