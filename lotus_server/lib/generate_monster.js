@@ -22,30 +22,36 @@ class CompleteMonster {
     this.maxHp = body.attributes.hp;
     this.hp = body.attributes.hp;
     this.type = type.attributes;
+    this.accuracy_bonus = body.attributes.accuracy_bonus;
     // Will eventually the compiled image
-    this.image_url = body.attributes.image_url;
-    this.image= monster.attributes.image;
+    this.image_url = monster.attributes.image || body.attributes.image_url;
+    this.image = monster.attributes.image;
     this.bench = true;
+    this.canBench = true;
     this.passiveActive = true;
-    this.dot = [];
     this.modifiers = new ModifierCollection();
   }
   takeDamage(damage){
-    this.hp -= damage;
+    if(!this.protector) return this.hp -= damage;
+
+    // If a passive monster has an electric_shield ability.
+    const protectorDamage = damage > 5 ? damage - 5 : damage;
+    this.protector.hp -= protectorDamage;
+    this.hp -= damage - protectorDamage;
+    return;
   }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
-    const {id, name, description} = attributes;
-    const {altId, altName, altDescription} = altAttributes;
-    this.attacks[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
-    if(altName){
-      this.attacks[altName]  = {id: altId, name: altName, description: altDescription || 'Attack 2 description', func: attackFuncs[altName].bind(this)};
+    let {id, name, description} = attributes;
+    this.attacks[name] = {id, name, description: description, func: attackFuncs[name].bind(this)};
+    if(altAttributes.name){
+      let {id, name, description} = altAttributes;
+      this.attacks[name]  = {id, name, description: description, func: attackFuncs[name].bind(this), isAlt:true};
     }
   }
-  set_ability(name) {
-    /* @TODO: apply the above pattern to abilities */
+  set_ability({name, description}) {
     // this.ability[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
-    this.ability = abilityFuncs[name].bind(this);
+    this.ability = {name, description, func: abilityFuncs[name].bind(this)};
   }
 }
 
@@ -56,10 +62,10 @@ const getCreature = (id) => {
     // After monster has been created set attacks and abilities
     monster.set_attacks(attack.attributes, alt_attack.attributes);
     if(ability.attributes.name){
-      monster.set_ability(ability.attributes.name);
+      monster.set_ability(ability.attributes);
     }
     return monster;
-  });
+  }).catch(e => console.log(e));
 };
 
 module.exports = getCreature;

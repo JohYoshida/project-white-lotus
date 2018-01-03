@@ -1,64 +1,66 @@
 const bookshelf = require('./lib/bookshelf');
+const {Modifier} = require('../lib/Modifier.js');
 
 const Ability = bookshelf.Model.extend({
   tableName: 'abilities',
 });
 
 const abilityFuncs = {
-  // TODO: Implement these with the proper effects
   supercharge: function(player){
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.hp += 1;
-    // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
+    player.activeMonster.supercharged = true;
     this.passiveActive = false;
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 1`;
+    return `${this.name} has supercharged ${player.activeMonster.name}`;
   },
   nanomachine_swarm: function(player){
-    if (!player.activeMonster) {
-      return;
+    const {team} = player;
+    for(const monsterId in team){
+      const curMonster = team[monsterId];
+      if(curMonster.creature === 'mecha') curMonster.hp += 2;
     }
-    player.activeMonster.hp += 1;
-    // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
-    this.passiveActive = false;
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 1`;
+    return `${this.name} heals all mecha's by 2hp`;
   },
   electric_shield: function(player){
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.hp += 1;
-    // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
+    player.activeMonster.protector = this;
     this.passiveActive = false;
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 1`;
+    return `${this.name} is protecting ${player.activeMonster.name}`;
   },
+  // Have to set type manual because asynchronous programming would not work here.
+  // New types are set with the modifier and removed when the monster is benched.
   pierce: function(player){
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.hp += 1;
-    // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
+    new Modifier(player.activeMonster, {type: {id: 1, name: 'pierce', weakness: 2}}, (modifier) => {
+      if(player.activeMonster.bench) modifier.removeModifier();
+    });
     this.passiveActive = false;
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 1`;
+    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
   },
   crush: function(player){
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.hp += 1;
-    // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
+    new Modifier(player.activeMonster, {type: {id: 2, name: 'crush', weakness: 3}}, (modifier) => {
+      if(player.activeMonster.bench) modifier.removeModifier();
+    });
     this.passiveActive = false;
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 1`;
+    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
   },
   spray: function(player){
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.hp += 1;
-    // this is bound to the monster who has this ability, this ability is one time use. Increases max hp.
+    new Modifier(player.activeMonster, {type: {id: 3, name: 'spray', weakness: 1}}, (modifier) => {
+      if(player.activeMonster.bench) modifier.removeModifier();
+    });
     this.passiveActive = false;
-    return `${this.name} increased ${player.activeMonster.name}'s HP by 1`;
+    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
   }
 };
 

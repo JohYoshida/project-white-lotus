@@ -2,7 +2,8 @@ export function postLogin(event) {
   const form = event.target.parentNode;
   const userName = form.elements['username'].value;
   const password = form.elements['password'].value;
-  return (fetch(`/login`, {
+  return (fetch('/login', {
+    credentials: 'same-origin',
     method: 'POST',
     body: encodeURI(`email=${userName}&password=${password}`),
     headers: {
@@ -11,11 +12,22 @@ export function postLogin(event) {
   }));
 }
 
+export function fetchUserDetails(component) {
+  fetch('/user/', {
+    credentials: 'same-origin'
+  }).then(res => {
+    res.json().then(data => {
+      component.setState({brouzoff: data.brouzoff, username: data.email});
+    });
+  });
+}
+
 export function postRegister(event) {
   const form = event.target.parentNode;
   const userName = form.elements['username'].value;
   const password = form.elements['password'].value;
-  return (fetch('/users', {
+  return (fetch('/user', {
+    credentials: 'same-origin',
     method: 'POST',
     body: encodeURI(`email=${userName}&password=${password}`),
     headers: {
@@ -28,15 +40,9 @@ export function setUserState(component, res) {
   const {cookies} = component.props;
   return (res.json().then(data => {
     if (!data.error) {
-      cookies.set('id', data.id, {path: '/'});
-      component.setState({id: cookies.get('id'), loggedin: true});
-      fetch(`/users/${component.state.id}`).then(res => {
-        res.json().then(data => {
-          component.setState({brouzoff: data.brouzoff, email: data.email});
-        });
-      });
+      cookies.set('loggedin', true);
+      component.setState({loggedin: cookies.get('loggedin')});
+      fetchUserDetails(component);
     }
-  }).catch((err) => {
-    console.log('Promise error in generate_user.js', err);
   }));
 }

@@ -6,7 +6,7 @@ module.exports = (wss, id) => {
   const setupRoom = (room, playerInfo) => {
     room[`battle_${id}`] = {};
     let battle = room[`battle_${id}`];
-    return generatePlayer(playerInfo.battlerId, playerInfo.team.split(',')).then(player => {
+    return generatePlayer(playerInfo.battlerId, playerInfo.team.split(','), playerInfo.name).then(player => {
       battle['players'] = [player];
     });
   };
@@ -14,7 +14,7 @@ module.exports = (wss, id) => {
   // once both players are in a room, this starts the game.
   const startGame = (battle, msg) => {
     const playerInfo = msg;
-    return generatePlayer(playerInfo.battlerId, playerInfo.team.split(',')).then(player => {
+    return generatePlayer(playerInfo.battlerId, playerInfo.team.split(','), playerInfo.name).then(player => {
       battle.players.push(player);
       return new Game(battle.players);
     });
@@ -50,7 +50,6 @@ module.exports = (wss, id) => {
     ws.on('message', function(msg) {
       const room = wss.getWss(`/${id}`);
       const battle = room[`battle_${id}`];
-      console.log(battle);
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
       case 'join': {
@@ -71,7 +70,6 @@ module.exports = (wss, id) => {
       }
       case 'action' : {
         const messages = handleActions(battle, parsedMsg);
-        // console.log(battle.game.players);
         ws.broadcast({
           game: battle.game,
           messages: battle.game.gameOver ? ['Game is over!'] : messages

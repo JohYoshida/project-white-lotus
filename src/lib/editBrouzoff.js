@@ -1,11 +1,10 @@
-function editBrouzoff(playerId, amount) {
-  fetch(`http://localhost:3000/users/${playerId}`, {
-      method: 'PATCH',
-      body: encodeURI(`brouzoffChange=${amount}`),
-      headers: {
-        'content-type' : 'application/x-www-form-urlencoded'
-      }
+export default function editBrouzoff(playerId, amount) {
+  fetch('/user/brouzoff/', {
+    credentials: 'same-origin',
+    method: 'PUT',
+    body: encodeURI(`brouzoffChange=${amount}`),
+    headers: {
+      'content-type' : 'application/x-www-form-urlencoded'
+    }
   });
 }
-
-module.exports = editBrouzoff;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
@@ -11,9 +12,10 @@ import Store from './Store.jsx';
 import Login from './Login.jsx';
 import Teams from './Teams.jsx';
 import CreateBattle from './CreateBattle.jsx';
+import {toggleModalById} from './lib/element_effect_helpers';
 
 // Functions
-import {postLogin, postRegister, setUserState} from './lib/user_auth.js';
+import {postLogin, fetchUserDetails, postRegister, setUserState} from './lib/user_auth.js';
 import {postNewMonster} from './lib/store.js';
 
 class App extends Component {
@@ -42,8 +44,10 @@ class App extends Component {
 
   componentWillMount() {
     const {cookies} = this.props;
-    if (cookies.get('id')) {
-      this.setState({id: cookies.get('id'), loggedin: true});
+    if (cookies.get('loggedin')) {
+      this.setState({loggedin: cookies.get('loggedin')}, () => {
+        fetchUserDetails(this);
+      });
     }
   }
   register(event) {
@@ -62,8 +66,12 @@ class App extends Component {
 
   logout(event) {
     const {cookies} = this.props;
-    cookies.remove('id');
-    this.setState({id: null, loggedin: false, brouzoff: null});
+    cookies.remove('loggedin');
+    this.setState({id: null, loggedin: cookies.get('loggedin'), brouzoff: null});
+    fetch('/logout', {
+      credentials: 'same-origin',
+      method: 'DELETE'
+    });
   }
   // default load app.
   loadApp(){
@@ -72,7 +80,6 @@ class App extends Component {
   fetchMonsters(){
     fetch('/monsters', {credentials: 'same-origin'}).then(res => {
       res.json().then(data => {
-        console.log(data);
         this.setState({monsters: data});
         this.loadApp();
       });
@@ -89,8 +96,8 @@ class App extends Component {
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
-        this.setState({brouzoff: data.brouzoff});
-        console.log(data.monster);
+        this.setState({brouzoff: data.brouzoff, purchasedMonster: data.monster});
+        toggleModalById(data.monster.id);
       });
     });
   }
@@ -106,19 +113,23 @@ class App extends Component {
   }
 
   render() {
-    const {email} = this.state;
+    const {username} = this.state;
     if (this.state.loggedin) {
       return (<Router>
-        <div hidden={!this.state.loaded}>
-          <h1>{email}</h1>
+        <div className="container" hidden={!this.state.loaded}>
           <nav>
-            <span className='float-left'><Link className='nav-link' to="/">Monsters</Link></span>
-            <span className='float-left'><Link className='nav-link' to="/store">Store</Link></span>
-            <span className='float-left'><Link className='nav-link' to="/teams">Teams</Link></span>
-            <span className='float-left'><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
-            <Link to="/">
-              <button onClick={this.logout} className='button button-outline'>Log out</button>
-            </Link>
+            <section className="nav-links">
+              <span><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
+              <span><Link className='nav-link' to="/teams">Teams</Link></span>
+              <span><Link className='nav-link' to="/">Monsters</Link></span>
+              <span><Link className='nav-link' to="/store">Store</Link></span>
+            </section>
+            <section className="nav-user">
+              <p>Hi, {username}</p>
+              <Link to="/">
+                <button onClick={this.logout} className='button button-outline'>Log out</button>
+              </Link>
+            </section>
           </nav>
           <Route exact path="/" render={() =>
             (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
@@ -127,13 +138,13 @@ class App extends Component {
             (<Monster {...props} loadApp={this.loadApp}/>)
           }/>
           <Route path="/store" render={(props) =>
-            (<Store {...props} brouzoff={this.state.brouzoff} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
+            (<Store {...props} brouzoff={this.state.brouzoff} loadApp={this.loadApp} purchasedMonster={this.state.purchasedMonster} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
           }/>
           <Route path="/teams" render={() =>
             (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
           }/>
           <Route path="/battle/:roomName" render={({match}) => (
-            <Battle roomName={match.params.roomName} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
+            <Battle roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
           }/>
           <Route path="/create-battle" render={() =>
             (<CreateBattle loadApp={this.loadApp} />)

@@ -12,7 +12,7 @@ exports.seed = function(knex, Promise) {
   const arms = Array(9).fill().map(() => uuidv4());
   const attacks = Array(15).fill().map(() => uuidv4());
   const abilities = Array(6).fill().map(() => uuidv4());
-  const types = Array(3).fill().map(() => uuidv4());
+  const types = [1, 2, 3];
 
   // Deletes ALL existing entries
   return Promise.all([
@@ -84,6 +84,7 @@ exports.seed = function(knex, Promise) {
           name: 'Blob',
           image_url:'https://api.adorable.io/avatars/285/blob.png',
           hp: 30,
+          accuracy_bonus: 0,
           type_id: types[0],
           creature: 'kaiju',
           nameword: 'Blob'
@@ -93,6 +94,7 @@ exports.seed = function(knex, Promise) {
           name: 'T-Wrex',
           image_url:'https://api.adorable.io/avatars/285/t-wrex.png',
           hp: 35,
+          accuracy_bonus: -1,
           type_id: types[1],
           creature: 'kaiju',
           nameword: 'Dino'
@@ -103,6 +105,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/cthulumonster.png',
           hp: 25,
           type_id: types[2],
+          accuracy_bonus: +1,
           creature: 'kaiju',
           nameword: 'Horror'
 
@@ -112,6 +115,7 @@ exports.seed = function(knex, Promise) {
           name: 'Shock Top',
           image_url:'https://api.adorable.io/avatars/285/shocktop.png',
           hp: 25,
+          accuracy_bonus: +1,
           type_id: types[2],
           creature: 'mecha',
           nameword: 'Robot'
@@ -122,6 +126,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/medi-o-cre.png',
           hp: 20,
           type_id: types[0],
+          accuracy_bonus: +1,
           creature: 'mecha',
           nameword:'Medic'
         },
@@ -131,6 +136,7 @@ exports.seed = function(knex, Promise) {
           image_url:'https://api.adorable.io/avatars/285/red_knight.png',
           hp: 25,
           type_id: types[1],
+          accuracy_bonus: +2,
           creature: 'mecha',
           nameword:'Knight'
         }
@@ -325,133 +331,154 @@ exports.seed = function(knex, Promise) {
           id: attacks[0],
           name: 'toxic_slime',
           aoe: false,
-          dot: true
+          dot: true,
+          description: 'Deal 4 damage per turn for 3 turns.'
         },
         {
           id: attacks[1],
           name: 'roar',
           aoe: true,
-          dot: false
+          dot: false,
+          description: 'Deal 3 damage to each enemy.'
         },
         {
           id: attacks[2],
           name: 'insanity',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 6 damage. Reduce the target\'s accuracy by 1 per turn until target is benched. '
         },
         {
           id: attacks[3],
           name: 'decimate',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal floor(target\'s max HP / target\'s current HP) damage.'
         },
         {
           id: attacks[4],
           name: 'web_sling',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\'t leave field.'
         },
         {
           id: attacks[5],
           name: 'deep_knowledge',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Take the type of the opposing player\'s active monster.'
         },
         {
           id: attacks[6],
           name: 'vomitous_sludge',
           aoe: false,
-          dot: true
+          dot: true,
+          description: 'Deal 10 damage. Deal 1 damage per turn until target is benched.'
         },
         {
           id: attacks[7],
           name: 'steel_jaw',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 14-18 damage.'
         },
         {
           id: attacks[8],
           name: 'eldritch_horror',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 5-8 damage. Swap target with a random benched monster.'
         },
         {
           id: attacks[9],
           name: 'neutralize',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 10-12 damage. Ignore an enemy passive until they are activated.'
         },
         {
           id: attacks[10],
           name: 'stimulant',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 8 damage. Heal self for 4 HP.'
         },
         {
           id: attacks[11],
           name: 'hyper_lance',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 8-12 damage.'
         },
         {
           id: attacks[12],
           name: 'simulate_kaiju',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 10-12 damage. If enemy is a kaiju, gain its secondary attack.'
         },
         {
           id: attacks[13],
           name: 'snake_handler',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 12-16 damage.'
         },
         {
           id: attacks[14],
           name: 'neurotoxin',
           aoe: false,
-          dot: false
+          dot: false,
+          description: 'Deal 5-18 damage.'
         }
       ]),
       knex('abilities').insert([
         {
           id: abilities[0],
-          name: 'supercharge'
+          name: 'supercharge',
+          description: 'Active monster\'s attacks affect all enemy monsters.'
         },
         {
           id: abilities[1],
-          name: 'nanomachine_swarm'
+          name: 'nanomachine_swarm',
+          description: 'Heal all mechas on your team by 2 HP per turn.'
         },
         {
           id: abilities[2],
-          name: 'electric_shield'
+          name: 'electric_shield',
+          description: 'Take the first 5 damage the active monster would take.'
         },
         {
           id: abilities[3],
-          name: 'pierce'
+          name: 'pierce',
+          description: 'Active monster\'s attack type becomes Pierce.'
         },
         {
           id: abilities[4],
-          name: 'crush'
+          name: 'crush',
+          description: 'Active monster\'s attack type becomes Crush.'
         },
         {
           id: abilities[5],
-          name: 'spray'
+          name: 'spray',
+          description: 'Active monster\'s attack type becomes Spray.'
         }
       ]),
       knex('types').insert([
         {
           id: types[0],
-          name: 'absorb',
+          name: 'pierce',
           weakness: types[1],
         },
         {
           id: types[1],
-          name: 'harden',
+          name: 'crush',
           weakness: types[2],
         },
         {
           id: types[2],
-          name: 'reflect',
+          name: 'spray',
           weakness: types[0],
         }
       ]),

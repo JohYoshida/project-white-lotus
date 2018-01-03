@@ -38,20 +38,18 @@ module.exports = (db) => {
             let img3 = './models/parts/RKLH.png';
             let img4 = './models/parts/RKH.png';
             let arr = [img1,img2,img3,img4];
-            //console.log(__dirname);
-            monsterMash.monsterMash(arr).then((result)=>{;
-            return {
+            monsterMash(arr).then((result)=> {
+              return {
                 id: uuidv1(),
                 arm_id: arm.id,
-                body_id: head.id,
-                head_id: arm.id,
-                name: head.nameword+" "+arm.nameword+" "+body.nameword,
+                body_id: body.id,
+                head_id: head.id,
+                name: `${arm.nameword} ${body.nameword}`,
                 user_id: user.attributes.id,
                 image:result
-
               };
             }).then(monster => {
-                resolve(db('monsters').insert(monster, 'id'));
+              resolve(db('monsters').insert(monster, 'id'));
             });
           });
         });

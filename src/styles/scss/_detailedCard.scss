@@ -1,0 +1,125 @@
+.card-full{
+  box-shadow: 0px 2px 10px black;
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+  height:300px;
+  margin-bottom:4rem;
+  @include card-background-image();
+  background-size: contain;
+  padding: 2rem;
+  border-radius: $border-radius;
+  border: 2px solid white;
+  h3{
+    font-size: 1.4rem;
+    position: relative;
+    text-align: right;
+    color:white;
+    font-weight: bold;
+  }
+  p{
+    margin: 0;
+    font-size: 1rem;
+  }
+  div.card-image-header{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    margin: auto;
+    z-index: 0;
+    img{
+      width: 100%;
+    }
+
+  }
+  &:hover {
+    .card-details{
+      display: block;
+    }
+  }
+  .card-details {
+    display: none;
+    position: relative;
+    div.stats{
+      background-color: white;
+      border-radius: $border-radius;
+      padding-left:1rem;
+      padding-right:1rem;
+      padding-bottom: .5rem;
+      padding-top: .5rem;
+      margin-bottom: 1rem;
+      text-transform: capitalize;
+      p{
+        color: #333333;
+        font-size: 0.8rem;
+      }
+    }
+    div.card-details-abilities{
+      background-color: white;
+      border-radius: $border-radius;
+      padding-left:1rem;
+      padding-right:1rem;
+      padding-bottom: .5rem;
+      padding-top: .5rem;
+      height: 120px;
+      overflow-y: auto;
+      strong.abilities-name {
+        font-size: .8rem;
+        text-transform: capitalize;
+        color: #222222;
+      }
+      p{
+        color: #222222;
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+.delete-monster-button{
+  position: absolute;
+  bottom:2rem;
+  font-size: .5em;
+  padding: 0rem 1rem;
+  z-index: 10;
+}
+span.card-hp{
+  position: absolute;
+  padding: 1rem;
+  color: white;
+  font-size: 1em;
+  top:0; left:0;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+  border-bottom-right-radius: 10px;
+  font-weight: bold;
+  z-index: 9999;
+}
+span.card-acc{
+  padding: 1rem;
+  position: absolute;
+  font-size: 1.2em;
+  bottom:0; right:0;
+  color: white;
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-top-left-radius: 10px;
+  font-weight: bold;
+  z-index: 999;
+}
+
+
+.card-full.card-modal{
+  width: 500px;
+  height:500px;
+  .card-details {
+    display: block;
+    div.card-details-abilities{
+      height: auto;
+    }
+  }
+}

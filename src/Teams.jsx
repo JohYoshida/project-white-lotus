@@ -1,6 +1,8 @@
+
 import React, { Component } from 'react';
 import AddTeamPane from './components/AddTeamPane.jsx';
 import Modal from './components/Modal.jsx';
+import DetailedCard from './components/card_components/DetailedCard.jsx';
 import {toggleElementByIdButton, toggleElementById, toggleModalByIdButton, toggleModalById} from './lib/element_effect_helpers.js';
 
 class Teams extends Component {
@@ -16,16 +18,17 @@ class Teams extends Component {
   sendTeam(event){
     event.preventDefault();
     event.stopPropagation();
-    const teamList = document.querySelector('.add-team-new-team');
+    const teamList = document.querySelector('.addTeamPane-new-team');
     const name = document.querySelector('#teamNameForm').elements['teamName'].value;
     if(name.length < 1){
-      /* @TODO add flash message here */
       return;
     }
     if(teamList.childNodes.length < 3){
       /* @TODO add flash message here */
       return;
     }
+
+    // grabs monster ids from the cards in .addTeamPane-new-team
     const members = [];
     for(let monsterCard of teamList.childNodes){
       members.push(monsterCard.getAttribute('data-id'));
@@ -38,10 +41,8 @@ class Teams extends Component {
       },
       body: JSON.stringify({name, members})
     }).then(() => {
-      teamList.childNodes.forEach(node => teamList.remove(node));
-      // update team's list.
-      toggleModalById('submitName');
-      this.props.fetchTeams();
+      // reloads page
+      window.location.href = '/teams';
     });
   }
   deleteTeam(event){
@@ -60,39 +61,52 @@ class Teams extends Component {
       });
     });
   }
+
+  /**
+   * printTeams - shows all teams associated with the current logged in user.
+   *
+   */
   printTeams(){
     if(this.props.teams){
       const {teams} = this.props;
       const getTeamMembers = (teamMember) => {
-        const {name, id, image} = teamMember;
-        return (<span key={id} className='team-team-member' data-id={id}>{name}, </span>);
+        return (<DetailedCard className='card-full' monster={teamMember} />);
       };
       return teams.map(team => {
         return (
           <article key={team.id} data-id={team.id} className='team'>
-            <h3>Name: {team.name}</h3>
-            <p>Members: {team.teamMembers.map(getTeamMembers)}</p>
-            <button onClick={this.deleteTeam}>Delete Team</button>
+            <h3>{team.name}</h3>
+            <button class="delete-team-button" onClick={this.deleteTeam}>Delete Team</button>
+            <section className="team-team-members">
+              {team.teamMembers.map(getTeamMembers)}
+            </section>
           </article>
         );
       });
     }
   }
+
+  /**
+   * toggleTeamPane - toggles the panel from which a new team can be created.
+   *
+   * @param  {object} event - the click event object.
+   */
+  toggleTeamPane(event){
+    const button = event.currentTarget;
+    button.innerHTML === 'Close' ? button.innerHTML = 'Add a Team' : button.innerHTML = 'Close';
+    toggleElementById('addTeamPane');
+    toggleElementById('your-teams');
+  }
   render() {
-    const inputForm = () => {
-      return (
-        <form id="teamNameForm" onSubmit={this.sendTeam}>
-          <input type="text" name="teamName" placeholder="Team name" />
-        </form>
-      )
-    };
     return (
-      <section>
-        <Modal id="submitName" header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
-        <AddTeamPane sendTeam={toggleModalByIdButton('submitName')} monsters={this.props.monsters} />
-        <h2>Your Teams</h2>
-        <button onClick={toggleElementByIdButton('addTeamPane')}>Add a team</button>
-        {this.printTeams()}
+      <section className="teams-list">
+        <h2>Teams</h2>
+        <button className="add-a-team" onClick={this.toggleTeamPane}>Add a Team</button>
+        <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters} />
+        <section id="your-teams">
+          <h3>Your Teams</h3>
+          {this.printTeams()}
+        </section>
       </section>
     );
   }
