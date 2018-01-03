@@ -10,9 +10,9 @@ module.exports = (db) => {
   const monsterRouter = express.Router();
   // Find monsters so they can be fetched by React Monsters component
   monsterRouter.get('/', (req, res) => {
-    if(!req.cookies.id) res.status(400).send();
+    if(!req.session.id) res.status(400).send();
     // Get all monster IDs
-    buildMonstersJSON(res, req.cookies.id)
+    buildMonstersJSON(res, req.session.id)
   });
 
   // For deleting a monster

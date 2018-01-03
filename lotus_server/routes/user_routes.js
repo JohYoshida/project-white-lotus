@@ -88,10 +88,16 @@ module.exports = (db) => {
     });
   });
 
-  userRouter.get('/:id', (req, res) => {
-    const {id} = req.params;
-    knex('users').first('brouzoff', 'email').where('id', id)
+  userRouter.get('/', (req, res) => {
+    const {id} = req.session;
+    if(!req.session.id){
+      res.status(400).send();
+      return;
+    }
+    console.log(req.session.id);
+    knex('users').first('brouzoff', 'email').where('id', req.session.id)
       .then(data => {
+        console.log('sending data', data);
         res.send(JSON.stringify(data));
       });
   });

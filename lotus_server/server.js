@@ -5,6 +5,8 @@ const server = express();
 const PORT = 3001;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+
 
 // Database setup
 const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
@@ -22,9 +24,13 @@ const loginUser = require('./lib/login_user');
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
-server.use(express.static('dist'));
 // Cookie Parser
 server.use(cookieParser());
+server.use(cookieSession({
+  name: 'id',
+  keys: ['spider', 'pie', 'issue']
+}));
+server.use(express.static('dist'));
 
 // Default room for testing.
 socketRouter.genBattle('1');
@@ -34,7 +40,8 @@ server.use('/monsters', monsterRouter);
 server.use('/user', userRouter);
 
 server.post('/login', (req, res) => {
-  loginUser(res, req.body.email, req.body.password);
+  console.log(req.body);
+  loginUser(res, req, req.body.email, req.body.password);
 });
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
