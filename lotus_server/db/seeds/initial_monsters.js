@@ -82,7 +82,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[0],
           name: 'Blob',
-          image_url:'https://api.adorable.io/avatars/285/blob.png',
+          image_url:'./assets/monsters/BLOBB.png',
           hp: 30,
           accuracy_bonus: 0,
           type_id: types[0],
@@ -92,7 +92,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[1],
           name: 'T-Wrex',
-          image_url:'https://api.adorable.io/avatars/285/t-wrex.png',
+          image_url:'./assets/monsters/TWB.png',
           hp: 35,
           accuracy_bonus: -1,
           type_id: types[1],
@@ -102,7 +102,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[2],
           name: 'C\'thulumonster',
-          image_url:'https://api.adorable.io/avatars/285/cthulumonster.png',
+          image_url:'./assets/monsters/CMB.png',
           hp: 25,
           type_id: types[2],
           accuracy_bonus: +1,
@@ -113,7 +113,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[3],
           name: 'Shock Top',
-          image_url:'https://api.adorable.io/avatars/285/shocktop.png',
+          image_url:'./assets/monsters/RK.png',
           hp: 25,
           accuracy_bonus: +1,
           type_id: types[2],
@@ -123,7 +123,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[4],
           name: 'Medi-o-cre',
-          image_url:'https://api.adorable.io/avatars/285/medi-o-cre.png',
+          image_url:'./assets/monsters/RK.png',
           hp: 20,
           type_id: types[0],
           accuracy_bonus: +1,
@@ -133,7 +133,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[5],
           name: 'Red Knight',
-          image_url:'https://api.adorable.io/avatars/285/red_knight.png',
+          image_url:'./assets/monsters/RK.png',
           hp: 25,
           type_id: types[1],
           accuracy_bonus: +2,
@@ -144,8 +144,8 @@ exports.seed = function(knex, Promise) {
       knex('heads').insert([
         {
           id: heads[0],
-          name: 'Blob Eye Stalk',
-          image_url: null,
+          name: 'Blob Maw',
+          image_url: './models/parts/BLOBH.png',
           attack_id: attacks[0],
           ability_id: null,
           creature: 'kaiju',
@@ -154,7 +154,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[1],
           name: 'T-Wrex Head',
-          image_url: null,
+          image_url: './models/parts/TWH.png',
           attack_id: attacks[1],
           ability_id: null,
           creature: 'kaiju',
@@ -163,7 +163,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[2],
           name: 'C\'thulu Head',
-          image_url: null,
+          image_url: './models/parts/CMH.png',
           attack_id: attacks[2],
           ability_id: null,
           creature: 'kaiju',
@@ -172,7 +172,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[3],
           name: 'Shock Top Helm',
-          image_url: null,
+          image_url: './models/parts/STH.png',
           attack_id: null,
           ability_id: abilities[0],
           creature: 'mecha',
@@ -181,7 +181,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[4],
           name: 'Medipad',
-          image_url: null,
+          image_url: './models/parts/MDH.png',
           attack_id: null,
           ability_id: abilities[1],
           creature: 'mecha',
@@ -190,7 +190,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[5],
           name: 'Red Knight Helm',
-          image_url: null,
+          image_url: './models/parts/RKH.png',
           attack_id: null,
           ability_id: abilities[2],
           creature: 'mecha',
@@ -256,7 +256,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[0],
           name: 'Blob',
-          image_url: null,
+          image_url: 'BLOB',
           attack_id: attacks[6],
           creature: 'kaiju',
           nameword: 'Slimey'
@@ -264,7 +264,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[1],
           name: 'Stubby Wrex Arms',
-          image_url: null,
+          image_url: 'TW',
           attack_id: attacks[7],
           creature: 'kaiju',
           nameword:'Subby-armed'
@@ -272,7 +272,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[2],
           name: 'C\'thulumonster',
-          image_url: null,
+          image_url: 'CM',
           attack_id: attacks[8],
           creature: 'kaiju',
           nameword: 'Eldritch'
@@ -280,7 +280,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[3],
           name: 'Shock Top',
-          image_url: null,
+          image_url: 'ST',
           attack_id: attacks[9],
           creature: 'mecha',
           nameword: 'Electro'
@@ -288,7 +288,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[4],
           name: 'Medi-o-cre',
-          image_url: null,
+          image_url: 'MD',
           attack_id: attacks[10],
           creature: 'mecha',
           nameword: 'Support'
@@ -296,7 +296,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[5],
           name: 'Red Knight',
-          image_url: null,
+          image_url: 'RK',
           attack_id: attacks[11],
           creature: 'mecha',
           nameword: 'Defender'

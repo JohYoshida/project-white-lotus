@@ -34,7 +34,8 @@ module.exports = (db) => {
             let body = randomComponent(bodies)
             let head = randomComponent(heads)
             let img1 = './models/parts/RKRH.png';
-            let img2 = './models/parts/RKB.png';
+
+            let img2 = arm.image_url;
             let img3 = './models/parts/RKLH.png';
             let img4 = './models/parts/RKH.png';
             let arr = [img1,img2,img3,img4];
