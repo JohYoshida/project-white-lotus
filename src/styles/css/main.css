@@ -3,30 +3,48 @@ body {
   padding: 0;
   background: linear-gradient(#E9626F, #E867A5);
   font-family: 'Press Start 2P', cursive; }
-  body p {
-    color: #22222; }
-  body a {
-    color: white; }
-  body button, body .button, body .button-outline {
-    font-family: 'Press Start 2P', cursive;
-    background-color: white;
-    border-color: white;
-    color: #E9626F;
-    text-transform: none;
-    border-radius: 1rem;
-    margin-bottom: 0; }
-  body button.button.button-outline {
-    font-family: 'Press Start 2P', cursive;
-    border-color: white;
-    color: white;
-    border-radius: 1rem;
-    margin-bottom: 0; }
-    body button.button.button-outline:hover {
-      color: #E9626F;
-      background-color: white;
-      border-color: white; }
   body.modal-open {
     overflow: hidden; }
+
+p, a, label {
+  color: white; }
+
+hr {
+  border-top: 2px solid white; }
+
+input[type='email'], input[type='number'], input[type='password'], input[type='search'], input[type='tel'], input[type='text'], input[type='url'], textarea, select, textarea {
+  border: 2px solid white;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  border-radius: 1rem; }
+  input[type='email']:focus, input[type='number']:focus, input[type='password']:focus, input[type='search']:focus, input[type='tel']:focus, input[type='text']:focus, input[type='url']:focus, textarea:focus, select:focus, textarea:focus {
+    border: 2px solid white; }
+
+input::placeholder, select::placeholder, textarea::placeholder {
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  opacity: 0.5; }
+
+button, .button, .button-outline {
+  font-family: 'Press Start 2P', cursive;
+  background-color: white;
+  border-color: white;
+  color: #E9626F;
+  text-transform: none;
+  border-radius: 1rem;
+  margin-bottom: 0; }
+
+button.button.button-outline {
+  font-family: 'Press Start 2P', cursive;
+  border: 2px solid white;
+  border-color: white;
+  color: white;
+  border-radius: 1rem;
+  margin-bottom: 0; }
+  button.button.button-outline:hover {
+    color: #E9626F;
+    background-color: white;
+    border-color: white; }
 
 h1, h2, h3, h4 {
   color: white;
@@ -177,8 +195,7 @@ section.modal {
 .monster-container {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center; }
+  align-items: baseline; }
   .monster-container div.card-full {
     margin-right: 2rem; }
 
@@ -326,6 +343,7 @@ section.modal {
       margin-bottom: 1rem;
       text-transform: capitalize; }
       .card-full .card-details div.stats p {
+        color: #333333;
         font-size: 0.8rem; }
     .card-full .card-details div.card-details-abilities {
       background-color: white;
@@ -334,10 +352,12 @@ section.modal {
       padding-right: 1rem;
       padding-bottom: .5rem;
       padding-top: .5rem; }
-      .card-full .card-details div.card-details-abilities .abilities-name {
+      .card-full .card-details div.card-details-abilities strong.abilities-name {
         font-size: .8rem;
-        text-transform: capitalize; }
+        text-transform: capitalize;
+        color: #222222; }
       .card-full .card-details div.card-details-abilities p {
+        color: #222222;
         font-size: 0.8rem;
         margin-bottom: 1rem; }
 
@@ -397,8 +417,7 @@ span.card-acc {
 
 .addTeamPane-container, .addTeamPane-new-team {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center; }
+  flex-wrap: wrap; }
   .addTeamPane-container .monster-card, .addTeamPane-new-team .monster-card {
     margin-bottom: 4rem;
     margin-right: 2rem; }

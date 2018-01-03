@@ -31,6 +31,7 @@ module.exports = (db) => {
     res.status(204).send();
   });
 
+  // For adding a new team
   userRouter.post('/teams', (req, res) => {
     const {id} = req.cookies;
     if(!id) res.send({error: 'Not authorized to complete this transaction.'});
@@ -43,15 +44,19 @@ module.exports = (db) => {
         new TeamMonster().save({team_id: team.get('id'), monster_id: members[2]}),
       ]);
     });
-    res.send({flash: 'Team saved!'});
   });
 
+  // sends all teams
   userRouter.get('/teams', (req, res) => {
     const {id} = req.cookies;
     new User({id}).fetch({withRelated:['team']}).then(user => {
+      // puts all the teams in an array
       const teams = user.related('team').serialize();
+      // Creates an array of promises to retrieve a all team members in specific teams.
       const teamPromises = teams.map(team => new TeamMonster().query({where: {team_id: team.id}}).fetchAll({withRelated: ['monster', 'team']}));
       Promise.all(teamPromises).then(teams => {
+        // Creates an array of promises to retrieve a new CompleteMonster object for every member for a team. The CompleteMonster is then
+        // added to the final 'team'
         const formattedTeams = teams.map(formatTeam);
         Promise.all(formattedTeams).then(teams => {
           // remove any null entries before sending.
@@ -75,6 +80,7 @@ module.exports = (db) => {
         // teamMonsterEntries have a null id by default.
         teamMonsterEntries.where({team_id: team.get('id')}).destroy();
       })).then(() => {
+        // destroys the team oncce all the monsters in that team have been destroyed.
         team.destroy().then(team => {
           res.send(JSON.stringify({flash: `${team.get('name')} has been deleted.`}));
         });
@@ -85,9 +91,9 @@ module.exports = (db) => {
   userRouter.get('/:id', (req, res) => {
     const {id} = req.params;
     knex('users').first('brouzoff', 'email').where('id', id)
-    .then(data => {
-      res.send(JSON.stringify(data));
-    });
+      .then(data => {
+        res.send(JSON.stringify(data));
+      });
   });
 
   return userRouter;

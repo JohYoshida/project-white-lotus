@@ -53,6 +53,7 @@
       margin-bottom: 1rem;
       text-transform: capitalize;
       p{
+        color: #333333;
         font-size: 0.8rem;
       }
     }
@@ -63,11 +64,13 @@
       padding-right:1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
-      .abilities-name {
+      strong.abilities-name {
         font-size: .8rem;
         text-transform: capitalize;
+        color: #222222;
       }
       p{
+        color: #222222;
         font-size: 0.8rem;
         margin-bottom: 1rem;
       }

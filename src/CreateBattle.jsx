@@ -13,6 +13,9 @@ class CreateBattle extends Component {
     event.preventDefault();
     const form = event.target;
     const roomName = form.elements.roomName.value;
+    if(roomName.length === 0){
+      return;
+    }
     fetch('/battles', {
       credentials: 'same-origin',
       method: 'POST',
@@ -28,7 +31,8 @@ class CreateBattle extends Component {
   render() {
     return (
       <main>
-        <p id="roomLink" className='hidden'>Your room <a href={this.state.roomLink}>{this.state.roomLink}</a></p>
+        <h2>Start a Battle</h2>
+        <p id="roomLink" className='hidden'>Your battlefield: <a href={this.state.roomLink}>{this.state.roomLink}</a></p>
         <form onSubmit={this.submitRoom}>
           <label>Room name</label>
           <input name="roomName" type="text"></input>

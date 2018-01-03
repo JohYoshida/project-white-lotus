@@ -27,6 +27,8 @@ class Teams extends Component {
       /* @TODO add flash message here */
       return;
     }
+
+    // grabs monster ids from the cards in .addTeamPane-new-team
     const members = [];
     for(let monsterCard of teamList.childNodes){
       members.push(monsterCard.getAttribute('data-id'));
@@ -39,6 +41,7 @@ class Teams extends Component {
       },
       body: JSON.stringify({name, members})
     }).then(() => {
+      // reloads page
       window.location.href = '/teams';
     });
   }
@@ -58,6 +61,11 @@ class Teams extends Component {
       });
     });
   }
+
+  /**
+   * printTeams - shows all teams associated with the current logged in user.
+   *
+   */
   printTeams(){
     if(this.props.teams){
       const {teams} = this.props;
@@ -77,6 +85,12 @@ class Teams extends Component {
       });
     }
   }
+
+  /**
+   * toggleTeamPane - toggles the panel from which a new team can be created.
+   *
+   * @param  {object} event - the click event object.
+   */
   toggleTeamPane(event){
     const button = event.currentTarget;
     button.innerHTML === 'Close' ? button.innerHTML = 'Add a Team' : button.innerHTML = 'Close';
@@ -84,23 +98,15 @@ class Teams extends Component {
     toggleElementById('your-teams');
   }
   render() {
-    const inputForm = () => {
-      return (
-        <form id="teamNameForm" onSubmit={this.sendTeam}>
-          <input type="text" name="teamName" placeholder="Team name" />
-        </form>
-      );
-    };
     return (
       <section className="teams-list">
         <h2>Teams</h2>
         <button className="add-a-team" onClick={this.toggleTeamPane}>Add a Team</button>
-        <AddTeamPane sendTeam={toggleModalByIdButton('submitName')} monsters={this.props.monsters} />
+        <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters} />
         <section id="your-teams">
           <h3>Your Teams</h3>
           {this.printTeams()}
         </section>
-        <Modal id="submitName" header="Name your team" mainContent={inputForm()} footer={<button onClick={this.sendTeam}>Done</button>}/>
       </section>
     );
   }

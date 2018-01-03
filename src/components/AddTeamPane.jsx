@@ -47,7 +47,7 @@ class AddTeamPane extends Component {
       return (
         <section key={monster.id} data-id={monster.id} className="monster-card">
           <DetailedCard className='card-full' monster={monster} />
-          <button className='add' onClick={this.addCreatureToTeam}>Add to team</button>
+          <button className='add' onClick={this.addCreatureToTeam}>Add to Team</button>
           <button className='remove hidden' onClick={this.removeCreatureFromTeam}>Remove from Team</button>
         </section>
       );
@@ -56,10 +56,16 @@ class AddTeamPane extends Component {
   render() {
     return (
       <section id="addTeamPane" className='add-team hidden'>
-        <h2>Create a new team!</h2>
+        <h3>Create a New Team</h3>
         <section className='addTeamPane-new-team'>
         </section>
-        {this.state.readyToSend && <button onClick={this.props.sendTeam}>Submit team</button>}
+        {this.state.readyToSend &&
+        <form id="teamNameForm" onSubmit={this.props.sendTeam}>
+          <label>Enter a Team Name</label>
+          <input type="text" name="teamName" placeholder="Team name" />
+          <button onClick={this.props.sendTeam}>Submit team</button>
+        </form>
+        }
         <hr/>
         <div className='addTeamPane-container'>{this.showMonsters()}</div>
       </section>
