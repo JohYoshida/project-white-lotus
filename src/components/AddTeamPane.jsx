@@ -57,15 +57,14 @@ class AddTeamPane extends Component {
     return (
       <section id="addTeamPane" className='add-team hidden'>
         <h3>Create a New Team</h3>
-        <section className='addTeamPane-new-team'>
-        </section>
         {this.state.readyToSend &&
         <form id="teamNameForm" onSubmit={this.props.sendTeam}>
           <label>Enter a Team Name</label>
           <input type="text" name="teamName" placeholder="Team name" />
-          <button onClick={this.props.sendTeam}>Submit team</button>
-        </form>
-        }
+        </form>}
+        <section className='addTeamPane-new-team'>
+        </section>
+        {this.state.readyToSend && <button form="teamNameForm">Submit team</button>}
         <hr/>
         <div className='addTeamPane-container'>{this.showMonsters()}</div>
       </section>

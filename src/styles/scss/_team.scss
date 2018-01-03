@@ -6,7 +6,7 @@ $team-padding:2rem;
   background-color: $player-color;
   padding: $team-padding;
   border-radius: $border-radius;
-  button{
+  button.delete-team-button{
     position: absolute;
     top:$team-padding;
     right:$team-padding;
@@ -33,7 +33,6 @@ $team-padding:2rem;
   display: flex;
   flex-wrap: wrap;
   .monster-card {
-    margin-bottom: 4rem;
     margin-right: 2rem;
     .card-full{
       margin-bottom: 1.5rem;
@@ -59,6 +58,21 @@ $team-padding:2rem;
   }
 }
 
+.addTeamPane-new-team{
+  @extend .team;
+  display: flex;
+  justify-content: center;
+  .card-full{
+    margin-bottom: 0;
+  }
+}
 button.add-a-team{
   margin-bottom: 2rem;
+}
+
+form#teamNameForm{
+  margin-bottom: 2rem;
+  input{
+    margin: 0;
+  }
 }

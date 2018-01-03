@@ -393,21 +393,21 @@ span.card-acc {
   .card-full.card-modal .card-details {
     display: block; }
 
-.team {
+.team, .addTeamPane-new-team {
   position: relative;
   margin-bottom: 2rem;
   background-color: #826682;
   padding: 2rem;
   border-radius: 1rem; }
-  .team button {
+  .team button.delete-team-button, .addTeamPane-new-team button.delete-team-button {
     position: absolute;
     top: 2rem;
     right: 2rem;
     display: block; }
-  .team .team-team-members {
+  .team .team-team-members, .addTeamPane-new-team .team-team-members {
     display: flex;
     justify-content: center; }
-    .team .team-team-members .card-full {
+    .team .team-team-members .card-full, .addTeamPane-new-team .team-team-members .card-full {
       margin-top: 2rem;
       margin-right: 1rem;
       margin-bottom: 2rem; }
@@ -419,7 +419,6 @@ span.card-acc {
   display: flex;
   flex-wrap: wrap; }
   .addTeamPane-container .monster-card, .addTeamPane-new-team .monster-card {
-    margin-bottom: 4rem;
     margin-right: 2rem; }
     .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
       margin-bottom: 1.5rem; }
@@ -436,8 +435,19 @@ span.card-acc {
   display: block;
   margin: auto; }
 
+.addTeamPane-new-team {
+  display: flex;
+  justify-content: center; }
+  .addTeamPane-new-team .card-full {
+    margin-bottom: 0; }
+
 button.add-a-team {
   margin-bottom: 2rem; }
+
+form#teamNameForm {
+  margin-bottom: 2rem; }
+  form#teamNameForm input {
+    margin: 0; }
 
 .battlefield-visual {
   position: relative;

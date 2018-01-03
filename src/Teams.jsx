@@ -76,7 +76,7 @@ class Teams extends Component {
         return (
           <article key={team.id} data-id={team.id} className='team'>
             <h3>{team.name}</h3>
-            <button onClick={this.deleteTeam}>Delete Team</button>
+            <button class="delete-team-button" onClick={this.deleteTeam}>Delete Team</button>
             <section className="team-team-members">
               {team.teamMembers.map(getTeamMembers)}
             </section>
