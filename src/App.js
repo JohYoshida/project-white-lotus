@@ -68,6 +68,10 @@ class App extends Component {
     const {cookies} = this.props;
     cookies.remove('loggedin');
     this.setState({id: null, loggedin: cookies.get('loggedin'), brouzoff: null});
+    fetch('/logout', {
+      credentials: 'same-origin',
+      method: 'DELETE'
+    });
   }
   // default load app.
   loadApp(){

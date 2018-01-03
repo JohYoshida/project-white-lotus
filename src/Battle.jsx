@@ -34,16 +34,15 @@ class Battle extends Component {
     document.querySelector('nav').remove();
     document.querySelector('#battlefield').classList.remove('hidden');
   }
-  isWinner(){
+  gameOver(){
     const {gameOver} = this.state.game;
     if(!gameOver) return;
     toggleModalById('gameOverModal');
     if(gameOver.winner.id === this.state.battlerId){
       editBrouzoff(this.state.game, 500);
-      return (<p>You won!</p>);
     }
     editBrouzoff(this.state.game, 250);
-    return(<p>You lost!</p>);
+    return(<p>Winner is {gameOver.winner.name}!</p>);
   }
   renderTeam(team){
     // right now we're showing the button, but we could render anything with it (icon images, etc)
@@ -82,7 +81,7 @@ class Battle extends Component {
           {this.state.ready && <Player className='player row' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
           {this.state.ready && <section><span><a className='nav-link leave-game' href="/">Leave Game</a></span></section>}
         </div>
-        <Modal id="gameOverModal" header="Game over" mainContent={this.isWinner()} footer={<a className="button" href="/">Done</a>} />
+        <Modal id="gameOverModal" header="Game over" mainContent={this.gameOver()} footer={<a className="button" href="/">Done</a>} />
         {this.state.game.players && this.generateModals(this.state.game)}
       </main>
     );

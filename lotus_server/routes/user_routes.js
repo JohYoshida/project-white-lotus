@@ -23,10 +23,10 @@ module.exports = (db) => {
   });
 
   // Change the player's money
-  userRouter.patch('/brouzoff/:id', (req, res) => {
-    const userId = req.params.id;
-    let brouzoffChange = req.body.brouzoffChange;
-    knex.select().from('users').where('id', '=', userId)
+  userRouter.put('/brouzoff/', (req, res) => {
+    const {id} = req.session;
+    const {brouzoffChange} = req.body;
+    knex.select().from('users').where('id', id)
       .increment('brouzoff', brouzoffChange).then();
     res.status(204).send();
   });
@@ -42,7 +42,9 @@ module.exports = (db) => {
         new TeamMonster().save({team_id: team.get('id'), monster_id: members[0]}),
         new TeamMonster().save({team_id: team.get('id'), monster_id: members[1]}),
         new TeamMonster().save({team_id: team.get('id'), monster_id: members[2]}),
-      ]);
+      ]).then(() => {
+        res.status(200).send(JSON.stringify({flash: 'Team added sucessfully.'}));
+      });
     });
   });
 

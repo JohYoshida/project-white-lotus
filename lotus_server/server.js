@@ -39,6 +39,10 @@ server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);
 server.use('/user', userRouter);
 server.post('/login', loginUser);
+server.delete('/logout', (req, res) => {
+  req.session = null;
+  res.status(200).send(JSON.stringify({flash: 'logout successful'}));
+});
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
