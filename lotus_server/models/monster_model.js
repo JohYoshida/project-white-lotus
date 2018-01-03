@@ -1,5 +1,6 @@
 const bookshelf = require('./lib/bookshelf');
 
+// function arugments are optional.
 module.exports = function(Body, Head, Arm, Type, Attack, Ability){
   return bookshelf.Model.extend({
     tableName: 'monsters',
@@ -25,4 +26,4 @@ module.exports = function(Body, Head, Arm, Type, Attack, Ability){
       return this.belongsTo(Attack).through(Head);
     }
   });
-}
+};

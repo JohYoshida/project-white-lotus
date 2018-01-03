@@ -3,6 +3,8 @@ const buildMonstersJSON = require('../lib/build_monsters_json');
 const buildMonsterJSON = require('../lib/build_monster_json');
 const express = require('express');
 const getCreature = require('../lib/generate_monster.js');
+const Monster = require('../models/monster_model.js')();
+
 module.exports = (db) => {
   const User = require('../models/user_model')(db);
   const monsterRouter = express.Router();
@@ -15,9 +17,16 @@ module.exports = (db) => {
 
   // For deleting a monster
   monsterRouter.delete('/:id', (req, res) => {
-    const {id} = req.params
-    db('monsters').where('id', id).del().then(monster => {
-      res.send(JSON.stringify({flash: `Monster ${id} has been deleted.`}))
+    const userId = req.cookies.id;
+    const {id} = req.params;
+    new Monster({id}).fetch().then(monster => {
+      if(monster.get('user_id') !== userId){
+        res.status(400).send();
+        return;
+      }
+      monster.destroy().then(() => {
+        res.send(JSON.stringify({flash: `Monster ${id} has been deleted.`}));
+      })
     });
   });
 

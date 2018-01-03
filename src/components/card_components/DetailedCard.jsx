@@ -53,6 +53,7 @@ class DetailedCard extends Component {
             {this.attackDetails(monster)}
             {this.abilityDetails(monster)}
           </div>
+          {this.props.deletable && <button className="delete-monster-button" onClick={this.deleteMonster}>Delete</button>}
         </div>
       </div>
     );
