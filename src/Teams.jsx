@@ -39,10 +39,7 @@ class Teams extends Component {
       },
       body: JSON.stringify({name, members})
     }).then(() => {
-      teamList.childNodes.forEach(node => teamList.remove(node));
-      // update team's list.
-      toggleModalById('submitName');
-      this.props.fetchTeams();
+      window.location.href = '/teams';
     });
   }
   deleteTeam(event){
@@ -70,10 +67,11 @@ class Teams extends Component {
       return teams.map(team => {
         return (
           <article key={team.id} data-id={team.id} className='team'>
-            <h3>Name: {team.name}</h3>
-            <p>Members:</p>
-            {team.teamMembers.map(getTeamMembers)}
+            <h3>{team.name}</h3>
             <button onClick={this.deleteTeam}>Delete Team</button>
+            <section className="team-team-members">
+              {team.teamMembers.map(getTeamMembers)}
+            </section>
           </article>
         );
       });

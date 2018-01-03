@@ -1,14 +1,42 @@
+$team-padding:2rem;
+
+.team{
+  position: relative;
+  margin-bottom: 2rem;
+  background-color: $player-color;
+  padding: $team-padding;
+  border-radius: $border-radius;
+  button{
+    position: absolute;
+    top:$team-padding;
+    right:$team-padding;
+    display: block;
+  }
+  .team-team-members{
+    display: flex;
+    justify-content: center;
+    .card-full{
+      margin-top: 2rem;
+      margin-right: 1rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
 .teams-list{
   margin-bottom: 4rem;
 }
 
+// container = list of all monsters
+// new-team = the actual team
 .addTeamPane-container, .addTeamPane-new-team{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   .monster-card {
     margin-bottom: 4rem;
+    margin-right: 2rem;
     .card-full{
-      margin-right: 1rem;
       margin-bottom: 1.5rem;
     }
   }
@@ -16,13 +44,13 @@
     display: block;
     margin: auto;
   }
-  // justify-content: space-between;
 }
+
 .addTeamPane-container{
   .monster-card {
     margin-bottom: 4rem;
     .card-full{
-      margin-right: 1rem;
+      margin-right: 2rem;
       margin-bottom: 1.5rem;
     }
   }
@@ -31,6 +59,7 @@
     margin: auto;
   }
 }
+
 button.add-a-team{
   margin-bottom: 2rem;
 }

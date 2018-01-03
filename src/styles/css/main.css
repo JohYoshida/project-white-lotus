@@ -177,9 +177,10 @@ section.modal {
 .monster-container {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline; }
+  align-items: baseline;
+  justify-content: center; }
   .monster-container div.card-full {
-    margin-right: 1rem; }
+    margin-right: 2rem; }
 
 .battlefield-active {
   position: relative;
@@ -282,23 +283,23 @@ section.modal {
   box-shadow: 0px 2px 10px black;
   position: relative;
   overflow: hidden;
-  width: 350px;
-  height: 350px;
+  width: 300px;
+  height: 300px;
   margin-bottom: 4rem;
   background-image: url("/assets/images/monster-bg.png");
   background-size: contain;
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 1rem;
-  border: 4px solid white; }
+  border: 2px solid white; }
   .card-full h3 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     position: relative;
-    text-align: center;
+    text-align: right;
     color: white;
     font-weight: bold; }
   .card-full p {
     margin: 0;
-    font-size: 1.4rem; }
+    font-size: 1rem; }
   .card-full div.card-image-header {
     position: absolute;
     top: 0;
@@ -322,8 +323,10 @@ section.modal {
       padding-right: 1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       text-transform: capitalize; }
+      .card-full .card-details div.stats p {
+        font-size: 0.8rem; }
     .card-full .card-details div.card-details-abilities {
       background-color: white;
       border-radius: 1rem;
@@ -332,10 +335,10 @@ section.modal {
       padding-bottom: .5rem;
       padding-top: .5rem; }
       .card-full .card-details div.card-details-abilities .abilities-name {
-        font-size: 1.1rem;
+        font-size: .8rem;
         text-transform: capitalize; }
       .card-full .card-details div.card-details-abilities p {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         margin-bottom: 1rem; }
 
 span.card-hp {
@@ -370,16 +373,36 @@ span.card-acc {
   .card-full.card-modal .card-details {
     display: block; }
 
+.team {
+  position: relative;
+  margin-bottom: 2rem;
+  background-color: #826682;
+  padding: 2rem;
+  border-radius: 1rem; }
+  .team button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: block; }
+  .team .team-team-members {
+    display: flex;
+    justify-content: center; }
+    .team .team-team-members .card-full {
+      margin-top: 2rem;
+      margin-right: 1rem;
+      margin-bottom: 2rem; }
+
 .teams-list {
   margin-bottom: 4rem; }
 
 .addTeamPane-container, .addTeamPane-new-team {
   display: flex;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  justify-content: center; }
   .addTeamPane-container .monster-card, .addTeamPane-new-team .monster-card {
-    margin-bottom: 4rem; }
+    margin-bottom: 4rem;
+    margin-right: 2rem; }
     .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
-      margin-right: 1rem;
       margin-bottom: 1.5rem; }
   .addTeamPane-container button, .addTeamPane-new-team button {
     display: block;
@@ -388,7 +411,7 @@ span.card-acc {
 .addTeamPane-container .monster-card {
   margin-bottom: 4rem; }
   .addTeamPane-container .monster-card .card-full {
-    margin-right: 1rem;
+    margin-right: 2rem;
     margin-bottom: 1.5rem; }
 .addTeamPane-container button {
   display: block;
