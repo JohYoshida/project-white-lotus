@@ -132,7 +132,7 @@ div#battlefield {
       padding: 2rem;
       border-radius: 1rem; }
       div#battlefield section.messages section.messages-content p {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         color: white; }
   div#battlefield .player {
     background-color: #826682;
