@@ -119,6 +119,7 @@ div#battlefield {
   padding-top: 5rem; }
   div#battlefield section.messages {
     padding: 2rem;
+    height: 150px;
     background-color: #826682;
     border: 2px solid #B0BEC5;
     font-size: 1rem;
@@ -129,8 +130,7 @@ div#battlefield {
     margin-bottom: 1rem; }
     div#battlefield section.messages section.messages-content {
       padding: 2rem;
-      border-radius: 1rem;
-      height: 100%; }
+      border-radius: 1rem; }
       div#battlefield section.messages section.messages-content p {
         margin-bottom: 20px;
         color: white; }
@@ -209,7 +209,7 @@ section.modal {
   flex-wrap: wrap;
   align-items: baseline; }
   .monster-container div.card-full {
-    margin-right: 2rem; }
+    margin-right: 1rem; }
 
 .battlefield-active {
   position: relative;
@@ -238,7 +238,7 @@ section.modal {
       text-align: center;
       margin: auto; }
       .battlefield-active .battlefield-active-battler .card-image-header img {
-        width: 100%; }
+        height: 100%; }
     .battlefield-active .battlefield-active-battler span.card-hp {
       font-size: 1rem; }
     .battlefield-active .battlefield-active-battler span.card-acc {
@@ -253,10 +253,12 @@ section.modal {
     .battlefield-active .abilities .abilities-actions {
       background-color: #574457;
       border-radius: 1rem;
-      padding: 1rem 1rem; }
+      padding: .5rem 1rem; }
     .battlefield-active .abilities button {
+      text-transform: capitalize;
       cursor: pointer;
-      margin-bottom: 1rem;
+      margin-top: .5rem;
+      margin-bottom: .5rem;
       font-size: 1rem;
       padding: 0 1rem; }
 
@@ -283,12 +285,12 @@ section.modal {
     text-align: center;
     margin: auto; }
     .battlefield-onBench .bench-monster .card-image-header img {
-      width: 100%; }
+      height: 100%; }
   .battlefield-onBench .bench-monster button {
     position: absolute;
     margin: 0;
     left: 0;
-    bottom: 0; }
+    top: 0; }
   .battlefield-onBench .bench-monster span.card-hp {
     font-size: 1rem; }
   .battlefield-onBench .bench-monster span.card-acc {
@@ -298,8 +300,8 @@ section.modal {
   box-shadow: 0px 2px 10px black;
   position: relative;
   overflow: hidden;
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   margin-bottom: 4rem;
   background-image: url("/assets/images/monster-bg.png");
   background-size: contain;
@@ -331,6 +333,8 @@ section.modal {
       height: 100%; }
   .card-full:hover .card-details {
     display: block; }
+  .card-full:hover .delete-monster-button {
+    display: block; }
   .card-full .card-details {
     display: none;
     position: relative; }
@@ -353,8 +357,7 @@ section.modal {
       padding-right: 1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
-      height: 120px;
-      overflow-y: auto; }
+      min-height: 120px; }
       .card-full .card-details div.card-details-abilities strong.abilities-name {
         font-size: .8rem;
         text-transform: capitalize;
@@ -365,8 +368,10 @@ section.modal {
         margin-bottom: 1rem; }
 
 .delete-monster-button {
+  display: none;
   position: absolute;
-  bottom: 2rem;
+  top: 1rem;
+  left: 2rem;
   font-size: .5em;
   padding: 0rem 1rem;
   z-index: 10; }
@@ -376,11 +381,11 @@ span.card-hp {
   padding: 1rem;
   color: white;
   font-size: 1em;
-  top: 0;
+  bottom: 0;
   left: 0;
-  border-bottom: 2px solid white;
+  border-top: 2px solid white;
   border-right: 2px solid white;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 1rem;
   font-weight: bold;
   z-index: 9999; }
 
@@ -393,13 +398,13 @@ span.card-acc {
   color: white;
   border-top: 2px solid white;
   border-left: 2px solid white;
-  border-top-left-radius: 10px;
+  border-top-left-radius: 1rem;
   font-weight: bold;
   z-index: 999; }
 
 .card-full.card-modal {
-  width: 500px;
-  height: 500px; }
+  width: 400px;
+  height: 400px; }
   .card-full.card-modal .card-details {
     display: block; }
     .card-full.card-modal .card-details div.card-details-abilities {
@@ -417,11 +422,10 @@ span.card-acc {
     right: 2rem;
     display: block; }
   .team .team-team-members, .addTeamPane-new-team .team-team-members {
-    display: flex;
-    justify-content: center; }
+    display: flex; }
     .team .team-team-members .card-full, .addTeamPane-new-team .team-team-members .card-full {
-      margin-top: 2rem;
       margin-right: 1rem;
+      margin-top: 2rem;
       margin-bottom: 2rem; }
 
 .teams-list {
@@ -430,10 +434,8 @@ span.card-acc {
 .addTeamPane-container, .addTeamPane-new-team {
   display: flex;
   flex-wrap: wrap; }
-  .addTeamPane-container .monster-card, .addTeamPane-new-team .monster-card {
-    margin-right: 2rem; }
-    .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
-      margin-bottom: 1.5rem; }
+  .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
+    margin-bottom: 1.5rem; }
   .addTeamPane-container button, .addTeamPane-new-team button {
     display: block;
     margin: auto; }
@@ -441,7 +443,7 @@ span.card-acc {
 .addTeamPane-container .monster-card {
   margin-bottom: 4rem; }
   .addTeamPane-container .monster-card .card-full {
-    margin-right: 2rem;
+    margin-right: 1rem;
     margin-bottom: 1.5rem; }
 .addTeamPane-container button {
   display: block;
@@ -451,7 +453,10 @@ span.card-acc {
   display: flex;
   justify-content: center; }
   .addTeamPane-new-team .card-full {
-    margin-bottom: 0; }
+    height: 300px;
+    width: 300px;
+    margin-bottom: 0;
+    margin-right: 1rem; }
 
 button.add-a-team {
   margin-bottom: 2rem; }

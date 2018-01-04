@@ -14,10 +14,9 @@ $team-padding:2rem;
   }
   .team-team-members{
     display: flex;
-    justify-content: center;
     .card-full{
-      margin-top: 2rem;
       margin-right: 1rem;
+      margin-top: 2rem;
       margin-bottom: 2rem;
     }
   }
@@ -28,12 +27,10 @@ $team-padding:2rem;
 }
 
 // container = list of all monsters
-// new-team = the actual team
 .addTeamPane-container, .addTeamPane-new-team{
   display: flex;
   flex-wrap: wrap;
   .monster-card {
-    margin-right: 2rem;
     .card-full{
       margin-bottom: 1.5rem;
     }
@@ -48,7 +45,7 @@ $team-padding:2rem;
   .monster-card {
     margin-bottom: 4rem;
     .card-full{
-      margin-right: 2rem;
+      margin-right: 1rem;
       margin-bottom: 1.5rem;
     }
   }
@@ -58,12 +55,16 @@ $team-padding:2rem;
   }
 }
 
+// The actual team that is building
 .addTeamPane-new-team{
   @extend .team;
   display: flex;
   justify-content: center;
   .card-full{
+    height: 300px;
+    width: 300px;
     margin-bottom: 0;
+    margin-right: 1rem;
   }
 }
 button.add-a-team{
