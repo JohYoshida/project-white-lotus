@@ -24,19 +24,20 @@ module.exports = (db) => {
         user.set({brouzoff: user.attributes.brouzoff - cost});
         user.save().then(() => {
           Promise.all([
-            db.select('id','nameword').from('bodies').where('creature', creature),
-            db.select('id','nameword').from('heads').where('creature', creature),
-            db.select('id','nameword').from('arms').where('creature', creature)
+            db.select('id','image_url','nameword').from('bodies').where('creature', creature),
+            db.select('id','image_url','nameword').from('heads').where('creature', creature),
+            db.select('id','image_url','nameword').from('arms').where('creature', creature)
           ]).then(components => {
             const bodies = components[0], heads = components[1], arms = components[2];
             // Make the monster.
             let arm = randomComponent(arms)
             let body = randomComponent(bodies)
             let head = randomComponent(heads)
-            let img1 = './models/parts/RKRH.png';
-            let img2 = './models/parts/RKB.png';
-            let img3 = './models/parts/RKLH.png';
-            let img4 = './models/parts/RKH.png';
+            console.log(arm);
+            let img1 = './models/parts/'+arm.image_url+'RH.png';
+            let img2 = body.image_url;
+            let img3 = head.image_url;
+            let img4 = './models/parts/'+arm.image_url+'LH.png';
             let arr = [img1,img2,img3,img4];
             monsterMash(arr).then((result)=> {
               return {
