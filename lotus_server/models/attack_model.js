@@ -96,7 +96,7 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const maxHp = targetMonster.maxHp;
     const hp = targetMonster.hp;
-    const damage = damageCalculator(Math.floor(maxHp/hp), compareTyping(this, attackedPlayer));
+    const damage = damageCalculator(Math.floor(maxHp/hp), compareTyping(this, targetMonster));
 
     targetMonster.takeDamage(damage);
     return [`${targetMonster.name} took ${damage} damage!`];
