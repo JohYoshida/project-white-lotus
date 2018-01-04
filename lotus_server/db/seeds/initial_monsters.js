@@ -35,7 +35,8 @@ exports.seed = function(knex, Promise) {
           user_id: user,
           body_id: bodies[0],
           arm_id: arms[0],
-          head_id: heads[0]
+          head_id: heads[0],
+          image: './assets/monsters/BLOB.png'
         },
         {
           id: 2,
@@ -43,7 +44,9 @@ exports.seed = function(knex, Promise) {
           user_id: user,
           body_id: bodies[1],
           arm_id: arms[1],
-          head_id: heads[1]
+          head_id: heads[1],
+          image:'./assets/monsters/T-Wrex.png'
+
         },
         {
           id: 3,
@@ -51,7 +54,8 @@ exports.seed = function(knex, Promise) {
           user_id: user,
           body_id: bodies[2],
           arm_id: arms[2],
-          head_id: heads[2]
+          head_id: heads[2],
+          image:'./assets/monsters/cthulamonster.png'
         },
         {
           id: 4,
@@ -59,7 +63,9 @@ exports.seed = function(knex, Promise) {
           user_id: user,
           body_id: bodies[3],
           arm_id: arms[3],
-          head_id: heads[3]
+          head_id: heads[3],
+          image:'./assets/monsters/RK.png'
+
         },
         {
           id: 5,
@@ -67,7 +73,8 @@ exports.seed = function(knex, Promise) {
           user_id: user,
           body_id: bodies[4],
           arm_id: arms[4],
-          head_id: heads[4]
+          head_id: heads[4],
+          image: './assets/monsters/RK.png'
         },
         {
           id: 6,
@@ -75,14 +82,15 @@ exports.seed = function(knex, Promise) {
           user_id: user,
           body_id: bodies[5],
           arm_id: arms[5],
-          head_id: heads[5]
+          head_id: heads[5],
+          image: './assets/monsters/RK.png'
         },
       ]),
       knex('bodies').insert([
         {
           id: bodies[0],
           name: 'Blob',
-          image_url:'./assets/monsters/BLOBB.png',
+          image_url:'./models/parts/BLOBB.png',
           hp: 30,
           accuracy_bonus: 0,
           type_id: types[0],
@@ -92,7 +100,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[1],
           name: 'T-Wrex',
-          image_url:'./assets/monsters/TWB.png',
+          image_url:'./models/parts/TWB.png',
           hp: 35,
           accuracy_bonus: -1,
           type_id: types[1],
@@ -102,7 +110,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[2],
           name: 'C\'thulumonster',
-          image_url:'./assets/monsters/CMB.png',
+          image_url:'./models/parts/CMB.png',
           hp: 25,
           type_id: types[2],
           accuracy_bonus: +1,
@@ -113,7 +121,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[3],
           name: 'Shock Top',
-          image_url:'./assets/monsters/RK.png',
+          image_url:'./models/parts/STB.png',
           hp: 25,
           accuracy_bonus: +1,
           type_id: types[2],
@@ -123,7 +131,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[4],
           name: 'Medi-o-cre',
-          image_url:'./assets/monsters/RK.png',
+          image_url:'./models/parts/MDB.png',
           hp: 20,
           type_id: types[0],
           accuracy_bonus: +1,
@@ -133,7 +141,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[5],
           name: 'Red Knight',
-          image_url:'./assets/monsters/RK.png',
+          image_url:'./models/parts/RKB.png',
           hp: 25,
           type_id: types[1],
           accuracy_bonus: +2,
@@ -199,7 +207,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[6],
           name: 'Hydra Heads',
-          image_url: null,
+          image_url: './models/parts/HH.png',
           attack_id: attacks[3],
           ability_id: null,
           creature: 'kaiju',
@@ -208,7 +216,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[7],
           name: 'Spider Head',
-          image_url: null,
+          image_url: './models/parts/SH.png',
           attack_id: attacks[4],
           ability_id: null,
           creature: 'kaiju',
@@ -217,7 +225,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[8],
           name: 'Eye of the Void',
-          image_url: null,
+          image_url: './models/parts/EVH.png',
           attack_id: attacks[5],
           ability_id: null,
           creature: 'kaiju',
@@ -227,7 +235,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[9],
           name: 'Cyclone Laser System',
-          image_url: null,
+          image_url: './models/parts/CLSH.png',
           attack_id: null,
           ability_id: abilities[3],
           creature: 'mecha',
@@ -236,7 +244,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[10],
           name: 'Hypermatter Generator',
-          image_url: null,
+          image_url: './models/parts/HMG.png',
           attack_id: null,
           ability_id: abilities[4],
           creature: 'mecha',
@@ -245,7 +253,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[11],
           name: 'Missile Support Platform',
-          image_url: null,
+          image_url: './models/parts/MSPH.png',
           attack_id: null,
           ability_id: abilities[5],
           creature: 'mecha',
@@ -304,7 +312,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[6],
           name: 'Mind Siphon',
-          image_url: null,
+          image_url: 'MS',
           attack_id: attacks[12],
           creature: 'kaiju',
           nameword: 'Mind-warping'
@@ -312,7 +320,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[7],
           name: 'Snake Hands',
-          image_url: null,
+          image_url: 'SH',
           attack_id: attacks[13],
           creature: 'kaiju',
           nameword: 'Striking'
@@ -320,7 +328,7 @@ exports.seed = function(knex, Promise) {
         {
           id: arms[8],
           name: 'Spider Fang',
-          image_url: null,
+          image_url: 'SF',
           attack_id: attacks[14],
           creature: 'kaiju',
           nameword:'Biting'
