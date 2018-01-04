@@ -1,43 +1,41 @@
-console.log ("starting");
-var Jimp = require("jimp");
-
-// open a file called "lenna.png"
-let img1 = './parts/RKRH.png';
-let img2 = './parts/RKB.png';
-let img3 = './parts/RKLH.png';
-let img4 = './parts/RKH.png'
-let arr = [img1,img2,img3,img4];
+const Jimp = require('jimp');
 const uuidv1 = require('uuid/v1');
+
+// composites the first two indexes of the array containing monster parts
 function composeSS(x,y){
-  return new Promise((resolve,reject)=>{
-  Jimp.read(x).then(function (im1) {
-    Jimp.read(y).then(function(im2){
-      im1.composite(im2,0,0);
-      resolve(im1);
-    });
+  return new Promise((resolve,reject) => {
+    Jimp.read(x).then(function (im1) {
+      Jimp.read(y).then(function (im2) {
+        im1.composite(im2,0,0);
+        resolve(im1);
+      });
     }).catch(function (err) {
-        console.error(err);
-        reject(err);
+      console.error(err);
+      reject(err);
     });
   });
 }
-function composeIS(img,str){
-  return new Promise((resolve,reject)=>{
+
+// Composites composites an image to the image being built.
+function composeIS(img, str){
+  return new Promise((resolve, reject)=>{
     Jimp.read(str).then(function(im2){
-      img.composite(im2,0,0);
+      img.composite(im2, 0, 0);
       resolve(img);
     }).catch(function (err) {
-        console.error(err);
-        reject(err);
+      console.error(err);
+      reject(err);
     });
   });
 }
+
+// Recursively composites images until we've run out of images then returns the final image.
 function mash(arr,index,img){
-  return new Promise((resolve,reject)=>{
-    if(index>=arr.length){
+  return new Promise((resolve)=>{
+    if(index >= arr.length){
       resolve(img);
-    }else{
-      composeIS(img,arr[index]).then(function(r1){
+    } else {
+      composeIS(img, arr[index]).then(function(r1){
         mash(arr,index+1,r1).then(function(r2){
           resolve(r2);
         });
@@ -46,24 +44,26 @@ function mash(arr,index,img){
   });
 }
 
-const monsterMash= (arr)=>{
-  return new Promise((resolve,reject)=>{
+// Starts compositing chain, with composeSS then runs mash.
+// Once completed, it writes the image and returns the image url for adding to the database.
+const monsterMash = (arr) => {
+  return new Promise((resolve)=>{
     if(arr.length===1){
       Jimp.read(arr[0]).then(function(r1){
-         let x = uuidv1();
-          r2.write("${x}.png");
-          resolve("${x}.png");
+        let x = uuidv1();
+        r2.write(`${x}.png`);
+        resolve(`${x}.png`);
       });
-    }else{
+    } else {
       composeSS(arr[0],arr[1]).then(function(r1){
-        mash(arr,2,r1).then(function(r2){
+        mash(arr, 2, r1).then(function(r2){
           let x = uuidv1();
-          r2.write("./models/monsters/"+x+".png");
-          resolve(`/${x}.png`);
+          r2.write("./dist/assets/monsters/"+x+".png");
+          resolve(`/assets/monsters/${x}.png`);
         });
       });
     }
   });
-}
-//monsterMash(arr);
-module.exports={monsterMash};
+};
+
+module.exports = monsterMash;

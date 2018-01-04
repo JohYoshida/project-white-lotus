@@ -5,21 +5,21 @@
   width: 350px;
   height:350px;
   margin-bottom:4rem;
-  background-image: url('/monster-bg.png');
+  @include card-background-image();
   background-size: contain;
-  padding: 3rem;
-  border-radius: 1rem;
-  border: 4px solid white;
+  padding: 2rem;
+  border-radius: $border-radius;
+  border: 2px solid white;
   h3{
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     position: relative;
-    text-align: center;
+    text-align: right;
     color:white;
     font-weight: bold;
   }
   p{
     margin: 0;
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
   div.card-image-header{
     position: absolute;
@@ -30,14 +30,19 @@
     width:100%;
     margin: auto;
     z-index: 0;
-    opacity: 0.5;
     img{
-      width: 100%;
+      display: block;
+      margin: auto;
+      width: auto;
+      height: 100%;
     }
 
   }
   &:hover {
     .card-details{
+      display: block;
+    }
+    .delete-monster-button{
       display: block;
     }
   }
@@ -46,42 +51,58 @@
     position: relative;
     div.stats{
       background-color: white;
-      border-radius: 1rem;
+      border-radius: $border-radius;
       padding-left:1rem;
       padding-right:1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       text-transform: capitalize;
+      p{
+        color: #333333;
+        font-size: 0.8rem;
+      }
     }
     div.card-details-abilities{
       background-color: white;
-      border-radius: 10px;
+      border-radius: $border-radius;
       padding-left:1rem;
       padding-right:1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
-      .abilities-name {
-        font-size: 1.1rem;
+      min-height: 120px;
+      strong.abilities-name {
+        font-size: .8rem;
         text-transform: capitalize;
+        color: #222222;
       }
       p{
-        font-size: 0.9rem;
+        color: #222222;
+        font-size: 0.8rem;
         margin-bottom: 1rem;
       }
     }
   }
 }
 
+.delete-monster-button{
+  display: none;
+  position: absolute;
+  top:1rem;
+  left:2rem;
+  font-size: .5em;
+  padding: 0rem 1rem;
+  z-index: 10;
+}
 span.card-hp{
   position: absolute;
   padding: 1rem;
   color: white;
   font-size: 1em;
-  top:0; left:0;
-  border-bottom: 2px solid white;
+  bottom:0; left:0;
+  border-top: 2px solid white;
   border-right: 2px solid white;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: $border-radius;
   font-weight: bold;
   z-index: 9999;
 }
@@ -93,16 +114,19 @@ span.card-acc{
   color: white;
   border-top: 2px solid white;
   border-left: 2px solid white;
-  border-top-left-radius: 10px;
+  border-top-left-radius: $border-radius;
   font-weight: bold;
   z-index: 999;
 }
 
 
 .card-full.card-modal{
-  width: 500px;
-  height:500px;
+  width: 400px;
+  height:400px;
   .card-details {
     display: block;
+    div.card-details-abilities{
+      height: auto;
+    }
   }
 }

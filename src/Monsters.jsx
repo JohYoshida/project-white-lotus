@@ -14,7 +14,7 @@ class Monsters extends Component {
     const monsterArray = [];
     for(let monster of monsters){
       monsterArray.push(
-        <DetailedCard className='card-full' monster={monster} />
+        <DetailedCard deletable={true} className='card-full' monster={monster} />
       );
     }
     return monsterArray;

@@ -20,7 +20,7 @@ a.nav-link {
     background-color: white;
     color: $coral-color;
     height: 80px;
-    border-radius:1rem;
+    border-radius: $border-radius;
   }
   &:focus{
     color:white;
@@ -36,7 +36,7 @@ a.nav-link.on-page::after{
 
 a.nav-link.leave-game{
   border: 2px solid $message-border-color;
-  border-radius: 1rem;
+  border-radius: $border-radius;
   text-transform: capitalize;
   width:25%;
   margin: auto;
@@ -49,10 +49,13 @@ a.nav-link.leave-game{
 }
 section.nav-user{
   display: flex;
-  h4{
+  p{
+    color: white;
     padding: 1rem;
-    line-height: 3.5rem;
     margin-right: 3rem;
+  }
+  button{
+    margin-top: 3px;
   }
 }
 

@@ -35,11 +35,14 @@ class Player extends Component {
     const attacks = [];
     for(let attackName in monster.attacks){
       const attack = monster.attacks[attackName];
-      attacks.push(<button disabled={!this.props.player.turn} className='sword-ico' key={attack.id} onClick={this.sendAttack} data-name={attack.name}></button>);
+      attacks.push(<button disabled={!this.props.player.turn} key={attack.id} onClick={this.sendAttack} data-name={attack.name}>{attack.name.replace('_', ' ')}</button>);
     }
     return (
       <section className="abilities">
-        {attacks}
+        <h4>Actions</h4>
+        <section className="abilities-actions">
+          {attacks}
+        </section>
       </section>
     );
   }
@@ -62,7 +65,7 @@ class Player extends Component {
     return (
       <section className={this.props.className}>
         <div className="column">
-          <h4>Benched Monster</h4>
+          <h4>Benched Monsters</h4>
           <div className="battlefield-onBench">
             {this.generateBenchedMonster()}
           </div>
