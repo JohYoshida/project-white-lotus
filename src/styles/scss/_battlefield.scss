@@ -1,138 +1,86 @@
 .battlefield-visual{
   position: relative;
   height:350px;
-  background-image: url('/bg.png');
-  border-radius: 1rem;
+  background-image: url('/assets/images/bg.png');
+  border-radius: $border-radius;
   border: 2px solid #BBBBBB;
   width: 1100px;
 }
-span.monster-hp{
+span.monster-name{
+  display: none;
+  width: 100%;
+  text-align: center;
   position: absolute;
+  font-size: .8rem;
   bottom:22rem;
   color:white;
 }
-
-.player-monster{
+span.monster-hp{
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: auto;
   position: absolute;
-  height:200px;
-  width:100px;
-  bottom:0;
-  z-index: 2;
-  // box-shadow: 0px 0px 90px black;
+  bottom:19rem;
+  color:white;
 }
 
-.player-monster-bench-1{
-  @extend .player-monster;
-  left:4rem;
+.kaiju{
+  height: 187px;
+  width: 187px;
+}
+
+.mecha{
+  width: 100px;
+  height: 187px;
+}
+
+.player-side{
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  left: 2rem;
+  .player-monster{
+    position: relative;
+    margin-right: 1rem;
+    cursor: pointer;
+  }
   img {
     transform: scaleX(-1);
-    width: 100%;
     height: 100%;
+    width: 100%;
+  }
+  &:hover{
+    span.monster-name{
+      display: block;
+    }
+  }
+  .active{
+    order:1;
   }
 }
 
-.player-monster-bench-2{
-  @extend .player-monster;
-  left:18rem;
-  img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.player-monster-bench-3{
-  @extend .player-monster;
-  left:32rem;
-  img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.player-monster-active{
-  @extend .player-monster;
-  left:36rem;
-  img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%;
-  }
-}
-.player-stats{
-  display: none;
+.opponent-side{
   position: absolute;
-  left:4rem;
-  top:2rem;
-
-  span {
-    font-size: 1.4rem;
-    display: block;
-    margin-bottom: 0.5rem;
+  display: flex;
+  height: auto;
+  right: 2rem;
+  bottom: 0;
+  .opponent-monster{
+    position: relative;
+    margin-left: 1rem;
+    cursor: pointer;
   }
-  span.activeMonster-stats{
-    color:$opponent-color;
-  }
-}
-
-.opponent-monster{
-  position: absolute;
-  height:200px;
-  width:100px;
-  bottom:0;
-}
-.opponent-monster-bench-1{
-  @extend .opponent-monster;
-  right:4rem;
-
-  img {
-    width: 100%;
+  img{
     height: 100%;
-  }
-}
-
-.opponent-monster-bench-2{
-  @extend .opponent-monster;
-  right:18rem;
-
-  img {
     width: 100%;
-    height: 100%;
   }
-}
-
-.opponent-monster-bench-3{
-  @extend .opponent-monster;
-  right:32rem;
-
-  img {
-    width: 100%;
-    height: 100%;
+  &:hover{
+    span{
+      display: block;
+    }
   }
-}
-
-.opponent-monster-active{
-  @extend .opponent-monster;
-  right:36rem;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.opponent-stats{
-  display: none;
-  position: absolute;
-  right:4rem;
-  top:2rem;
-  span {
-    font-size: 1.4rem;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  span.activeMonster-stats{
-    color:white;
+  .active{
+    order:-1;
   }
 }

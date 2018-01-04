@@ -44,9 +44,8 @@ class App extends Component {
 
   componentWillMount() {
     const {cookies} = this.props;
-    if (cookies.get('id')) {
-      console.log(cookies.get('id'));
-      this.setState({id: cookies.get('id'), loggedin: true}, () => {
+    if (cookies.get('loggedin')) {
+      this.setState({loggedin: cookies.get('loggedin')}, () => {
         fetchUserDetails(this);
       });
     }
@@ -67,8 +66,12 @@ class App extends Component {
 
   logout(event) {
     const {cookies} = this.props;
-    cookies.remove('id');
-    this.setState({id: null, loggedin: false, brouzoff: null});
+    cookies.remove('loggedin');
+    this.setState({id: null, loggedin: cookies.get('loggedin'), brouzoff: null});
+    fetch('/logout', {
+      credentials: 'same-origin',
+      method: 'DELETE'
+    });
   }
   // default load app.
   loadApp(){
@@ -122,7 +125,7 @@ class App extends Component {
               <span><Link className='nav-link' to="/store">Store</Link></span>
             </section>
             <section className="nav-user">
-              <h4>Hi, {username}</h4>
+              <p>Hi, {username}</p>
               <Link to="/">
                 <button onClick={this.logout} className='button button-outline'>Log out</button>
               </Link>

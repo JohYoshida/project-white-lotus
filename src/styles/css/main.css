@@ -1,25 +1,50 @@
 body {
   margin: 0;
   padding: 0;
+  background: linear-gradient(#E9626F, #E867A5);
   font-family: 'Press Start 2P', cursive; }
-  body a {
-    color: white; }
-  body button, body .button, body .button-outline {
-    background-color: white;
-    border-color: white;
-    color: black;
-    text-transform: none;
-    border-radius: 1rem; }
-  body button.button.button-outline {
-    border-color: white;
-    color: white;
-    border-radius: 1rem; }
-    body button.button.button-outline:hover {
-      background-color: white;
-      border-color: white;
-      color: black; }
   body.modal-open {
     overflow: hidden; }
+
+p, a, label {
+  color: white; }
+
+hr {
+  border-top: 2px solid white; }
+
+input[type='email'], input[type='number'], input[type='password'], input[type='search'], input[type='tel'], input[type='text'], input[type='url'], textarea, select, textarea {
+  border: 2px solid white;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  border-radius: 1rem; }
+  input[type='email']:focus, input[type='number']:focus, input[type='password']:focus, input[type='search']:focus, input[type='tel']:focus, input[type='text']:focus, input[type='url']:focus, textarea:focus, select:focus, textarea:focus {
+    border: 2px solid white; }
+
+input::placeholder, select::placeholder, textarea::placeholder {
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  opacity: 0.5; }
+
+button, .button, .button-outline {
+  font-family: 'Press Start 2P', cursive;
+  background-color: white;
+  border-color: white;
+  color: #E9626F;
+  text-transform: none;
+  border-radius: 1rem;
+  margin-bottom: 0; }
+
+button.button.button-outline {
+  font-family: 'Press Start 2P', cursive;
+  border: 2px solid white;
+  border-color: white;
+  color: white;
+  border-radius: 1rem;
+  margin-bottom: 0; }
+  button.button.button-outline:hover {
+    color: #E9626F;
+    background-color: white;
+    border-color: white; }
 
 h1, h2, h3, h4 {
   color: white;
@@ -30,7 +55,7 @@ div#root {
   background: linear-gradient(#E9626F, #E867A5); }
 
 .hidden {
-  display: none; }
+  display: none !important; }
 
 nav {
   position: relative;
@@ -78,10 +103,12 @@ a.nav-link.leave-game {
 
 section.nav-user {
   display: flex; }
-  section.nav-user h4 {
+  section.nav-user p {
+    color: white;
     padding: 1rem;
-    line-height: 3.5rem;
     margin-right: 3rem; }
+  section.nav-user button {
+    margin-top: 3px; }
 
 .hidden {
   display: none; }
@@ -97,16 +124,15 @@ div#battlefield {
     border: 2px solid #B0BEC5;
     font-size: 1rem;
     z-index: -2;
-    overflow-y: hidden;
+    overflow-y: auto;
     border-radius: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem; }
     div#battlefield section.messages section.messages-content {
       padding: 2rem;
-      border-radius: 1rem;
-      height: 100%; }
+      border-radius: 1rem; }
       div#battlefield section.messages section.messages-content p {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         color: white; }
   div#battlefield .player {
     background-color: #826682;
@@ -122,32 +148,6 @@ div#battlefield {
       position: absolute; }
     div#battlefield .player h1.player-turn {
       color: white; }
-    div#battlefield .player .abilities {
-      background-color: #574457;
-      border-radius: 1rem;
-      display: flex;
-      padding: 1rem 1rem;
-      position: absolute;
-      bottom: 2rem;
-      right: 0;
-      z-index: 9999; }
-      div#battlefield .player .abilities button.sword-ico:first-of-type {
-        margin-right: .5rem; }
-      div#battlefield .player .abilities button.sword-ico {
-        display: block;
-        background-image: url("https://maxcdn.icons8.com/Share/icon/Gaming/minecraft_sword1600.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        padding: 0;
-        cursor: pointer;
-        display: block;
-        margin-bottom: 0px;
-        height: 50px;
-        width: 50px; }
-        div#battlefield .player .abilities button.sword-ico:hover {
-          background-color: white;
-          border-color: white; }
 
 /* This should override Milligram's greyed buttons on focus */
 @media (max-width: 812px) {
@@ -166,6 +166,7 @@ section.modal {
   background-color: rgba(0, 0, 0, 0.8); }
   section.modal div.modal-container {
     position: absolute;
+    border-radius: 1rem;
     top: 0;
     right: 0;
     bottom: 0;
@@ -173,11 +174,26 @@ section.modal {
     height: 50%;
     width: 50%;
     margin: auto;
-    border: 1px solid black;
-    background-color: white; }
+    background-color: #9b809b; }
+    section.modal div.modal-container header {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      padding: 2rem;
+      background-color: #826682; }
+      section.modal div.modal-container header h3 {
+        margin-bottom: 0; }
     section.modal div.modal-container main {
       position: relative;
-      height: 100%; }
+      padding: 2rem; }
+    section.modal div.modal-container footer {
+      position: absolute;
+      padding: 2rem;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      background-color: #826682; }
   section.modal div.card-modal-container {
     position: absolute;
     top: 0;
@@ -185,11 +201,8 @@ section.modal {
     bottom: 0;
     left: 0;
     height: 50%;
-    width: 50%;
+    width: 496px;
     margin: auto; }
-    section.modal div.card-modal-container main {
-      width: 50%;
-      margin: auto; }
 
 .monster-container {
   display: flex;
@@ -209,7 +222,7 @@ section.modal {
     position: relative;
     width: 150px;
     height: 150px;
-    background-image: url("/monster-bg.png");
+    background-image: url("/assets/images/monster-bg.png");
     background-size: contain;
     border-radius: 1rem;
     border: 2px solid white; }
@@ -225,11 +238,29 @@ section.modal {
       text-align: center;
       margin: auto; }
       .battlefield-active .battlefield-active-battler .card-image-header img {
-        width: 100%; }
+        height: 100%; }
     .battlefield-active .battlefield-active-battler span.card-hp {
       font-size: 1rem; }
     .battlefield-active .battlefield-active-battler span.card-acc {
       font-size: 1rem; }
+  .battlefield-active .abilities {
+    position: absolute;
+    bottom: 18px;
+    left: 200px; }
+    .battlefield-active .abilities h4 {
+      font-size: 1.1em;
+      margin-left: 0; }
+    .battlefield-active .abilities .abilities-actions {
+      background-color: #574457;
+      border-radius: 1rem;
+      padding: .5rem 1rem; }
+    .battlefield-active .abilities button {
+      text-transform: capitalize;
+      cursor: pointer;
+      margin-top: .5rem;
+      margin-bottom: .5rem;
+      font-size: 1rem;
+      padding: 0 1rem; }
 
 .battlefield-onBench .bench-monster {
   display: inline-block;
@@ -237,7 +268,7 @@ section.modal {
   height: 150px;
   margin-right: 1rem;
   position: relative;
-  background-image: url("/monster-bg.png");
+  background-image: url("/assets/images/monster-bg.png");
   background-size: contain;
   border-radius: 1rem;
   border: 2px solid white;
@@ -254,12 +285,12 @@ section.modal {
     text-align: center;
     margin: auto; }
     .battlefield-onBench .bench-monster .card-image-header img {
-      width: 100%; }
+      height: 100%; }
   .battlefield-onBench .bench-monster button {
     position: absolute;
     margin: 0;
     left: 0;
-    bottom: 0; }
+    top: 0; }
   .battlefield-onBench .bench-monster span.card-hp {
     font-size: 1rem; }
   .battlefield-onBench .bench-monster span.card-acc {
@@ -272,20 +303,20 @@ section.modal {
   width: 350px;
   height: 350px;
   margin-bottom: 4rem;
-  background-image: url("/monster-bg.png");
+  background-image: url("/assets/images/monster-bg.png");
   background-size: contain;
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 1rem;
-  border: 4px solid white; }
+  border: 2px solid white; }
   .card-full h3 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     position: relative;
-    text-align: center;
+    text-align: right;
     color: white;
     font-weight: bold; }
   .card-full p {
     margin: 0;
-    font-size: 1.4rem; }
+    font-size: 1rem; }
   .card-full div.card-image-header {
     position: absolute;
     top: 0;
@@ -294,11 +325,15 @@ section.modal {
     bottom: 0;
     width: 100%;
     margin: auto;
-    z-index: 0;
-    opacity: 0.5; }
+    z-index: 0; }
     .card-full div.card-image-header img {
-      width: 100%; }
+      display: block;
+      margin: auto;
+      width: auto;
+      height: 100%; }
   .card-full:hover .card-details {
+    display: block; }
+  .card-full:hover .delete-monster-button {
     display: block; }
   .card-full .card-details {
     display: none;
@@ -310,32 +345,47 @@ section.modal {
       padding-right: 1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       text-transform: capitalize; }
+      .card-full .card-details div.stats p {
+        color: #333333;
+        font-size: 0.8rem; }
     .card-full .card-details div.card-details-abilities {
       background-color: white;
-      border-radius: 10px;
+      border-radius: 1rem;
       padding-left: 1rem;
       padding-right: 1rem;
       padding-bottom: .5rem;
-      padding-top: .5rem; }
-      .card-full .card-details div.card-details-abilities .abilities-name {
-        font-size: 1.1rem;
-        text-transform: capitalize; }
+      padding-top: .5rem;
+      min-height: 120px; }
+      .card-full .card-details div.card-details-abilities strong.abilities-name {
+        font-size: .8rem;
+        text-transform: capitalize;
+        color: #222222; }
       .card-full .card-details div.card-details-abilities p {
-        font-size: 0.9rem;
+        color: #222222;
+        font-size: 0.8rem;
         margin-bottom: 1rem; }
+
+.delete-monster-button {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
+  font-size: .5em;
+  padding: 0rem 1rem;
+  z-index: 10; }
 
 span.card-hp {
   position: absolute;
   padding: 1rem;
   color: white;
   font-size: 1em;
-  top: 0;
+  bottom: 0;
   left: 0;
-  border-bottom: 2px solid white;
+  border-top: 2px solid white;
   border-right: 2px solid white;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 1rem;
   font-weight: bold;
   z-index: 9999; }
 
@@ -348,124 +398,172 @@ span.card-acc {
   color: white;
   border-top: 2px solid white;
   border-left: 2px solid white;
-  border-top-left-radius: 10px;
+  border-top-left-radius: 1rem;
   font-weight: bold;
   z-index: 999; }
 
 .card-full.card-modal {
-  width: 500px;
-  height: 500px; }
+  width: 400px;
+  height: 400px; }
   .card-full.card-modal .card-details {
     display: block; }
+    .card-full.card-modal .card-details div.card-details-abilities {
+      height: auto; }
+
+.team, .addTeamPane-new-team {
+  position: relative;
+  margin-bottom: 2rem;
+  background-color: #826682;
+  padding: 2rem;
+  border-radius: 1rem; }
+  .team button.delete-team-button, .addTeamPane-new-team button.delete-team-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: block; }
+  .team .team-team-members, .addTeamPane-new-team .team-team-members {
+    display: flex; }
+    .team .team-team-members .card-full, .addTeamPane-new-team .team-team-members .card-full {
+      margin-right: 1rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem; }
+
+.teams-list {
+  margin-bottom: 4rem; }
 
 .addTeamPane-container, .addTeamPane-new-team {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; }
+  flex-wrap: wrap; }
+  .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
+    margin-bottom: 1.5rem; }
+  .addTeamPane-container button, .addTeamPane-new-team button {
+    display: block;
+    margin: auto; }
+
+.addTeamPane-container .monster-card {
+  margin-bottom: 4rem; }
+  .addTeamPane-container .monster-card .card-full {
+    margin-right: 1rem;
+    margin-bottom: 1.5rem; }
+.addTeamPane-container button {
+  display: block;
+  margin: auto; }
 
 .addTeamPane-new-team {
-  justify-content: left; }
+  display: flex;
+  justify-content: center; }
+  .addTeamPane-new-team .card-full {
+    height: 300px;
+    width: 300px;
+    margin-bottom: 0;
+    margin-right: 1rem; }
+
+button.add-a-team {
+  margin-bottom: 2rem; }
+
+form#teamNameForm {
+  margin-bottom: 2rem; }
+  form#teamNameForm input {
+    margin: 0; }
 
 .battlefield-visual {
   position: relative;
   height: 350px;
-  background-image: url("/bg.png");
+  background-image: url("/assets/images/bg.png");
   border-radius: 1rem;
   border: 2px solid #BBBBBB;
   width: 1100px; }
 
-span.monster-hp {
+span.monster-name {
+  display: none;
+  width: 100%;
+  text-align: center;
   position: absolute;
+  font-size: .8rem;
   bottom: 22rem;
   color: white; }
 
-.player-monster, .player-monster-bench-1, .player-monster-bench-2, .player-monster-bench-3, .player-monster-active {
+span.monster-hp {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: auto;
   position: absolute;
-  height: 200px;
+  bottom: 19rem;
+  color: white; }
+
+.kaiju {
+  height: 187px;
+  width: 187px; }
+
+.mecha {
   width: 100px;
+  height: 187px; }
+
+.player-side {
+  position: absolute;
+  display: flex;
   bottom: 0;
-  z-index: 2; }
-
-.player-monster-bench-1 {
-  left: 4rem; }
-  .player-monster-bench-1 img {
+  left: 2rem; }
+  .player-side .player-monster {
+    position: relative;
+    margin-right: 1rem;
+    cursor: pointer; }
+  .player-side img {
     transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
+    height: 100%;
+    width: 100%; }
+  .player-side:hover span.monster-name {
+    display: block; }
+  .player-side .active {
+    order: 1; }
 
-.player-monster-bench-2 {
-  left: 18rem; }
-  .player-monster-bench-2 img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
-
-.player-monster-bench-3 {
-  left: 32rem; }
-  .player-monster-bench-3 img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
-
-.player-monster-active {
-  left: 36rem; }
-  .player-monster-active img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
-
-.player-stats {
-  display: none;
+.opponent-side {
   position: absolute;
-  left: 4rem;
-  top: 2rem; }
-  .player-stats span {
-    font-size: 1.4rem;
-    display: block;
-    margin-bottom: 0.5rem; }
-  .player-stats span.activeMonster-stats {
-    color: #EF9A9A; }
-
-.opponent-monster, .opponent-monster-bench-1, .opponent-monster-bench-2, .opponent-monster-bench-3, .opponent-monster-active {
-  position: absolute;
-  height: 200px;
-  width: 100px;
+  display: flex;
+  height: auto;
+  right: 2rem;
   bottom: 0; }
+  .opponent-side .opponent-monster {
+    position: relative;
+    margin-left: 1rem;
+    cursor: pointer; }
+  .opponent-side img {
+    height: 100%;
+    width: 100%; }
+  .opponent-side:hover span {
+    display: block; }
+  .opponent-side .active {
+    order: -1; }
 
-.opponent-monster-bench-1 {
-  right: 4rem; }
-  .opponent-monster-bench-1 img {
-    width: 100%;
-    height: 100%; }
+.store-items {
+  margin-bottom: 2rem; }
 
-.opponent-monster-bench-2 {
-  right: 18rem; }
-  .opponent-monster-bench-2 img {
-    width: 100%;
-    height: 100%; }
-
-.opponent-monster-bench-3 {
-  right: 32rem; }
-  .opponent-monster-bench-3 img {
-    width: 100%;
-    height: 100%; }
-
-.opponent-monster-active {
-  right: 36rem; }
-  .opponent-monster-active img {
-    width: 100%;
-    height: 100%; }
-
-.opponent-stats {
-  display: none;
-  position: absolute;
-  right: 4rem;
-  top: 2rem; }
-  .opponent-stats span {
-    font-size: 1.4rem;
+.store-item {
+  margin-top: 2rem;
+  display: inline-block; }
+  .store-item .store-item-details {
+    width: 320px;
+    height: 320px;
+    background-color: #826682;
+    border-radius: 1rem;
+    padding: 2rem; }
+    .store-item .store-item-details h4 {
+      margin-top: 2rem;
+      text-align: center; }
+    .store-item .store-item-details img {
+      display: block;
+      width: 50%;
+      margin: auto;
+      margin-bottom: 2rem; }
+    .store-item .store-item-details p.price {
+      text-align: center;
+      margin-bottom: 0; }
+  .store-item button {
     display: block;
-    margin-bottom: 0.5rem; }
-  .opponent-stats span.activeMonster-stats {
-    color: white; }
+    margin: 2rem auto; }
+
+div.egg {
+  margin-right: 4rem; }
 
 /*# sourceMappingURL=main.css.map */

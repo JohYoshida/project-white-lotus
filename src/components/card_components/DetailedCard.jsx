@@ -36,10 +36,21 @@ class DetailedCard extends Component {
       </div>
     );
   }
+  // send a fetch request to delete a monster.
+  deleteMonster(event){
+    const monsterCard = event.currentTarget.parentNode;
+    const id = monsterCard.dataset.id;
+    fetch(`/monsters/${id}`, {
+      credentials: 'same-origin',
+      method:'DELETE'
+    }).then(() => {
+      window.location.href = '/';
+    });
+  }
   render() {
     const {monster} = this.props;
     return (
-      <div className={this.props.className}>
+      <div className={this.props.className} data-id={monster.id}>
         <span class="card-hp">{monster.hp}</span>
         <span class="card-acc">{monster.accuracy_bonus}</span>
         {cardImageHeader(monster)}
@@ -54,6 +65,7 @@ class DetailedCard extends Component {
             {this.abilityDetails(monster)}
           </div>
         </div>
+        {this.props.deletable && <button className="delete-monster-button button button-outline" onClick={this.deleteMonster}>Delete</button>}
       </div>
     );
   }
