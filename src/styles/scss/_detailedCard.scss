@@ -31,7 +31,10 @@
     margin: auto;
     z-index: 0;
     img{
-      width: 100%;
+      display: block;
+      margin: auto;
+      width: auto;
+      height: 100%;
     }
 
   }

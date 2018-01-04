@@ -18,7 +18,7 @@ class Monster extends Component {
       if(activeMonster && monsterId === activeMonster.id) continue;
       const curMonster = team[monsterId];
       monsters.push(
-        <div className={`${prefix}-monster-bench-${monsters.length + 1}`} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
+        <div className={`${prefix}-monster ${curMonster.creature}`} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
           <span className='monster-name'>{curMonster.name}</span>
           <span className='monster-hp'>HP:{curMonster.hp}</span>
           <img src={curMonster.image_url} alt={curMonster.name}/>
@@ -27,7 +27,7 @@ class Monster extends Component {
     }
     if(activeMonster) {
       monsters.push(
-        <div className={`${prefix}-monster-active`} onClick={toggleModalByIdButton(`${activeMonster.id}-modal`)}>
+        <div className={`${prefix}-monster active ${activeMonster.creature}`} onClick={toggleModalByIdButton(`${activeMonster.id}-modal`)}>
           <span className='monster-name'>{activeMonster.name}</span>
           <span className='monster-hp'>HP:{activeMonster.hp}</span>
           <img src={activeMonster.image_url} alt={activeMonster.name} />

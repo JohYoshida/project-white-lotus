@@ -30,10 +30,9 @@ module.exports = (db) => {
           ]).then(components => {
             const bodies = components[0], heads = components[1], arms = components[2];
             // Make the monster.
-            let arm = randomComponent(arms)
-            let body = randomComponent(bodies)
-            let head = randomComponent(heads)
-            console.log(arm);
+            let arm = randomComponent(arms);
+            let body = randomComponent(bodies);
+            let head = randomComponent(heads);
             let img1 = './models/parts/'+arm.image_url+'RH.png';
             let img2 = body.image_url;
             let img3 = head.image_url;

@@ -36,7 +36,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[0],
           arm_id: arms[0],
           head_id: heads[0],
-          image: './assets/monsters/BLOB.png'
+          image: '/assets/monsters/BLOB.png'
         },
         {
           id: 2,
@@ -45,7 +45,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[1],
           arm_id: arms[1],
           head_id: heads[1],
-          image:'./assets/monsters/T-Wrex.png'
+          image:'/assets/monsters/T-Wrex.png'
 
         },
         {
@@ -55,7 +55,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[2],
           arm_id: arms[2],
           head_id: heads[2],
-          image:'./assets/monsters/cthulamonster.png'
+          image:'/assets/monsters/cthulamonster.png'
         },
         {
           id: 4,
@@ -64,7 +64,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[3],
           arm_id: arms[3],
           head_id: heads[3],
-          image:'./assets/monsters/RK.png'
+          image:'/assets/monsters/RK.png'
 
         },
         {
@@ -74,7 +74,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[4],
           arm_id: arms[4],
           head_id: heads[4],
-          image: './assets/monsters/RK.png'
+          image: '/assets/monsters/RK.png'
         },
         {
           id: 6,
@@ -83,7 +83,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[5],
           arm_id: arms[5],
           head_id: heads[5],
-          image: './assets/monsters/RK.png'
+          image: '/assets/monsters/RK.png'
         },
       ]),
       knex('bodies').insert([

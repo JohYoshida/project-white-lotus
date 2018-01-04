@@ -41,4 +41,15 @@ section.modal {
       background-color: $player-color;
     }
   }
+  // For displaying cards
+  div.card-modal-container{
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    height: 50%;
+    width: 496px;
+    margin: auto;
+  }
 }
