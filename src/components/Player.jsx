@@ -30,17 +30,18 @@ class Player extends Component {
         <section className='activemonster-container'>
           <h4>{monster.name}</h4>
           <ActiveMonster key={monster.id} isPlayer={true} player={player} monster={monster} sendAttack={this.sendAttack} />
+          {this.printModifier(monster)}
         </section>
       );
     }
   }
-  showAttacks(){
+  printAttacks(){
     const monster = this.props.player.activeMonster;
     if(!monster) return;
     const attacks = [];
     for(let attackName in monster.attacks){
       const attack = monster.attacks[attackName];
-      attacks.push(<button disabled={!this.props.player.turn} key={attack.id} onClick={this.sendAttack} data-name={attack.name}>{attack.name.replace('_', ' ')}</button>);
+      attacks.push(<button className='button' disabled={!this.props.player.turn} key={attack.id} onClick={this.sendAttack} data-name={attack.name}>{attack.name.replace('_', ' ')}</button>);
     }
     return (
       <section className="abilities-actions">
@@ -56,37 +57,32 @@ class Player extends Component {
       const monster = player.team[monsterid];
       if(monster.bench){
         cards.push(
-          <BenchedMonster key={monster.id} isPlayer={true} player={player} monster={monster} unBench={this.unBench} />
+          <BenchedMonster key={monster.id} isPlayer={true} player={player} printModifier={this.printModifier} monster={monster} unBench={this.unBench} />
         );
       }
     }
     return cards;
   }
-  generateModifierImages(monster){
+  printModifier(monster){
     const modifiers = [];
     for(const modifierId in monster.modifiers){
       const modifier = monster.modifiers[modifierId];
-      modifiers.push(<img src="https://d2ujflorbtfzji.cloudfront.net/key-image/46086c17-d663-4998-9931-507841b47350.png" title={modifier.description} />);
+      let icon = 'https://d2ujflorbtfzji.cloudfront.net/key-image/46086c17-d663-4998-9931-507841b47350.png';
+      modifiers.push(<img src={icon} title={modifier.description} />);
     }
-    return modifiers;
-  }
-  showModifiers(){
-    const {player} = this.props;
-    const modifiers = [];
-    // loop over team
-    // for each team member, push name and modifier to an array
-    for(const monsterId in player.team){
-      const monster = player.team[monsterId];
-      modifiers.push(
-        <section key={monsterId}>
-          <p>{monster.name}</p>
-          {this.generateModifierImages(monster)}
-        </section>
-      );
-    }
-    return modifiers;
+    return(
+      <section className='modifiers'>
+        {modifiers}
+      </section>
+    );
   }
   render() {
+    /**
+     * <section className='modifiers'>
+       {player.activeMonster && <h4>Modifiers</h4>}
+       {player.activeMonster && this.showModifiers()}
+     </section>
+     */
     const {player} = this.props;
     return (
       <section className={this.props.className}>
@@ -96,11 +92,7 @@ class Player extends Component {
             {this.generateActiveMonster()}
             <section className="abilities">
               {player.activeMonster && <h4>Actions</h4>}
-              {this.showAttacks()}
-            </section>
-            <section className='modifiers'>
-              {player.activeMonster && <h4>Modifiers</h4>}
-              {player.activeMonster && this.showModifiers()}
+              {this.printAttacks()}
             </section>
           </section>
         </div>

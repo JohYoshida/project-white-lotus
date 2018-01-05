@@ -119,7 +119,7 @@ div#battlefield {
   padding-top: 5rem; }
   div#battlefield section.messages {
     padding: 2rem 4rem;
-    height: 150px;
+    height: 115px;
     background-color: #826682;
     border: 2px solid #B0BEC5;
     font-size: 1rem;
@@ -136,7 +136,7 @@ div#battlefield {
   div#battlefield .player {
     background-color: #826682;
     border: 2px solid #B0BEC5;
-    height: 300px;
+    height: 325px;
     padding: 2rem 4rem;
     position: relative;
     border-radius: 1rem; }
@@ -211,16 +211,15 @@ section.modal {
     margin-right: 1rem; }
 
 .battlefield-active {
-  position: relative;
-  border-radius: 1rem; }
-  .battlefield-active h4 {
-    margin-left: 2rem; }
-  .battlefield-active .activemonster-container h4 {
-    font-size: 1em;
-    margin-bottom: .5em; }
+  position: relative; }
+  .battlefield-active .activemonster-container {
+    padding-left: 2rem; }
+    .battlefield-active .activemonster-container h4 {
+      font-size: .8em; }
+    .battlefield-active .activemonster-container .modifiers {
+      width: 150px; }
   .battlefield-active .battlefield-active-battler {
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin-right: 4rem;
     position: relative;
     width: 150px;
     height: 150px;
@@ -252,8 +251,7 @@ section.modal {
     margin-right: 2rem; }
     .battle-info .abilities h4 {
       font-size: 1em;
-      margin-left: 0;
-      margin-bottom: .5em; }
+      margin-left: 0; }
     .battle-info .abilities .abilities-actions {
       background-color: #574457;
       border-radius: 1rem;
@@ -267,24 +265,21 @@ section.modal {
       margin-right: 1rem;
       font-size: 1rem;
       padding: 0 1rem; }
-  .battle-info .modifiers section {
-    background-color: #574457;
-    border-radius: 1rem;
-    padding: .5rem 1rem;
-    margin-bottom: 5px; }
-  .battle-info .modifiers h4 {
-    font-size: 1em;
-    margin-left: 0;
-    margin-bottom: .5em; }
-  .battle-info .modifiers p {
-    margin-right: 1rem;
-    font-size: 1rem;
-    margin-bottom: 5px; }
-  .battle-info .modifiers img {
+
+.modifiers {
+  display: flex;
+  background-color: #574457;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  margin-top: .5rem;
+  width: 115px; }
+  .modifiers img {
+    display: block;
     border-radius: 0.5rem;
-    height: 24px;
-    width: 24px;
-    margin-right: 8px; }
+    height: 25px;
+    width: 25px;
+    margin-right: 8px;
+    margin-bottom: 0; }
 
 .battlefield-bench h4 {
   font-size: 1em; }
@@ -297,7 +292,7 @@ section.modal {
     margin-right: 2rem; }
     .battlefield-benched .bench-monster-container h4 {
       font-size: .5em;
-      margin-bottom: .5em; }
+      margin-bottom: 1rem; }
     .battlefield-benched .bench-monster-container .bench-monster {
       width: 100%;
       height: 100%;
@@ -322,15 +317,16 @@ section.modal {
         margin: auto; }
         .battlefield-benched .bench-monster-container .bench-monster .card-image-header img {
           height: 100%; }
-      .battlefield-benched .bench-monster-container .bench-monster button {
-        position: absolute;
-        margin: 0;
-        left: 0;
-        top: 0; }
       .battlefield-benched .bench-monster-container .bench-monster span.card-hp {
         font-size: 1rem; }
       .battlefield-benched .bench-monster-container .bench-monster span.card-acc {
         font-size: 1rem; }
+    .battlefield-benched .bench-monster-container button {
+      display: block;
+      line-height: 1em;
+      padding: 1rem;
+      width: 100%;
+      margin-bottom: 1rem; }
 
 .card-full {
   box-shadow: 0px 2px 10px black;

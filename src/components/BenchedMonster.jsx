@@ -13,13 +13,14 @@ class BenchedMonster extends Component {
     if(player.activeMonster) canBench = player.activeMonster.canBench;
     return (
       <section key={monster.id} className='bench-monster-container'>
+        {this.props.isPlayer && <button data-id={monster.id} disabled={!player.turn || !canBench} onClick={this.props.unBench}>Activate</button>}
         <h4>{monster.name}</h4>
         <div data-id={monster.id} disabled={!this.props.player.turn} className="bench-monster">
           {cardImageHeader(monster, toggleModalByIdButton(`${monster.id}-modal`))}
           <span className="card-hp">{monster.hp}</span>
           <span className="card-acc">{monster.accuracy_bonus}</span>
         </div>
-        {this.props.isPlayer && <button data-id={monster.id} disabled={!player.turn || !canBench} onClick={this.props.unBench}>Ico</button>}
+        {this.props.printModifier(monster)}
       </section>
     );
   }
