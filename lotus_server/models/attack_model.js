@@ -253,7 +253,7 @@ const attackFuncs = {
     if(targetMonster.creature === 'kaiju'){
       const attacks = Object.keys(targetMonster.attacks);
       const {id, name, description, func} = targetMonster.attacks[attacks[1]];
-      this.attacks.push({id, name, description, func: func.bind(this)});
+      this.attacks[name] = {id, name, description, func: func.bind(this)};
       messages.unshift(`${this.name} has gained ${this.attacks[attacks[1]].name}.`);
     }
     return messages;
