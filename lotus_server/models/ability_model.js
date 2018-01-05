@@ -20,14 +20,12 @@ const abilityFuncs = {
       const curMonster = team[monsterId];
       if(curMonster.creature === 'mecha' && !curMonster.modifiers.has('heal')){
         new Modifier(curMonster, 'heal', {}, (modifier) => {
-          console.log(this);
           if(!this.passiveActive){
             modifier.removeModifier();
           }
           if(curMonster.hp === curMonster.maxHp){
             return;
           }
-          console.log('increasing hp');
           curMonster.hp += 2;
         });
       }
