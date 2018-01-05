@@ -47,6 +47,9 @@ const abilityFuncs = {
       return;
     }
     const targetMonster = player.activeMonster;
+    if(targetMonster.modifiers.has('shield')){
+      return;
+    }
     const description = `${this.name} takes the first 5 damage ${targetMonster.name} takes each turn.`;
     new Modifier(targetMonster, {protector: this}, 'shield', description, (modifier) => {
       if(!this.passiveActive){

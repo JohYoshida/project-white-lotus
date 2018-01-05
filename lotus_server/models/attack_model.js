@@ -202,7 +202,6 @@ const attackFuncs = {
     new Modifier(randomBenchedMonster, 'deactivate', {passiveActive: false}, modifier => {
       if(!randomBenchedMonster.bench) {
         modifier.removeModifier();
-        return `${randomBenchedMonster.name}'s passive has been reactivated!`;
       }
     });
     messages.unshift(`${randomBenchedMonster.name}'s passive is disabled.`);
