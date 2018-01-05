@@ -105,7 +105,7 @@ class Teams extends Component {
         <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters} />
         <section id="your-teams">
           <h3>Your Teams</h3>
-          {this.printTeams()}
+          {this.props.teams && this.printTeams()}
         </section>
       </section>
     );

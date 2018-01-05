@@ -9,7 +9,7 @@ div#battlefield{
     border: 2px solid $message-border-color;
     font-size: 1rem;
     z-index: -2;
-    overflow-y:hidden;
+    overflow-y:auto;
     border-radius: $border-radius;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -17,9 +17,8 @@ div#battlefield{
     section.messages-content{
       padding: 2rem;
       border-radius: $border-radius;
-      height:100%;
       p {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         color: white;
       }
     }

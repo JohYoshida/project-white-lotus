@@ -44,12 +44,13 @@ const damageCalculator = (damage, effectiveness) => {
 
 // Handles AOE attack lcgic
 const doAOEAttack = (attackedPlayer, messages, dmg, attacker) => {
+  // Loop over each monster and cause them to take damage.
   for(const monsterId in attackedPlayer.team){
     const curMonster = attackedPlayer.team[monsterId];
     const damage = damageCalculator(dmg, compareTyping(attacker, curMonster));
     curMonster.takeDamage(damage);
   }
-  return ['All monsters take damage!'];
+  return ['> All monsters take damage!'];
 };
 
 const attackFuncs = {
@@ -58,14 +59,14 @@ const attackFuncs = {
     const dmg = 4;
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-    new Modifier(targetMonster, {}, (modifier) => {
+    new Modifier(targetMonster, 'dot', {}, (modifier) => {
       // check turn count
       modifier.count ? modifier.count++ : modifier.count = 1;
       if(modifier.count >= 3) return modifier.removeModifier();
       targetMonster.takeDamage(damage);
       return `Toxic Slime: ${targetMonster.name} took ${damage} damage!`;
     });
-    return [`${targetMonster.name} becomes enveloped in slime...`];
+    return [`${this.name} attacks! ${targetMonster.name} becomes enveloped in slime...`];
   },
   // Secondary attack
   roar: function(attackedPlayer){
@@ -83,20 +84,20 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(6, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, (modifier) => {
+    new Modifier(targetMonster, 'debuff', {accuracy_bonus: targetMonster.accuracy_bonus - 1}, (modifier) => {
       // If the monster is on the bench, remove the modifier.
       if(targetMonster.bench) modifier.removeModifier();
       targetMonster.accuracy_bonus -= 1;
       return `Insanity: ${targetMonster.name} loses 1 accuracy!`;
     });
-    return [`${targetMonster.name} took ${damage} damage! They are less accurate...`];
+    return [`${this.name} attacks! ${targetMonster.name} took ${damage} damage. They are less accurate...`];
   },
   // Secondary attack
   decimate: function(attackedPlayer){
     const targetMonster = attackedPlayer.activeMonster;
     const maxHp = targetMonster.maxHp;
     const hp = targetMonster.hp;
-    const damage = damageCalculator(Math.floor(maxHp/hp), compareTyping(this, attackedPlayer));
+    const damage = damageCalculator(Math.floor(maxHp/hp), compareTyping(this, targetMonster));
 
     targetMonster.takeDamage(damage);
     return [`${targetMonster.name} took ${damage} damage!`];
@@ -108,21 +109,21 @@ const attackFuncs = {
     const damage = damageCalculator(5, compareTyping(this, targetMonster));
     attackedPlayer.activeMonster.takeDamage(damage);
     // Increase accuracy
-    new Modifier(this, {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
+    new Modifier(this, 'buff', {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
     // Prevents benching
-    new Modifier(targetMonster, {canBench: false}, (modifier) => {
+    new Modifier(targetMonster, 'stuck', {canBench: false}, (modifier) => {
       this.count ? this.count++ : this.count = 1;
       if(this.count > 1){
         modifier.removeModifier();
       }
     });
-    return [`${targetMonster.name} took ${damage} damage! Webbing prevents them from moving!`];
+    return [`${this.name} attacks! ${targetMonster.name} took ${damage} damage. Webbing prevents them from moving!`];
   },
   // Secondary attack
   deep_knowledge: function(attackedPlayer){
     const {activeMonster} = attackedPlayer;
 
-    new Modifier(this, {type: activeMonster.type}, (modifier) => this.bench && modifier.removeModifier());
+    new Modifier(this, 'morph', {type: activeMonster.type}, (modifier) => this.bench && modifier.removeModifier());
     return [`${this.name}'s type changed to ${activeMonster.type} type.`];
   },
   // Secondary attack
@@ -131,12 +132,12 @@ const attackFuncs = {
     const damage = damageCalculator(10, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
 
-    new Modifier(targetMonster, {}, (modifier) => {
+    new Modifier(targetMonster, 'dot', {}, (modifier) => {
       if(targetMonster.bench) return modifier.removeModifier();
       targetMonster.hp -= 1;
-      return `The sludge causes ${targetMonster.name} to lose 1 hp!`;
+      return `The sludge causes ${targetMonster.name} to lose 1 hp. They have ${targetMonster.hp} hp.`;
     });
-    return [`${targetMonster.name} took ${damage} damage! The sludge envelopes them.`];
+    return [`${this.name} attacks! ${targetMonster.name} took ${damage} damage, The sludge envelopes them.`];
   },
   // primary attack
   steel_jaw: function(attackedPlayer){
@@ -165,7 +166,7 @@ const attackFuncs = {
     } else {
       damage = damageCalculator(dmg, compareTyping(this, targetMonster));
       targetMonster.takeDamage(damage);
-      messages = [`${targetMonster.name} took ${damage} damage!`];
+      messages = [`${this.name} attacks! ${targetMonster.name} took ${damage} damage. They have ${targetMonster.hp} hp.`];
     }
     // Get a random monster id and activate it.
     const randomBenchedMonster = attackedPlayer.getRandomMonster({bench:true});
@@ -188,14 +189,14 @@ const attackFuncs = {
     } else {
       damage = damageCalculator(dmg, compareTyping(this, targetMonster));
       targetMonster.takeDamage(damage);
-      messages = [`${this.name}'s neutralizes ${targetMonster.name}. They take ${damage} damage!`];
+      messages = [`${this.name} neutralizes ${targetMonster.name}. They take ${damage} damage! They have ${targetMonster.hp} hp.`];
     }
     // removes the passive ability of a random benched monster.
     const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true});
     if(!randomBenchedMonster){
       return messages;
     }
-    new Modifier(randomBenchedMonster, {passiveActive: false}, modifier => {
+    new Modifier(randomBenchedMonster, 'deactivate', {passiveActive: false}, modifier => {
       if(!randomBenchedMonster.bench) {
         modifier.removeModifier();
         return `${randomBenchedMonster.name}'s passive has been reactivated!`;
@@ -250,9 +251,10 @@ const attackFuncs = {
       messages = [`${targetMonster.name} took ${damage} damage!`];
     }
     if(targetMonster.creature === 'kaiju'){
-      const {id, name, description, func} = targetMonster.attacks[1];
-      this.attacks.push({id, name, description, func: func.bind(this)});
-      messages.unshift(`${this.name} has gained ${this.attacks[1].name}.`);
+      const attacks = Object.keys(targetMonster.attacks);
+      const {id, name, description, func} = targetMonster.attacks[attacks[1]];
+      this.attacks[name] = {id, name, description, func: func.bind(this)};
+      messages.unshift(`${this.name} has gained ${this.attacks[attacks[1]].name}.`);
     }
     return messages;
   },

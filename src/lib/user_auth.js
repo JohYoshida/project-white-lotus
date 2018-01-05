@@ -36,13 +36,9 @@ export function postRegister(event) {
   }));
 }
 
-export function setUserState(component, res) {
+export function setLoggedIn(component) {
   const {cookies} = component.props;
-  return (res.json().then(data => {
-    if (!data.error) {
-      cookies.set('loggedin', true);
-      component.setState({loggedin: cookies.get('loggedin')});
-      fetchUserDetails(component);
-    }
-  }));
+  cookies.set('loggedin', true);
+  component.setState({loggedin: cookies.get('loggedin')});
+  fetchUserDetails(component);
 }

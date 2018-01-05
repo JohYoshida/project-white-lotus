@@ -124,16 +124,15 @@ div#battlefield {
     border: 2px solid #B0BEC5;
     font-size: 1rem;
     z-index: -2;
-    overflow-y: hidden;
+    overflow-y: auto;
     border-radius: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem; }
     div#battlefield section.messages section.messages-content {
       padding: 2rem;
-      border-radius: 1rem;
-      height: 100%; }
+      border-radius: 1rem; }
       div#battlefield section.messages section.messages-content p {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         color: white; }
   div#battlefield .player {
     background-color: #826682;
@@ -195,13 +194,22 @@ section.modal {
       border-bottom-left-radius: 1rem;
       border-bottom-right-radius: 1rem;
       background-color: #826682; }
+  section.modal div.card-modal-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    width: 496px;
+    margin: auto; }
 
 .monster-container {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline; }
   .monster-container div.card-full {
-    margin-right: 2rem; }
+    margin-right: 1rem; }
 
 .battlefield-active {
   position: relative;
@@ -230,7 +238,7 @@ section.modal {
       text-align: center;
       margin: auto; }
       .battlefield-active .battlefield-active-battler .card-image-header img {
-        width: 100%; }
+        height: 100%; }
     .battlefield-active .battlefield-active-battler span.card-hp {
       font-size: 1rem; }
     .battlefield-active .battlefield-active-battler span.card-acc {
@@ -245,26 +253,14 @@ section.modal {
     .battlefield-active .abilities .abilities-actions {
       background-color: #574457;
       border-radius: 1rem;
-      display: flex;
-      padding: 1rem 1rem; }
-    .battlefield-active .abilities button.sword-ico {
-      background-color: #574457;
-      border-color: #574457;
-      display: block;
-      background-image: url("/assets/icons/prime_attack_black.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
+      padding: .5rem 1rem; }
+    .battlefield-active .abilities button {
+      text-transform: capitalize;
       cursor: pointer;
-      display: block;
-      height: 64px;
-      width: 64px; }
-      .battlefield-active .abilities button.sword-ico:hover {
-        border-color: #574457;
-        background-color: #574457;
-        opacity: 0.5; }
-      .battlefield-active .abilities button.sword-ico:first-of-type {
-        margin-right: .5rem; }
+      margin-top: .5rem;
+      margin-bottom: .5rem;
+      font-size: 1rem;
+      padding: 0 1rem; }
 
 .battlefield-onBench .bench-monster {
   display: inline-block;
@@ -289,12 +285,12 @@ section.modal {
     text-align: center;
     margin: auto; }
     .battlefield-onBench .bench-monster .card-image-header img {
-      width: 100%; }
+      height: 100%; }
   .battlefield-onBench .bench-monster button {
     position: absolute;
     margin: 0;
     left: 0;
-    bottom: 0; }
+    top: 0; }
   .battlefield-onBench .bench-monster span.card-hp {
     font-size: 1rem; }
   .battlefield-onBench .bench-monster span.card-acc {
@@ -304,8 +300,8 @@ section.modal {
   box-shadow: 0px 2px 10px black;
   position: relative;
   overflow: hidden;
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   margin-bottom: 4rem;
   background-image: url("/assets/images/monster-bg.png");
   background-size: contain;
@@ -331,8 +327,13 @@ section.modal {
     margin: auto;
     z-index: 0; }
     .card-full div.card-image-header img {
-      width: 100%; }
+      display: block;
+      margin: auto;
+      width: auto;
+      height: 100%; }
   .card-full:hover .card-details {
+    display: block; }
+  .card-full:hover .delete-monster-button {
     display: block; }
   .card-full .card-details {
     display: none;
@@ -356,8 +357,7 @@ section.modal {
       padding-right: 1rem;
       padding-bottom: .5rem;
       padding-top: .5rem;
-      height: 120px;
-      overflow-y: auto; }
+      min-height: 120px; }
       .card-full .card-details div.card-details-abilities strong.abilities-name {
         font-size: .8rem;
         text-transform: capitalize;
@@ -368,8 +368,10 @@ section.modal {
         margin-bottom: 1rem; }
 
 .delete-monster-button {
+  display: none;
   position: absolute;
-  bottom: 2rem;
+  top: 1rem;
+  left: 2rem;
   font-size: .5em;
   padding: 0rem 1rem;
   z-index: 10; }
@@ -379,30 +381,30 @@ span.card-hp {
   padding: 1rem;
   color: white;
   font-size: 1em;
-  top: 0;
+  bottom: 0;
   left: 0;
-  border-bottom: 2px solid white;
+  border-top: 2px solid white;
   border-right: 2px solid white;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 1rem;
   font-weight: bold;
   z-index: 9999; }
 
 span.card-acc {
   padding: 1rem;
   position: absolute;
-  font-size: 1.2em;
+  font-size: 1em;
   bottom: 0;
   right: 0;
   color: white;
   border-top: 2px solid white;
   border-left: 2px solid white;
-  border-top-left-radius: 10px;
+  border-top-left-radius: 1rem;
   font-weight: bold;
   z-index: 999; }
 
 .card-full.card-modal {
-  width: 500px;
-  height: 500px; }
+  width: 400px;
+  height: 400px; }
   .card-full.card-modal .card-details {
     display: block; }
     .card-full.card-modal .card-details div.card-details-abilities {
@@ -420,11 +422,10 @@ span.card-acc {
     right: 2rem;
     display: block; }
   .team .team-team-members, .addTeamPane-new-team .team-team-members {
-    display: flex;
-    justify-content: center; }
+    display: flex; }
     .team .team-team-members .card-full, .addTeamPane-new-team .team-team-members .card-full {
-      margin-top: 2rem;
       margin-right: 1rem;
+      margin-top: 2rem;
       margin-bottom: 2rem; }
 
 .teams-list {
@@ -433,10 +434,8 @@ span.card-acc {
 .addTeamPane-container, .addTeamPane-new-team {
   display: flex;
   flex-wrap: wrap; }
-  .addTeamPane-container .monster-card, .addTeamPane-new-team .monster-card {
-    margin-right: 2rem; }
-    .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
-      margin-bottom: 1.5rem; }
+  .addTeamPane-container .monster-card .card-full, .addTeamPane-new-team .monster-card .card-full {
+    margin-bottom: 1.5rem; }
   .addTeamPane-container button, .addTeamPane-new-team button {
     display: block;
     margin: auto; }
@@ -444,7 +443,7 @@ span.card-acc {
 .addTeamPane-container .monster-card {
   margin-bottom: 4rem; }
   .addTeamPane-container .monster-card .card-full {
-    margin-right: 2rem;
+    margin-right: 1rem;
     margin-bottom: 1.5rem; }
 .addTeamPane-container button {
   display: block;
@@ -454,7 +453,10 @@ span.card-acc {
   display: flex;
   justify-content: center; }
   .addTeamPane-new-team .card-full {
-    margin-bottom: 0; }
+    height: 300px;
+    width: 300px;
+    margin-bottom: 0;
+    margin-right: 1rem; }
 
 button.add-a-team {
   margin-bottom: 2rem; }
@@ -472,82 +474,67 @@ form#teamNameForm {
   border: 2px solid #BBBBBB;
   width: 1100px; }
 
-span.monster-hp {
+span.monster-name {
+  display: none;
+  width: 100%;
+  text-align: center;
   position: absolute;
+  font-size: .8rem;
   bottom: 22rem;
   color: white; }
 
-span.monster-name {
+span.monster-hp {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: auto;
   position: absolute;
-  width: 100px;
-  font-size: .8rem;
-  bottom: 25rem;
+  bottom: 19rem;
   color: white; }
 
-.player-monster, .player-monster-bench-1, .player-monster-bench-2, .player-monster-bench-3, .player-monster-active {
-  position: absolute;
-  height: 200px;
+.kaiju {
+  height: 187px;
+  width: 187px; }
+
+.mecha {
   width: 100px;
+  height: 187px; }
+
+.player-side {
+  position: absolute;
+  display: flex;
   bottom: 0;
-  z-index: 2; }
-
-.player-monster-bench-1 {
-  left: 4rem; }
-  .player-monster-bench-1 img {
+  left: 2rem; }
+  .player-side .player-monster {
+    position: relative;
+    margin-right: 1rem;
+    cursor: pointer; }
+  .player-side img {
     transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
+    height: 100%;
+    width: 100%; }
+  .player-side:hover span.monster-name {
+    display: block; }
+  .player-side .active {
+    order: 1; }
 
-.player-monster-bench-2 {
-  left: 18rem; }
-  .player-monster-bench-2 img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
-
-.player-monster-bench-3 {
-  left: 32rem; }
-  .player-monster-bench-3 img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
-
-.player-monster-active {
-  left: 36rem; }
-  .player-monster-active img {
-    transform: scaleX(-1);
-    width: 100%;
-    height: 100%; }
-
-.opponent-monster, .opponent-monster-bench-1, .opponent-monster-bench-2, .opponent-monster-bench-3, .opponent-monster-active {
+.opponent-side {
   position: absolute;
-  height: 200px;
-  width: 100px;
+  display: flex;
+  height: auto;
+  right: 2rem;
   bottom: 0; }
-
-.opponent-monster-bench-1 {
-  right: 4rem; }
-  .opponent-monster-bench-1 img {
-    width: 100%;
-    height: 100%; }
-
-.opponent-monster-bench-2 {
-  right: 18rem; }
-  .opponent-monster-bench-2 img {
-    width: 100%;
-    height: 100%; }
-
-.opponent-monster-bench-3 {
-  right: 32rem; }
-  .opponent-monster-bench-3 img {
-    width: 100%;
-    height: 100%; }
-
-.opponent-monster-active {
-  right: 36rem; }
-  .opponent-monster-active img {
-    width: 100%;
-    height: 100%; }
+  .opponent-side .opponent-monster {
+    position: relative;
+    margin-left: 1rem;
+    cursor: pointer; }
+  .opponent-side img {
+    height: 100%;
+    width: 100%; }
+  .opponent-side:hover span {
+    display: block; }
+  .opponent-side .active {
+    order: -1; }
 
 .store-items {
   margin-bottom: 2rem; }
