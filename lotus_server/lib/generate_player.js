@@ -33,7 +33,7 @@ class Player {
       monsterId === monstId ? monster.bench = false : monster.bench = true;
     }
     this.findActiveMonster();
-    return [`${this.name || 'user'}: has changed their active monster to ${this.activeMonster.name}`];
+    return [`${this.name || 'user'} has changed their active monster to ${this.activeMonster.name}`];
   }
   findActiveMonster(){
     for(const monsterId in this.team){
