@@ -4,9 +4,10 @@ const uuid = require('uuid/v1');
 // Each turn, the modifier's update function will be called, taking itself as an argument.
 // see modifier.test.js for a use case.
 class Modifier{
-  constructor(monster, modifierName, attributesToChange, updateFunction){
+  constructor(monster, attributesToChange, modifierName, description, updateFunction){
     this.id = uuid();
     this.name = modifierName;
+    this.description = description;
     this.savedAttributes = {};
     // change monster attributes
     for(const attribute in attributesToChange){

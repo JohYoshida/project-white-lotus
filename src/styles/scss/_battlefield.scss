@@ -35,12 +35,12 @@ span.monster-hp{
   height: 187px;
 }
 
-.player-side{
+.opponent-side{
   position: absolute;
   display: flex;
   bottom: 0;
   left: 2rem;
-  .player-monster{
+  .opponent-monster{
     position: relative;
     margin-right: 1rem;
     cursor: pointer;
@@ -60,13 +60,13 @@ span.monster-hp{
   }
 }
 
-.opponent-side{
+.player-side{
   position: absolute;
   display: flex;
   height: auto;
   right: 2rem;
   bottom: 0;
-  .opponent-monster{
+  .player-monster{
     position: relative;
     margin-left: 1rem;
     cursor: pointer;

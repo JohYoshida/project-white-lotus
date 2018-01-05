@@ -50,7 +50,7 @@ const doAOEAttack = (attackedPlayer, messages, dmg, attacker) => {
     const damage = damageCalculator(dmg, compareTyping(attacker, curMonster));
     curMonster.takeDamage(damage);
   }
-  return ['> All monsters take damage!'];
+  return ['All monsters take damage!'];
 };
 
 const attackFuncs = {
@@ -59,12 +59,12 @@ const attackFuncs = {
     const dmg = 4;
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-    new Modifier(targetMonster, 'dot', {}, (modifier) => {
+    const description = `Slime causes ${targetMonster.name} to lose ${damage} hp each turn (3 turns).`;
+    new Modifier(targetMonster, {}, 'dot', description, (modifier) => {
       // check turn count
       modifier.count ? modifier.count++ : modifier.count = 1;
       if(modifier.count >= 3) return modifier.removeModifier();
       targetMonster.takeDamage(damage);
-      return `Toxic Slime: ${targetMonster.name} took ${damage} damage!`;
     });
     return [`${this.name} attacks! ${targetMonster.name} becomes enveloped in slime...`];
   },
@@ -84,7 +84,8 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(6, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    new Modifier(targetMonster, 'debuff', {accuracy_bonus: targetMonster.accuracy_bonus - 1}, (modifier) => {
+    const description = `${targetMonster.name} loses 1 accuracy per turn until benched. Then accuracy resets.`;
+    new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, 'debuff', description, (modifier) => {
       // If the monster is on the bench, remove the modifier.
       if(targetMonster.bench) modifier.removeModifier();
       targetMonster.accuracy_bonus -= 1;
@@ -109,9 +110,11 @@ const attackFuncs = {
     const damage = damageCalculator(5, compareTyping(this, targetMonster));
     attackedPlayer.activeMonster.takeDamage(damage);
     // Increase accuracy
-    new Modifier(this, 'buff', {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
+    let description1 = `${this.name} has +2 accuracy until next turn.`;
+    new Modifier(this, {accuracy_bonus: this.accuracy_bonus + 2}, 'accBuff', description1, (modifier) => modifier.removeModifier());
     // Prevents benching
-    new Modifier(targetMonster, 'stuck', {canBench: false}, (modifier) => {
+    let description2 = `${targetMonster.name} cannot be benched until next turn.`;
+    new Modifier(targetMonster, {canBench: false}, 'stuck', description2, (modifier) => {
       this.count ? this.count++ : this.count = 1;
       if(this.count > 1){
         modifier.removeModifier();
@@ -122,8 +125,8 @@ const attackFuncs = {
   // Secondary attack
   deep_knowledge: function(attackedPlayer){
     const {activeMonster} = attackedPlayer;
-
-    new Modifier(this, 'morph', {type: activeMonster.type}, (modifier) => this.bench && modifier.removeModifier());
+    const description = `Changes type to ${activeMonster.type}.`;
+    new Modifier(this, {type: activeMonster.type}, 'morph', description, (modifier) => this.bench && modifier.removeModifier());
     return [`${this.name}'s type changed to ${activeMonster.type} type.`];
   },
   // Secondary attack
@@ -131,11 +134,11 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(10, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-
-    new Modifier(targetMonster, 'dot', {}, (modifier) => {
+    const description = `The sludge causes ${targetMonster.name} to lose 1hp per turn until benched.`;
+    new Modifier(targetMonster, {}, 'dot', description, (modifier) => {
       if(targetMonster.bench) return modifier.removeModifier();
       targetMonster.hp -= 1;
-      return `The sludge causes ${targetMonster.name} to lose 1 hp. They have ${targetMonster.hp} hp.`;
+      return;
     });
     return [`${this.name} attacks! ${targetMonster.name} took ${damage} damage, The sludge envelopes them.`];
   },
