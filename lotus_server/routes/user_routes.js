@@ -18,9 +18,8 @@ const registerUser = require('../lib/register_user');
 module.exports = (db) => {
   const User = getUserModel(db);
 
-  userRouter.post('/', (req, res) => {
-    registerUser(res, req.body.email, req.body.password);
-  });
+  // register a user
+  userRouter.post('/', registerUser);
 
   // Change the player's money
   userRouter.put('/brouzoff/', (req, res) => {
