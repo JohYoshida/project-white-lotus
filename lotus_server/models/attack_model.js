@@ -154,7 +154,7 @@ const attackFuncs = {
     } else {
       damage = damageCalculator(dmg, compareTyping(this, targetMonster));
       targetMonster.takeDamage(damage);
-      messages = [`${targetMonster.name} took ${damage} damage!`];
+      messages = [{target:targetMonster, damage, message:`${targetMonster.name} took ${damage} damage!`}];
     }
     return messages;
   },
