@@ -4,8 +4,9 @@ const uuid = require('uuid/v1');
 // Each turn, the modifier's update function will be called, taking itself as an argument.
 // see modifier.test.js for a use case.
 class Modifier{
-  constructor(monster, attributesToChange, updateFunction){
+  constructor(monster, modifierName, attributesToChange, updateFunction){
     this.id = uuid();
+    this.name = modifierName;
     this.savedAttributes = {};
     // change monster attributes
     for(const attribute in attributesToChange){
@@ -24,10 +25,9 @@ class Modifier{
         monster[attribute] = savedAttributeValue;
       }
       delete monster.modifiers[this.id];
-    }
+    };
   }
   // remove the modifier from the monster to whom it belongs
-
 }
 
 class ModifierCollection{
@@ -38,6 +38,22 @@ class ModifierCollection{
   }
   length(){
     return Object.keys(this).length;
+  }
+
+  /**
+   * has - checks if a modifier collection has a certain modifier, by name.
+   *
+   * @param  {string} name  the name of the modifier type you'd like to check in on.
+   * @return {boolean}
+   */
+  has(name){
+    let result = false;
+    this.forEach((modifier) => {
+      if(modifier.name === name){
+        result = true;
+      }
+    });
+    return result;
   }
 }
 

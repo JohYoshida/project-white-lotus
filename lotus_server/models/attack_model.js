@@ -58,7 +58,7 @@ const attackFuncs = {
     const dmg = 4;
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-    new Modifier(targetMonster, {}, (modifier) => {
+    new Modifier(targetMonster, 'dot', {}, (modifier) => {
       // check turn count
       modifier.count ? modifier.count++ : modifier.count = 1;
       if(modifier.count >= 3) return modifier.removeModifier();
@@ -83,7 +83,7 @@ const attackFuncs = {
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(6, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
-    new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, (modifier) => {
+    new Modifier(targetMonster, 'debuff', {accuracy_bonus: targetMonster.accuracy_bonus - 1}, (modifier) => {
       // If the monster is on the bench, remove the modifier.
       if(targetMonster.bench) modifier.removeModifier();
       targetMonster.accuracy_bonus -= 1;
@@ -108,9 +108,9 @@ const attackFuncs = {
     const damage = damageCalculator(5, compareTyping(this, targetMonster));
     attackedPlayer.activeMonster.takeDamage(damage);
     // Increase accuracy
-    new Modifier(this, {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
+    new Modifier(this, 'buff', {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
     // Prevents benching
-    new Modifier(targetMonster, {canBench: false}, (modifier) => {
+    new Modifier(targetMonster, 'stuck', {canBench: false}, (modifier) => {
       this.count ? this.count++ : this.count = 1;
       if(this.count > 1){
         modifier.removeModifier();
@@ -122,7 +122,7 @@ const attackFuncs = {
   deep_knowledge: function(attackedPlayer){
     const {activeMonster} = attackedPlayer;
 
-    new Modifier(this, {type: activeMonster.type}, (modifier) => this.bench && modifier.removeModifier());
+    new Modifier(this, 'morph', {type: activeMonster.type}, (modifier) => this.bench && modifier.removeModifier());
     return [`> ${this.name}'s type changed to ${activeMonster.type} type.`];
   },
   // Secondary attack
@@ -131,7 +131,7 @@ const attackFuncs = {
     const damage = damageCalculator(10, compareTyping(this, targetMonster));
     targetMonster.takeDamage(damage);
 
-    new Modifier(targetMonster, {}, (modifier) => {
+    new Modifier(targetMonster, 'dot', {}, (modifier) => {
       if(targetMonster.bench) return modifier.removeModifier();
       targetMonster.hp -= 1;
       return `The sludge causes ${targetMonster.name} to lose 1 hp. They have ${targetMonster.hp} hp.`;
@@ -195,7 +195,7 @@ const attackFuncs = {
     if(!randomBenchedMonster){
       return messages;
     }
-    new Modifier(randomBenchedMonster, {passiveActive: false}, modifier => {
+    new Modifier(randomBenchedMonster, 'deactivate', {passiveActive: false}, modifier => {
       if(!randomBenchedMonster.bench) {
         modifier.removeModifier();
         return `> ${randomBenchedMonster.name}'s passive has been reactivated!`;
