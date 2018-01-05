@@ -44,6 +44,7 @@ const damageCalculator = (damage, effectiveness) => {
 
 // Handles AOE attack lcgic
 const doAOEAttack = (attackedPlayer, messages, dmg, attacker) => {
+  // Loop over each monster and cause them to take damage.
   for(const monsterId in attackedPlayer.team){
     const curMonster = attackedPlayer.team[monsterId];
     const damage = damageCalculator(dmg, compareTyping(attacker, curMonster));
