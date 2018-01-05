@@ -12,7 +12,7 @@ const abilityFuncs = {
     }
     player.activeMonster.supercharged = true;
     this.passiveActive = false;
-    return `> ${this.name} has supercharged ${player.activeMonster.name}`;
+    return `${this.name} has supercharged ${player.activeMonster.name}`;
   },
   nanomachine_swarm: function(player){
     const {team} = player;
@@ -20,7 +20,7 @@ const abilityFuncs = {
       const curMonster = team[monsterId];
       if(curMonster.creature === 'mecha') curMonster.hp += 2;
     }
-    return `> ${this.name} heals all mecha's by 2hp`;
+    return `${this.name} heals all mecha's by 2hp`;
   },
   electric_shield: function(player){
     if (!player.activeMonster) {
@@ -28,7 +28,7 @@ const abilityFuncs = {
     }
     player.activeMonster.protector = this;
     this.passiveActive = false;
-    return `> ${this.name} is protecting ${player.activeMonster.name}`;
+    return `${this.name} is protecting ${player.activeMonster.name}`;
   },
   // Have to set type manual because asynchronous programming would not work here.
   // New types are set with the modifier and removed when the monster is benched.
@@ -40,7 +40,7 @@ const abilityFuncs = {
       if(player.activeMonster.bench) modifier.removeModifier();
     });
     this.passiveActive = false;
-    return `> ${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
+    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
   },
   crush: function(player){
     if (!player.activeMonster) {
@@ -50,7 +50,7 @@ const abilityFuncs = {
       if(player.activeMonster.bench) modifier.removeModifier();
     });
     this.passiveActive = false;
-    return `> ${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
+    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
   },
   spray: function(player){
     if (!player.activeMonster) {
@@ -60,7 +60,7 @@ const abilityFuncs = {
       if(player.activeMonster.bench) modifier.removeModifier();
     });
     this.passiveActive = false;
-    return `> ${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
+    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
   }
 };
 
