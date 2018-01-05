@@ -74,8 +74,10 @@ const attackFuncs = {
     for(const monsterId in attackedPlayer.team){
       const curMonster = attackedPlayer.team[monsterId];
       const damage = damageCalculator(3, compareTyping(this, curMonster));
+      /* @TODO have the take damage function return a message object as below */
       curMonster.takeDamage(damage);
-      messages.unshift(`${curMonster.name} took ${damage} damage!`);
+
+      messages.unshift({target: curMonster, damage, message:`${curMonster.name} took ${damage} damage!`});
     }
     return messages;
   },

@@ -583,7 +583,8 @@ span.monster-hp {
   width: 100%;
   text-align: center;
   color: red;
-  animation: damageNumber 2s infinite; }
+  animation: damageNumber 1s linear;
+  animation-fill-mode: forwards; }
 
 .store-items {
   margin-bottom: 2rem; }
