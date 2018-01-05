@@ -255,17 +255,29 @@ section.modal {
       border-radius: 1rem;
       padding: .5rem 1rem; }
     .battlefield-active .abilities button {
+      display: block;
       text-transform: capitalize;
       cursor: pointer;
       margin-top: .5rem;
       margin-bottom: .5rem;
+      margin-right: 1rem;
       font-size: 1rem;
       padding: 0 1rem; }
+  .battlefield-active .modifiers {
+    position: absolute;
+    bottom: 18px;
+    left: 400px; }
+    .battlefield-active .modifiers h4 {
+      font-size: 1.1em;
+      margin-left: 0; }
+    .battlefield-active .modifiers img {
+      height: 32px;
+      width: 32px; }
 
 .battlefield-onBench .bench-monster {
   display: inline-block;
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
   margin-right: 1rem;
   position: relative;
   background-image: url("/assets/images/monster-bg.png");
@@ -392,7 +404,7 @@ span.card-hp {
 span.card-acc {
   padding: 1rem;
   position: absolute;
-  font-size: 1em;
+  font-size: 1KBem;
   bottom: 0;
   right: 0;
   color: white;

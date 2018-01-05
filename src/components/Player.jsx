@@ -62,6 +62,15 @@ class Player extends Component {
   }
   render() {
     const {player} = this.props;
+    const displayModifiers = () => {
+      const modifiers = [];
+      for(const modifierId in player.activeMonster.modifiers){
+        const modifier = player.activeMonster.modifiers[modifierId];
+        modifiers.push(<img src="https://d2ujflorbtfzji.cloudfront.net/key-image/46086c17-d663-4998-9931-507841b47350.png"
+                            title={modifier.name} />);
+      }
+      return modifiers;
+    };
     return (
       <section className={this.props.className}>
         <div className="column">
@@ -70,11 +79,18 @@ class Player extends Component {
             {this.generateBenchedMonster()}
           </div>
         </div>
-        <div className="battlefield-active column column-40">
+        <div className="battlefield-active column column">
           <h4>Active Monster</h4>
           <div className="battlefield-activeMonster">
             {this.generateActiveMonster()}
           </div>
+          {player.activeMonster &&
+            <section className='modifiers'>
+              <h4>Modifiers</h4>
+              <p>{player.activeMonster.name}</p>
+              {displayModifiers()}
+            </section>
+          }
           {this.showAttacks()}
         </div>
       </section>

@@ -10,9 +10,15 @@ const abilityFuncs = {
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.supercharged = true;
-    this.passiveActive = false;
-    return `${this.name} has supercharged ${player.activeMonster.name}`;
+    const targetMonster = player.activeMonster;
+    if(targetMonster.modifiers.has('aoe')){
+      return;
+    }
+    new Modifier(targetMonster, 'aoe', {supercharged: true}, (modifier) => {
+      if(!this.passiveActive){
+        modifier.removeModifier();
+      }
+    });
   },
   nanomachine_swarm: function(player){
     const {team} = player;

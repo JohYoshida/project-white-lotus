@@ -50,12 +50,26 @@
       padding: .5rem 1rem;
     }
     button{
+      display: block;
       text-transform: capitalize;
       cursor: pointer;
       margin-top: .5rem;
       margin-bottom: .5rem;
+      margin-right: 1rem;
       font-size: 1rem;
       padding: 0 1rem;
+    }
+  }
+  .modifiers{
+    position: absolute;
+    bottom: 18px; left:400px;
+    h4{
+      font-size: 1.1em;
+      margin-left: 0;
+    }
+    img{
+      height: 32px;
+      width: 32px;
     }
   }
 }
@@ -63,8 +77,8 @@
 .battlefield-onBench{
   .bench-monster{
     display: inline-block;
-    width:150px;
-    height:150px;
+    width:125px;
+    height:125px;
     margin-right: 1rem;
     position: relative;
     @include card-background-image();
