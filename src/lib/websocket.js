@@ -1,3 +1,11 @@
+const printDamage = (monster, damage) => {
+  console.log(monster);
+  const monsterContainer = document.querySelector(`#m-${monster.id}`);
+  const damageSpan = document.createElement('span');
+  damageSpan.classList.add('damage');
+  damageSpan.innerText = damage;
+  monsterContainer.prepend(damageSpan);
+};
 
 const generateBattleSocket = (battleComponent, team) => {
   const {roomName} = battleComponent.props;
@@ -13,19 +21,29 @@ const generateBattleSocket = (battleComponent, team) => {
   });
   // When game updates are sent
   socket.addEventListener('message', (event) => {
-    // Try block to make sure things don't break if something that isn't JSON is sent down.
+    let player = null;
+    let opponent = null;
+    let messages = null;
+    let game = null;
+    // try block to make sure things don't break if something that isn't JSON is sent down.
     try{
-      const {game, messages} = JSON.parse(event.data);
-      console.log(messages);
-      let player = null;
-      let opponent = null;
-      game.players.forEach(pc => {
-        pc.id ? player = pc : opponent = pc;
-      });
-      battleComponent.setState({game, messages: messages || [], player, opponent});
+      const gameData = JSON.parse(event.data);
+      messages = gameData.messages;
+      game = gameData.game;
     } catch(e) {
       console.log(e);
     }
+    game.players.forEach(pc => {
+      pc.id ? player = pc : opponent = pc;
+    });
+    if(messages){
+      for(const message of messages){
+        if(message.target){
+          printDamage(message.target, message.damage);
+        }
+      }
+    }
+    battleComponent.setState({game, messages:[], player, opponent});
   });
   return socket;
 };

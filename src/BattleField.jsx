@@ -9,28 +9,21 @@ class Monster extends Component {
   constructor(props) {
     super(props);
   }
-  // Places monster images on the battlefield. Prefix is either player or opponent as a string.
+  // Places monster images on the battlefield. Prefix is either "player" or "opponent" as a string.
   generateMonsterImages(player, prefix){
     const {team, activeMonster} = player;
     const monsters = [];
     // add benched monsters
     for(const monsterId in team){
-      if(activeMonster && monsterId === activeMonster.id) continue;
       const curMonster = team[monsterId];
+      let className = `${prefix}-monster ${curMonster.creature}`;
+      // if this monsters is the active monster, add the active class.
+      if(activeMonster && monsterId === activeMonster.id) className += ' active';
       monsters.push(
-        <div key={monsterId} className={`${prefix}-monster ${curMonster.creature}`} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
+        <div key={monsterId} id={`m-${monsterId}`} className={className} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
           <span className='monster-name'>{curMonster.name}</span>
           <span className='monster-hp'>HP:{curMonster.hp}</span>
           <img src={curMonster.image_url} alt={curMonster.name}/>
-        </div>
-      );
-    }
-    if(activeMonster) {
-      monsters.push(
-        <div className={`${prefix}-monster active ${activeMonster.creature}`} onClick={toggleModalByIdButton(`${activeMonster.id}-modal`)}>
-          <span className='monster-name'>{activeMonster.name}</span>
-          <span className='monster-hp'>HP:{activeMonster.hp}</span>
-          <img src={activeMonster.image_url} alt={activeMonster.name} />
         </div>
       );
     }
