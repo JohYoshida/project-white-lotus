@@ -30,14 +30,33 @@ class CompleteMonster {
     this.passiveActive = true;
     this.modifiers = new ModifierCollection();
   }
-  takeDamage(damage){
-    if(!this.protector) return this.hp -= damage;
 
-    // If a passive monster has an electric_shield ability.
+  /**
+   * takeDamage - Deals damage to monster. Returns an array with the updates the function made
+   *
+   * @param  {number} damage   the amount of damage to inflict
+   * @param  {array} messages  An array of existing messages, optional.
+   * @return {array}           Returns an array containing messages.
+   */
+  takeDamage(damage, messages){
+    if(!messages) messages = [];
+    if(damage < 1){
+      return null;
+    }
+    if(!this.protector){
+      this.hp -= damage;
+      messages.unshift({target: this, damage, message:`${this.name} took ${damage} damage!`});
+      return messages;
+    }
+    // If there is a benched monster protecting this monster.
     const protectorDamage = damage > 5 ? damage - 5 : damage;
-    this.protector.hp -= protectorDamage;
     this.hp -= damage - protectorDamage;
-    return;
+    messages.unshift(
+      {target: this, damage, message:`${this.name} took ${damage} damage!`},
+      this.protectorDamage.takeDamage(protectorDamage)
+    );
+    // filter out null results before sending
+    return messages.filter(message => message);
   }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};

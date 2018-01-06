@@ -1,7 +1,10 @@
-const printDamage = (monster, damage) => {
-  /* @TODO add functionality for determining if it's opponent damage or not, e.g. for DOT */
-
-  const monsterContainer = document.querySelector(`.opponent-side #m-${monster.id}`);
+// Takes in the monster to target, the damage to write.
+// Also takes a playerId and a player (optional). These are just used to determine if it's a DOT effect.
+const printDamage = (monster, damage, playerId, player) => {
+  let monsterContainer = document.querySelector(`.opponent-side #m-${monster.id}`);
+  if(playerId && playerId === player){
+    monsterContainer = document.querySelector(`.player-side #m-${monster.id}`);
+  }
 
   /* @TODO put this into it's own factory function */
 
@@ -47,16 +50,38 @@ const generateBattleSocket = (battleComponent, team) => {
     game.players.forEach(pc => {
       pc.id ? player = pc : opponent = pc;
     });
+    const damagesOnly = {};
+    const messagesOnly = [];
     if(messages){
-      /* @TODO implement functionality for adding up total damages. */
-      for(const message of messages){
-        if(message.target){
-          printDamage(message.target, message.damage);
+      /**
+       * Loops over each messages and builds an object for the damages part of the messages
+       * and an array for the message part of the of the messages.
+       * This way, total damage will be shown to users as opposed to an individual damage.
+       */
+      messages.forEach(message => {
+        if(!message.target){
+          messagesOnly.push(message);
+        }
+        const {target, damage, playerId} = message;
+        // OR short circuiting here incase playerID was not given in the message
+        const damageId = target.id + (playerId || '');
+        if(damagesOnly[damageId]){
+          damagesOnly[damageId] += damage;
+        } else {
+          damagesOnly[damageId] = {
+            target, damage, playerId
+          };
+        }
+        messagesOnly.push(message);
+      });
+      for(const damageId in damagesOnly){
+        const damageMessage = damagesOnly[damageId];
+        if(damageMessage.target){
+          printDamage(damageMessage.target, damageMessage.damage, damageMessage.playerId, player);
         }
       }
     }
-    /* @TODO reimplement messages */
-    battleComponent.setState({game, messages:[], player, opponent});
+    battleComponent.setState({game, messages:messagesOnly, player, opponent});
   });
   return socket;
 };
