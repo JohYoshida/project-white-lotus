@@ -16,12 +16,10 @@ class Game{
     const {activePlayer, idlePlayer} = this;
     const {options, name} = actionObj;
     const messages = activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
-    // switch turns, check for deaths
-    this.switchTurns();
     return messages;
   }
   // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
-  // Messages given in the take action object to make it easier to use in the modifier update functions
+  // Messages given in the takeAction function to make it easier to use in the modifier update functions
   passive(player, messages){
     if(!player.activeMonster) return;
     const {team} = player;
@@ -46,7 +44,6 @@ class Game{
     if(!monsterId){
       return;
     }
-    this.switchTurns();
     return activePlayer.activateMonster(monsterId);
   }
   switchTurns(){
@@ -56,6 +53,7 @@ class Game{
   }
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
+    this.switchTurns();
     for(const player of this.players){
       if(player.team.aliveMonsters() === 0){
         const losingPlayerIndex = this.players.indexOf(player);
@@ -68,7 +66,9 @@ class Game{
     }
   }
   takeAction(actionObj){
-    let messages = this[actionObj.action](actionObj) || [];
+    const {action} = actionObj;
+    // Takes the action given in the actionObj and runs it, creating the initial message array.
+    let messages = this[action](actionObj) || [];
     // After action is over, check active players and run passives.
     this.findActivePlayer(actionObj);
     for(const player of this.players){

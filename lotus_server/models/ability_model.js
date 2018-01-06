@@ -57,43 +57,46 @@ const abilityFuncs = {
       }
     });
   },
-  // Have to set type manual because asynchronous programming would not work here.
+  // Have to set type manually because asynchronous programming would not work here.
   // New types are set with the modifier and removed when the monster is benched.
   pierce: function(player){
     if (!player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(!targetMonster.modifier.has('morph') || targetMonster.type !== 'pierce'){
-      const description = 'Changes type to pierce.';
-      new Modifier(targetMonster, {type: {id: 1, name: 'pierce', weakness: 2}}, 'morph', description, (modifier) => {
-        if(player.activeMonster.bench) modifier.removeModifier();
-      });
+    if(targetMonster.modifier.has('morph') || targetMonster.type === 'pierce'){
+      return;
     }
+    const description = 'Changes type to pierce.';
+    new Modifier(targetMonster, {type: {id: 1, name: 'pierce', weakness: 2}}, 'morph', description, (modifier) => {
+      if(player.activeMonster.bench) modifier.removeModifier();
+    });
   },
   crush: function(player){
     if (!player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(!targetMonster.modifier.has('morph') || targetMonster.type !== 'crush'){
-      const description = 'Changes type to crush.';
-      new Modifier(targetMonster, {type: {id: 2, name: 'crush', weakness: 3}}, 'morph', description, (modifier) => {
-        if(targetMonster.bench) modifier.removeModifier();
-      });
+    if(targetMonster.modifier.has('morph') || targetMonster.type === 'crush'){
+      return;
     }
+    const description = 'Changes type to crush.';
+    new Modifier(targetMonster, {type: {id: 2, name: 'crush', weakness: 3}}, 'morph', description, (modifier) => {
+      if(targetMonster.bench) modifier.removeModifier();
+    });
   },
   spray: function(player){
     if (!player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(!targetMonster.modifier.has('morph') || targetMonster.type !== 'spray'){
-      const description = 'Changes type to spray.';
-      new Modifier(player.activeMonster, {type: {id: 3, name: 'spray', weakness: 1}}, 'morph', description, (modifier) => {
-        if(targetMonster.bench) modifier.removeModifier();
-      });
+    if(targetMonster.modifier.has('morph') || targetMonster.type === 'spray'){
+      return;
     }
+    const description = 'Changes type to spray.';
+    new Modifier(player.activeMonster, {type: {id: 3, name: 'spray', weakness: 1}}, 'morph', description, (modifier) => {
+      if(targetMonster.bench) modifier.removeModifier();
+    });
   }
 };
 
