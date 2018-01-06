@@ -61,8 +61,8 @@ const attackFuncs = {
   toxic_slime: function(attackedPlayer){
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(4, compareTyping(this, targetMonster));
-    const description = `Slime causes ${targetMonster.name} to lose ${damage} hp each turn (3 turns).`;
 
+    const description = `Slime causes ${targetMonster.name} to lose ${damage} hp each turn (3 turns).`;
     new Modifier(targetMonster, {}, 'dot', description, (modifier) => {
       // check turn count
       modifier.count ? modifier.count++ : modifier.count = 1;
@@ -70,9 +70,8 @@ const attackFuncs = {
       return targetMonster.takeDamage(damage);
     });
 
-    return [`${this.name} attacks! ${targetMonster.name} becomes enveloped in slime...`];
+    return [`${targetMonster.name} becomes enveloped in slime...`];
   },
-  // Secondary attack
   roar: function(attackedPlayer){
     return doAOEAttack(attackedPlayer, 3, this);
   },

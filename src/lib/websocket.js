@@ -52,18 +52,20 @@ const generateBattleSocket = (battleComponent, team) => {
     });
     const damagesOnly = {};
     const messagesOnly = [];
-    if(messages){
+    if(messages && messages.length > 0){
       /**
        * Loops over each messages and builds an object for the damages part of the messages
        * and an array for the message part of the of the messages.
        * This way, total damage will be shown to users as opposed to an individual damage.
        */
-      messages.forEach(message => {
-        if(!message.target){
-          messagesOnly.push(message);
+      messages.forEach(messageObject => {
+        if(!messageObject.target){
+          messagesOnly.push(messageObject);
+          return;
         }
-        const {target, damage, playerId} = message;
-        // OR short circuiting here incase playerID was not given in the message
+        const {target, damage, playerId, message} = messageObject;
+
+        // OR short circuiting here in case playerID was not given in the message
         const damageId = target.id + (playerId || '');
         if(damagesOnly[damageId]){
           damagesOnly[damageId] += damage;

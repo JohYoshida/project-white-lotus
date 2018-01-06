@@ -48,13 +48,16 @@ class CompleteMonster {
       messages.unshift({target: this, damage, message:`${this.name} took ${damage} damage!`});
       return messages;
     }
-    // If there is a benched monster protecting this monster.
-    const protectorDamage = damage > 5 ? damage - 5 : damage;
-    this.hp -= damage - protectorDamage;
-    messages.unshift(
-      {target: this, damage, message:`${this.name} took ${damage} damage!`},
-      this.protectorDamage.takeDamage(protectorDamage)
-    );
+    // If there is a benched monster protecting this monster. Check damage and effect protector accordingly.
+    let protectorDamage = 5;
+    if(damage > 5){
+      const totalDamage = damage - protectorDamage;
+      this.hp -= totalDamage;
+      messages.unshift({target: this, damage: totalDamage, message:`${this.name} took ${totalDamage} damage!`});
+      this.protector.takeDamage(protectorDamage, messages);
+    } else {
+      this.protector.takeDamage(damage, messages);
+    }
     // filter out null results before sending
     return messages.filter(message => message);
   }
