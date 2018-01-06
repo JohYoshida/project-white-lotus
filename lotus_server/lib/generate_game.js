@@ -21,21 +21,21 @@ class Game{
     return messages;
   }
   // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
-  passive(){
-    const {activePlayer} = this;
-    const {team} = activePlayer;
-    if(!activePlayer.activeMonster){
-      return;
-    }
+  // Messages given in the take action object to make it easier to use in the modifier update functions
+  passive(player, messages){
+    if(!player.activeMonster) return;
+    const {team} = player;
     for(let monsterId in team){
       const monster = team[monsterId];
       if(monster.bench && monster.passiveActive && monster.ability){
-        monster.ability.func(activePlayer);
+        monster.ability.func(player);
       }
-      // Loop over each modifier and update them.
-      monster.modifiers.forEach(modifier => {
-        modifier.update();
-      });
+      // Loop over each modifier and update them. But only for the current active player.
+      if(player === this.activePlayer){
+        monster.modifiers.forEach(modifier => {
+          modifier.update(messages);
+        });
+      }
     }
   }
   // this is used to execute position shifts, takes the id of the monster through the action object
@@ -63,16 +63,17 @@ class Game{
         this.gameOver = {winner:this.players[winningPlayerIndex], loser: this.players[losingPlayerIndex]};
         return;
       }
+      // executes passives and push the returning message to the messages list.
       player.turn ? this.activePlayer = player : this.idlePlayer = player;
     }
-    // executes passives and push the returning message to the messages list.
-    return this.passive();
   }
   takeAction(actionObj){
-    const messages = this[actionObj.action](actionObj) || [];
-    // After action is over, check active players and run passives if applicable.
+    let messages = this[actionObj.action](actionObj) || [];
+    // After action is over, check active players and run passives.
     this.findActivePlayer(actionObj);
-    // Returns log of changes.
+    for(const player of this.players){
+      this.passive(player, messages);
+    }
     return messages;
   }
 }

@@ -1,7 +1,7 @@
 const uuid = require('uuid/v1');
 // Takes an active monster, an object of attributesToChange and an update functions
 // it will add the modifier to the modifiers collection on first argument monster.
-// Each turn, the modifier's update function will be called, taking itself as an argument.
+// Each turn, the modifier's update function will be called, taking itself, and the current game messages as arguments.
 // see modifier.test.js for a use case.
 class Modifier{
   constructor(monster, attributesToChange, modifierName, description, updateFunction){
@@ -15,8 +15,9 @@ class Modifier{
       this.savedAttributes[attribute] = monster[attribute];
       monster[attribute] = attributeValue;
     }
-    this.update = () => {
-      return updateFunction(this);
+
+    this.update = (messages) => {
+      return updateFunction(this, messages);
     };
     monster.modifiers[this.id] = this;
 

@@ -2,7 +2,7 @@
 // Also takes a playerId and a player (optional). These are just used to determine if it's a DOT effect.
 const printDamage = (monster, damage, playerId, player) => {
   let monsterContainer = document.querySelector(`.opponent-side #m-${monster.id}`);
-  if(playerId && playerId === player){
+  if(playerId && playerId === player.id){
     monsterContainer = document.querySelector(`.player-side #m-${monster.id}`);
   }
 
@@ -15,7 +15,6 @@ const printDamage = (monster, damage, playerId, player) => {
   monsterContainer.prepend(damageSpan);
   new Promise(() => {
     setTimeout(() => {
-      console.log(damageSpan, 'deleted');
       monsterContainer.removeChild(damageSpan);
     }, 2000);
   });
@@ -66,9 +65,9 @@ const generateBattleSocket = (battleComponent, team) => {
         const {target, damage, playerId, message} = messageObject;
 
         // OR short circuiting here in case playerID was not given in the message
-        const damageId = target.id + (playerId || '');
+        const damageId = target.id + playerId;
         if(damagesOnly[damageId]){
-          damagesOnly[damageId] += damage;
+          damagesOnly[damageId].damage += damage;
         } else {
           damagesOnly[damageId] = {
             target, damage, playerId
