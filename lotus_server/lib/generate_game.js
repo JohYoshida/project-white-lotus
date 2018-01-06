@@ -53,7 +53,6 @@ class Game{
   }
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
-    this.switchTurns();
     for(const player of this.players){
       if(player.team.aliveMonsters() === 0){
         const losingPlayerIndex = this.players.indexOf(player);
@@ -69,7 +68,8 @@ class Game{
     const {action} = actionObj;
     // Takes the action given in the actionObj and runs it, creating the initial message array.
     let messages = this[action](actionObj) || [];
-    // After action is over, check active players and run passives.
+    // After action is over, switchTurns and check active players and run passives.
+    this.switchTurns();
     this.findActivePlayer(actionObj);
     for(const player of this.players){
       this.passive(player, messages);
