@@ -67,7 +67,7 @@ class Player extends Component {
     const modifiers = [];
     for(const modifierId in monster.modifiers){
       const modifier = monster.modifiers[modifierId];
-      let icon = 'https://d2ujflorbtfzji.cloudfront.net/key-image/46086c17-d663-4998-9931-507841b47350.png';
+      let icon = `/assets/icons/${modifier.name}.png`;
       modifiers.push(<img src={icon} title={modifier.description} />);
     }
     return(

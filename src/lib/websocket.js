@@ -5,6 +5,7 @@ const printDamage = (monster, damage, playerId, player) => {
   if(playerId && playerId === player.id){
     monsterContainer = document.querySelector(`.player-side #m-${monster.id}`);
   }
+  if(!monsterContainer) return;
 
   /* @TODO put this into it's own factory function */
 
