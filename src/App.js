@@ -15,7 +15,7 @@ import CreateBattle from './CreateBattle.jsx';
 import {toggleModalById} from './lib/element_effect_helpers';
 
 // Functions
-import {postLogin, fetchUserDetails, postRegister, setUserState} from './lib/user_auth.js';
+import {postLogin, fetchUserDetails, postRegister, setLoggedIn} from './lib/user_auth.js';
 import {postNewMonster} from './lib/store.js';
 
 class App extends Component {
@@ -53,14 +53,24 @@ class App extends Component {
   register(event) {
     event.preventDefault();
     postRegister(event).then(res => {
-      setUserState(this, res);
+      res.json().then(resObj => {
+        if(resObj.error){
+          return;
+        }
+        setLoggedIn(this);
+      });
     });
   }
 
   login(event) {
     event.preventDefault();
     postLogin(event).then(res => {
-      setUserState(this, res);
+      res.json().then(resObj => {
+        if(resObj.error){
+          return;
+        }
+        setLoggedIn(this);
+      });
     });
   }
 

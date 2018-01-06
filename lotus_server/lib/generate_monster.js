@@ -23,7 +23,6 @@ class CompleteMonster {
     this.hp = body.attributes.hp;
     this.type = type.attributes;
     this.accuracy_bonus = body.attributes.accuracy_bonus;
-    // Will eventually the compiled image
     this.image_url = monster.attributes.image || body.attributes.image_url;
     this.image = monster.attributes.image;
     this.bench = true;

@@ -13,7 +13,7 @@ const loginUser = (knex) => {
         bcrypt.compare(password, user.password, (err, result) => {
           if(result){
             req.session.id = user.id;
-            res.send(JSON.stringify({flash: 'Login confirmed'}));
+            res.status(200).send(JSON.stringify({flash: 'Login success!'}));
             return;
           }
           res.send(JSON.stringify({error:'User or password could not be found 2'}));

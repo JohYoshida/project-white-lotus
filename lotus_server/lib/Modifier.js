@@ -4,8 +4,9 @@ const uuid = require('uuid/v1');
 // Each turn, the modifier's update function will be called, taking itself as an argument.
 // see modifier.test.js for a use case.
 class Modifier{
-  constructor(monster, attributesToChange, updateFunction){
+  constructor(monster, modifierName, attributesToChange, updateFunction){
     this.id = uuid();
+    this.name = modifierName;
     this.savedAttributes = {};
     // change monster attributes
     for(const attribute in attributesToChange){
@@ -17,6 +18,10 @@ class Modifier{
       return updateFunction(this);
     };
     monster.modifiers[this.id] = this;
+
+    /**
+     * removeModifier - resets the monsters attributes and then deletes the modifier from the monster's modifier collection.
+     */
     this.removeModifier = () => {
       // Reset monster attributes.
       for(const attribute in this.savedAttributes){
@@ -24,20 +29,46 @@ class Modifier{
         monster[attribute] = savedAttributeValue;
       }
       delete monster.modifiers[this.id];
-    }
+    };
   }
-  // remove the modifier from the monster to whom it belongs
-
 }
 
 class ModifierCollection{
+
+  /**
+   * forEach - Loops over each modifier in a collection. Each iteration, it calls a callback with the modifier as an argument.
+   *
+   * @param  {function} callback  function that will be called each iteration, passing the current modifier.
+   */
   forEach(callback){
     for(const key in this){
       callback(this[key]);
     }
   }
+
+  /**
+   * length - Gets the number of modifiers a collection has.
+   *
+   * @return {number}  The number of modifiers in the collection it is a method of.
+   */
   length(){
     return Object.keys(this).length;
+  }
+
+  /**
+   * has - checks if a modifier collection has a certain modifier, by name.
+   *
+   * @param  {string} name  the name of the modifier type you'd like to check in on.
+   * @return {boolean}
+   */
+  has(name){
+    let result = false;
+    this.forEach((modifier) => {
+      if(modifier.name === name){
+        result = true;
+      }
+    });
+    return result;
   }
 }
 
