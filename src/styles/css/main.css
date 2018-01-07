@@ -616,4 +616,8 @@ span.monster-hp {
 div.egg {
   margin-right: 4rem; }
 
+section.flash-message {
+  color: white;
+  padding: 10px; }
+
 /*# sourceMappingURL=main.css.map */

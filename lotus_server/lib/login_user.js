@@ -6,7 +6,7 @@ const loginUser = (knex) => {
     knex.table('users').first('id','email','brouzoff','password').where('email',email)
       .then(user => {
         if(user === undefined){
-          res.send(JSON.stringify({error:'User or password could not be found 1'}));
+          res.send(JSON.stringify({error:'User could not be found'}));
           return;
         }
         // Check password info
@@ -16,7 +16,7 @@ const loginUser = (knex) => {
             res.status(200).send(JSON.stringify({flash: 'Login success!'}));
             return;
           }
-          res.send(JSON.stringify({error:'User or password could not be found 2'}));
+          res.send(JSON.stringify({error:'Wrong password'}));
         });
       });
   };

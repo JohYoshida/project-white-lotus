@@ -2,27 +2,28 @@ import React, {Component} from 'react';
 import cardImageHeader from './cardImageHeader.jsx';
 
 class DetailedCard extends Component {
-  constructor(props) {
-    super(props);
-  }
   attackDetails(monster){
     const attacks = [];
+    let attackKey = 1;
+    let abilityKey = -1;
     for(const attackName in monster.attacks){
       const attack = monster.attacks[attackName];
       if(attack.isAlt){
         attacks.push(
-          <div class="abilities-ability">
+          <div className="abilities-ability" key={attackKey}>
             <strong className="abilities-name"><span className="sword-ico">ATK: {attackName.replace('_', ' ')}</span></strong>
             <p>{attack.description}</p>
           </div>
         );
+        attackKey++;
       } else {
         attacks.push(
-          <div className="abilities-ability">
+          <div className="abilities-ability" key={abilityKey}>
             <strong className="abilities-name"><span className="sword-ico"></span>ATK: {attackName.replace('_', ' ')}</strong>
             <p>{attack.description}</p>
           </div>
         );
+        abilityKey--;
       }
     }
     return attacks;

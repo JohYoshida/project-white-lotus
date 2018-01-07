@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
@@ -38,23 +37,28 @@ class App extends Component {
       loggedin: false,
       loaded: false,
       monsters: [],
-      teams:null
+      teams: null,
+      flashMessage: null
     };
   }
 
   componentWillMount() {
     const {cookies} = this.props;
     if (cookies.get('loggedin')) {
-      this.setState({loggedin: cookies.get('loggedin')}, () => {
+      this.setState({
+        loggedin: cookies.get('loggedin')
+      }, () => {
         fetchUserDetails(this);
       });
     }
   }
+
   register(event) {
     event.preventDefault();
     postRegister(event).then(res => {
       res.json().then(resObj => {
-        if(resObj.error){
+        if (resObj.error) {
+          this.setState({flashMessage: resObj.error});
           return;
         }
         setLoggedIn(this);
@@ -66,9 +70,11 @@ class App extends Component {
     event.preventDefault();
     postLogin(event).then(res => {
       res.json().then(resObj => {
-        if(resObj.error){
+        if (resObj.error) {
+          this.setState({flashMessage: resObj.error})
           return;
         }
+        this.setState({flashMessage: null})
         setLoggedIn(this);
       });
     });
@@ -77,17 +83,22 @@ class App extends Component {
   logout(event) {
     const {cookies} = this.props;
     cookies.remove('loggedin');
-    this.setState({id: null, loggedin: cookies.get('loggedin'), brouzoff: null});
+    this.setState({
+      id: null,
+      loggedin: cookies.get('loggedin'),
+      brouzoff: null
+    });
     fetch('/logout', {
       credentials: 'same-origin',
       method: 'DELETE'
     });
   }
-  // default load app.
-  loadApp(){
-    this.setState({loaded:true});
+
+  loadApp() {
+    this.setState({loaded: true});
   }
-  fetchMonsters(){
+
+  fetchMonsters() {
     fetch('/monsters', {credentials: 'same-origin'}).then(res => {
       res.json().then(data => {
         this.setState({monsters: data});
@@ -95,14 +106,16 @@ class App extends Component {
       });
     });
   }
-  fetchTeams(){
+
+  fetchTeams() {
     fetch('/user/teams', {credentials: 'same-origin'}).then(data => {
       data.json().then(parsedData => {
-        this.setState({teams:parsedData.teams});
+        this.setState({teams: parsedData.teams});
         this.loadApp();
       });
     });
   }
+
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
@@ -169,6 +182,7 @@ class App extends Component {
           login = {this.login}
           register = {this.register}
           hidden = {this.state.loggedin}
+          flashMessage = {this.state.flashMessage}
         />
         </div>);
     }

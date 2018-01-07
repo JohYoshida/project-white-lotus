@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import uuid from 'uuid';
 import MessageBox from './components/MessageBox.jsx';
 import CardModal from './components/CardModal.jsx';
@@ -13,7 +13,13 @@ import {toggleModalById} from './lib/element_effect_helpers';
 class Battle extends Component {
   constructor(props) {
     super(props);
-    this.state = {ready:false, game:{}, messages: [], player:{}, opponent:{}};
+    this.state = {
+      ready: false,
+      game: {},
+      messages: [],
+      player: {},
+      opponent: {}
+    };
     this.joinGame = this.joinGame.bind(this);
     this.renderTeam = this.renderTeam.bind(this);
   }
@@ -60,7 +66,7 @@ class Battle extends Component {
     this.setState({ready:true});
     this.showBattleScreen();
   }
-  gameOver(){
+  gameOver() {
     const {gameOver} = this.state.game;
     if(gameOver){
       toggleModalById('gameOverModal');
@@ -90,7 +96,7 @@ class Battle extends Component {
     const modals = [];
     players.forEach(player => {
       const {team} = player;
-      for(let monsterId in team){
+      for (let monsterId in team) {
         const monster = team[monsterId];
         modals.push(<CardModal id={`${monster.id}-modal`} monster={monster}/>);
       }
