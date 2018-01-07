@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import FlashMessage from './components/FlashMessage.jsx';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +41,7 @@ class Login extends Component {
           <p>Or</p>
           <button onClick={this.toggle}>Login</button>
         </div>
+        <FlashMessage message={this.props.flashMessage}/>
       </div>
     );
   }
