@@ -12,7 +12,7 @@ const {ModifierCollection} = require('./Modifier.js');
 
 // the monster class
 class CompleteMonster {
-  constructor(monster){
+  constructor(monster, userid){
     // arm and head to be used for image compilation functionality.
     const {body, type} = monster.relations;
     // set attributes
@@ -29,15 +29,38 @@ class CompleteMonster {
     this.canBench = true;
     this.passiveActive = true;
     this.modifiers = new ModifierCollection();
+    this.playerId = userid || null;
   }
-  takeDamage(damage){
-    if(!this.protector) return this.hp -= damage;
 
-    // If a passive monster has an electric_shield ability.
-    const protectorDamage = damage > 5 ? damage - 5 : damage;
-    this.protector.hp -= protectorDamage;
-    this.hp -= damage - protectorDamage;
-    return;
+  /**
+   * takeDamage - Deals damage to monster. Returns an array with the updates the function made
+   *
+   * @param  {number} damage   the amount of damage to inflict
+   * @param  {array} messages  An array of existing messages, optional.
+   * @return {array}           Returns an array containing messages.
+   */
+  takeDamage(damage, messages, isModifier){
+    if(!messages) messages = [];
+    if(damage < 1){
+      return null;
+    }
+    if(!this.protector || isModifier){
+      this.hp -= damage;
+      messages.unshift({target: this, damage, playerId: this.playerId, message:`${this.name} took ${damage} damage!`});
+      return messages;
+    }
+    // If there is a benched monster protecting this monster. Check damage and effect protector accordingly.
+    let protectorDamage = 5;
+    if(damage > 5){
+      const totalDamage = damage - protectorDamage;
+      this.hp -= totalDamage;
+      messages.unshift({target: this, damage: totalDamage, playerId: this.playerId, message:`${this.name} took ${totalDamage} damage!`});
+      this.protector.takeDamage(protectorDamage, messages);
+    } else {
+      this.protector.takeDamage(damage, messages);
+    }
+    // filter out null results before sending
+    return messages.filter(message => message);
   }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
@@ -54,10 +77,10 @@ class CompleteMonster {
   }
 }
 
-const getCreature = (id) => {
+const getCreature = (id, userid) => {
   return new Monster({'id': id}).fetch({withRelated: ['body', 'arm', 'head', 'type', 'attack', 'alt_attack', 'ability']}).then(prod => {
     const {attack, alt_attack, ability} = prod.relations;
-    const monster = new CompleteMonster(prod);
+    const monster = new CompleteMonster(prod, userid);
     // After monster has been created set attacks and abilities
     monster.set_attacks(attack.attributes, alt_attack.attributes);
     if(ability.attributes.name){

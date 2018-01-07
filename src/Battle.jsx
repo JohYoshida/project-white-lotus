@@ -45,7 +45,6 @@ class Battle extends Component {
     return(<p>Winner is {gameOver.winner.name}!</p>);
   }
   renderTeam(team){
-    // right now we're showing the button, but we could render anything with it (icon images, etc)
     const {teamMembers} = team;
     const getTeamMembers = (teamMember) => {
       const {name, id, image} = teamMember;

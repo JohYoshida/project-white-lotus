@@ -43,131 +43,156 @@ const damageCalculator = (damage, effectiveness) => {
 };
 
 // Handles AOE attack lcgic
-const doAOEAttack = (attackedPlayer, messages, dmg, attacker) => {
+const doAOEAttack = (attackedPlayer, dmg, attacker, messages) => {
+  if(!messages) messages = [];
   // Loop over each monster and cause them to take damage.
   for(const monsterId in attackedPlayer.team){
     const curMonster = attackedPlayer.team[monsterId];
     const damage = damageCalculator(dmg, compareTyping(attacker, curMonster));
-    curMonster.takeDamage(damage);
+    curMonster.takeDamage(damage, messages);
   }
-  return ['> All monsters take damage!'];
+  return messages;
+};
+
+/**
+ * Returns a random 2d6 dice roll plus the accuracy_bonus of the argument monster
+ */
+const rollToHit = (monster) => {
+  return Math.round(Math.random()*6) + Math.round(Math.random()*6) + monster.accuracy_bonus > 6;
 };
 
 const attackFuncs = {
-  // Secondary attack
+  /**
+   * Secondary attacks
+   */
   toxic_slime: function(attackedPlayer){
-    const dmg = 4;
+    // check hit
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
-    const damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-    new Modifier(targetMonster, 'dot', {}, (modifier) => {
+    const damage = damageCalculator(4, compareTyping(this, targetMonster));
+
+    const description = `Slime causes ${targetMonster.name} to lose ${damage} hp each turn (3 turns).`;
+    new Modifier(targetMonster, {}, 'dot', description, (modifier, messages) => {
       // check turn count
       modifier.count ? modifier.count++ : modifier.count = 1;
       if(modifier.count >= 3) return modifier.removeModifier();
-      targetMonster.takeDamage(damage);
-      return `Toxic Slime: ${targetMonster.name} took ${damage} damage!`;
+      return targetMonster.takeDamage(damage, messages, true);
     });
-    return [`${this.name} attacks! ${targetMonster.name} becomes enveloped in slime...`];
+    return [`${targetMonster.name} becomes enveloped in slime...`];
   },
-  // Secondary attack
   roar: function(attackedPlayer){
-    const messages = [];
-    for(const monsterId in attackedPlayer.team){
-      const curMonster = attackedPlayer.team[monsterId];
-      const damage = damageCalculator(3, compareTyping(this, curMonster));
-      curMonster.takeDamage(damage);
-      messages.unshift(`${curMonster.name} took ${damage} damage!`);
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
     }
-    return messages;
+    return doAOEAttack(attackedPlayer, 3, this);
   },
-  // Secondary attack
   insanity: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(6, compareTyping(this, targetMonster));
-    targetMonster.takeDamage(damage);
-    new Modifier(targetMonster, 'debuff', {accuracy_bonus: targetMonster.accuracy_bonus - 1}, (modifier) => {
+    const messages = [`${targetMonster.name} is less accurate...`];
+
+    const description = `${targetMonster.name} loses 1 accuracy per turn until benched. Then accuracy resets.`;
+    new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, 'debuff', description, (modifier) => {
       // If the monster is on the bench, remove the modifier.
       if(targetMonster.bench) modifier.removeModifier();
       targetMonster.accuracy_bonus -= 1;
-      return `Insanity: ${targetMonster.name} loses 1 accuracy!`;
     });
-    return [`${this.name} attacks! ${targetMonster.name} took ${damage} damage. They are less accurate...`];
+
+    return targetMonster.takeDamage(damage, messages);
   },
-  // Secondary attack
   decimate: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
     const maxHp = targetMonster.maxHp;
     const hp = targetMonster.hp;
     const damage = damageCalculator(Math.floor(maxHp/hp), compareTyping(this, targetMonster));
-
-    targetMonster.takeDamage(damage);
-    return [`${targetMonster.name} took ${damage} damage!`];
+    return targetMonster.takeDamage(damage);
   },
-  // Secondary attack
   // Adds +2 to the attacking monster's accuracy and prevents the attacked monster from benching
   web_sling: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
+    const messages = [`Webbing prevents ${targetMonster.name} from moving!`];
     const targetMonster = attackedPlayer.activeMonster;
-    const damage = damageCalculator(5, compareTyping(this, targetMonster));
-    attackedPlayer.activeMonster.takeDamage(damage);
     // Increase accuracy
-    new Modifier(this, 'buff', {accuracy_bonus: this.accuracy_bonus + 2}, (modifier) => modifier.removeModifier());
+    let description1 = `${this.name} has +2 accuracy until next turn.`;
+    new Modifier(this, {accuracy_bonus: this.accuracy_bonus + 2}, 'accBuff', description1, (modifier) => modifier.removeModifier());
+
     // Prevents benching
-    new Modifier(targetMonster, 'stuck', {canBench: false}, (modifier) => {
+    let description2 = `${targetMonster.name} cannot be benched until next turn.`;
+    new Modifier(targetMonster, {canBench: false}, 'stuck', description2, (modifier) => {
       this.count ? this.count++ : this.count = 1;
       if(this.count > 1){
         modifier.removeModifier();
       }
     });
-    return [`${this.name} attacks! ${targetMonster.name} took ${damage} damage. Webbing prevents them from moving!`];
+    return targetMonster.takeDamage(damageCalculator(5, compareTyping(this, targetMonster)), messages);
   },
-  // Secondary attack
   deep_knowledge: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const {activeMonster} = attackedPlayer;
-
-    new Modifier(this, 'morph', {type: activeMonster.type}, (modifier) => this.bench && modifier.removeModifier());
+    const description = `Changes type to ${activeMonster.type}.`;
+    new Modifier(this, {type: activeMonster.type}, 'morph', description, (modifier) => this.bench && modifier.removeModifier());
     return [`${this.name}'s type changed to ${activeMonster.type} type.`];
   },
-  // Secondary attack
+  /**
+  * primary attacks
+  */
   vomitous_sludge: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
-    const damage = damageCalculator(10, compareTyping(this, targetMonster));
-    targetMonster.takeDamage(damage);
 
-    new Modifier(targetMonster, 'dot', {}, (modifier) => {
+    const description = `The sludge causes ${targetMonster.name} to lose 1hp per turn until benched.`;
+    new Modifier(targetMonster, {}, 'dot', description, (modifier, messages) => {
       if(targetMonster.bench) return modifier.removeModifier();
-      targetMonster.hp -= 1;
-      return `The sludge causes ${targetMonster.name} to lose 1 hp. They have ${targetMonster.hp} hp.`;
+      return targetMonster.takeDamage(1, messages, true);
     });
-    return [`${this.name} attacks! ${targetMonster.name} took ${damage} damage, The sludge envelopes them.`];
+
+    const messages = [`Sludge envelopes ${targetMonster.name}.`];
+    const damage = damageCalculator(10, compareTyping(this, targetMonster));
+    return targetMonster.takeDamage(damage, messages);
   },
-  // primary attack
+
   steel_jaw: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
-    const dmg = getRandomNumber(14, 18) ;
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
+    const dmg = getRandomNumber(14, 18) ;
     // If the monster is supercharged perform an AOE attack
     if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
-    } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${targetMonster.name} took ${damage} damage!`];
+      return doAOEAttack(attackedPlayer, dmg, this);
     }
-    return messages;
+    return targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)));
   },
-  // primary attack
+
   eldritch_horror: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
-    const dmg = getRandomNumber(5, 8);
-    const targetMonster = attackedPlayer.activeMonster;
-    if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
-    } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${this.name} attacks! ${targetMonster.name} took ${damage} damage. They have ${targetMonster.hp} hp.`];
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
     }
+    const targetMonster = attackedPlayer.activeMonster;
+
+    const dmg = getRandomNumber(5, 8);
+    const messages = [`${attackedPlayer.activeMonster.name} is now on the field.`];
+    // check for supercharged and add to messages accordingly.
+    if(this.supercharged) {
+      doAOEAttack(attackedPlayer, dmg, this, messages);
+    } else {
+      targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)), messages);
+    }
+
     // Get a random monster id and activate it.
     const randomBenchedMonster = attackedPlayer.getRandomMonster({bench:true});
     if(!randomBenchedMonster){
@@ -175,118 +200,110 @@ const attackFuncs = {
     }
     attackedPlayer.activateMonster(randomBenchedMonster.id);
     attackedPlayer.findActiveMonster();
-    messages.unshift(`${attackedPlayer.activeMonster.name} is now on the field.`);
+
     return messages;
   },
-  // primary attack
+
   neutralize: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
-    const dmg = getRandomNumber(10, 12);
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
+    const messages = [];
+    const dmg = getRandomNumber(10, 12);
     if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
+      doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${this.name} neutralizes ${targetMonster.name}. They take ${damage} damage! They have ${targetMonster.hp} hp.`];
+      targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)), messages);
     }
     // removes the passive ability of a random benched monster.
-    const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true});
+    const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true, creature: 'mecha'});
     if(!randomBenchedMonster){
       return messages;
     }
-    new Modifier(randomBenchedMonster, 'deactivate', {passiveActive: false}, modifier => {
+    const description = `${randomBenchedMonster.name}'s passive ability is disabled.`;
+    new Modifier(randomBenchedMonster, {passiveActive: false}, 'deactivate', description, modifier => {
       if(!randomBenchedMonster.bench) {
         modifier.removeModifier();
-        return `${randomBenchedMonster.name}'s passive has been reactivated!`;
       }
     });
-    messages.unshift(`${randomBenchedMonster.name}'s passive is disabled.`);
+    messages.push(`${randomBenchedMonster.name}'s passive is disabled.`);
     return messages;
   },
-  // primary attack
+
   stimulant: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
+    const messages = [];
     const dmg = 8;
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
+      doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${this.name} drains ${targetMonster.name}. They took ${damage} damage!`];
+      targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)), messages);
     }
     this.hp += 4;
-    messages.unshift(`${this.name} heals 4hp.`);
+    messages.push(`${this.name} heals 4hp.`);
     return messages;
   },
-  // primary attack
+
   hyper_lance: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const dmg = getRandomNumber(8, 12) ;
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
+      return doAOEAttack(attackedPlayer, dmg, this);
     } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${this.name}'s Hyper Lance pierces ${targetMonster.name}. They take ${damage} damage!`];
+      return targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)));
     }
-    return messages;
   },
-  // primary attack
   simulate_kaiju: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
+    let messages = [];
     const dmg = getRandomNumber(10, 12) ;
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
+      doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${targetMonster.name} took ${damage} damage!`];
+      targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)), messages);
     }
+    // if the creature is kaiju, grab their secondary attack.
     if(targetMonster.creature === 'kaiju'){
       const attacks = Object.keys(targetMonster.attacks);
       const {id, name, description, func} = targetMonster.attacks[attacks[1]];
       this.attacks[name] = {id, name, description, func: func.bind(this)};
-      messages.unshift(`${this.name} has gained ${this.attacks[attacks[1]].name}.`);
+      messages.push(`${this.name} has gained ${this.attacks[attacks[1]].name}.`);
     }
     return messages;
   },
-  // primary attack
   snake_handler: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const dmg = getRandomNumber(12, 16);
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
+      return doAOEAttack(attackedPlayer, dmg, this);
     } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${targetMonster.name} took ${damage} damage!`];
+      return targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)));
     }
-    return messages;
   },
-  // primary attack
   neurotoxin: function(attackedPlayer){
-    let messages = null;
-    let damage = null;
-    const dmg = getRandomNumber(5, 18) ;
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
+    const dmg = getRandomNumber(5, 18);
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
-      messages = doAOEAttack(attackedPlayer, messages, dmg, this);
+      return doAOEAttack(attackedPlayer, dmg, this);
     } else {
-      damage = damageCalculator(dmg, compareTyping(this, targetMonster));
-      targetMonster.takeDamage(damage);
-      messages = [`${targetMonster.name} took ${damage} damage!`];
+      return targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)));
     }
-    return messages;
   }
 };
 

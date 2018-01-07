@@ -1,5 +1,4 @@
 const generateTeam = require('./generate_team');
-const {ModifierCollection} = require('./Modifier.js');
 // Generate player function takes a userId to apply to the player and an array of 3 ids representing monsters
 // to be on the player's team.
 class Player {
@@ -68,7 +67,7 @@ class Player {
 }
 // Takes a userid (string) and a team, (array of strings)
 const generatePlayer = (userid, team, name) => {
-  return generateTeam(team).then(team => {
+  return generateTeam(team, userid).then(team => {
     return new Player(userid, team, name);
   });
 };
