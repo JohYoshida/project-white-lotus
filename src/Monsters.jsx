@@ -39,7 +39,9 @@ class Monsters extends Component {
         <main>
           <h2>Monsters</h2>
           <p>You don't have any monsters yet!</p>
-          <Link to='/store'>Store</Link>
+          <Link to='/store'>
+            <button>Store</button>
+          </Link>
         </main>
       );
     }
