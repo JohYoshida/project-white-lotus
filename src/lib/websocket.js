@@ -88,10 +88,10 @@ const rejoinBattle = (battleComponent) => {
   return socket;
 };
 
-const generateBattleSocket = (battleComponent, team) => {
+const joinGame = (battleComponent, team) => {
   const {roomName} = battleComponent.props;
-  // Joining the game
   const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  // Joining the game
   socket.addEventListener('open', () => {
     socket.send(JSON.stringify({
       messageType: 'join',
@@ -105,4 +105,4 @@ const generateBattleSocket = (battleComponent, team) => {
   return socket;
 };
 
-export {generateBattleSocket, rejoinBattle};
+export {joinGame, rejoinBattle};

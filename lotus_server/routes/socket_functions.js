@@ -49,10 +49,16 @@ module.exports = (wss, id) => {
         }
       });
     };
+
+    ws.on('connection', (ws) => {
+      // send a message to confirm connection
+      ws.send(JSON.stringify({flash:'connected!'}));
+    });
     ws.on('message', function(msg) {
       const room = wss.getWss(`/${id}`);
       const battle = room[`battle_${id}`];
       let parsedMsg = JSON.parse(msg);
+      // Execute message logic depending on the type
       switch(parsedMsg.messageType) {
       case 'rejoin' : {
         if(battle && battle.game){
