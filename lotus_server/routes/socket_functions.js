@@ -57,12 +57,14 @@ module.exports = (wss, id) => {
       case 'rejoin' : {
         if(battle && battle.game){
           const {battlerId} = parsedMsg;
+          // loop over each player and see if this battlerId is, in fact, in the battle.
+          
+          // set the client id of the 'new' client
           room.clients.forEach((client) => {
             if(!client.id){
               client.id = battlerId;
             }
           });
-          // loop over each player and see if this battlerId is, in fact, in the battle.
           ws.broadcast({game:battle.game, message:['Player rejoined']});
         }
         break;

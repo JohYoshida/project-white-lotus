@@ -36,7 +36,6 @@ const updateGame = (battleComponent) => {
       console.log(e);
     }
     game.players.forEach(pc => {
-      console.log(pc);
       pc.id ? player = pc : opponent = pc;
     });
     const damagesOnly = {};
