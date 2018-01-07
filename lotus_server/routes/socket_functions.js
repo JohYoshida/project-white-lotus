@@ -6,14 +6,16 @@ module.exports = (wss, id) => {
   const setupRoom = (room, playerInfo) => {
     room[`battle_${id}`] = {};
     let battle = room[`battle_${id}`];
+    console.log(Object.keys(room.clients));
+    battle[playerInfo.battlerId] = room.clients[room.clients.length - 1];
     return generatePlayer(playerInfo.battlerId, playerInfo.team.split(','), playerInfo.name).then(player => {
       battle['players'] = [player];
     });
   };
 
   // once both players are in a room, this starts the game.
-  const startGame = (battle, msg) => {
-    const playerInfo = msg;
+  const startGame = (battle, playerInfo, room) => {
+    battle[playerInfo.battlerId] = room.clients[room.clients.length - 1];
     return generatePlayer(playerInfo.battlerId, playerInfo.team.split(','), playerInfo.name).then(player => {
       battle.players.push(player);
       return new Game(battle.players);
@@ -52,15 +54,28 @@ module.exports = (wss, id) => {
       const battle = room[`battle_${id}`];
       let parsedMsg = JSON.parse(msg);
       switch(parsedMsg.messageType) {
+      case 'rejoin' : {
+        if(battle && battle.game){
+          const {battlerId} = parsedMsg;
+          room.clients.forEach((client) => {
+            if(!client.id){
+              client.id = battlerId;
+            }
+          });
+          // loop over each player and see if this battlerId is, in fact, in the battle.
+          ws.broadcast({game:battle.game, message:['Player rejoined']});
+        }
+        break;
+      }
       case 'join': {
         // assign ids to clients.
-        room.clients.forEach(client => {
+        room.clients.forEach((client) => {
           if(!client.id) client.id = parsedMsg.battlerId;
         });
         if(!battle) {
           setupRoom(room, parsedMsg).catch(() => delete ws.battle);
         } else {
-          startGame(battle, parsedMsg).then(game => {
+          startGame(battle, parsedMsg, room).then(game => {
             delete battle.players;
             battle.game = game;
             ws.broadcast({game: game, message:['Game started!']});

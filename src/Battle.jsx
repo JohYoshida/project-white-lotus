@@ -5,7 +5,7 @@ import CardModal from './components/CardModal.jsx';
 import Modal from './components/Modal.jsx';
 import BattleField from './BattleField.jsx';
 import Player from './components/Player.jsx';
-import generateBattleSocket from './lib/websocket.js';
+import {generateBattleSocket, rejoinBattle} from './lib/websocket.js';
 import editBrouzoff from './lib/editBrouzoff.js';
 import {toggleModalById} from './lib/element_effect_helpers';
 
@@ -16,13 +16,29 @@ class Battle extends Component {
     this.joinGame = this.joinGame.bind(this);
     this.renderTeam = this.renderTeam.bind(this);
   }
+  clearScreen(){
+    document.querySelector('.battlefield-teams').remove();
+    document.querySelector('nav').remove();
+    document.querySelector('#battlefield').classList.remove('hidden');
+  }
   componentDidMount(){
+    const {cookies} = this.props;
     this.props.fetchTeams();
+    const battlerId = cookies.get(decodeURI(this.props.roomName));
+    if(!battlerId) return;
+    this.setState({ready:true});
+    this.setState({battlerId});
+    this.socket = rejoinBattle(this);
+    this.clearScreen();
   }
   // Handles sending join game requests.
   joinGame(event){
+    const {cookies} = this.props;
+    const battlerId = uuid();
     this.state.ready || this.setState({ready:true});
-    this.setState({battlerId:uuid()});
+    this.setState({battlerId});
+    // decodeURI to get the original name
+    cookies.set(decodeURI(this.props.roomName), battlerId);
     const team = [];
     const button = event.currentTarget;
     for(const child of button.children){
@@ -30,9 +46,7 @@ class Battle extends Component {
       team.push(child.dataset.id);
     }
     this.socket = generateBattleSocket(this, team.join(','));
-    document.querySelector('.battlefield-teams').remove();
-    document.querySelector('nav').remove();
-    document.querySelector('#battlefield').classList.remove('hidden');
+    this.clearScreen();
   }
   gameOver(){
     const {gameOver} = this.state.game;

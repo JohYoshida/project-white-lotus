@@ -154,7 +154,7 @@ class App extends Component {
             (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
           }/>
           <Route path="/battle/:roomName" render={({match}) => (
-            <Battle roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
+            <Battle cookies={this.props.cookies} roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
           }/>
           <Route path="/create-battle" render={() =>
             (<CreateBattle loadApp={this.loadApp} />)

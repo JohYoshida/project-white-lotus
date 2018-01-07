@@ -21,20 +21,8 @@ const printDamage = (monster, damage, playerId, player) => {
   });
 };
 
-const generateBattleSocket = (battleComponent, team) => {
-  const {roomName} = battleComponent.props;
-  // Joining the game
-  const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
-  socket.addEventListener('open', () => {
-    socket.send(JSON.stringify({
-      messageType: 'join',
-      team,
-      battlerId: battleComponent.state.battlerId,
-      name: battleComponent.props.username
-    }));
-  });
-  // When game updates are sent
-  socket.addEventListener('message', (event) => {
+const updateGame = (battleComponent) => {
+  return (event) => {
     let player = null;
     let opponent = null;
     let messages = null;
@@ -48,6 +36,7 @@ const generateBattleSocket = (battleComponent, team) => {
       console.log(e);
     }
     game.players.forEach(pc => {
+      console.log(pc);
       pc.id ? player = pc : opponent = pc;
     });
     const damagesOnly = {};
@@ -84,8 +73,37 @@ const generateBattleSocket = (battleComponent, team) => {
       }
     }
     battleComponent.setState({game, messages:messagesOnly, player, opponent});
+  };
+};
+
+const rejoinBattle = (battleComponent) => {
+  const {roomName} = battleComponent.props;
+  const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  socket.addEventListener('open', () => {
+    socket.send(JSON.stringify({
+      messageType: 'rejoin',
+      battlerId: battleComponent.state.battlerId,
+    }));
   });
+  socket.addEventListener('message', updateGame(battleComponent));
   return socket;
 };
 
-module.exports = generateBattleSocket;
+const generateBattleSocket = (battleComponent, team) => {
+  const {roomName} = battleComponent.props;
+  // Joining the game
+  const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  socket.addEventListener('open', () => {
+    socket.send(JSON.stringify({
+      messageType: 'join',
+      team,
+      battlerId: battleComponent.state.battlerId,
+      name: battleComponent.props.username
+    }));
+  });
+  // When game updates are sent
+  socket.addEventListener('message', updateGame(battleComponent));
+  return socket;
+};
+
+export {generateBattleSocket, rejoinBattle};
