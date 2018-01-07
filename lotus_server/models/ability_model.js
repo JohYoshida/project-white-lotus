@@ -30,14 +30,14 @@ const abilityFuncs = {
         // heal modifier increases hp by turn until the monster who applied has a false passiveActive
         // or monster to whom it is applied has max hp.
         const description = 'Monster is healed 2 hp per turn until fully healed.';
-        new Modifier(curMonster, {}, 'heal', description, (modifier) => {
+        new Modifier(curMonster, {}, 'heal', description, (modifier, messages) => {
           if(!this.passiveActive){
             modifier.removeModifier();
           }
           if(curMonster.hp === curMonster.maxHp){
             modifier.removeModifier();
           }
-          curMonster.hp += 2;
+          return curMonster.healHp(2, messages);
         });
       }
     }

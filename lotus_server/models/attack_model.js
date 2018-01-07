@@ -97,7 +97,7 @@ const attackFuncs = {
     const messages = [`${targetMonster.name} is less accurate...`];
 
     const description = `${targetMonster.name} loses 1 accuracy per turn until benched. Then accuracy resets.`;
-    new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, 'debuff', description, (modifier) => {
+    new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, 'accDebuff', description, (modifier) => {
       // If the monster is on the bench, remove the modifier.
       if(targetMonster.bench) modifier.removeModifier();
       targetMonster.accuracy_bonus -= 1;
@@ -243,9 +243,7 @@ const attackFuncs = {
     } else {
       targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)), messages);
     }
-    this.hp += 4;
-    messages.push(`${this.name} heals 4hp.`);
-    return messages;
+    return this.healHp(4, messages);
   },
 
   hyper_lance: function(attackedPlayer){

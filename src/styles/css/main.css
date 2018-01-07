@@ -577,12 +577,24 @@ span.monster-hp {
     opacity: 0;
     bottom: 23rem; } }
 .damage {
+  text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
   font-size: 3rem;
   position: absolute;
   bottom: 22rem;
   width: 100%;
   text-align: center;
   color: red;
+  animation: damageNumber 1s linear;
+  animation-fill-mode: forwards; }
+
+.heal {
+  text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+  font-size: 3rem;
+  position: absolute;
+  bottom: 22rem;
+  width: 100%;
+  text-align: center;
+  color: green;
   animation: damageNumber 1s linear;
   animation-fill-mode: forwards; }
 

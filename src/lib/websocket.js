@@ -1,24 +1,68 @@
+// simple function to delay without blocking execution
+const delayFunction = (ms, callback) => {
+  return new Promise(() => {
+    setTimeout(callback, ms);
+  });
+};
+
+const makeInfoSpan = (value, infoName) => {
+  const infoSpan = document.createElement('span');
+  infoSpan.classList.add(infoName);
+  infoSpan.innerText = value;
+  return infoSpan;
+};
+
 // Takes in the monster to target, the damage to write.
 // Also takes a playerId and a player (optional). These are just used to determine if it's a DOT effect.
-const printDamage = (monster, damage, playerId, player) => {
-  let monsterContainer = document.querySelector(`.opponent-side #m-${monster.id}`);
-  if(playerId && playerId === player.id){
-    monsterContainer = document.querySelector(`.player-side #m-${monster.id}`);
+const printInfo = (infoCollection, infoName, player) => {
+  let delay = 0;
+  for(const messageId in infoCollection){
+    const {target, value, playerId} = infoCollection[messageId];
+    if(target){
+      let monsterContainer = document.querySelector(`.opponent-side #m-${target.id}`);
+      if(playerId && playerId === player.id){
+        monsterContainer = document.querySelector(`.player-side #m-${target.id}`);
+      }
+      if(monsterContainer){
+        // set the delay only if there is a info span to create
+        delay = 1000;
+        const infoSpan = makeInfoSpan(value, infoName);
+        monsterContainer.prepend(infoSpan);
+        delayFunction(2000, () => {
+          monsterContainer.removeChild(infoSpan);
+        });
+      }
+    }
   }
-  if(!monsterContainer) return;
+  return delay;
+};
 
-  /* @TODO put this into it's own factory function */
-
-  const damageSpan = document.createElement('span');
-  damageSpan.classList.add('damage');
-  damageSpan.innerText = damage;
-  //
-  monsterContainer.prepend(damageSpan);
-  new Promise(() => {
-    setTimeout(() => {
-      monsterContainer.removeChild(damageSpan);
-    }, 2000);
+const collectMessages = (messages) => {
+  const healsCollection = {};
+  const messagesCollection = [];
+  const damagesCollection = {};
+  messages.forEach(messageObject => {
+    const {target, damage, amount, playerId, message} = messageObject;
+    if(!target){
+      messagesCollection.push(messageObject);
+      return;
+    }
+    // determine the type of message and use the appropriate value
+    const messageCollection = amount ? healsCollection : damagesCollection;
+    const value = amount || damage;
+    const messageId = target.id + playerId;
+    // messageCollection becomes the new container!
+    if(messageCollection[messageId]){
+      messageCollection[messageId].value += value;
+    } else {
+      messageCollection[messageId] = {
+        target, value, playerId
+      };
+    }
+    messagesCollection.push(message);
   });
+  console.log(messagesCollection);
+  return {healsCollection, damagesCollection, messagesCollection};
 };
 
 const updateGame = (battleComponent) => {
@@ -32,46 +76,24 @@ const updateGame = (battleComponent) => {
       const gameData = JSON.parse(event.data);
       messages = gameData.messages;
       game = gameData.game;
+      console.log(messages);
     } catch(e) {
       console.log(e);
     }
     game.players.forEach(pc => {
       pc.id ? player = pc : opponent = pc;
     });
-    const damagesOnly = {};
-    const messagesOnly = [];
     if(messages && messages.length > 0){
-      /**
-       * Loops over each messages and builds an object for the damages part of the messages
-       * and an array for the message part of the of the messages.
-       * This way, total damage will be shown to users as opposed to an individual damage.
-       */
-      messages.forEach(messageObject => {
-        if(!messageObject.target){
-          messagesOnly.push(messageObject);
-          return;
-        }
-        const {target, damage, playerId, message} = messageObject;
-
-        // OR short circuiting here in case playerID was not given in the message
-        const damageId = target.id + playerId;
-        if(damagesOnly[damageId]){
-          damagesOnly[damageId].damage += damage;
-        } else {
-          damagesOnly[damageId] = {
-            target, damage, playerId
-          };
-        }
-        messagesOnly.push(message);
+      const {healsCollection, damagesCollection, messagesCollection} = collectMessages(messages);
+      console.log('collected messages,', messagesCollection);
+      messages = messagesCollection;
+      let delay = printInfo(damagesCollection, 'damage', player);
+      // delay heal messages from appearing showing
+      delayFunction(delay, () => {
+        delay = printInfo(healsCollection, 'heal', player);
       });
-      for(const damageId in damagesOnly){
-        const damageMessage = damagesOnly[damageId];
-        if(damageMessage.target){
-          printDamage(damageMessage.target, damageMessage.damage, damageMessage.playerId, player);
-        }
-      }
     }
-    battleComponent.setState({game, messages:messagesOnly, player, opponent});
+    battleComponent.setState({game, messages: messages || [], player, opponent});
   };
 };
 

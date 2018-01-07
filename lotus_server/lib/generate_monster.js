@@ -62,6 +62,11 @@ class CompleteMonster {
     // filter out null results before sending
     return messages.filter(message => message);
   }
+  healHp(amount, messages){
+    this.hp += amount;
+    messages.unshift({target: this, amount, playerId: this.playerId, message:`${this.name} healed ${amount} hp!`});
+    return messages;
+  }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
     let {id, name, description} = attributes;
@@ -72,7 +77,6 @@ class CompleteMonster {
     }
   }
   set_ability({name, description}) {
-    // this.ability[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
     this.ability = {name, description, func: abilityFuncs[name].bind(this)};
   }
 }
