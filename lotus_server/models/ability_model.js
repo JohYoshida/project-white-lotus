@@ -26,7 +26,7 @@ const abilityFuncs = {
     // loops over each monster in the players team and applies the heal modifier if applicable.
     for(const monsterId in team){
       const curMonster = team[monsterId];
-      if(curMonster.creature === 'mecha' && !curMonster.modifiers.has('heal')){
+      if(curMonster.creature === 'mecha' && !curMonster.modifiers.has('heal') && curMonster.hp < curMonster.maxHp){
         // heal modifier increases hp by turn until the monster who applied has a false passiveActive
         // or monster to whom it is applied has max hp.
         const description = 'Monster is healed 2 hp per turn until fully healed.';

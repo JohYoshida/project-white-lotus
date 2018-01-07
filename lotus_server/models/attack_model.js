@@ -54,11 +54,22 @@ const doAOEAttack = (attackedPlayer, dmg, attacker, messages) => {
   return messages;
 };
 
+/**
+ * Returns a random 2d6 dice roll plus the accuracy_bonus of the argument monster
+ */
+const rollToHit = (monster) => {
+  return Math.round(Math.random()*6) + Math.round(Math.random()*6) + monster.accuracy_bonus > 6;
+};
+
 const attackFuncs = {
   /**
    * Secondary attacks
    */
   toxic_slime: function(attackedPlayer){
+    // check hit
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(4, compareTyping(this, targetMonster));
 
@@ -69,13 +80,18 @@ const attackFuncs = {
       if(modifier.count >= 3) return modifier.removeModifier();
       return targetMonster.takeDamage(damage, messages, true);
     });
-
     return [`${targetMonster.name} becomes enveloped in slime...`];
   },
   roar: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     return doAOEAttack(attackedPlayer, 3, this);
   },
   insanity: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
     const damage = damageCalculator(6, compareTyping(this, targetMonster));
     const messages = [`${targetMonster.name} is less accurate...`];
@@ -90,6 +106,9 @@ const attackFuncs = {
     return targetMonster.takeDamage(damage, messages);
   },
   decimate: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
     const maxHp = targetMonster.maxHp;
     const hp = targetMonster.hp;
@@ -98,6 +117,9 @@ const attackFuncs = {
   },
   // Adds +2 to the attacking monster's accuracy and prevents the attacked monster from benching
   web_sling: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const messages = [`Webbing prevents ${targetMonster.name} from moving!`];
     const targetMonster = attackedPlayer.activeMonster;
     // Increase accuracy
@@ -115,6 +137,9 @@ const attackFuncs = {
     return targetMonster.takeDamage(damageCalculator(5, compareTyping(this, targetMonster)), messages);
   },
   deep_knowledge: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const {activeMonster} = attackedPlayer;
     const description = `Changes type to ${activeMonster.type}.`;
     new Modifier(this, {type: activeMonster.type}, 'morph', description, (modifier) => this.bench && modifier.removeModifier());
@@ -124,6 +149,9 @@ const attackFuncs = {
   * primary attacks
   */
   vomitous_sludge: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
 
     const description = `The sludge causes ${targetMonster.name} to lose 1hp per turn until benched.`;
@@ -138,6 +166,9 @@ const attackFuncs = {
   },
 
   steel_jaw: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
     const dmg = getRandomNumber(14, 18) ;
     // If the monster is supercharged perform an AOE attack
@@ -148,6 +179,9 @@ const attackFuncs = {
   },
 
   eldritch_horror: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
 
     const dmg = getRandomNumber(5, 8);
@@ -171,6 +205,9 @@ const attackFuncs = {
   },
 
   neutralize: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const targetMonster = attackedPlayer.activeMonster;
     const messages = [];
     const dmg = getRandomNumber(10, 12);
@@ -180,11 +217,12 @@ const attackFuncs = {
       targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)), messages);
     }
     // removes the passive ability of a random benched monster.
-    const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true});
+    const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true, creature: 'mecha'});
     if(!randomBenchedMonster){
       return messages;
     }
-    new Modifier(randomBenchedMonster, 'deactivate', {passiveActive: false}, modifier => {
+    const description = `${randomBenchedMonster.name}'s passive ability is disabled.`;
+    new Modifier(randomBenchedMonster, {passiveActive: false}, 'deactivate', description, modifier => {
       if(!randomBenchedMonster.bench) {
         modifier.removeModifier();
       }
@@ -194,6 +232,9 @@ const attackFuncs = {
   },
 
   stimulant: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const messages = [];
     const dmg = 8;
     const targetMonster = attackedPlayer.activeMonster;
@@ -208,6 +249,9 @@ const attackFuncs = {
   },
 
   hyper_lance: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const dmg = getRandomNumber(8, 12) ;
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
@@ -217,6 +261,9 @@ const attackFuncs = {
     }
   },
   simulate_kaiju: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     let messages = [];
     const dmg = getRandomNumber(10, 12) ;
     const targetMonster = attackedPlayer.activeMonster;
@@ -235,6 +282,9 @@ const attackFuncs = {
     return messages;
   },
   snake_handler: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const dmg = getRandomNumber(12, 16);
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
@@ -244,6 +294,9 @@ const attackFuncs = {
     }
   },
   neurotoxin: function(attackedPlayer){
+    if(!rollToHit(this)) {
+      return [`${this.name} misses!`];
+    }
     const dmg = getRandomNumber(5, 18);
     const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
