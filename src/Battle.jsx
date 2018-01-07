@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import uuid from 'uuid';
 import MessageBox from './components/MessageBox.jsx';
 import CardModal from './components/CardModal.jsx';
@@ -12,21 +12,28 @@ import {toggleModalById} from './lib/element_effect_helpers';
 class Battle extends Component {
   constructor(props) {
     super(props);
-    this.state = {ready:false, game:{}, messages: [], player:{}, opponent:{}};
+    this.state = {
+      ready: false,
+      game: {},
+      messages: [],
+      player: {},
+      opponent: {}
+    };
     this.joinGame = this.joinGame.bind(this);
     this.renderTeam = this.renderTeam.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchTeams();
   }
   // Handles sending join game requests.
-  joinGame(event){
-    this.state.ready || this.setState({ready:true});
-    this.setState({battlerId:uuid()});
+  joinGame(event) {
+    this.state.ready || this.setState({ready: true});
+    this.setState({battlerId: uuid()});
     const team = [];
     const button = event.currentTarget;
-    for(const child of button.children){
-      if(!child.dataset.id) continue;
+    for (const child of button.children) {
+      if (!child.dataset.id)
+        continue;
       team.push(child.dataset.id);
     }
     this.socket = generateBattleSocket(this, team.join(','));
@@ -34,34 +41,33 @@ class Battle extends Component {
     document.querySelector('nav').remove();
     document.querySelector('#battlefield').classList.remove('hidden');
   }
-  gameOver(){
+  gameOver() {
     const {gameOver} = this.state.game;
-    if(!gameOver) return;
+    if (!gameOver)
+      return;
     toggleModalById('gameOverModal');
-    if(gameOver.winner.id === this.state.battlerId){
+    if (gameOver.winner.id === this.state.battlerId) {
       editBrouzoff(this.state.game, 500);
     }
     editBrouzoff(this.state.game, 250);
-    return(<p>Winner is {gameOver.winner.name}!</p>);
+    return (<p>Winner is {gameOver.winner.name}!</p>);
   }
-  renderTeam(team){
+  renderTeam(team) {
     const {teamMembers} = team;
     const getTeamMembers = (teamMember) => {
-      const {name, id, image} = teamMember;
+      const {name, id} = teamMember;
       return (<span key={id} className='team-team-member' data-id={id}>{name}</span>);
     };
-    return(
-      <div onClick={this.joinGame} key={team.id}>
-        <h3>{team.name}</h3>
-        {teamMembers.map(getTeamMembers)}
-      </div>
-    );
+    return (<div onClick={this.joinGame} key={team.id}>
+      <h3>{team.name}</h3>
+      {teamMembers.map(getTeamMembers)}
+    </div>);
   }
-  generateModals({players}){
+  generateModals({players}) {
     const modals = [];
     players.forEach(player => {
       const {team} = player;
-      for(let monsterId in team){
+      for (let monsterId in team) {
         const monster = team[monsterId];
         modals.push(<CardModal id={`${monster.id}-modal`} monster={monster}/>);
       }

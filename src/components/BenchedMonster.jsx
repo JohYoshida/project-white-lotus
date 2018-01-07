@@ -3,9 +3,6 @@ import cardImageHeader from './card_components/cardImageHeader.jsx';
 import {toggleModalByIdButton} from '../lib/element_effect_helpers';
 
 class BenchedMonster extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const {monster} = this.props;
     const {player} = this.props;

@@ -68,7 +68,7 @@ class Player extends Component {
     for(const modifierId in monster.modifiers){
       const modifier = monster.modifiers[modifierId];
       let icon = `/assets/icons/${modifier.name}.png`;
-      modifiers.push(<img src={icon} title={modifier.description} />);
+      modifiers.push(<img src={icon} title={modifier.description} alt={modifier.name}/>);
     }
     return(
       <section className='modifiers'>
