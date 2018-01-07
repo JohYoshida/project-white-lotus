@@ -6,7 +6,6 @@ module.exports = (wss, id) => {
   const setupRoom = (room, playerInfo) => {
     room[`battle_${id}`] = {};
     let battle = room[`battle_${id}`];
-    console.log(Object.keys(room.clients));
     battle[playerInfo.battlerId] = room.clients[room.clients.length - 1];
     return generatePlayer(playerInfo.battlerId, playerInfo.team.split(','), playerInfo.name).then(player => {
       battle['players'] = [player];
@@ -44,6 +43,7 @@ module.exports = (wss, id) => {
             delete player.id;
           }
         }
+        // If the client is ready for messages
         if(client.readyState === 1){
           client.send(JSON.stringify(copiedData));
         }
@@ -57,9 +57,9 @@ module.exports = (wss, id) => {
       case 'rejoin' : {
         if(battle && battle.game){
           const {battlerId} = parsedMsg;
-          // loop over each player and see if this battlerId is, in fact, in the battle.
-          
-          // set the client id of the 'new' client
+          // @TODO loop over each player and see if this battlerId is, in fact, in the battle.
+
+          // set the client id of the 'new' client. Since a new client is created for every connection
           room.clients.forEach((client) => {
             if(!client.id){
               client.id = battlerId;
