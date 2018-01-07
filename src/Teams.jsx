@@ -24,7 +24,6 @@ class Teams extends Component {
       return;
     }
     if(teamList.childNodes.length < 3){
-      /* @TODO add flash message here */
       return;
     }
 
