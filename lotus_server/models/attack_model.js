@@ -67,10 +67,10 @@ const attackFuncs = {
    */
   toxic_slime: function(attackedPlayer){
     // check hit
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
     const damage = damageCalculator(4, compareTyping(this, targetMonster));
 
     const description = `Slime causes ${targetMonster.name} to lose ${damage} hp each turn (3 turns).`;
@@ -83,16 +83,13 @@ const attackFuncs = {
     return [`${targetMonster.name} becomes enveloped in slime...`];
   },
   roar: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     return doAOEAttack(attackedPlayer, 3, this);
   },
   insanity: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
     const damage = damageCalculator(6, compareTyping(this, targetMonster));
     const messages = [`${targetMonster.name} is less accurate...`];
 
@@ -106,10 +103,10 @@ const attackFuncs = {
     return targetMonster.takeDamage(damage, messages);
   },
   decimate: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
     const maxHp = targetMonster.maxHp;
     const hp = targetMonster.hp;
     const damage = damageCalculator(Math.floor(maxHp/hp), compareTyping(this, targetMonster));
@@ -117,10 +114,10 @@ const attackFuncs = {
   },
   // Adds +2 to the attacking monster's accuracy and prevents the attacked monster from benching
   web_sling: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
     const messages = [`Webbing prevents ${targetMonster.name} from moving!`];
     // Increase accuracy
     let description1 = `${this.name} has +2 accuracy until next turn.`;
@@ -137,10 +134,10 @@ const attackFuncs = {
     return targetMonster.takeDamage(damageCalculator(5, compareTyping(this, targetMonster)), messages);
   },
   deep_knowledge: function(attackedPlayer){
+    const targetMonster = attackedPlayer.activeMonster;
     if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
+      return targetMonster.dodged();
     }
-    const {activeMonster} = attackedPlayer;
     const description = `Changes type to ${activeMonster.type}.`;
     new Modifier(this, {type: activeMonster.type}, 'morph', description, (modifier) => this.bench && modifier.removeModifier());
     return [`${this.name}'s type changed to ${activeMonster.type} type.`];
@@ -149,11 +146,10 @@ const attackFuncs = {
   * primary attacks
   */
   vomitous_sludge: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
-
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
     const description = `The sludge causes ${targetMonster.name} to lose 1hp per turn until benched.`;
     new Modifier(targetMonster, {}, 'dot', description, (modifier, messages) => {
       if(targetMonster.bench) return modifier.removeModifier();
@@ -166,10 +162,10 @@ const attackFuncs = {
   },
 
   steel_jaw: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
     const dmg = getRandomNumber(14, 18) ;
     // If the monster is supercharged perform an AOE attack
     if(this.supercharged) {
@@ -179,10 +175,10 @@ const attackFuncs = {
   },
 
   eldritch_horror: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
 
     const dmg = getRandomNumber(5, 8);
     const messages = [`${attackedPlayer.activeMonster.name} is now on the field.`];
@@ -205,10 +201,10 @@ const attackFuncs = {
   },
 
   neutralize: function(attackedPlayer){
-    if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
-    }
     const targetMonster = attackedPlayer.activeMonster;
+    if(!rollToHit(this)) {
+      return targetMonster.dodged();
+    }
     const messages = [];
     const dmg = getRandomNumber(10, 12);
     if(this.supercharged) {
@@ -232,12 +228,12 @@ const attackFuncs = {
   },
 
   stimulant: function(attackedPlayer){
+    const targetMonster = attackedPlayer.activeMonster;
     if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
+      return targetMonster.dodged();
     }
     const messages = [];
     const dmg = 8;
-    const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
       doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
@@ -247,11 +243,11 @@ const attackFuncs = {
   },
 
   hyper_lance: function(attackedPlayer){
+    const targetMonster = attackedPlayer.activeMonster;
     if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
+      return targetMonster.dodged();
     }
     const dmg = getRandomNumber(8, 12) ;
-    const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
       return doAOEAttack(attackedPlayer, dmg, this);
     } else {
@@ -259,12 +255,12 @@ const attackFuncs = {
     }
   },
   simulate_kaiju: function(attackedPlayer){
+    const targetMonster = attackedPlayer.activeMonster;
     if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
+      return targetMonster.dodged();
     }
     let messages = [];
     const dmg = getRandomNumber(10, 12) ;
-    const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
       doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
@@ -280,11 +276,11 @@ const attackFuncs = {
     return messages;
   },
   snake_handler: function(attackedPlayer){
+    const targetMonster = attackedPlayer.activeMonster;
     if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
+      return targetMonster.dodged();
     }
     const dmg = getRandomNumber(12, 16);
-    const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
       return doAOEAttack(attackedPlayer, dmg, this);
     } else {
@@ -292,11 +288,11 @@ const attackFuncs = {
     }
   },
   neurotoxin: function(attackedPlayer){
+    const targetMonster = attackedPlayer.activeMonster;
     if(!rollToHit(this)) {
-      return [`${this.name} misses!`];
+      return targetMonster.dodged();
     }
     const dmg = getRandomNumber(5, 18);
-    const targetMonster = attackedPlayer.activeMonster;
     if(this.supercharged) {
       return doAOEAttack(attackedPlayer, dmg, this);
     } else {

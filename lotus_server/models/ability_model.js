@@ -69,7 +69,7 @@ const abilityFuncs = {
     }
     const description = 'Changes type to pierce.';
     new Modifier(targetMonster, {type: {id: 1, name: 'pierce', weakness: 2}}, 'morph', description, (modifier) => {
-      if(player.activeMonster.bench) modifier.removeModifier();
+      if(targetMonster.bench) modifier.removeModifier();
     });
   },
   crush: function(player){

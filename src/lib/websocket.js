@@ -29,8 +29,6 @@ const printInfo = (infoCollection, infoName, player) => {
     const {target, value, playerId} = infoCollection[messageId];
     if(target){
       let monsterContainer = document.querySelector(`.opponent-side #m-${target.id}`);
-      console.log('playerId', playerId);
-      console.log('player.id', player.id);
       if(playerId && playerId === player.id){
         monsterContainer = document.querySelector(`.player-side #m-${target.id}`);
       }
@@ -57,19 +55,19 @@ const printInfo = (infoCollection, infoName, player) => {
  */
 const collectMessages = (messages) => {
   // initialize collections
-  const healsCollection = {};
+  const alertsCollection = {};
   const messagesCollection = [];
-  const damagesCollection = {};
   messages.forEach(messageObject => {
-    const {target, damage, amount, playerId, message} = messageObject;
+    const {type, target, value, playerId, message} = messageObject;
     // If it's just a basic message, push it and return.
     if(!target){
       messagesCollection.push(messageObject);
       return;
     }
-    // determine the type of message and use the appropriate value
-    const messageCollection = amount ? healsCollection : damagesCollection;
-    const value = amount || damage;
+    if(!alertsCollection[type]){
+      alertsCollection[type] = {};
+    }
+    const messageCollection = alertsCollection[type];
     const messageId = target.id + playerId;
     // messageCollection becomes the new container!
     if(messageCollection[messageId]){
@@ -81,7 +79,7 @@ const collectMessages = (messages) => {
     }
     messagesCollection.push(message);
   });
-  return {healsCollection, damagesCollection, messagesCollection};
+  return {alertsCollection, messagesCollection};
 };
 
 const updateGame = (battleComponent) => {
@@ -107,13 +105,15 @@ const updateGame = (battleComponent) => {
       }
     });
     if(messages && messages.length > 0){
-      const {healsCollection, damagesCollection, messagesCollection} = collectMessages(messages);
+      const {alertsCollection, messagesCollection} = collectMessages(messages);
       messages = messagesCollection;
-      let delay = printInfo(damagesCollection, 'damage', player);
-      // delay heal messages from appearing showing
-      delayFunction(delay, () => {
-        delay = printInfo(healsCollection, 'heal', player);
-      });
+      let delay = 0;
+      for(const collectionName in alertsCollection){
+        const alertCollection = alertsCollection[collectionName];
+        delayFunction(delay, () => {
+          delay = printInfo(alertCollection, collectionName, player);
+        });
+      }
     }
     battleComponent.setState({game, messages: messages || [], player, opponent});
   };
