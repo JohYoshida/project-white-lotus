@@ -70,11 +70,19 @@ class Battle extends Component {
     const {gameOver} = this.state.game;
     if(gameOver){
       toggleModalById('gameOverModal');
+      let earnings = 0;
       if(gameOver.winner.id === this.state.battlerId){
-        editBrouzoff(this.state.game, 500);
+        earnings = 50;
+        editBrouzoff(this.state.game, earnings);
       }
-      editBrouzoff(this.state.game, 250);
-      return(<p>Winner is {gameOver.winner.name}!</p>);
+      editBrouzoff(this.state.game, earnings);
+      return(
+        <section>
+          <h3>Winner is {gameOver.winner.name}!</h3>
+          <img src='/assets/images/gold.png' alt='Gold rabbit'/>
+          <h4>You've earned: &#3647;{earnings}</h4>
+        </section>
+      );
     }
   }
   renderTeam(team){
