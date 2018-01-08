@@ -36,7 +36,7 @@ const printInfo = (infoCollection, infoName, player) => {
       }
       if(monsterContainer){
         // set the delay only if there is a info span to create
-        delay = 250;
+        delay = 1000;
         const infoSpan = makeInfoSpan(value, infoName);
         monsterContainer.prepend(infoSpan);
         delayFunction(2000, () => {
