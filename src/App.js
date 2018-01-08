@@ -176,15 +176,13 @@ class App extends Component {
       </Router>);
     } else {
       return(
-        <div>
         <Login
           state = {this.state}
           login = {this.login}
           register = {this.register}
           hidden = {this.state.loggedin}
           flashMessage = {this.state.flashMessage}
-        />
-        </div>);
+        />);
     }
   }
 }
