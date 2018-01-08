@@ -29,12 +29,14 @@ const printInfo = (infoCollection, infoName, player) => {
     const {target, value, playerId} = infoCollection[messageId];
     if(target){
       let monsterContainer = document.querySelector(`.opponent-side #m-${target.id}`);
+      console.log('playerId', playerId);
+      console.log('player.id', player.id);
       if(playerId && playerId === player.id){
         monsterContainer = document.querySelector(`.player-side #m-${target.id}`);
       }
       if(monsterContainer){
         // set the delay only if there is a info span to create
-        delay = 1000;
+        delay = 250;
         const infoSpan = makeInfoSpan(value, infoName);
         monsterContainer.prepend(infoSpan);
         delayFunction(2000, () => {
@@ -98,7 +100,7 @@ const updateGame = (battleComponent) => {
     }
     game.players.forEach(pc => {
       // Checks if there is no opponent already to add extra bug protection.
-      if(pc.id !== battleComponent.props.battlerId && !opponent){
+      if(pc.id !== battleComponent.state.battlerId && !opponent){
         opponent = pc;
       } else {
         player = pc;
