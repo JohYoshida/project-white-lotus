@@ -17,8 +17,9 @@ class Login extends Component {
   render() {
     if(this.state.register){
       return (
-        <main className='container'>
+        <main className='login-panel'>
           <div>
+            <h1>Mechas and Kaijus</h1>
             <h4>Register</h4>
             <FlashMessage message={this.props.flashMessage}/>
             <form id="registerForm">
@@ -36,8 +37,6 @@ class Login extends Component {
     return (
       <main className='login-panel'>
         <h1>Mechas and Kaijus</h1>
-        <p>The year: 2086</p>
-        <p>30 years since the creatures came from below.</p>
         <h4>Login</h4>
         <FlashMessage message={this.props.flashMessage}/>
         <form id="loginForm">
