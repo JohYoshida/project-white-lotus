@@ -58,7 +58,7 @@ const doAOEAttack = (attackedPlayer, dmg, attacker, messages) => {
  * Returns a random 2d6 dice roll plus the accuracy_bonus of the argument monster
  */
 const rollToHit = (monster) => {
-  return Math.round(Math.random()*6) + Math.round(Math.random()*6) + monster.accuracy_bonus > 6;
+  return Math.round(Math.random()*6) + Math.round(Math.random()*6) + monster.accuracy_bonus > 5;
 };
 
 const attackFuncs = {
@@ -120,8 +120,8 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return [`${this.name} misses!`];
     }
-    const messages = [`Webbing prevents ${targetMonster.name} from moving!`];
     const targetMonster = attackedPlayer.activeMonster;
+    const messages = [`Webbing prevents ${targetMonster.name} from moving!`];
     // Increase accuracy
     let description1 = `${this.name} has +2 accuracy until next turn.`;
     new Modifier(this, {accuracy_bonus: this.accuracy_bonus + 2}, 'accBuff', description1, (modifier) => modifier.removeModifier());

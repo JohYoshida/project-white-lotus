@@ -43,6 +43,7 @@ module.exports = (wss, id) => {
             delete player.id;
           }
         }
+        // delete messages with ids that don't match the players?
         // If the client is ready for messages
         if(client.readyState === 1){
           client.send(JSON.stringify(copiedData));
@@ -71,7 +72,7 @@ module.exports = (wss, id) => {
               client.id = battlerId;
             }
           });
-          ws.broadcast({game:battle.game, message:['Player rejoined']});
+          ws.broadcast({game:battle.game, messages:['Player rejoined']});
         }
         break;
       }

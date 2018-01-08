@@ -5,6 +5,15 @@ const delayFunction = (ms, callback) => {
   });
 };
 
+
+/**
+ * makeInfoSpan - creates a new span element
+ *
+ * @param {string/number} value  any value to be input as the content of the span.
+ * @param {string} infoName  A class name to be added to the span
+ * @returns {object} HTML element  An HTML element representing the info span.
+ */
+
 const makeInfoSpan = (value, infoName) => {
   const infoSpan = document.createElement('span');
   infoSpan.classList.add(infoName);
@@ -37,12 +46,21 @@ const printInfo = (infoCollection, infoName, player) => {
   return delay;
 };
 
+
+/**
+ * collectMessages - takes all messages sent down and funnels them into their appropriate message objects
+ *
+ * @param {array} messages  An array of messages. These can be strings or objects.
+ * @return {object}  An object of all the filled collections
+ */
 const collectMessages = (messages) => {
+  // initialize collections
   const healsCollection = {};
   const messagesCollection = [];
   const damagesCollection = {};
   messages.forEach(messageObject => {
     const {target, damage, amount, playerId, message} = messageObject;
+    // If it's just a basic message, push it and return.
     if(!target){
       messagesCollection.push(messageObject);
       return;
@@ -61,7 +79,6 @@ const collectMessages = (messages) => {
     }
     messagesCollection.push(message);
   });
-  console.log(messagesCollection);
   return {healsCollection, damagesCollection, messagesCollection};
 };
 
@@ -76,16 +93,19 @@ const updateGame = (battleComponent) => {
       const gameData = JSON.parse(event.data);
       messages = gameData.messages;
       game = gameData.game;
-      console.log(messages);
     } catch(e) {
       console.log(e);
     }
     game.players.forEach(pc => {
-      pc.id ? player = pc : opponent = pc;
+      // Checks if there is no opponent already to add extra bug protection.
+      if(pc.id !== battleComponent.props.battlerId && !opponent){
+        opponent = pc;
+      } else {
+        player = pc;
+      }
     });
     if(messages && messages.length > 0){
       const {healsCollection, damagesCollection, messagesCollection} = collectMessages(messages);
-      console.log('collected messages,', messagesCollection);
       messages = messagesCollection;
       let delay = printInfo(damagesCollection, 'damage', player);
       // delay heal messages from appearing showing

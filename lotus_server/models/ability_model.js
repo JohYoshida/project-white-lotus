@@ -64,7 +64,7 @@ const abilityFuncs = {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(targetMonster.modifier.has('morph') || targetMonster.type === 'pierce'){
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'pierce'){
       return;
     }
     const description = 'Changes type to pierce.';
@@ -77,7 +77,7 @@ const abilityFuncs = {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(targetMonster.modifier.has('morph') || targetMonster.type === 'crush'){
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'crush'){
       return;
     }
     const description = 'Changes type to crush.';
@@ -90,7 +90,7 @@ const abilityFuncs = {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(targetMonster.modifier.has('morph') || targetMonster.type === 'spray'){
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'spray'){
       return;
     }
     const description = 'Changes type to spray.';
