@@ -46,6 +46,7 @@ span.monster-hp{
     cursor: pointer;
   }
   img {
+    position: relative;
     transform: scaleX(-1);
     height: 100%;
     width: 100%;
@@ -72,6 +73,7 @@ span.monster-hp{
     cursor: pointer;
   }
   img{
+    position: relative;
     height: 100%;
     width: 100%;
   }
@@ -84,6 +86,7 @@ span.monster-hp{
     order:-1;
   }
 }
+// animations and effects
 @keyframes damageNumber {
   0% {
     bottom: 20rem;
@@ -95,6 +98,36 @@ span.monster-hp{
     opacity: 0;
     bottom:23rem;
   }
+}
+@keyframes playerAttackAnimation {
+  0% {
+    right:0;
+  }
+  50%{
+    right:50px;
+  }
+  100%{
+    right:0px;
+  }
+}
+@keyframes opponentAttackAnimation {
+  0% {
+    left:0;
+  }
+  50%{
+    left:50px;
+  }
+  100%{
+    left:0px;
+  }
+}
+.attack-player{
+  animation: playerAttackAnimation 1s ease-out;
+  animation-fill-mode: forwards;
+}
+.attack-opponent{
+  @extend .attack-player;
+  animation: opponentAttackAnimation 1s ease-out;
 }
 .damage{
   text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;

@@ -74,6 +74,11 @@ class CompleteMonster {
     messages.unshift({type:'heal', target: this, value: amount, playerId: this.playerId, message:`${this.name} healed ${amount} hp!`});
     return messages;
   }
+  // call this function when request an attack to be made.
+  attack(attackName, idlePlayer){
+    const messages = [{type:'animate', value:'attack', target: this, playerId: this.playerId}];
+    return this.attacks[attackName].func(idlePlayer, messages);
+  }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
     let {id, name, description} = attributes;

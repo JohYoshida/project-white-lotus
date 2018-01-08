@@ -21,6 +21,27 @@ const makeInfoSpan = (value, infoName) => {
   return infoSpan;
 };
 
+/**
+ * animateCharacter - adds a class to a monster image in order to perform an animation
+ *
+ * @param {object} animation  The object represeting the animation information
+ */
+const animateCharacter = (animation, player) => {
+  const {target, value, playerId} = animation;
+  // find the appropriate image
+  let prefix = 'opponent';
+  let monsterImage = document.querySelector(`.opponent-side #m-${target.id} img`);
+  if(playerId && playerId === player.id){
+    prefix = 'player';
+    monsterImage = document.querySelector(`.player-side #m-${target.id} img`);
+  }
+  // add the the class(value)
+  monsterImage.classList.add(`${value}-${prefix}`);
+  delayFunction(2000, () => {
+    // remove the class after two seconds
+    monsterImage.classList.remove(`${value}-${prefix}`);
+  });
+};
 // Takes in the monster to target, the damage to write.
 // Also takes a playerId and a player (optional). These are just used to determine if it's a DOT effect.
 const printInfo = (infoCollection, infoName, player) => {
@@ -43,6 +64,7 @@ const printInfo = (infoCollection, infoName, player) => {
       }
     }
   }
+  // At the end of it all, return the delay for other alert collections to use.
   return delay;
 };
 
@@ -56,6 +78,7 @@ const printInfo = (infoCollection, infoName, player) => {
 const collectMessages = (messages) => {
   // initialize collections
   const alertsCollection = {};
+  const animationsCollection = {};
   const messagesCollection = [];
   messages.forEach(messageObject => {
     const {type, target, value, playerId, message} = messageObject;
@@ -64,22 +87,34 @@ const collectMessages = (messages) => {
       messagesCollection.push(messageObject);
       return;
     }
+    if(type === 'animate'){
+      console.log(messageObject);
+      const messageId = target.id + playerId;
+      animationsCollection[messageId] = {
+        target, value, playerId
+      };
+      console.log(animationsCollection);
+      return;
+    }
+    // Initialize the alert message collection if it doesn't already exist
     if(!alertsCollection[type]){
       alertsCollection[type] = {};
     }
     const messageCollection = alertsCollection[type];
     const messageId = target.id + playerId;
-    // messageCollection becomes the new container!
     if(messageCollection[messageId]){
-      messageCollection[messageId].value += value;
+      // If the message value is not a number, simply update the value of the message
+      // Since some values are just going to be strings we don't want them concatenating.
+      typeof value === 'number' ? messageCollection[messageId].value += value : messageCollection[messageId].value = value;
     } else {
       messageCollection[messageId] = {
         target, value, playerId
       };
     }
+    // push the message to be displayed in the messages component
     messagesCollection.push(message);
   });
-  return {alertsCollection, messagesCollection};
+  return {alertsCollection, animationsCollection, messagesCollection};
 };
 
 const updateGame = (battleComponent) => {
@@ -105,13 +140,23 @@ const updateGame = (battleComponent) => {
       }
     });
     if(messages && messages.length > 0){
-      const {alertsCollection, messagesCollection} = collectMessages(messages);
+      // Collect all message types into the alerts collection.
+      const {alertsCollection, animationsCollection, messagesCollection} = collectMessages(messages);
       messages = messagesCollection;
       let delay = 0;
+      // for each collection, print the info, delaying it as necessary
+      for(const animationId in animationsCollection){
+        const animation = animationsCollection[animationId];
+        animateCharacter(animation, player);
+      }
       for(const collectionName in alertsCollection){
         const alertCollection = alertsCollection[collectionName];
-        delayFunction(delay, () => {
+        if(!delay){
           delay = printInfo(alertCollection, collectionName, player);
+          continue
+        }
+        delayFunction(delay, () => {
+          printInfo(alertCollection, collectionName, player);
         });
       }
     }
