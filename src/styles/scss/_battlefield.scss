@@ -24,23 +24,14 @@ span.monster-hp{
   bottom:19rem;
   color:white;
 }
-
-.kaiju{
-  height: 187px;
-  width: 187px;
-}
-
-.mecha{
-  width: 100px;
-  height: 187px;
-}
-
 .opponent-side{
   position: absolute;
   display: flex;
   bottom: 0;
   left: 2rem;
   .opponent-monster{
+    height: 150px;
+    width: 150px;
     position: relative;
     margin-right: 1rem;
     cursor: pointer;
@@ -68,6 +59,8 @@ span.monster-hp{
   right: 2rem;
   bottom: 0;
   .player-monster{
+    height: 150px;
+    width: 150px;
     position: relative;
     margin-left: 1rem;
     cursor: pointer;
@@ -122,12 +115,12 @@ span.monster-hp{
   }
 }
 .attack-player{
-  animation: playerAttackAnimation 1s ease-out;
+  animation: playerAttackAnimation .5s ease-out;
   animation-fill-mode: forwards;
 }
 .attack-opponent{
   @extend .attack-player;
-  animation: opponentAttackAnimation 1s ease-out;
+  animation: opponentAttackAnimation .5s ease-out;
 }
 .damage{
   text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
