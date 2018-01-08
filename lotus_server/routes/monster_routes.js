@@ -13,7 +13,7 @@ module.exports = (db) => {
   monsterRouter.get('/', (req, res) => {
     if(!req.session.id) res.status(400).send();
     // Get all monster IDs
-    buildMonstersJSON(res, req.session.id)
+    buildMonstersJSON(res, req.session.id);
   });
 
   // For deleting a monster
@@ -28,7 +28,7 @@ module.exports = (db) => {
       // grab the rows from the many-to-many table put them into a collection
       new TeamMonster().where({monster_id: monster.get('id')}).fetchAll().then(TeamMonsterCollection => {
         const deletionPromises = [];
-        // collect all deletion requests (where: clause necessary since the many-to-many table has no id attribute)
+        // collect all deletion requests (where({}) clause necessary since the many-to-many table has no id attribute)
         TeamMonsterCollection.forEach(model => {
           deletionPromises.push(new Team().where({id: model.get('team_id')}).destroy());
           deletionPromises.push(model.where({id: model.get('team_id')}).destroy());

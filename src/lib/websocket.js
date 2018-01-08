@@ -42,6 +42,7 @@ const animateCharacter = (animation, player) => {
     monsterImage.classList.remove(`${value}-${prefix}`);
   });
 };
+
 // Takes in the monster to target, the damage to write.
 // Also takes a playerId and a player (optional). These are just used to determine if it's a DOT effect.
 const printInfo = (infoCollection, infoName, player) => {
