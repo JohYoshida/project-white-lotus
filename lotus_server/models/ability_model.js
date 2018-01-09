@@ -30,14 +30,14 @@ const abilityFuncs = {
         // heal modifier increases hp by turn until the monster who applied has a false passiveActive
         // or monster to whom it is applied has max hp.
         const description = 'Monster is healed 2 hp per turn until fully healed.';
-        new Modifier(curMonster, {}, 'heal', description, (modifier) => {
+        new Modifier(curMonster, {}, 'heal', description, (modifier, messages) => {
           if(!this.passiveActive){
             modifier.removeModifier();
           }
           if(curMonster.hp === curMonster.maxHp){
             modifier.removeModifier();
           }
-          curMonster.hp += 2;
+          return curMonster.healHp(2, messages);
         });
       }
     }
@@ -64,12 +64,12 @@ const abilityFuncs = {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(targetMonster.modifier.has('morph') || targetMonster.type === 'pierce'){
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'pierce'){
       return;
     }
     const description = 'Changes type to pierce.';
     new Modifier(targetMonster, {type: {id: 1, name: 'pierce', weakness: 2}}, 'morph', description, (modifier) => {
-      if(player.activeMonster.bench) modifier.removeModifier();
+      if(targetMonster.bench) modifier.removeModifier();
     });
   },
   crush: function(player){
@@ -77,7 +77,7 @@ const abilityFuncs = {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(targetMonster.modifier.has('morph') || targetMonster.type === 'crush'){
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'crush'){
       return;
     }
     const description = 'Changes type to crush.';
@@ -90,7 +90,7 @@ const abilityFuncs = {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(targetMonster.modifier.has('morph') || targetMonster.type === 'spray'){
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'spray'){
       return;
     }
     const description = 'Changes type to spray.';

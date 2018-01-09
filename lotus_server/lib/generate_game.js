@@ -14,9 +14,8 @@ class Game{
   // actionObj = {action:'attack', name:{{attack_name}}, [options:{options}]}
   attack(actionObj){
     const {activePlayer, idlePlayer} = this;
-    const {options, name} = actionObj;
-    const messages = activePlayer.activeMonster.attacks[name].func(idlePlayer, options);
-    return messages;
+    const {name} = actionObj;
+    return activePlayer.activeMonster.attack(name, idlePlayer);
   }
   // used to execute all passive abilities of monsters with their passive's active. This can include monsters on the field.
   // Messages given in the takeAction function to make it easier to use in the modifier update functions

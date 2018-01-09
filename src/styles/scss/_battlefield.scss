@@ -24,28 +24,20 @@ span.monster-hp{
   bottom:19rem;
   color:white;
 }
-
-.kaiju{
-  height: 187px;
-  width: 187px;
-}
-
-.mecha{
-  width: 100px;
-  height: 187px;
-}
-
 .opponent-side{
   position: absolute;
   display: flex;
   bottom: 0;
   left: 2rem;
   .opponent-monster{
+    height: 150px;
+    width: 150px;
     position: relative;
     margin-right: 1rem;
     cursor: pointer;
   }
   img {
+    position: relative;
     transform: scaleX(-1);
     height: 100%;
     width: 100%;
@@ -67,11 +59,14 @@ span.monster-hp{
   right: 2rem;
   bottom: 0;
   .player-monster{
+    height: 150px;
+    width: 150px;
     position: relative;
     margin-left: 1rem;
     cursor: pointer;
   }
   img{
+    position: relative;
     height: 100%;
     width: 100%;
   }
@@ -84,6 +79,7 @@ span.monster-hp{
     order:-1;
   }
 }
+// animations and effects
 @keyframes damageNumber {
   0% {
     bottom: 20rem;
@@ -96,7 +92,38 @@ span.monster-hp{
     bottom:23rem;
   }
 }
+@keyframes playerAttackAnimation {
+  0% {
+    right:0;
+  }
+  50%{
+    right:50px;
+  }
+  100%{
+    right:0px;
+  }
+}
+@keyframes opponentAttackAnimation {
+  0% {
+    left:0;
+  }
+  50%{
+    left:50px;
+  }
+  100%{
+    left:0px;
+  }
+}
+.attack-player{
+  animation: playerAttackAnimation .5s ease-out;
+  animation-fill-mode: forwards;
+}
+.attack-opponent{
+  @extend .attack-player;
+  animation: opponentAttackAnimation .5s ease-out;
+}
 .damage{
+  text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
   font-size: 3rem;
   position: absolute;
   bottom: 22rem;
@@ -105,4 +132,12 @@ span.monster-hp{
   color: red;
   animation: damageNumber 1s linear;
   animation-fill-mode: forwards;
+}
+.heal{
+  @extend .damage;
+  color: green;
+}
+.miss{
+  @extend .damage;
+  color:orange;
 }
