@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Route, Link} from 'react-router-dom';
 import uuid from 'uuid';
 import MessageBox from './components/MessageBox.jsx';
 import CardModal from './components/CardModal.jsx';
@@ -92,7 +93,7 @@ class Battle extends Component {
     return (
       <article key={team.id} data-id={team.id} className='team'>
         <h3>{team.name}</h3>
-        <button class="delete-team-button" onClick={this.joinGame}>Select Team</button>
+        <button className="delete-team-button" onClick={this.joinGame}>Select Team</button>
         <section className="team-team-members">
           {team.teamMembers.map(getTeamMembers)}
         </section>
@@ -115,7 +116,11 @@ class Battle extends Component {
     if(this.state.roomNotFound){
       return(
         <main>
-          <h2>Room not found</h2>
+          <div>
+            <h2>Room not found</h2>
+            <Link to="/create-battle"><button>Create Battle</button></Link>
+            <Link to="/join-battle"><button>Join Battle</button></Link>
+          </div>
         </main>
       );
     }
