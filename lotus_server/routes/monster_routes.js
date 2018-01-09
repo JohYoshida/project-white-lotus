@@ -30,16 +30,10 @@ module.exports = (db) => {
     });
   });
 
-  // Find a single monster so it can be fetched by React Monster component
-  monsterRouter.get('/:id', (req, res) => {
-    buildMonsterJSON(res, req.params.id);
-  });
-
   // For creating a new monster.
   monsterRouter.post('/', (req, res) => {
     const {id} = req.session;
     const {creature, cost} = req.body;
-
     if (!creature || !id){
       return;
     }
