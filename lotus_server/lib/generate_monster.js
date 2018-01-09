@@ -46,7 +46,7 @@ class CompleteMonster {
     }
     if(!this.protector || isModifier){
       this.hp -= damage;
-      messages.unshift({target: this, damage, playerId: this.playerId, message:`${this.name} took ${damage} damage!`});
+      messages.unshift({type:'damage', target: this, value: damage, playerId: this.playerId, message:`${this.name} took ${damage} damage!`});
       return messages;
     }
     // If there is a benched monster protecting this monster. Check damage and effect protector accordingly.
@@ -54,13 +54,30 @@ class CompleteMonster {
     if(damage > 5){
       const totalDamage = damage - protectorDamage;
       this.hp -= totalDamage;
-      messages.unshift({target: this, damage: totalDamage, playerId: this.playerId, message:`${this.name} took ${totalDamage} damage!`});
+      messages.unshift({type:'damage', target: this, value: totalDamage, playerId: this.playerId, message:`${this.name} took ${totalDamage} damage!`});
       this.protector.takeDamage(protectorDamage, messages);
     } else {
       this.protector.takeDamage(damage, messages);
     }
     // filter out null results before sending
     return messages.filter(message => message);
+  }
+  // Call this function when an attack against this monster misses
+  dodged(messages){
+    if(!messages) messages = [];
+    messages.unshift({type:'miss', target: this, value:'missed', playerId: this.playerId, message:`${this.name} dodges!`});
+    return messages;
+  }
+  // Call this function when an abiliti heals a monster
+  healHp(amount, messages){
+    this.hp += amount;
+    messages.unshift({type:'heal', target: this, value: amount, playerId: this.playerId, message:`${this.name} healed ${amount} hp!`});
+    return messages;
+  }
+  // call this function when request an attack to be made.
+  attack(attackName, idlePlayer){
+    const messages = [{type:'animate', value:'attack', target: this, playerId: this.playerId}];
+    return this.attacks[attackName].func(idlePlayer, messages);
   }
   set_attacks(attributes, altAttributes) {
     this.attacks = {};
@@ -72,7 +89,6 @@ class CompleteMonster {
     }
   }
   set_ability({name, description}) {
-    // this.ability[name] = {id: id, name: name, description: description || 'Attack 1 description', func: attackFuncs[name].bind(this)};
     this.ability = {name, description, func: abilityFuncs[name].bind(this)};
   }
 }
