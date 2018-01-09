@@ -2,7 +2,8 @@
 require('dotenv').config();
 const express = require('express');
 const server = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
+const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
@@ -21,6 +22,8 @@ const userRouter = require('./routes/user_routes')(knex);
 const loginUser = require('./lib/login_user')(knex);
 
 // Middleware
+// Serve static files from the React app
+server.use(express.static(path.join(__dirname, '../build')));
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
