@@ -6,7 +6,6 @@ import {withCookies, Cookies} from 'react-cookie';
 // Components
 import Battle from './Battle.jsx';
 import Monsters from './Monsters.jsx';
-import Monster from './Monster.jsx';
 import Store from './Store.jsx';
 import Login from './Login.jsx';
 import Teams from './Teams.jsx';
@@ -156,9 +155,6 @@ class App extends Component {
           </nav>
           <Route exact path="/" render={() =>
             (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
-          }/>
-          <Route path="/monsters/:id" render={(props) =>
-            (<Monster {...props} loadApp={this.loadApp}/>)
           }/>
           <Route path="/store" render={(props) =>
             (<Store {...props} brouzoff={this.state.brouzoff} loadApp={this.loadApp} purchasedMonster={this.state.purchasedMonster} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
