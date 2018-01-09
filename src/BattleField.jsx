@@ -4,18 +4,37 @@ import React, {Component} from 'react';
 import {BrowserRouter as Route} from 'react-router-dom';
 import {toggleModalByIdButton} from './lib/element_effect_helpers';
 
-class Monster extends Component {
+class BattleField extends Component {
   // Places monster images on the battlefield. Prefix is either "player" or "opponent" as a string.
+  updatePositions(player){
+    const {team, activeMonster} = player;
+    // add benched monsters
+    for (const monsterId in team) {
+      const monster = team[monsterId];
+      console.log(monster);
+      if(monster.killed || monsterId === activeMonster.id){
+        continue;
+      }
+      console.log(monsterId);
+      const monsterContainer = document.querySelector(`#m-${monsterId}`);
+      console.log(monsterContainer);
+      monsterContainer.classList.replace(`pos-${monster.position}`, `pos-${monster.position-1}`);
+    }
+  }
   generateMonsterImages(player, prefix) {
     const {team, activeMonster} = player;
     const monsters = [];
     // add benched monsters
     for (const monsterId in team) {
       const curMonster = team[monsterId];
-      let className = `${prefix}-monster ${curMonster.creature}`;
+      let className = `${prefix}-monster pos-${curMonster.position}`;
       // if this monsters is the active monster, add the active class.
       if (activeMonster && monsterId === activeMonster.id) {
         className += ' active';
+      }
+      if(curMonster.killed){
+        className += ' death-fade-out';
+        this.updatePositions(player);
       }
       monsters.push(
         <div key={monsterId} id={`m-${monsterId}`} className={className} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
@@ -40,4 +59,4 @@ class Monster extends Component {
   }
 }
 
-export default Monster;
+export default BattleField;

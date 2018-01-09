@@ -27,6 +27,7 @@ span.monster-hp{
 .opponent-side{
   position: absolute;
   display: flex;
+  justify-content: space-between;
   bottom: 0;
   left: 2rem;
   .opponent-monster{
@@ -50,6 +51,9 @@ span.monster-hp{
   .active{
     order:1;
   }
+  .active-dead{
+    order:2;
+  }
 }
 
 .player-side{
@@ -58,6 +62,7 @@ span.monster-hp{
   height: auto;
   right: 2rem;
   bottom: 0;
+  justify-content: space-between;
   .player-monster{
     height: 150px;
     width: 150px;
@@ -77,6 +82,9 @@ span.monster-hp{
   }
   .active{
     order:-1;
+  }
+  .active-dead{
+    order:-2;
   }
 }
 // animations and effects
@@ -114,6 +122,18 @@ span.monster-hp{
     left:0px;
   }
 }
+@keyframes deathFadeOut {
+    0% {
+      opacity: 1;
+    }
+    50%{
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+}
 .attack-player{
   animation: playerAttackAnimation .5s ease-out;
   animation-fill-mode: forwards;
@@ -122,6 +142,11 @@ span.monster-hp{
   @extend .attack-player;
   animation: opponentAttackAnimation .5s ease-out;
 }
+.death-fade-out{
+  animation: deathFadeOut 1s ease-out;
+  animation-fill-mode: forwards;
+}
+// text effect
 .damage{
   text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
   font-size: 3rem;

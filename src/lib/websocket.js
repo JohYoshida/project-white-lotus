@@ -43,6 +43,10 @@ const animateCharacter = (animation, player) => {
   });
 };
 
+// const animateDeaths = () => {
+//
+// };
+
 // Takes in the monster to target, the damage to write.
 // Also takes a playerId and a player (optional). These are just used to determine if it's a DOT effect.
 const printInfo = (infoCollection, infoName, player) => {
@@ -89,12 +93,10 @@ const collectMessages = (messages) => {
       return;
     }
     if(type === 'animate'){
-      console.log(messageObject);
       const messageId = target.id + playerId;
       animationsCollection[messageId] = {
         target, value, playerId
       };
-      console.log(animationsCollection);
       return;
     }
     // Initialize the alert message collection if it doesn't already exist
@@ -145,21 +147,23 @@ const updateGame = (battleComponent) => {
       const {alertsCollection, animationsCollection, messagesCollection} = collectMessages(messages);
       messages = messagesCollection;
       let delay = 0;
-      // for each collection, print the info, delaying it as necessary
+      // animate characters
       for(const animationId in animationsCollection){
         const animation = animationsCollection[animationId];
         animateCharacter(animation, player);
       }
+      // for each collection, print the info, delaying it as necessary
       for(const collectionName in alertsCollection){
         const alertCollection = alertsCollection[collectionName];
         if(!delay){
           delay = printInfo(alertCollection, collectionName, player);
-          continue
+          continue;
         }
         delayFunction(delay, () => {
           printInfo(alertCollection, collectionName, player);
         });
       }
+      // animateDeaths(player);
     }
     battleComponent.setState({game, messages: messages || [], player, opponent});
   };

@@ -533,6 +533,7 @@ span.monster-hp {
 .opponent-side {
   position: absolute;
   display: flex;
+  justify-content: space-between;
   bottom: 0;
   left: 2rem; }
   .opponent-side .opponent-monster {
@@ -550,13 +551,16 @@ span.monster-hp {
     display: block; }
   .opponent-side .active {
     order: 1; }
+  .opponent-side .active-dead {
+    order: 2; }
 
 .player-side {
   position: absolute;
   display: flex;
   height: auto;
   right: 2rem;
-  bottom: 0; }
+  bottom: 0;
+  justify-content: space-between; }
   .player-side .player-monster {
     height: 150px;
     width: 150px;
@@ -571,6 +575,8 @@ span.monster-hp {
     display: block; }
   .player-side .active {
     order: -1; }
+  .player-side .active-dead {
+    order: -2; }
 
 @keyframes damageNumber {
   0% {
@@ -594,12 +600,24 @@ span.monster-hp {
     left: 50px; }
   100% {
     left: 0px; } }
+@keyframes deathFadeOut {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    display: none; } }
 .attack-player, .attack-opponent {
   animation: playerAttackAnimation .5s ease-out;
   animation-fill-mode: forwards; }
 
 .attack-opponent {
   animation: opponentAttackAnimation .5s ease-out; }
+
+.death-fade-out {
+  animation: deathFadeOut 1s ease-out;
+  animation-fill-mode: forwards; }
 
 .damage, .heal, .miss {
   text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
