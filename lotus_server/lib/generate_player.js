@@ -6,26 +6,31 @@ class Player {
     if(name) this.name = name;
     this.id = userid;
     this.team = team;
+    this.graveyard = {};
     this.turn = false;
     this.activeMonster = undefined;
   }
   // checks if any monsters are dead.
   checkForDeath(){
-    const {team} = this;
+    const {team, graveyard} = this;
     // turn the animated attribute of the graveyard to true
+    for(const monstId in graveyard){
+      const deadMonster = graveyard[monstId];
+      deadMonster.animated = true;
+    }
     for(const monstId in team){
       const monster = team[monstId];
-      if(monster.killed){
-        delete team[monstId];
-      }
       if(monster.hp < 1){
-        monster.killed = true;
+        this.graveyard[monstId] = monster;
+        delete team[monstId];
         // If the monster that died is the active monster, the game will automatically set the next monster in the list as the active monster.
-        if(monster.bench === false && team.aliveMonsters() > 0){
-          const firstMonsterId = Object.keys(team)[1];
+        const aliveMonsters = team.aliveMonsters();
+        if(monster.bench === false && aliveMonsters.length > 0){
+          const firstMonsterId = aliveMonsters[0].id;
           team[firstMonsterId].bench = false;
           this.findActiveMonster();
         }
+        monster.bench = true;
       }
     }
   }
@@ -39,16 +44,12 @@ class Player {
     return [`${this.name || 'user'} has changed their active monster to ${this.activeMonster.name}`];
   }
   findActiveMonster(){
-    let count = 1;
     for(const monsterId in this.team){
       const monster = this.team[monsterId];
       if(monster.bench === false){
         this.activeMonster = monster;
-        monster.position = 0;
         continue;
       }
-      monster.position = count;
-      count++;
       // resets certain passive monster attributes when a new active monster is searched for.
       monster.passiveActive = true;
       monster.protector = null;

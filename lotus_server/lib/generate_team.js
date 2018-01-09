@@ -8,7 +8,12 @@ class Team{
   }
   // returns number of alive monsters
   aliveMonsters(){
-    return Object.keys(this).length;
+    const monsters = [];
+    for(const monstId in this){
+      const monster = this[monstId];
+      monsters.push(monster);
+    }
+    return monsters;
   }
 }
 

@@ -53,7 +53,7 @@ class Game{
   // Sets this.activePlayer and this.idlePlayer to the appropriate player. Used for turns.
   findActivePlayer(){
     for(const player of this.players){
-      if(player.team.aliveMonsters() === 0){
+      if(player.team.aliveMonsters().length === 0){
         const losingPlayerIndex = this.players.indexOf(player);
         const winningPlayerIndex = 1 - losingPlayerIndex;
         this.gameOver = {winner:this.players[winningPlayerIndex], loser: this.players[losingPlayerIndex]};

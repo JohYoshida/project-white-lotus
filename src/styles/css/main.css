@@ -504,80 +504,6 @@ form#teamNameForm {
   form#teamNameForm input {
     margin: 0; }
 
-.battlefield-visual {
-  position: relative;
-  height: 350px;
-  background-image: url("/assets/images/bg.png");
-  border-radius: 1rem;
-  border: 2px solid #BBBBBB;
-  width: 1100px; }
-
-span.monster-name {
-  display: none;
-  width: 100%;
-  text-align: center;
-  position: absolute;
-  font-size: .8rem;
-  bottom: 22rem;
-  color: white; }
-
-span.monster-hp {
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin: auto;
-  position: absolute;
-  bottom: 19rem;
-  color: white; }
-
-.opponent-side {
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  bottom: 0;
-  left: 2rem; }
-  .opponent-side .opponent-monster {
-    height: 150px;
-    width: 150px;
-    position: relative;
-    margin-right: 1rem;
-    cursor: pointer; }
-  .opponent-side img {
-    position: relative;
-    transform: scaleX(-1);
-    height: 100%;
-    width: 100%; }
-  .opponent-side:hover span.monster-name {
-    display: block; }
-  .opponent-side .active {
-    order: 1; }
-  .opponent-side .active-dead {
-    order: 2; }
-
-.player-side {
-  position: absolute;
-  display: flex;
-  height: auto;
-  right: 2rem;
-  bottom: 0;
-  justify-content: space-between; }
-  .player-side .player-monster {
-    height: 150px;
-    width: 150px;
-    position: relative;
-    margin-left: 1rem;
-    cursor: pointer; }
-  .player-side img {
-    position: relative;
-    height: 100%;
-    width: 100%; }
-  .player-side:hover span {
-    display: block; }
-  .player-side .active {
-    order: -1; }
-  .player-side .active-dead {
-    order: -2; }
-
 @keyframes damageNumber {
   0% {
     bottom: 20rem; }
@@ -606,18 +532,80 @@ span.monster-hp {
   50% {
     opacity: 1; }
   100% {
-    opacity: 0;
-    display: none; } }
+    opacity: 0; } }
+.battlefield-visual {
+  position: relative;
+  height: 350px;
+  background-image: url("/assets/images/bg.png");
+  border-radius: 1rem;
+  border: 2px solid #BBBBBB;
+  width: 1100px; }
+
+span.monster-name {
+  display: none;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  font-size: .8rem;
+  bottom: 22rem;
+  color: white; }
+
+span.monster-hp {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  position: absolute;
+  bottom: 19rem;
+  color: white; }
+
+.monster {
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin-left: 1rem;
+  order: -2;
+  cursor: pointer; }
+  .monster.dead {
+    order: 0;
+    opacity: 0; }
+  .monster.death-fade-out {
+    order: -1;
+    filter: invert(1);
+    animation: deathFadeOut 1s ease-out;
+    animation-fill-mode: forwards; }
+  .monster.active {
+    order: -3; }
+  .monster img {
+    position: relative;
+    height: 100%;
+    width: 100%; }
+  .monster:hover span {
+    display: block; }
+
+.opponent-side {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  bottom: 0;
+  left: 2rem; }
+  .opponent-side img {
+    transform: scaleX(-1); }
+
+.player-side {
+  position: absolute;
+  display: flex;
+  height: auto;
+  right: 2rem;
+  bottom: 0; }
+
 .attack-player, .attack-opponent {
   animation: playerAttackAnimation .5s ease-out;
   animation-fill-mode: forwards; }
 
 .attack-opponent {
   animation: opponentAttackAnimation .5s ease-out; }
-
-.death-fade-out {
-  animation: deathFadeOut 1s ease-out;
-  animation-fill-mode: forwards; }
 
 .damage, .heal, .miss {
   text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
