@@ -37,7 +37,7 @@ const abilityFuncs = {
           if(curMonster.hp === curMonster.maxHp){
             modifier.removeModifier();
           }
-          return curMonster.healHp(2, messages);
+          return curMonster.healHp(200, messages);
         });
       }
     }
