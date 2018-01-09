@@ -69,7 +69,7 @@ const abilityFuncs = {
     }
     const description = 'Changes type to pierce.';
     new Modifier(targetMonster, {type: {id: 1, name: 'pierce', weakness: 2}}, 'morph', description, (modifier) => {
-      if(targetMonster.bench) modifier.removeModifier();
+      if(targetMonster.bench || !this.passiveActive) modifier.removeModifier();
     });
   },
   crush: function(player){
@@ -82,7 +82,7 @@ const abilityFuncs = {
     }
     const description = 'Changes type to crush.';
     new Modifier(targetMonster, {type: {id: 2, name: 'crush', weakness: 3}}, 'morph', description, (modifier) => {
-      if(targetMonster.bench) modifier.removeModifier();
+      if(targetMonster.bench || !this.passiveActive) modifier.removeModifier();
     });
   },
   spray: function(player){
@@ -95,7 +95,7 @@ const abilityFuncs = {
     }
     const description = 'Changes type to spray.';
     new Modifier(player.activeMonster, {type: {id: 3, name: 'spray', weakness: 1}}, 'morph', description, (modifier) => {
-      if(targetMonster.bench) modifier.removeModifier();
+      if(targetMonster.bench || !this.passiveActive) modifier.removeModifier();
     });
   }
 };
