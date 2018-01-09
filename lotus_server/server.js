@@ -21,6 +21,8 @@ const userRouter = require('./routes/user_routes')(knex);
 const loginUser = require('./lib/login_user')(knex);
 
 // Middleware
+// Serve static files from the React app
+server.use(express.static(path.join(__dirname, 'client/build')));
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
