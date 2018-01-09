@@ -504,6 +504,35 @@ form#teamNameForm {
   form#teamNameForm input {
     margin: 0; }
 
+@keyframes damageNumber {
+  0% {
+    bottom: 20rem; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    bottom: 23rem; } }
+@keyframes playerAttackAnimation {
+  0% {
+    right: 0; }
+  50% {
+    right: 50px; }
+  100% {
+    right: 0px; } }
+@keyframes opponentAttackAnimation {
+  0% {
+    left: 0; }
+  50% {
+    left: 50px; }
+  100% {
+    left: 0px; } }
+@keyframes deathFadeOut {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
 .battlefield-visual {
   position: relative;
   height: 350px;
@@ -530,26 +559,39 @@ span.monster-hp {
   bottom: 19rem;
   color: white; }
 
+.monster {
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin-left: 1rem;
+  order: -2;
+  cursor: pointer; }
+  .monster.dead {
+    order: 0;
+    opacity: 0; }
+  .monster.death-fade-out {
+    order: -1;
+    filter: invert(1);
+    animation: deathFadeOut 1s ease-out;
+    animation-fill-mode: forwards; }
+  .monster.active {
+    order: -3; }
+  .monster img {
+    position: relative;
+    height: 100%;
+    width: 100%; }
+  .monster:hover span {
+    display: block; }
+
 .opponent-side {
   position: absolute;
   display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
   bottom: 0;
   left: 2rem; }
-  .opponent-side .opponent-monster {
-    height: 150px;
-    width: 150px;
-    position: relative;
-    margin-right: 1rem;
-    cursor: pointer; }
   .opponent-side img {
-    position: relative;
-    transform: scaleX(-1);
-    height: 100%;
-    width: 100%; }
-  .opponent-side:hover span.monster-name {
-    display: block; }
-  .opponent-side .active {
-    order: 1; }
+    transform: scaleX(-1); }
 
 .player-side {
   position: absolute;
@@ -557,43 +599,7 @@ span.monster-hp {
   height: auto;
   right: 2rem;
   bottom: 0; }
-  .player-side .player-monster {
-    height: 150px;
-    width: 150px;
-    position: relative;
-    margin-left: 1rem;
-    cursor: pointer; }
-  .player-side img {
-    position: relative;
-    height: 100%;
-    width: 100%; }
-  .player-side:hover span {
-    display: block; }
-  .player-side .active {
-    order: -1; }
 
-@keyframes damageNumber {
-  0% {
-    bottom: 20rem; }
-  50% {
-    opacity: 1; }
-  100% {
-    opacity: 0;
-    bottom: 23rem; } }
-@keyframes playerAttackAnimation {
-  0% {
-    right: 0; }
-  50% {
-    right: 50px; }
-  100% {
-    right: 0px; } }
-@keyframes opponentAttackAnimation {
-  0% {
-    left: 0; }
-  50% {
-    left: 50px; }
-  100% {
-    left: 0px; } }
 .attack-player, .attack-opponent {
   animation: playerAttackAnimation .5s ease-out;
   animation-fill-mode: forwards; }

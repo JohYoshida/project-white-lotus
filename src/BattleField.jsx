@@ -4,17 +4,23 @@ import React, {Component} from 'react';
 import {BrowserRouter as Route} from 'react-router-dom';
 import {toggleModalByIdButton} from './lib/element_effect_helpers';
 
-class Monster extends Component {
+const delayFunction = (ms, callback) => {
+  return new Promise(() => {
+    setTimeout(callback, ms);
+  });
+};
+
+class BattleField extends Component {
   // Places monster images on the battlefield. Prefix is either "player" or "opponent" as a string.
-  generateMonsterImages(player, prefix) {
-    const {team, activeMonster} = player;
+  generateMonsterImages(player) {
+    const {team, graveyard, activeMonster} = player;
     const monsters = [];
     // add benched monsters
     for (const monsterId in team) {
       const curMonster = team[monsterId];
-      let className = `${prefix}-monster ${curMonster.creature}`;
+      let className = 'monster';
       // if this monsters is the active monster, add the active class.
-      if (activeMonster && monsterId === activeMonster.id) {
+      if(activeMonster && monsterId === activeMonster.id) {
         className += ' active';
       }
       monsters.push(
@@ -22,6 +28,18 @@ class Monster extends Component {
           <span className='monster-name'>{curMonster.name}</span>
           <span className='monster-hp'>HP:{curMonster.hp}</span>
           <img src={curMonster.image_url} alt={curMonster.name}/>
+        </div>
+      );
+    }
+    for(const monsterId in graveyard){
+      const deadMonster = graveyard[monsterId];
+      let className = 'monster dead';
+      if(!deadMonster.animated){
+        className += ' death-fade-out';
+      }
+      monsters.push(
+        <div key={monsterId} id={`m-${monsterId}`} className={className}>
+          <img src={deadMonster.image_url} alt={deadMonster.name}/>
         </div>
       );
     }
@@ -40,4 +58,4 @@ class Monster extends Component {
   }
 }
 
-export default Monster;
+export default BattleField;

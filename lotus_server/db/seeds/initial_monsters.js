@@ -64,7 +64,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[3],
           arm_id: arms[3],
           head_id: heads[3],
-          image:'/assets/monsters/RK.png'
+          image:'/assets/monsters/Shocktop.png'
 
         },
         {
@@ -74,7 +74,7 @@ exports.seed = function(knex, Promise) {
           body_id: bodies[4],
           arm_id: arms[4],
           head_id: heads[4],
-          image: '/assets/monsters/RK.png'
+          image: '/assets/monsters/mediocre.png'
         },
         {
           id: 6,

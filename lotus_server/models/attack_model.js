@@ -128,7 +128,7 @@ const attackFuncs = {
     let description2 = `${targetMonster.name} cannot be benched until next turn.`;
     new Modifier(targetMonster, {canBench: false}, 'stuck', description2, (modifier) => {
       this.count ? this.count++ : this.count = 1;
-      if(this.count > 1){
+      if(this.count > 2){
         modifier.removeModifier();
       }
     });

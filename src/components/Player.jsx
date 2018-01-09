@@ -55,6 +55,9 @@ class Player extends Component {
     if(!player.team) return;
     for(const monsterid in player.team){
       const monster = player.team[monsterid];
+      if(monster.killed){
+        continue;
+      }
       if(monster.bench){
         cards.push(
           <BenchedMonster key={monster.id} isPlayer={true} player={player} printModifier={this.printModifier} monster={monster} unBench={this.unBench} />
