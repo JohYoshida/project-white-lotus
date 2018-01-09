@@ -12,7 +12,7 @@ const delayFunction = (ms, callback) => {
 
 class BattleField extends Component {
   // Places monster images on the battlefield. Prefix is either "player" or "opponent" as a string.
-  generateMonsterImages(player, prefix) {
+  generateMonsterImages(player) {
     const {team, graveyard, activeMonster} = player;
     const monsters = [];
     // add benched monsters
