@@ -33,7 +33,7 @@ class BattleField extends Component {
     }
     for(const monsterId in graveyard){
       const deadMonster = graveyard[monsterId];
-      let className = `monster dead`;
+      let className = 'monster dead';
       if(!deadMonster.animated){
         className += ' death-fade-out';
       }
