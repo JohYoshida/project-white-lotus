@@ -10,6 +10,7 @@ import Store from './Store.jsx';
 import Login from './Login.jsx';
 import Teams from './Teams.jsx';
 import CreateBattle from './CreateBattle.jsx';
+import JoinBattle from './JoinBattle.jsx';
 import {toggleModalById} from './lib/element_effect_helpers';
 
 // Functions
@@ -142,6 +143,7 @@ class App extends Component {
           <nav>
             <section className="nav-links">
               <span><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
+              <span><Link className='nav-link' to="/join-battle">Join Battle</Link></span>
               <span><Link className='nav-link' to="/teams">Teams</Link></span>
               <span><Link className='nav-link' to="/">Monsters</Link></span>
               <span><Link className='nav-link' to="/store">Store</Link></span>
@@ -167,6 +169,9 @@ class App extends Component {
           }/>
           <Route path="/create-battle" render={() =>
             (<CreateBattle loadApp={this.loadApp} />)
+          }/>
+        <Route path="/join-battle" render={() =>
+            (<JoinBattle loadApp={this.loadApp} />)
           }/>
         </div>
       </Router>);
