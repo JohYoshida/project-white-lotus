@@ -13,10 +13,16 @@ exports.seed = function(knex, Promise) {
           brouzoff:9999
        },
        {
-          id: uuidv1(),
-          email: 'user',
+          id: 2,
+          email: 'The Machine',
           password: bcrypt.hashSync('pass2',10),
-          brouzoff:100
+          brouzoff:150
+       },
+       {
+          id: 3,
+          email: 'Gun Battler',
+          password: bcrypt.hashSync('pass2',10),
+          brouzoff:150
        }
       ]);
     });
