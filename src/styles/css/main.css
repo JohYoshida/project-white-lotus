@@ -121,7 +121,7 @@ div#battlefield {
   padding-top: 5rem; }
   div#battlefield section.messages {
     padding: 2rem 4rem;
-    height: 115px;
+    height: 120px;
     background-color: #826682;
     border: 2px solid #B0BEC5;
     font-size: 1rem;
@@ -138,7 +138,7 @@ div#battlefield {
   div#battlefield .player {
     background-color: #826682;
     border: 2px solid #B0BEC5;
-    height: 325px;
+    min-height: 325px;
     padding: 2rem 4rem;
     position: relative;
     border-radius: 1rem; }
@@ -221,7 +221,9 @@ section.modal {
 .battlefield-active {
   position: relative; }
   .battlefield-active .activemonster-container {
-    padding-left: 2rem; }
+    width: 150px;
+    padding-left: 2rem;
+    margin-right: 60px; }
     .battlefield-active .activemonster-container h4 {
       font-size: .8em; }
     .battlefield-active .activemonster-container .modifiers {
@@ -276,20 +278,20 @@ section.modal {
 
 .modifiers {
   display: flex;
+  flex-wrap: wrap;
   background-color: #574457;
   border-radius: 1rem;
   padding: 1rem 1rem;
   margin-top: .5rem;
   min-width: 115px; }
   .modifiers img {
+    flex-shrink: 2;
+    flex-basis: auto;
+    width: 25px;
+    height: 25px;
     display: block;
     border-radius: 0.5rem;
-    height: 32px;
-    width: 32px;
-    margin-right: 8px;
     margin-bottom: 0; }
-    .modifiers img:last-of-type {
-      margin-right: 0px; }
 
 .battlefield-bench h4 {
   font-size: 1em; }

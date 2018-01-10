@@ -49,9 +49,11 @@ class BattleField extends Component {
     const {player, opponent} = this.props;
     return (<section className="battlefield-visual row">
       <div className="player-side">
+        <h4>{player.name}</h4>
         {this.generateMonsterImages(player, 'player')}
       </div>
       <div className="opponent-side">
+        <h4>{opponent.name}</h4>
         {this.generateMonsterImages(opponent, 'opponent')}
       </div>
     </section>);
