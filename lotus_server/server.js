@@ -24,7 +24,7 @@ const loginUser = require('./lib/login_user')(knex);
 // Middleware
 // Serve static files from the React app
 server.use(express.static(path.join(__dirname, '../build')));
-server.use(express.static(__dirname, './dist'));
+server.use(express.static(path.join(__dirname, './dist')));
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
