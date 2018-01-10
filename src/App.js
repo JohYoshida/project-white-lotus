@@ -12,6 +12,7 @@ import Teams from './Teams.jsx';
 import CreateBattle from './CreateBattle.jsx';
 import JoinBattle from './JoinBattle.jsx';
 import {toggleModalById} from './lib/element_effect_helpers';
+import FlashMessage from './components/FlashMessage.jsx';
 
 // Functions
 import {postLogin, fetchUserDetails, postRegister, setLoggedIn} from './lib/user_auth.js';
@@ -52,6 +53,11 @@ class App extends Component {
       });
     }
   }
+  componentWillUpdate(){
+    if(this.state.flashMessage){
+      this.setState({flashMessage:null});
+    }
+  }
 
   register(event) {
     event.preventDefault();
@@ -61,6 +67,7 @@ class App extends Component {
           this.setState({flashMessage: resObj.error});
           return;
         }
+        this.setState({flashMessage:null});
         setLoggedIn(this);
       });
     });
@@ -119,6 +126,10 @@ class App extends Component {
   fetchNewMonster(creature) {
     postNewMonster(creature).then(res => {
       res.json().then(data => {
+        if(data.error){
+          this.setState({flashMessage:data.error});
+          return;
+        }
         this.setState({brouzoff: data.brouzoff, purchasedMonster: data.monster});
         toggleModalById(data.monster.id);
       });
@@ -155,6 +166,7 @@ class App extends Component {
               </Link>
             </section>
           </nav>
+          <FlashMessage message={this.state.flashMessage}/>
           <Route exact path="/" render={() =>
             (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
           }/>
