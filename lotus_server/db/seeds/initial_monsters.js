@@ -90,7 +90,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[0],
           name: 'Blob',
-          image_url:'./parts/BLOBB.png',
+          image_url:'/parts/BLOBB.png',
           hp: 3000,
           accuracy_bonus: 0,
           type_id: types[0],
@@ -100,7 +100,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[1],
           name: 'T-Wrex',
-          image_url:'./parts/TWB.png',
+          image_url:'/parts/TWB.png',
           hp: 3500,
           accuracy_bonus: -1,
           type_id: types[1],
@@ -110,7 +110,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[2],
           name: 'C\'thulumonster',
-          image_url:'./parts/CMB.png',
+          image_url:'/parts/CMB.png',
           hp: 2500,
           type_id: types[2],
           accuracy_bonus: +1,
@@ -121,7 +121,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[3],
           name: 'Shock Top',
-          image_url:'./parts/STB.png',
+          image_url:'/parts/STB.png',
           hp: 2500,
           accuracy_bonus: +1,
           type_id: types[2],
@@ -131,7 +131,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[4],
           name: 'Medi-o-cre',
-          image_url:'./parts/MDB.png',
+          image_url:'/parts/MDB.png',
           hp: 2000,
           type_id: types[0],
           accuracy_bonus: +1,
@@ -141,7 +141,7 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[5],
           name: 'Red Knight',
-          image_url:'./parts/RKB.png',
+          image_url:'/parts/RKB.png',
           hp: 2500,
           type_id: types[1],
           accuracy_bonus: +2,
