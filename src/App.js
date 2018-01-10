@@ -33,6 +33,7 @@ class App extends Component {
     this.fetchMonsters = this.fetchMonsters.bind(this);
     this.fetchTeams = this.fetchTeams.bind(this);
     this.loadApp = this.loadApp.bind(this);
+    this.showFlashMessage = this.showFlashMessage.bind(this);
     this.state = {
       id: '',
       loggedin: false,
@@ -53,12 +54,16 @@ class App extends Component {
       });
     }
   }
+
   componentWillUpdate(){
     if(this.state.flashMessage){
       this.setState({flashMessage:null});
     }
   }
 
+  showFlashMessage(message){
+    this.setState({flashMessage:message});
+  }
   register(event) {
     event.preventDefault();
     postRegister(event).then(res => {
@@ -168,22 +173,22 @@ class App extends Component {
           </nav>
           <FlashMessage message={this.state.flashMessage}/>
           <Route exact path="/" render={() =>
-            (<Monsters fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
+            (<Monsters showFlashMessage={this.showFlashMessage} fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
           }/>
           <Route path="/store" render={(props) =>
-            (<Store {...props} brouzoff={this.state.brouzoff} loadApp={this.loadApp} purchasedMonster={this.state.purchasedMonster} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
+            (<Store {...props} showFlashMessage={this.showFlashMessage} brouzoff={this.state.brouzoff} loadApp={this.loadApp} purchasedMonster={this.state.purchasedMonster} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
           }/>
           <Route path="/teams" render={() =>
-            (<Teams fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
+            (<Teams showFlashMessage={this.showFlashMessage} fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
           }/>
           <Route path="/battle/:roomName" render={({match}) => (
-            <Battle cookies={this.props.cookies} roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
+            <Battle showFlashMessage={this.showFlashMessage} cookies={this.props.cookies} roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
           }/>
           <Route path="/create-battle" render={() =>
-            (<CreateBattle loadApp={this.loadApp} />)
+            (<CreateBattle showFlashMessage={this.showFlashMessage} loadApp={this.loadApp} />)
           }/>
         <Route path="/join-battle" render={() =>
-            (<JoinBattle loadApp={this.loadApp} />)
+            (<JoinBattle showFlashMessage={this.showFlashMessage} loadApp={this.loadApp} />)
           }/>
         </div>
       </Router>);
