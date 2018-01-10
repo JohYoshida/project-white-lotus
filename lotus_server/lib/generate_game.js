@@ -68,11 +68,11 @@ class Game{
     // Takes the action given in the actionObj and runs it, creating the initial message array.
     let messages = this[action](actionObj) || [];
     // After action is over, switchTurns and check active players and run passives.
-    this.switchTurns();
-    this.findActivePlayer(actionObj);
     for(const player of this.players){
       this.passive(player, messages);
     }
+    this.switchTurns();
+    this.findActivePlayer(actionObj);
     return messages;
   }
 }

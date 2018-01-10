@@ -11,7 +11,7 @@ $benchedMonster-height: 115px;
       font-size: .8em;
     }
     .modifiers{
-      width: $activeMonster-width;
+      min-width: $activeMonster-width;
     }
   }
   .battlefield-active-battler{
@@ -79,7 +79,7 @@ $benchedMonster-height: 115px;
   padding: 1rem 1rem;
   margin-top: .5rem;
   // default width
-  width:$benchedMonster-width;
+  min-width:$benchedMonster-width;
   img{
     display: block;
     border-radius: $border-radius / 2;
@@ -87,6 +87,10 @@ $benchedMonster-height: 115px;
     width: 32px;
     margin-right: 8px;
     margin-bottom: 0;
+
+    &:last-of-type{
+      margin-right: 0px;
+    }
   }
 }
 

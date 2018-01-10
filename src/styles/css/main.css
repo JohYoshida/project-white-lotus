@@ -225,7 +225,7 @@ section.modal {
     .battlefield-active .activemonster-container h4 {
       font-size: .8em; }
     .battlefield-active .activemonster-container .modifiers {
-      width: 150px; }
+      min-width: 150px; }
   .battlefield-active .battlefield-active-battler {
     margin-right: 4rem;
     position: relative;
@@ -280,7 +280,7 @@ section.modal {
   border-radius: 1rem;
   padding: 1rem 1rem;
   margin-top: .5rem;
-  width: 115px; }
+  min-width: 115px; }
   .modifiers img {
     display: block;
     border-radius: 0.5rem;
@@ -288,6 +288,8 @@ section.modal {
     width: 32px;
     margin-right: 8px;
     margin-bottom: 0; }
+    .modifiers img:last-of-type {
+      margin-right: 0px; }
 
 .battlefield-bench h4 {
   font-size: 1em; }

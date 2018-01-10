@@ -90,7 +90,7 @@ const attackFuncs = {
     }
     const damage = damageCalculator(300, compareTyping(this, targetMonster));
     messages.push(`${targetMonster.name} is less accurate...`);
-    
+
     const description = `${targetMonster.name} loses 1 accuracy until benched. Then accuracy resets.`;
     new Modifier(targetMonster, {accuracy_bonus: targetMonster.accuracy_bonus - 1}, 'accDebuff', description, (modifier) => {
       // If the monster is on the bench, remove the modifier.
