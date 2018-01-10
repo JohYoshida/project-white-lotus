@@ -91,7 +91,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[0],
           name: 'Blob',
           image_url:'./models/parts/BLOBB.png',
-          hp: 3000,
+          hp: 5000,
           accuracy_bonus: 0,
           type_id: types[0],
           creature: 'kaiju',
@@ -101,8 +101,8 @@ exports.seed = function(knex, Promise) {
           id: bodies[1],
           name: 'T-Wrex',
           image_url:'./models/parts/TWB.png',
-          hp: 3500,
-          accuracy_bonus: -1,
+          hp: 5500,
+          accuracy_bonus: -2,
           type_id: types[1],
           creature: 'kaiju',
           nameword: 'Dino'
@@ -111,7 +111,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[2],
           name: 'C\'thulumonster',
           image_url:'./models/parts/CMB.png',
-          hp: 2500,
+          hp: 4500,
           type_id: types[2],
           accuracy_bonus: +1,
           creature: 'kaiju',
@@ -122,7 +122,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[3],
           name: 'Shock Top',
           image_url:'./models/parts/STB.png',
-          hp: 2500,
+          hp: 4500,
           accuracy_bonus: +1,
           type_id: types[2],
           creature: 'mecha',
@@ -132,7 +132,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[4],
           name: 'Medi-o-cre',
           image_url:'./models/parts/MDB.png',
-          hp: 2000,
+          hp: 4000,
           type_id: types[0],
           accuracy_bonus: +1,
           creature: 'mecha',
@@ -142,7 +142,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[5],
           name: 'Red Knight',
           image_url:'./models/parts/RKB.png',
-          hp: 2500,
+          hp: 4500,
           type_id: types[1],
           accuracy_bonus: +2,
           creature: 'mecha',
@@ -340,35 +340,35 @@ exports.seed = function(knex, Promise) {
           name: 'toxic_slime',
           aoe: false,
           dot: true,
-          description: 'Deal 4 damage per turn for 3 turns.'
+          description: '400 damage per turn for 3 turns.'
         },
         {
           id: attacks[1],
           name: 'roar',
           aoe: true,
           dot: false,
-          description: 'Deal 3 damage to each enemy.'
+          description: '300 base damage. Hits every opposing party member.'
         },
         {
           id: attacks[2],
           name: 'insanity',
           aoe: false,
           dot: false,
-          description: 'Deal 6 damage. Reduce the target\'s accuracy by 1 per turn until target is benched. '
+          description: '300 base damage. Reduce the target\'s accuracy by 1 until target is benched. '
         },
         {
           id: attacks[3],
           name: 'decimate',
           aoe: false,
           dot: false,
-          description: 'Deal floor(target\'s max HP / target\'s current HP) damage.'
+          description: 'base damage equal to 25% of the target\'s hp.'
         },
         {
           id: attacks[4],
           name: 'web_sling',
           aoe: false,
           dot: false,
-          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\'t leave field.'
+          description: '500 base damage. Next attack gets +2 accuracy, and target can\'t leave field.'
         },
         {
           id: attacks[5],
@@ -382,95 +382,95 @@ exports.seed = function(knex, Promise) {
           name: 'vomitous_sludge',
           aoe: false,
           dot: true,
-          description: 'Deal 10 damage. Deal 1 damage per turn until target is benched.'
+          description: '1000 base damage. Plus 100 damage per turn until target is benched.'
         },
         {
           id: attacks[7],
           name: 'steel_jaw',
           aoe: false,
           dot: false,
-          description: 'Deal 14-18 damage.'
+          description: '1400-1600 base damage.'
         },
         {
           id: attacks[8],
           name: 'eldritch_horror',
           aoe: false,
           dot: false,
-          description: 'Deal 5-8 damage. Swap target with a random benched monster.'
+          description: '500-800 base damage. 25% chance to swap target with a random benched monster.'
         },
         {
           id: attacks[9],
           name: 'neutralize',
           aoe: false,
           dot: false,
-          description: 'Deal 10-12 damage. Ignore an enemy passive until they are activated.'
+          description: '1000-1200 base damage. Ignore an enemy passive until they are activated.'
         },
         {
           id: attacks[10],
           name: 'stimulant',
           aoe: false,
           dot: false,
-          description: 'Deal 8 damage. Heal self for 4 HP.'
+          description: '800 base damage. Heal self 400 HP.'
         },
         {
           id: attacks[11],
           name: 'hyper_lance',
           aoe: false,
           dot: false,
-          description: 'Deal 8-12 damage.'
+          description: '800-1200 base damage.'
         },
         {
           id: attacks[12],
           name: 'simulate_kaiju',
           aoe: false,
           dot: false,
-          description: 'Deal 10-12 damage. If enemy is a kaiju, gain its secondary attack.'
+          description: '1000-1200 base damage. If enemy is a kaiju, gain its secondary attack.'
         },
         {
           id: attacks[13],
           name: 'snake_handler',
           aoe: false,
           dot: false,
-          description: 'Deal 12-16 damage.'
+          description: '1000-1600 base damage.'
         },
         {
           id: attacks[14],
           name: 'neurotoxin',
           aoe: false,
           dot: false,
-          description: 'Deal 5-18 damage.'
+          description: '500-1800 base damage.'
         }
       ]),
       knex('abilities').insert([
         {
           id: abilities[0],
           name: 'supercharge',
-          description: 'Active monster\'s attacks affect all enemy monsters.'
+          description: 'Your active monster\'s attacks affect all enemy monsters.'
         },
         {
           id: abilities[1],
           name: 'nanomachine_swarm',
-          description: 'Heal all mechas on your team by 2 HP per turn.'
+          description: 'Heal all mechas on your team by 200 HP per turn.'
         },
         {
           id: abilities[2],
           name: 'electric_shield',
-          description: 'Take the first 5 damage the active monster would take.'
+          description: 'Take the first 500 damage your active monster would take.'
         },
         {
           id: abilities[3],
           name: 'pierce',
-          description: 'Active monster\'s attack type becomes Pierce.'
+          description: 'Your active monster\'s attack type becomes Pierce.'
         },
         {
           id: abilities[4],
           name: 'crush',
-          description: 'Active monster\'s attack type becomes Crush.'
+          description: 'Your active monster\'s attack type becomes Crush.'
         },
         {
           id: abilities[5],
           name: 'spray',
-          description: 'Active monster\'s attack type becomes Spray.'
+          description: 'Your active monster\'s attack type becomes Spray.'
         }
       ]),
       knex('types').insert([

@@ -29,7 +29,7 @@ class Game{
       }
       // Loop over each modifier and update them. But only for the current active player.
       if(player === this.activePlayer){
-        monster.modifiers.forEach(modifier => {
+        monster.modifiers.forEachBackwards(modifier => {
           modifier.update(messages);
         });
       }
