@@ -33,7 +33,7 @@ server.use(cookieSession({
   name: 'id',
   keys: ['spider', 'pie', 'issue']
 }));
-server.use(express.static(__dirname, './dist'));
+server.use(express.static(path.join(__dirname, './dist')));
 
 server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);
