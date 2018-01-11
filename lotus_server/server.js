@@ -41,10 +41,23 @@ server.delete('/logout', (req, res) => {
   req.session = null;
   res.status(200).send(JSON.stringify({flash: 'logout successful'}));
 });
+
+// For safety
+server.get('/create-battle', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+server.get('/join-battle', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 server.get('/teams', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
-
+server.get('/store', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+server.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
