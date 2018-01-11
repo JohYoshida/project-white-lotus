@@ -1,5 +1,4 @@
-require('dotenv').config
-
+const environment = 'development';
 // simple function to delay without blocking execution
 const delayFunction = (ms, callback) => {
   return new Promise(() => {
@@ -168,10 +167,11 @@ const updateGame = (battleComponent) => {
 
 const rejoinBattle = (battleComponent) => {
   const {roomName} = battleComponent.props;
-  if (process.env.DB_ENV === 'development') {
-    const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
-  } else if (process.env.DB_ENV === 'production') {
-    const socket = new WebSocket(`ws://projectwhitelotus.herokuapp.com/battles/${roomName}`);
+  let socket = null;
+  if (environment === 'development') {
+    socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  } else if (environment === 'production') {
+    socket = new WebSocket(`ws://projectwhitelotus.herokuapp.com/battles/${roomName}`);
   }
   socket.addEventListener('open', () => {
     socket.send(JSON.stringify({
@@ -185,10 +185,11 @@ const rejoinBattle = (battleComponent) => {
 
 const joinGame = (battleComponent, team) => {
   const {roomName} = battleComponent.props;
-  if (process.env.DB_ENV === 'development') {
-    const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
-  } else if (process.env.DB_ENV === 'production') {
-    const socket = new WebSocket(`ws://projectwhitelotus.herokuapp.com/battles/${roomName}`);
+  let socket = null;
+  if (environment === 'development') {
+    socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  } else if (environment === 'production') {
+    socket = new WebSocket(`ws://projectwhitelotus.herokuapp.com/battles/${roomName}`);
   }
   // Joining the game
   socket.addEventListener('open', () => {
