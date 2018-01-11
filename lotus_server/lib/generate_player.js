@@ -64,10 +64,16 @@ class Player {
       filteredTeam = {};
       for(const monsterId in this.team){
         const monster = this.team[monsterId];
+        let invalid = false;
         for(const attribute in filterObject){
-          if(monster[attribute] !== filterObject[attribute]) continue;
-          filteredTeam[monster.id] = monster;
+          if(monster[attribute] !== filterObject[attribute]){
+            invalid = true;
+          }
         }
+        if(!invalid){
+          continue;
+        }
+        filteredTeam[monster.id] = monster;
       }
     }
     const playerTeamIds = Object.keys(filteredTeam || this.team);

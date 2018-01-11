@@ -205,4 +205,5 @@ const joinGame = (battleComponent, team) => {
   return socket;
 };
 
+
 export {joinGame, rejoinBattle};
