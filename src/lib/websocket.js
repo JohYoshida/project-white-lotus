@@ -1,4 +1,4 @@
-const environment = 'development';
+const environment = 'production';
 // simple function to delay without blocking execution
 const delayFunction = (ms, callback) => {
   return new Promise(() => {
