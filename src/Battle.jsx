@@ -126,6 +126,13 @@ class Battle extends Component {
     return (
       <main>
         <div className="battlefield-teams">
+          {(this.props.teams && this.props.teams.length === 0) &&
+            <section>
+              <h3>You're almost ready to battle</h3>
+              <p>Your room is ready to go but you don't have any teams.</p>
+              <p>You'll need to <a href='/teams'>make one</a> before you can battle.</p>
+            </section>
+          }
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
         <div id="battlefield" className='hidden'>

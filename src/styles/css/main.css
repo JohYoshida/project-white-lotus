@@ -433,7 +433,7 @@ span.card-hp {
   position: absolute;
   padding: 1rem;
   color: white;
-  font-size: 1em;
+  font-size: .7em;
   bottom: 0;
   left: 0;
   border-top: 2px solid white;
@@ -445,7 +445,7 @@ span.card-hp {
 span.card-acc {
   padding: 1rem;
   position: absolute;
-  font-size: 1KBem;
+  font-size: .7em;
   bottom: 0;
   right: 0;
   color: white;

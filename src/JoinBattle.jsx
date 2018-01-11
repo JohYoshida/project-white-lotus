@@ -6,6 +6,7 @@ class CreateBattle extends Component {
     this.state = {roomLink: null};
   }
   componentDidMount(){
+    this.props.setActiveLink(this.props.linkId);
     this.props.loadApp();
     this.findRoom = this.findRoom.bind(this);
   }
@@ -21,7 +22,7 @@ class CreateBattle extends Component {
       res.json().then(() => {
         this.setState({roomLink: roomName});
       }).catch(() => {
-        this.props.showFlashMessage(<span>Room does not exist. <a href="/create-battle">Create it!</a></span>);
+        this.props.showFlashMessage(<span>Sorry, this room does not exist. <a href="/create-battle">Create it!</a></span>);
       });
     });
   }

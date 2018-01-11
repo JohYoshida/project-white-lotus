@@ -6,6 +6,7 @@ class CreateBattle extends Component {
     this.state = {roomLink: null};
   }
   componentDidMount(){
+    this.props.setActiveLink(this.props.linkId);
     this.props.loadApp();
     this.submitRoom = this.submitRoom.bind(this);
   }

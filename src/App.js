@@ -34,6 +34,7 @@ class App extends Component {
     this.fetchTeams = this.fetchTeams.bind(this);
     this.loadApp = this.loadApp.bind(this);
     this.showFlashMessage = this.showFlashMessage.bind(this);
+    this.setActiveLink = this.setActiveLink.bind(this);
     this.state = {
       id: '',
       loggedin: false,
@@ -122,6 +123,7 @@ class App extends Component {
   fetchTeams() {
     fetch('/user/teams', {credentials: 'same-origin'}).then(data => {
       data.json().then(parsedData => {
+        console.log(parsedData.teams);
         this.setState({teams: parsedData.teams});
         this.loadApp();
       });
@@ -150,8 +152,8 @@ class App extends Component {
     event.preventDefault();
     this.fetchNewMonster('mecha');
   }
-  setLinkToHere(event){
-    const linkButton = event.currentTarget;
+  setActiveLink(linkId){
+    const linkButton = document.querySelector(`#${linkId}`);
     const navLinks = linkButton.parentElement;
     for(const child of navLinks.children){
       if(child === linkButton){
@@ -164,16 +166,17 @@ class App extends Component {
 
   render() {
     const {username} = this.state;
+    const linkIds = ['create-battle-link', 'join-battle-link', 'teams-link', 'monsters-link', 'store-link'];
     if (this.state.loggedin) {
       return (<Router>
         <div className="container" hidden={!this.state.loaded}>
           <nav>
             <section className="nav-links">
-              <Link className='nav-link' onClick={this.setLinkToHere} to="/create-battle">Create Battle</Link>
-              <Link className='nav-link' onClick={this.setLinkToHere} to="/join-battle">Join Battle</Link>
-              <Link className='nav-link' onClick={this.setLinkToHere} to="/teams">Teams</Link>
-              <Link className='nav-link' onClick={this.setLinkToHere} to="/">Monsters</Link>
-              <Link className='nav-link' onClick={this.setLinkToHere} to="/store">Store</Link>
+              <Link id={linkIds[0]} className='nav-link' to="/create-battle">Create Battle</Link>
+              <Link id={linkIds[1]} className='nav-link' to="/join-battle">Join Battle</Link>
+              <Link id={linkIds[2]} className='nav-link' to="/teams">Teams</Link>
+              <Link id={linkIds[3]} className='nav-link' to="/">Monsters</Link>
+              <Link id={linkIds[4]} className='nav-link' to="/store">Store</Link>
             </section>
             <section className="nav-user">
               <p>Hi, {username}</p>
@@ -183,26 +186,60 @@ class App extends Component {
             </section>
           </nav>
           <FlashMessage message={this.state.flashMessage}/>
-          <Route exact path="/" render={() =>
-            (<Monsters showFlashMessage={this.showFlashMessage} fetchMonsters={this.fetchMonsters} monsters={this.state.monsters} loaded={this.state.loaded} />)
-          }/>
-          <Route path="/store" render={(props) =>
-            (<Store {...props} showFlashMessage={this.showFlashMessage} brouzoff={this.state.brouzoff} loadApp={this.loadApp} purchasedMonster={this.state.purchasedMonster} purchaseEgg={this.purchaseEgg} purchaseCrate={this.purchaseCrate}/>)
-          }/>
-          <Route path="/teams" render={() =>
-            (<Teams showFlashMessage={this.showFlashMessage} fetchMonsters={this.fetchMonsters} fetchTeams={this.fetchTeams} teams={this.state.teams} monsters={this.state.monsters}/>)
-          }/>
-          <Route path="/battle/:roomName" render={({match}) => (
-            <Battle showFlashMessage={this.showFlashMessage} cookies={this.props.cookies} roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
-          }/>
           <Route path="/create-battle" render={() =>
-            (<CreateBattle showFlashMessage={this.showFlashMessage} loadApp={this.loadApp} />)
+            (<CreateBattle
+              showFlashMessage={this.showFlashMessage}
+              loadApp={this.loadApp}
+              linkId={linkIds[0]}
+              setActiveLink={this.setActiveLink}
+            />)
           }/>
-        <Route path="/join-battle" render={() =>
-            (<JoinBattle showFlashMessage={this.showFlashMessage} loadApp={this.loadApp} />)
-          }/>
-        </div>
-      </Router>);
+          <Route path="/join-battle" render={() =>
+              (<JoinBattle
+                showFlashMessage={this.showFlashMessage}
+                loadApp={this.loadApp}
+                linkId={linkIds[1]}
+                setActiveLink={this.setActiveLink}
+              />)
+            }/>
+            <Route path="/teams" render={() =>
+              (<Teams
+                showFlashMessage={this.showFlashMessage}
+                fetchMonsters={this.fetchMonsters}
+                fetchTeams={this.fetchTeams}
+                teams={this.state.teams}
+                monsters={this.state.monsters}
+                setActiveLink={this.setActiveLink}
+                linkId={linkIds[2]}
+              />)
+            }/>
+          <Route exact path="/" render={() =>
+            (<Monsters
+              showFlashMessage={this.showFlashMessage}
+              fetchMonsters={this.fetchMonsters}
+              monsters={this.state.monsters}
+              loaded={this.state.loaded}
+              linkId={linkIds[3]}
+              setActiveLink={this.setActiveLink}
+              />)
+            }/>
+            <Route path="/store" render={(props) =>
+              (<Store {...props}
+                showFlashMessage={this.showFlashMessage}
+                brouzoff={this.state.brouzoff}
+                loadApp={this.loadApp}
+                purchasedMonster={this.state.purchasedMonster}
+                purchaseEgg={this.purchaseEgg}
+                purchaseCrate={this.purchaseCrate}
+                linkId={linkIds[4]}
+                setActiveLink={this.setActiveLink}
+                />)
+            }/>
+            <Route path="/battle/:roomName" render={({match}) => (
+              <Battle showFlashMessage={this.showFlashMessage} cookies={this.props.cookies} roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
+            }/>
+          </div>
+        </Router>);
     } else {
       return(
         <Login
