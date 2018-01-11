@@ -294,7 +294,7 @@ exports.seed = function(knex, Promise) {
         {
           id: uuidv4(),
           name: 'Medi-o-cre',
-          user_id:53,
+          user_id: 5,
           body_id: bodies[4],
           arm_id: arms[4],
           head_id: heads[4],
