@@ -203,7 +203,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[0],
           name: 'Blob',
           image_url:'/parts/BLOBB.png',
-          hp: 3000,
+          hp: 4500,
           accuracy_bonus: 0,
           type_id: types[0],
           creature: 'kaiju',
@@ -213,8 +213,8 @@ exports.seed = function(knex, Promise) {
           id: bodies[1],
           name: 'T-Wrex',
           image_url:'/parts/TWB.png',
-          hp: 3500,
-          accuracy_bonus: -1,
+          hp: 5000,
+          accuracy_bonus: 0,
           type_id: types[1],
           creature: 'kaiju',
           nameword: 'Dino'
@@ -223,7 +223,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[2],
           name: 'C\'thulumonster',
           image_url:'/parts/CMB.png',
-          hp: 2500,
+          hp: 4000,
           type_id: types[2],
           accuracy_bonus: +1,
           creature: 'kaiju',
@@ -234,7 +234,7 @@ exports.seed = function(knex, Promise) {
           id: bodies[3],
           name: 'Shock Top',
           image_url:'/parts/STB.png',
-          hp: 2500,
+          hp: 3500,
           accuracy_bonus: +1,
           type_id: types[2],
           creature: 'mecha',
@@ -244,9 +244,9 @@ exports.seed = function(knex, Promise) {
           id: bodies[4],
           name: 'Medi-o-cre',
           image_url:'/parts/MDB.png',
-          hp: 2000,
+          hp: 3000,
           type_id: types[0],
-          accuracy_bonus: +1,
+          accuracy_bonus: 0,
           creature: 'mecha',
           nameword:'Medic'
         },
@@ -254,9 +254,9 @@ exports.seed = function(knex, Promise) {
           id: bodies[5],
           name: 'Red Knight',
           image_url:'/parts/RKB.png',
-          hp: 2500,
+          hp: 3500,
           type_id: types[1],
-          accuracy_bonus: +2,
+          accuracy_bonus: +1,
           creature: 'mecha',
           nameword:'Knight'
         }
@@ -562,7 +562,7 @@ exports.seed = function(knex, Promise) {
         {
           id: abilities[1],
           name: 'nanomachine_swarm',
-          description: 'Heal all mechas on your team by 200 HP per turn.'
+          description: 'Heal all team members by 200 HP per turn.'
         },
         {
           id: abilities[2],
