@@ -58,7 +58,7 @@ const doSplashDamage = (attackedPlayer, dmg, attacker, messages) => {
     const curMonster = attackedPlayer.team[monsterId];
     let damage = damageCalculator(dmg, compareTyping(attacker, curMonster));
     if(curMonster.id !== attackedPlayer.activeMonster.id){
-      damage = damageCalculator((dmg*0.25), compareTyping(attacker, curMonster));
+      damage = damageCalculator((Math.round(dmg*0.25)), compareTyping(attacker, curMonster));
     }
     curMonster.takeDamage(damage, messages);
   }
