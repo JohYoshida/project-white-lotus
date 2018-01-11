@@ -43,7 +43,7 @@ server.delete('/logout', (req, res) => {
 });
 
 server.use((req, res, next) => {
-  res.sendFile('../build/index.html');
+  res.sendFile(path.join(__dirname, '../build/index.html'));
   next();
 });
 
