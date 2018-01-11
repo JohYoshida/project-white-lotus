@@ -16,7 +16,7 @@ const abilityFuncs = {
     }
     const description = 'Primary attacks damage all monsters on opponent\'s team.';
     new Modifier(targetMonster, {supercharged: true}, 'aoe', description, (modifier) => {
-      if(!this.passiveActive){
+      if(!this.passiveActive || targetMonster.bench){
         modifier.removeModifier();
       }
     });
@@ -31,7 +31,7 @@ const abilityFuncs = {
         // or monster to whom it is applied has max hp.
         const description = 'Monster is healed 2 hp per turn until fully healed.';
         new Modifier(curMonster, {}, 'heal', description, (modifier, messages) => {
-          if(!this.passiveActive){
+          if(!this.passiveActive  || curMonster.bench){
             modifier.removeModifier();
           }
           if(curMonster.hp === curMonster.maxHp){
@@ -52,7 +52,7 @@ const abilityFuncs = {
     }
     const description = `${this.name} takes the first 5 damage ${targetMonster.name} takes each turn.`;
     new Modifier(targetMonster, {protector: this}, 'shield', description, (modifier) => {
-      if(!this.passiveActive){
+      if(!this.passiveActive || targetMonster.bench){
         modifier.removeModifier();
       }
     });

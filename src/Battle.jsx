@@ -36,7 +36,6 @@ class Battle extends Component {
     // If the room exists, it will receive a json response. If it doesn't exists then it will set state roomNotFound to true.
     fetch(`/battles/${roomName}`).then(res => {
       res.json().then(() => {
-
       }).catch(() => {
         this.setState({roomNotFound: true});
       });

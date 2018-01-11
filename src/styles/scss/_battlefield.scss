@@ -115,12 +115,22 @@ span.monster-hp{
     transform:scaleX(-1);
   }
 }
+.opponent-name{
+  position: absolute;
+  top:2rem;
+  left:2rem;
+}
 .player-side{
   position: absolute;
   display: flex;
   height: auto;
   right: 2rem;
   bottom: 0;
+}
+.player-name{
+  position: absolute;
+  top:2rem;
+  right:2rem;
 }
 
 .attack-player{

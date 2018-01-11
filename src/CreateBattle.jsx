@@ -12,21 +12,29 @@ class CreateBattle extends Component {
   submitRoom(event){
     event.preventDefault();
     const form = event.target;
-    const roomName = form.elements.roomName.value;
+    const roomName = encodeURI(form.elements.roomName.value);
     if(roomName.length === 0){
       return;
     }
-    fetch('/battles', {
-      credentials: 'same-origin',
-      method: 'POST',
-      headers: {
-        'content-type' : 'application/json'
-      },
-      body: JSON.stringify({roomName: encodeURI(roomName)})
-    }).then(data => data.json().then(res => {
-      this.setState({roomLink: res.flash});
-      toggleElementById('roomLink');
-    }));
+    fetch(`/battles/${roomName}`).then((res) => {
+      res.json().then(res => {
+        if(res.flash){
+          this.props.showFlashMessage(res.flash);
+        }
+      }).catch(() => {
+        fetch('/battles', {
+          credentials: 'same-origin',
+          method: 'POST',
+          headers: {
+            'content-type' : 'application/json'
+          },
+          body: JSON.stringify({roomName: roomName})
+        }).then(data => data.json().then(res => {
+          this.setState({roomLink: res.flash});
+          toggleElementById('roomLink');
+        }));
+      });
+    });
   }
   render() {
     return (
