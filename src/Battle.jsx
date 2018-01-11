@@ -69,13 +69,15 @@ class Battle extends Component {
   gameOver() {
     const {gameOver} = this.state.game;
     if(gameOver){
-      toggleModalById('gameOverModal');
       let earnings = 25;
       if(gameOver.winner.id === this.state.battlerId){
         earnings = 50;
         editBrouzoff(this.state.game, earnings);
       }
       editBrouzoff(this.state.game, earnings);
+      setTimeout(() => {
+        toggleModalById('gameOverModal');
+      }, 1000);
       return(
         <section>
           <h3>Winner is {gameOver.winner.name}!</h3>
@@ -141,7 +143,7 @@ class Battle extends Component {
           {this.state.ready && <Player className='player row' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
           {this.state.ready && <section><span><a className='nav-link leave-game' href="/">Leave Game</a></span></section>}
         </div>
-        <Modal id="gameOverModal" header="Game Over" mainContent={this.gameOver()} footer={<a className="button" href="/">Done</a>} />
+        {this.state.game.gameOver && <Modal id="gameOverModal" header="Game Over" mainContent={this.gameOver()} footer={<a className="button" href="/">Done</a>} />}
         {this.state.game.players && this.generateModals(this.state.game)}
       </main>
     );
