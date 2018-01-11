@@ -20,6 +20,8 @@ const userRouter = require('./routes/user_routes')(knex);
 const loginUser = require('./lib/login_user')(knex);
 
 // Middleware
+// Serve static files from the React app
+server.use(express.static(path.join(__dirname, '../build')));
 server.use(express.static(path.join(__dirname, './dist')));
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
@@ -43,8 +45,6 @@ server.get('/teams', (req, res) => {
   res.sendFile('/index.html');
 });
 
-// Serve static files from the React app
-server.use(express.static(path.join(__dirname, '../build')));
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
