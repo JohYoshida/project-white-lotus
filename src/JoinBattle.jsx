@@ -12,12 +12,18 @@ class CreateBattle extends Component {
   findRoom(event){
     event.preventDefault();
     const form = event.target;
-    const roomName = form.elements.roomName.value;
+    const roomName = encodeURI(form.elements.roomName.value);
     if(roomName.length === 0){
+      this.props.showFlashMessage('Room name must be given.');
       return;
     }
-    this.setState({roomLink: roomName});
-    toggleElementById('roomLink');
+    fetch(`/battle/${roomName}`).then(res => {
+      res.json().then(() => {
+        this.setState({roomLink: roomName});
+      }).catch(() => {
+        this.props.showFlashMessage(<span>Room does not exist. <a href="/create-battle">Create it!</a></span>);
+      });
+    });
   }
   render() {
     return (
@@ -26,8 +32,8 @@ class CreateBattle extends Component {
         <form onSubmit={this.findRoom}>
           <label>Room name</label>
           <input name="roomName" type="text"></input>
-          <button>Find Battle</button>
-          <button id="roomLink" className='hidden'><a href={`battle/${this.state.roomLink}`}>Join Battle</a></button>
+          {!this.state.roomLink && <button>Find Battle</button>}
+          {this.state.roomLink && <a className="button" href={`battle/${this.state.roomLink}`}>Join Battle</a>}
         </form>
       </main>
     );

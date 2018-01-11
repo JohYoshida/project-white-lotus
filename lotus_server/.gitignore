@@ -8,7 +8,7 @@
 
 # production
 /build
-
+/dist/assets/monsters
 # misc
 .DS_Store
 .env.local

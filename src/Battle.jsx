@@ -70,7 +70,7 @@ class Battle extends Component {
     const {gameOver} = this.state.game;
     if(gameOver){
       toggleModalById('gameOverModal');
-      let earnings = 0;
+      let earnings = 25;
       if(gameOver.winner.id === this.state.battlerId){
         earnings = 50;
         editBrouzoff(this.state.game, earnings);

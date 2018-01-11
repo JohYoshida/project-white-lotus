@@ -150,6 +150,17 @@ class App extends Component {
     event.preventDefault();
     this.fetchNewMonster('mecha');
   }
+  setLinkToHere(event){
+    const linkButton = event.currentTarget;
+    const navLinks = linkButton.parentElement;
+    for(const child of navLinks.children){
+      if(child === linkButton){
+        child.classList.add('on-page');
+      } else {
+        child.classList.remove('on-page');
+      }
+    }
+  }
 
   render() {
     const {username} = this.state;
@@ -158,11 +169,11 @@ class App extends Component {
         <div className="container" hidden={!this.state.loaded}>
           <nav>
             <section className="nav-links">
-              <span><Link className='nav-link' to="/create-battle">Create Battle</Link></span>
-              <span><Link className='nav-link' to="/join-battle">Join Battle</Link></span>
-              <span><Link className='nav-link' to="/teams">Teams</Link></span>
-              <span><Link className='nav-link' to="/">Monsters</Link></span>
-              <span><Link className='nav-link' to="/store">Store</Link></span>
+              <Link className='nav-link' onClick={this.setLinkToHere} to="/create-battle">Create Battle</Link>
+              <Link className='nav-link' onClick={this.setLinkToHere} to="/join-battle">Join Battle</Link>
+              <Link className='nav-link' onClick={this.setLinkToHere} to="/teams">Teams</Link>
+              <Link className='nav-link' onClick={this.setLinkToHere} to="/">Monsters</Link>
+              <Link className='nav-link' onClick={this.setLinkToHere} to="/store">Store</Link>
             </section>
             <section className="nav-user">
               <p>Hi, {username}</p>
