@@ -210,6 +210,9 @@ section.modal {
     height: 50%;
     width: 496px;
     margin: auto; }
+    section.modal div.card-modal-container div.close-modal {
+      margin: auto;
+      width: 50%; }
 
 .monster-container {
   display: flex;

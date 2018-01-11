@@ -24,6 +24,7 @@ const loginUser = require('./lib/login_user')(knex);
 // Middleware
 // Serve static files from the React app
 server.use(express.static(path.join(__dirname, '../build')));
+server.use(express.static(path.join(__dirname, './dist')));
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
@@ -33,7 +34,6 @@ server.use(cookieSession({
   name: 'id',
   keys: ['spider', 'pie', 'issue']
 }));
-server.use(express.static('dist'));
 
 server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);

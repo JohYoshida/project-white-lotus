@@ -18,7 +18,7 @@ module.exports = (server) => {
   socketRouter.post('/',(req,res) => {
     const {roomName} = req.body;
     socketRouter.genBattle(roomName);
-    res.send(JSON.stringify({flash:`http://localhost:3000/battle/${roomName}`}));
+    res.send(JSON.stringify({flash:`/battle/${roomName}`}));
   });
   return socketRouter;
 };

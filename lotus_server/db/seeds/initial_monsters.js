@@ -202,8 +202,8 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[0],
           name: 'Blob',
-          image_url:'./models/parts/BLOBB.png',
-          hp: 5000,
+          image_url:'/parts/BLOBB.png',
+          hp: 3000,
           accuracy_bonus: 0,
           type_id: types[0],
           creature: 'kaiju',
@@ -212,9 +212,9 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[1],
           name: 'T-Wrex',
-          image_url:'./models/parts/TWB.png',
-          hp: 5500,
-          accuracy_bonus: -2,
+          image_url:'/parts/TWB.png',
+          hp: 3500,
+          accuracy_bonus: -1,
           type_id: types[1],
           creature: 'kaiju',
           nameword: 'Dino'
@@ -222,8 +222,8 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[2],
           name: 'C\'thulumonster',
-          image_url:'./models/parts/CMB.png',
-          hp: 4500,
+          image_url:'/parts/CMB.png',
+          hp: 2500,
           type_id: types[2],
           accuracy_bonus: +1,
           creature: 'kaiju',
@@ -233,8 +233,8 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[3],
           name: 'Shock Top',
-          image_url:'./models/parts/STB.png',
-          hp: 4500,
+          image_url:'/parts/STB.png',
+          hp: 2500,
           accuracy_bonus: +1,
           type_id: types[2],
           creature: 'mecha',
@@ -243,8 +243,8 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[4],
           name: 'Medi-o-cre',
-          image_url:'./models/parts/MDB.png',
-          hp: 4000,
+          image_url:'/parts/MDB.png',
+          hp: 2000,
           type_id: types[0],
           accuracy_bonus: +1,
           creature: 'mecha',
@@ -253,8 +253,8 @@ exports.seed = function(knex, Promise) {
         {
           id: bodies[5],
           name: 'Red Knight',
-          image_url:'./models/parts/RKB.png',
-          hp: 4500,
+          image_url:'/parts/RKB.png',
+          hp: 2500,
           type_id: types[1],
           accuracy_bonus: +2,
           creature: 'mecha',
@@ -265,7 +265,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[0],
           name: 'Blob Maw',
-          image_url: './models/parts/BLOBH.png',
+          image_url: '/parts/BLOBH.png',
           attack_id: attacks[0],
           ability_id: null,
           creature: 'kaiju',
@@ -274,7 +274,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[1],
           name: 'T-Wrex Head',
-          image_url: './models/parts/TWH.png',
+          image_url: '/parts/TWH.png',
           attack_id: attacks[1],
           ability_id: null,
           creature: 'kaiju',
@@ -283,7 +283,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[2],
           name: 'C\'thulu Head',
-          image_url: './models/parts/CMH.png',
+          image_url: '/parts/CMH.png',
           attack_id: attacks[2],
           ability_id: null,
           creature: 'kaiju',
@@ -292,7 +292,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[3],
           name: 'Shock Top Helm',
-          image_url: './models/parts/STH.png',
+          image_url: '/parts/STH.png',
           attack_id: null,
           ability_id: abilities[0],
           creature: 'mecha',
@@ -301,7 +301,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[4],
           name: 'Medipad',
-          image_url: './models/parts/MDH.png',
+          image_url: '/parts/MDH.png',
           attack_id: null,
           ability_id: abilities[1],
           creature: 'mecha',
@@ -310,7 +310,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[5],
           name: 'Red Knight Helm',
-          image_url: './models/parts/RKH.png',
+          image_url: '/parts/RKH.png',
           attack_id: null,
           ability_id: abilities[2],
           creature: 'mecha',
@@ -319,7 +319,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[6],
           name: 'Hydra Heads',
-          image_url: './models/parts/HH.png',
+          image_url: '/parts/HH.png',
           attack_id: attacks[3],
           ability_id: null,
           creature: 'kaiju',
@@ -328,7 +328,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[7],
           name: 'Spider Head',
-          image_url: './models/parts/SH.png',
+          image_url: '/parts/SH.png',
           attack_id: attacks[4],
           ability_id: null,
           creature: 'kaiju',
@@ -337,7 +337,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[8],
           name: 'Eye of the Void',
-          image_url: './models/parts/EVH.png',
+          image_url: '/parts/EVH.png',
           attack_id: attacks[5],
           ability_id: null,
           creature: 'kaiju',
@@ -347,7 +347,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[9],
           name: 'Cyclone Laser System',
-          image_url: './models/parts/CLSH.png',
+          image_url: '/parts/CLSH.png',
           attack_id: null,
           ability_id: abilities[3],
           creature: 'mecha',
@@ -356,7 +356,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[10],
           name: 'Hypermatter Generator',
-          image_url: './models/parts/HMG.png',
+          image_url: '/parts/HMG.png',
           attack_id: null,
           ability_id: abilities[4],
           creature: 'mecha',
@@ -365,7 +365,7 @@ exports.seed = function(knex, Promise) {
         {
           id: heads[11],
           name: 'Missile Support Platform',
-          image_url: './models/parts/MSPH.png',
+          image_url: '/parts/MSPH.png',
           attack_id: null,
           ability_id: abilities[5],
           creature: 'mecha',
