@@ -80,18 +80,13 @@ class Player extends Component {
     );
   }
   render() {
-    /**
-     * <section className='modifiers'>
-       {player.activeMonster && <h4>Modifiers</h4>}
-       {player.activeMonster && this.showModifiers()}
-     </section>
-     */
     const {player} = this.props;
     return (
       <section className={this.props.className}>
         <div className="battlefield-active column column-60">
           <h4>Active Monster</h4>
           <section className="battle-info">
+            {!player.activeMonster && <p>Select your monster!</p>}
             {this.generateActiveMonster()}
             <section className="abilities">
               {player.activeMonster && <h4>Actions</h4>}
