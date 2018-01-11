@@ -14,16 +14,28 @@ exports.seed = function(knex, Promise) {
        },
        {
           id: 2,
-          email: 'Ted',
-          password: bcrypt.hashSync('pass2',10),
-          brouzoff:150
+          email: 'Joh',
+          password: bcrypt.hashSync('pass',10),
+          brouzoff: 200
        },
        {
           id: 3,
-          email: 'Harry',
-          password: bcrypt.hashSync('pass2',10),
-          brouzoff:150
-       }
+          email: 'Quinlan',
+          password: bcrypt.hashSync('pass',10),
+          brouzoff: 200
+       },
+       {
+          id: 4,
+          email: 'David',
+          password: bcrypt.hashSync('pass',10),
+          brouzoff: 200
+       },
+       {
+          id: 5,
+          email: 'Nicolas',
+          password: bcrypt.hashSync('pass',10),
+          brouzoff: 200
+       },
       ]);
     });
 };
