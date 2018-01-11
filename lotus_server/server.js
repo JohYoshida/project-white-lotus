@@ -42,6 +42,11 @@ server.delete('/logout', (req, res) => {
   res.status(200).send(JSON.stringify({flash: 'logout successful'}));
 });
 
+server.use((req, res, next) => {
+  res.send('index.html');
+  next();
+});
+
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
 });
