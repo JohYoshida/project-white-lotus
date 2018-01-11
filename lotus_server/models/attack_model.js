@@ -223,7 +223,7 @@ const attackFuncs = {
     }
     // removes the passive ability of a random benched monster.
     const randomBenchedMonster = attackedPlayer.getRandomMonster({bench: true, creature: 'mecha'});
-    if(!randomBenchedMonster){
+    if(!randomBenchedMonster || randomBenchedMonster.modifiers.has('deactivate')){
       return messages;
     }
     const description = `${randomBenchedMonster.name}'s passive ability is disabled.`;

@@ -7,7 +7,7 @@ const Ability = bookshelf.Model.extend({
 
 const abilityFuncs = {
   supercharge: function(player){
-    if (!player.activeMonster) {
+    if (!this.passiveActive || !player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
@@ -22,6 +22,9 @@ const abilityFuncs = {
     });
   },
   nanomachine_swarm: function(player){
+    if (!this.passiveActive || !player.activeMonster) {
+      return;
+    }
     const {team} = player;
     // loops over each monster in the players team and applies the heal modifier if applicable.
     for(const monsterId in team){
@@ -43,7 +46,7 @@ const abilityFuncs = {
     }
   },
   electric_shield: function(player){
-    if (!player.activeMonster) {
+    if (!this.passiveActive || !player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
@@ -60,7 +63,7 @@ const abilityFuncs = {
   // Have to set type manually because asynchronous programming would not work here.
   // New types are set with the modifier and removed when the monster is benched.
   pierce: function(player){
-    if (!player.activeMonster) {
+    if (!this.passiveActive || !player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
@@ -73,7 +76,7 @@ const abilityFuncs = {
     });
   },
   crush: function(player){
-    if (!player.activeMonster) {
+    if (!this.passiveActive || !player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
@@ -86,7 +89,7 @@ const abilityFuncs = {
     });
   },
   spray: function(player){
-    if (!player.activeMonster) {
+    if (!this.passiveActive || !player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;

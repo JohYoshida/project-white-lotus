@@ -47,6 +47,7 @@ class Game{
   }
   switchTurns(){
     this.idlePlayer.checkForDeath();
+    this.activePlayer.checkForDeath();
     this.activePlayer.turn = false;
     this.idlePlayer.turn = true;
   }
