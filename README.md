@@ -6,20 +6,20 @@ Build your battle team, and challenge your friends to a 3v3 fight in the far-flu
 [Play Mechas and Kaiju](https://projectwhitelotus.herokuapp.com)
 
 ## Features
-* Team-based strategy
+### Team-based strategy
 
    Consider your mechas' unique passive abilities and kaiju's special attacks to synergize your team.
-* Procedurally generated monsters
+### Procedurally generated monsters
 
    Mechas and Kaiju are constructed from modular head, body, and arm parts with unique attacks, abilities, and types. Win battles to buy new monsters for your team.
-* Three damage types, and three monster types
+### Three damage types, and three monster types
 
    Pierce attacks are weak against Reflect type, and strong against Harden type.
    Crush attacks are weak against Absorb type, and strong against Reflect type.
    Spray attacks are weak against Harden type, and strong against Absorb type.
 
 ## Dependencies
-* React Dependencies
+### React Dependencies
 
    "enzyme": "^3.2.0",
    "enzyme-adapter-react-16": "^1.1.0",
@@ -34,7 +34,7 @@ Build your battle team, and challenge your friends to a 3v3 fight in the far-flu
    "react-scripts": "1.0.17",
    "sass": "^1.0.0-beta.4",
    "uuid": "^3.1.0"
-* Express Dependencies
+### Express Dependencies
 
    "bcrypt": "^1.0.3",
    "body-parser": "^1.18.2",
