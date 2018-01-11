@@ -58,7 +58,7 @@ class Player {
   }
   // gets a random monster from the player's team. Can take a filter object e.g. {bench: true}.
   getRandomMonster(filterObject){
-    let filteredTeam = undefined;
+    let filteredTeam = null;
     // Build a filtered team if the filterObject is prevent.
     if(filterObject){
       filteredTeam = {};
@@ -70,7 +70,7 @@ class Player {
             invalid = true;
           }
         }
-        if(!invalid){
+        if(invalid){
           continue;
         }
         filteredTeam[monster.id] = monster;
