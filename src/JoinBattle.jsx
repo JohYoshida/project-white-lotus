@@ -18,9 +18,10 @@ class CreateBattle extends Component {
       this.props.showFlashMessage('Room name must be given.');
       return;
     }
-    fetch(`/battle/${roomName}`).then(res => {
-      res.json().then(() => {
-        this.setState({roomLink: roomName});
+    fetch(`/battles/${roomName}`).then(res => {
+      res.json().then(res => {
+        console.log(res);
+        window.location.href = `/battles/${roomName}`;
       }).catch(() => {
         this.props.showFlashMessage(<span>Sorry, this room does not exist. <a href="/create-battle">Create it!</a></span>);
       });
@@ -33,8 +34,7 @@ class CreateBattle extends Component {
         <form onSubmit={this.findRoom}>
           <label>Room name</label>
           <input name="roomName" type="text"></input>
-          {!this.state.roomLink && <button>Find Battle</button>}
-          {this.state.roomLink && <a className="button" href={`battle/${this.state.roomLink}`}>Join Battle</a>}
+          <button>Find Battle</button>
         </form>
       </main>
     );

@@ -86,7 +86,7 @@ exports.seed = function(knex, Promise) {
           image: '/assets/monsters/RK.png'
         },
         {
-          id: 1,
+          id: uuidv4(),
           name: 'Blob',
           user_id: 2,
           body_id: bodies[0],
@@ -95,7 +95,7 @@ exports.seed = function(knex, Promise) {
           image: '/assets/monsters/BLOB.png'
         },
         {
-          id: 2,
+          id: uuidv4(),
           name: 'T-Wrex',
           user_id: 2,
           body_id: bodies[1],
@@ -105,7 +105,7 @@ exports.seed = function(knex, Promise) {
 
         },
         {
-          id: 3,
+          id: uuidv4(),
           name: 'C\'thulumonster',
           user_id: 2,
           body_id: bodies[2],
@@ -114,7 +114,7 @@ exports.seed = function(knex, Promise) {
           image:'/assets/monsters/cthulamonster.png'
         },
         {
-          id: 4,
+          id: uuidv4(),
           name: 'Shock Top',
           user_id: 2,
           body_id: bodies[3],
@@ -124,7 +124,7 @@ exports.seed = function(knex, Promise) {
 
         },
         {
-          id: 5,
+          id: uuidv4(),
           name: 'Medi-o-cre',
           user_id: 2,
           body_id: bodies[4],
@@ -133,7 +133,7 @@ exports.seed = function(knex, Promise) {
           image: '/assets/monsters/mediocre.png'
         },
         {
-          id: 6,
+          id: uuidv4(),
           name: 'Red Knight',
           user_id: 2,
           body_id: bodies[5],
@@ -142,7 +142,7 @@ exports.seed = function(knex, Promise) {
           image: '/assets/monsters/RK.png'
         },
         {
-          id: 1,
+          id: uuidv4(),
           name: 'Blob',
           user_id: 3,
           body_id: bodies[0],
@@ -151,7 +151,7 @@ exports.seed = function(knex, Promise) {
           image: '/assets/monsters/BLOB.png'
         },
         {
-          id: 2,
+          id: uuidv4(),
           name: 'T-Wrex',
           user_id: 3,
           body_id: bodies[1],
@@ -161,7 +161,7 @@ exports.seed = function(knex, Promise) {
 
         },
         {
-          id: 3,
+          id: uuidv4(),
           name: 'C\'thulumonster',
           user_id: 3,
           body_id: bodies[2],
@@ -170,7 +170,7 @@ exports.seed = function(knex, Promise) {
           image:'/assets/monsters/cthulamonster.png'
         },
         {
-          id: 4,
+          id: uuidv4(),
           name: 'Shock Top',
           user_id: 3,
           body_id: bodies[3],
@@ -180,7 +180,7 @@ exports.seed = function(knex, Promise) {
 
         },
         {
-          id: 5,
+          id: uuidv4(),
           name: 'Medi-o-cre',
           user_id: 3,
           body_id: bodies[4],
@@ -189,7 +189,7 @@ exports.seed = function(knex, Promise) {
           image: '/assets/monsters/mediocre.png'
         },
         {
-          id: 6,
+          id: uuidv4(),
           name: 'Red Knight',
           user_id: 3,
           body_id: bodies[5],

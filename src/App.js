@@ -235,7 +235,7 @@ class App extends Component {
                 setActiveLink={this.setActiveLink}
                 />)
             }/>
-            <Route path="/battle/:roomName" render={({match}) => (
+            <Route path="/battles/:roomName" render={({match}) => (
               <Battle showFlashMessage={this.showFlashMessage} cookies={this.props.cookies} roomName={match.params.roomName} username={username} teams={this.state.teams} fetchTeams={this.fetchTeams}/>)
             }/>
           </div>
