@@ -36,6 +36,7 @@ const animateCharacter = (animation, player) => {
     prefix = 'player';
     monsterImage = document.querySelector(`.player-side #m-${target.id} img`);
   }
+  if(!monsterImage) return;
   // add the the class(value)
   monsterImage.classList.add(`${value}-${prefix}`);
   delayFunction(2000, () => {
