@@ -162,7 +162,7 @@ const attackFuncs = {
       return targetMonster.dodged(messages);
     }
     messages.push(`Sludge envelopes ${targetMonster.name}.`);
-    const description = `The sludge causes ${targetMonster.name} to lose 1hp per turn until benched.`;
+    const description = `The sludge causes ${targetMonster.name} to lose 100hp per turn until benched.`;
     new Modifier(targetMonster, {}, 'dot', description, (modifier, messages) => {
       if(targetMonster.bench) return modifier.removeModifier();
       return targetMonster.takeDamage(100, messages, true);
