@@ -1,4 +1,4 @@
-const environment = 'production';
+const environment = 'development';
 // simple function to delay without blocking execution
 const delayFunction = (ms, callback) => {
   return new Promise(() => {
@@ -169,7 +169,7 @@ const rejoinBattle = (battleComponent) => {
   const {roomName} = battleComponent.props;
   let socket = null;
   if (environment === 'development') {
-    socket = new WebSocket(`wss://localhost:3001/battles/${roomName}`);
+    socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
   } else if (environment === 'production') {
     socket = new WebSocket(`wss://projectwhitelotus.herokuapp.com/battles/${roomName}`);
   }
@@ -187,7 +187,7 @@ const joinGame = (battleComponent, team) => {
   const {roomName} = battleComponent.props;
   let socket = null;
   if (environment === 'development') {
-    socket = new WebSocket(`wss://localhost:3001/battles/${roomName}`);
+    socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
   } else if (environment === 'production') {
     socket = new WebSocket(`wss://projectwhitelotus.herokuapp.com/battles/${roomName}`);
   }

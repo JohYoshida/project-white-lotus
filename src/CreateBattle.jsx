@@ -6,6 +6,7 @@ class CreateBattle extends Component {
     this.state = {roomLink: null};
   }
   componentDidMount(){
+    this.props.setActiveLink(this.props.linkId);
     this.props.loadApp();
     this.submitRoom = this.submitRoom.bind(this);
   }
@@ -31,7 +32,6 @@ class CreateBattle extends Component {
           body: JSON.stringify({roomName: roomName})
         }).then(data => data.json().then(res => {
           this.setState({roomLink: res.flash});
-          toggleElementById('roomLink');
         }));
       });
     });
@@ -40,7 +40,7 @@ class CreateBattle extends Component {
     return (
       <main>
         <h2>Start a Battle</h2>
-        <p id="roomLink" className='hidden'>Your battlefield: <a href={this.state.roomLink}>{this.state.roomLink}</a></p>
+        {this.state.roomLink && <p id="roomLink">Your battlefield: <a href={this.state.roomLink}>{this.state.roomLink}</a></p>}
         <form onSubmit={this.submitRoom}>
           <label>Room name</label>
           <input name="roomName" type="text"></input>

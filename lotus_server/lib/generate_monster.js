@@ -46,7 +46,7 @@ class CompleteMonster {
     }
     if(!this.protector || isModifier){
       this.hp -= damage;
-      messages.unshift({type:'damage', target: this, value: damage, playerId: this.playerId, message:`${this.name} took ${damage} damage!`});
+      messages.unshift({type:'damage', target: this, value: damage * -1, playerId: this.playerId, message:`${this.name} took ${damage} damage!`});
       return messages;
     }
     // If there is a benched monster protecting this monster. Check damage and effect protector accordingly.
@@ -54,7 +54,7 @@ class CompleteMonster {
     if(damage > 500){
       const totalDamage = damage - protectorDamage;
       this.hp -= totalDamage;
-      messages.unshift({type:'damage', target: this, value: totalDamage, playerId: this.playerId, message:`${this.name} took ${totalDamage} damage!`});
+      messages.unshift({type:'damage', target: this, value: totalDamage * -1, playerId: this.playerId, message:`${this.name} took ${totalDamage} damage!`});
       this.protector.takeDamage(protectorDamage, messages);
     } else {
       this.protector.takeDamage(damage, messages);

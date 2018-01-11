@@ -12,13 +12,13 @@ module.exports = (server) => {
     this.ws(`/${id}`, roomFunctionality);
     // For testing whether a room exists on the client side.
     this.get(`/${id}`, (req, res) => {
-      res.send({flash: 'room exists!'});
+      res.send({flash: 'Sorry, this room already exists.'});
     });
   };
   socketRouter.post('/',(req,res) => {
     const {roomName} = req.body;
     socketRouter.genBattle(roomName);
-    res.send(JSON.stringify({flash:`/battle/${roomName}`}));
+    res.send(JSON.stringify({flash:`/battles/${roomName}`}));
   });
   return socketRouter;
 };
