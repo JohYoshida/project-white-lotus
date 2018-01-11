@@ -5,9 +5,7 @@ const server = express();
 const PORT = process.env.PORT || 3001;
 const path = require('path');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-
 
 // Database setup
 const dbconfig = require('./knexfile.js')[process.env.DB_ENV];
@@ -28,13 +26,13 @@ server.use(express.static(path.join(__dirname, './dist')));
 // Body Parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
-// Cookie Parser
-server.use(cookieParser());
+// Cookie Session
 server.use(cookieSession({
   name: 'id',
   keys: ['spider', 'pie', 'issue']
 }));
 
+// Routes
 server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);
 server.use('/user', userRouter);
