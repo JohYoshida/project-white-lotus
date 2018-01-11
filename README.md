@@ -21,42 +21,39 @@ Build your battle team, and challenge your friends to a 3v3 fight in the far-flu
 ## Dependencies
 ### React Dependencies
 
-   "enzyme": "^3.2.0",
-   "enzyme-adapter-react-16": "^1.1.0",
-   "jimp": "^0.2.28",
-   "jsdom": "^11.5.1",
-   "knex": "^0.14.2",
-   "milligram": "^1.3.0",
-   "react": "^16.2.0",
-   "react-cookie": "^2.1.2",
-   "react-dom": "^16.2.0",
-   "react-router-dom": "^4.2.2",
-   "react-scripts": "1.0.17",
-   "sass": "^1.0.0-beta.4",
-   "uuid": "^3.1.0"
+- "enzyme": "^3.2.0",
+- "enzyme-adapter-react-16": "^1.1.0",
+- "jimp": "^0.2.28",
+- "jsdom": "^11.5.1",
+- "knex": "^0.14.2",
+- "milligram": "^1.3.0",
+- "react": "^16.2.0",
+- "react-cookie": "^2.1.2",
+- "react-dom": "^16.2.0",
+- "react-router-dom": "^4.2.2",
+- "react-scripts": "1.0.17",
+- "sass": "^1.0.0-beta.4",
+- "uuid": "^3.1.0"
 ### Express Dependencies
 
-   "bcrypt": "^1.0.3",
-   "body-parser": "^1.18.2",
-   "bookshelf": "^0.12.0",
-   "cookie-parser": "^1.4.3",
-   "cookie-session": "^2.0.0-beta.3",
-   "dotenv": "^4.0.0",
-   "express": "^4.16.2",
-   "express-ws": "^3.0.0",
-   "jest": "^21.2.1",
-   "jimp": "^0.2.28",
-   "knex": "^0.13.0",
-   "uuid": "^3.1.0",
-   "ws": "^3.3.2",
-   "pg": "^7.4.0"
+- "bcrypt": "^1.0.3",
+- "body-parser": "^1.18.2",
+- "bookshelf": "^0.12.0",
+- "cookie-parser": "^1.4.3",
+- "cookie-session": "^2.0.0-beta.3",
+- "dotenv": "^4.0.0",
+- "express": "^4.16.2",
+- "express-ws": "^3.0.0",
+- "jest": "^21.2.1",
+- "jimp": "^0.2.28",
+- "knex": "^0.13.0",
+- "uuid": "^3.1.0",
+- "ws": "^3.3.2",
+- "pg": "^7.4.0"
 
 ## Local Installation
 1. Make sure you have [PostgreSQL](https://www.postgresql.org/download/) installed.
-2. Clone this repo.
-
-   `git clone git@github.com:quinlanjager/project-white-lotus.git`
-
+2. Fork and clone this repo.
 3. Create a new PostgreSQL database.
 4. Create a `.env` (see `.env.example` for required fields).
 5. Install dependencies.
