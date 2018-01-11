@@ -12,11 +12,11 @@ module.exports = (server) => {
     const roomFunctionality = socketFunctions(wss, id);
     this.ws(`/${id}`, roomFunctionality);
     // For testing whether a room exists on the client side.
-    this.get(`/${id}-exists`, (req, res) => {
+    this.get(`/${id}/exists`, (req, res) => {
       res.send({flash: 'Sorry, this room already exists.'});
     });
   };
-  socketRouter.get('/', (req, res) => {
+  socketRouter.get('/:id', (req, res) => {
     res.sendFile(path.join(__dirname, '../../build/index.html'));
   });
   socketRouter.post('/',(req,res) => {
