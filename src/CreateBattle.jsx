@@ -17,7 +17,7 @@ class CreateBattle extends Component {
     if(roomName.length === 0){
       return;
     }
-    fetch(`/battles/${roomName}-exists`).then((res) => {
+    fetch(`/battles/${roomName}/exists`).then((res) => {
       res.json().then(res => {
         if(res.flash){
           this.props.showFlashMessage(res.flash);
