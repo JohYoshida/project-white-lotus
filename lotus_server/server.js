@@ -39,6 +39,9 @@ server.delete('/logout', (req, res) => {
   req.session = null;
   res.status(200).send(JSON.stringify({flash: 'logout successful'}));
 });
+server.get('/teams', (req, res) => {
+  res.sendFile('/index.html');
+});
 
 // Serve static files from the React app
 server.use(express.static(path.join(__dirname, '../build')));
