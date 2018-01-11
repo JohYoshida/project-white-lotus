@@ -41,6 +41,10 @@ server.delete('/logout', (req, res) => {
   req.session = null;
   res.status(200).send(JSON.stringify({flash: 'logout successful'}));
 });
+server.get('/teams', (req, res) => {
+  console.log('teams is sending index.html');
+  res.sendFile('/index.html');
+});
 
 server.listen(PORT, '0.0.0.0', 'localhost', () => {
   console.log(`Listening on ${PORT}`);
