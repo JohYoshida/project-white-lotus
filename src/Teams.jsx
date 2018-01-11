@@ -117,7 +117,7 @@ class Teams extends Component {
       {this.state.teamCreation && <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters}/>}
       {!this.state.teamCreation && <section id="your-teams">
         <h3>Your Teams</h3>
-        {(teams && teams.length === 0) && <p>You don't have any teams. <button onClick={this.toggleTeamPane}>let's make one</button></p>}
+        {(teams && teams.length === 0) && <p>You don't have any teams. <button onClick={this.toggleTeamPane}>Let's make one</button></p>}
         {teams && this.printTeams()}
       </section>}
     </section>);
