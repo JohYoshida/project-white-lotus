@@ -18,7 +18,7 @@ class CreateBattle extends Component {
       this.props.showFlashMessage('Room name must be given.');
       return;
     }
-    fetch(`/battles/${roomName}`).then(res => {
+    fetch(`/battles/${roomName}-exists`).then(res => {
       res.json().then(res => {
         console.log(res);
         window.location.href = `/battles/${roomName}`;

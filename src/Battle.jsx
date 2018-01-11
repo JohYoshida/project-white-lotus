@@ -34,7 +34,7 @@ class Battle extends Component {
     this.props.fetchTeams();
     // check if the room exists by making a get request then trying to parse the response as JSON
     // If the room exists, it will receive a json response. If it doesn't exists then it will set state roomNotFound to true.
-    fetch(`/battles/${roomName}`).then(res => {
+    fetch(`/battles/${roomName}-exists`).then(res => {
       res.json().then(() => {
       }).catch(() => {
         this.setState({roomNotFound: true});
