@@ -46,6 +46,8 @@ class Login extends Component {
           <input id='password' type='password' />
           <button onClick={this.props.login}>Submit</button>
         </form>
+        <p>Or</p>
+        <button onClick={this.toggle}>Register</button>
       </main>);
   }
 }
